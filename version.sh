@@ -84,7 +84,7 @@ new_patch=$((patch + inc_patch))
 new_revision="${new_major}.${new_minor}.${new_patch}"
 
 # Captura o changelog e adiciona o prefixo [TICKET]: em cada linha
-changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" | awk '{printf "[TICKET]: %s\\n", $0}')
+changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" | awk '{printf "[TICKET]: %s\n", $0}')
 
 # Atualizar CHANGELOG.md
 changelog_file="CHANGELOG.md"
@@ -101,7 +101,7 @@ description=$(echo "$description" | tr '\n' ' ')
 
 # Preencher o arquivo com as informações
 {
-    echo "[INFO]: Versão $revision criada em produção por $user ($email)"
+    echo "[INFO]: Versão $new_revision criada em produção por $user ($email)"
     echo "[INFO]: Descrição da publicação: $description"
     echo "[INFO]: Esta versão contém o(s) ticket(s)"
     echo "$changelog"
