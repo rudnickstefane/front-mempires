@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colors */
+.bg-primary {
+    background-color: #ff0336;
+}
+
+.color-primary {
+    color: #ff0336;
+}
+
+.color-secondary {
+    color: #08041b;
+}
+
+.no-uppercase {
+    text-transform: none;
+}
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* Afters */
+.after-arrow::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 37px;
+    background-color: #ff0336;
+    margin-top: 16px;
+}
+
+.after-arrowMenu::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: #ff0336;
+    margin-top: 3rem;
+    position: absolute;
+}
+
+.MuiOutlinedInput-root {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.MuiInputLabel-root {
+    font-family: 'Poppins', sans-serif !important;
+    color: #6b7280 !important;
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+.MuiOutlinedInput-root.MuiSelect-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #ff0336 !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+    color: #ff0336 !important;
+    font-family: 'Poppins', sans-serif;
+}
+
+.MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #ff0336 !important;
+    font-family: 'Poppins', sans-serif;
+}
+
+.MuiFormControlLabel-root {
+    border-color: #c4c4c4 !important;
+}
+
+.MuiTypography-root {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.MuiFormControlLabel-root:hover {
+    border-color: #ff0336 !important;
+}
+
+.Mui-checked,
+.MuiLink-root,
+.MuiSwitch-switchBase {
+    color: #ff0336 !important;
+}
+
+.MuiMenuItem-root:hover {
+    background-color: #ff0336 !important;
+    color: white !important;
+}
+
+.MuiIconButton-root:hover {
+    background-color: #ff0336 !important;
+    color: white !important;
+}
+
+.MuiTooltip-tooltip {
+    background-color: #000000dc !important;
+    color: white !important;
+    font-weight: normal !important;
+    font-size: 14px !important;
+    padding: .6rem 1rem !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.page-clean {
+    height: 6rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff0336;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+    height: 5px;
+}
+
+.Mui-checked+.MuiSwitch-track,
+.MuiSwitch-thumb {
+    background: #ff0336 !important;
+}
+
+.MuiSwitch-track {
+    background: #bdbdbd !important;
+}
