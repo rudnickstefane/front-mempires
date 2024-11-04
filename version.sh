@@ -4,10 +4,18 @@
 user=$(git config user.name)
 email=$(git config user.email)
 
-# Verifica se há uma tag associada ao commit atual; caso contrário, interrompe a execução
-revision=$(git describe --tags 2>/dev/null)
+
+# Verifica se há tags no repositório
+tags=$(git tag)
+if [[ -z "$tags" ]]; then
+  echo "[ERRO]: Nenhuma tag encontrada no repositório."
+  exit 1
+fi
+
+# Obtém a última versão
+revision=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null)
 if [[ -z "$revision" ]]; then
-  echo "[ERRO]: Nenhuma tag encontrada no repositório. Certifique-se de que há uma tag associada ao commit atual."
+  echo "[ERRO]: Não foi possível obter a versão atual."
   exit 1
 fi
 
@@ -110,13 +118,13 @@ description=$(echo "$description" | tr '\n' ' ')
 } >> "$version_file"
 
 # Criar a tag no Git
-git tag "v$new_revision" || { echo "[ERRO]: Falha ao criar a tag no Git."; exit 1; }
-git push origin "v$new_revision" || { echo "[ERRO]: Falha ao fazer push da tag para o repositório."; exit 1; }
+git tag "$new_revision" || { echo "[ERRO]: Falha ao criar a tag no Git."; exit 1; }
+git push origin "$new_revision" || { echo "[ERRO]: Falha ao fazer push da tag para o repositório."; exit 1; }
 
 echo
 echo "---------------- TAG DE VERSÃO ----------------"
-printf "Versão Atual: %s\n" "v$revision"
-printf "Nova Versão: %s\n" "v$new_revision"
+printf "Versão Atual: %s\n" "$revision"
+printf "Nova Versão: %s\n" "$new_revision"
 echo "-----------------------------------------------"
 echo
 echo "==============================================="
