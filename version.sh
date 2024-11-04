@@ -42,6 +42,7 @@ if [[ -z "$description" ]]; then
 fi
 
 # Exibir tipos de commit
+echo
 echo "Insira o número correspondente ao tipo de commit (Exemplos):"
 echo "1. Build: Alterações que afetam o sistema de construção ou dependências externas;"
 echo "2. Ci: Alterações nos arquivos de configuração e scripts de CI;"
@@ -70,7 +71,7 @@ esac
 
 # Se o revision não tem um formato de versão válido, iniciar em 0.0.0
 if [[ ! "$revision" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    revision="0.0.0"
+    revision="v0.0.0"
 fi
 
 # Incrementa a versão
@@ -81,7 +82,7 @@ new_major=$((major + inc_major))
 new_minor=$((minor + inc_minor))
 new_patch=$((patch + inc_patch))
 
-new_revision="${new_major}.${new_minor}.${new_patch}"
+new_revision="v${new_major}.${new_minor}.${new_patch}"
 
 # Captura o changelog e adiciona o prefixo [TICKET]: em cada linha
 changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" | awk '{printf "[TICKET]: %s\n", $0}')
@@ -89,7 +90,7 @@ changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h 
 # Atualizar CHANGELOG.md
 changelog_file="CHANGELOG.md"
 {
-  echo "## [${new_revision}] - $(date +'%Y-%m-%d')"
+  echo "## [v${new_revision}] - $(date +'%Y-%m-%d')"
   echo "- $description"
   echo "$changelog"
   echo ""
@@ -109,13 +110,13 @@ description=$(echo "$description" | tr '\n' ' ')
 } >> "$version_file"
 
 # Criar a tag no Git
-git tag "$new_revision" || { echo "[ERRO]: Falha ao criar a tag no Git."; exit 1; }
-git push origin "$new_revision" || { echo "[ERRO]: Falha ao fazer push da tag para o repositório."; exit 1; }
+git tag "v$new_revision" || { echo "[ERRO]: Falha ao criar a tag no Git."; exit 1; }
+git push origin "v$new_revision" || { echo "[ERRO]: Falha ao fazer push da tag para o repositório."; exit 1; }
 
 echo
 echo "---------------- TAG DE VERSÃO ----------------"
-printf "Versão Atual: %s\n" "$revision"
-printf "Nova Versão: %s\n" "$new_revision"
+printf "Versão Atual: %s\n" "v$revision"
+printf "Nova Versão: %s\n" "v$new_revision"
 echo "-----------------------------------------------"
 echo
 echo "==============================================="
