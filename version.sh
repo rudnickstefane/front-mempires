@@ -128,7 +128,7 @@ changelog_file="CHANGELOG.md"
 # Preencher o arquivo com as informações
 {
     echo "[INFO]: Versão $new_revision criada em produção por $user ($email)"
-    echo "[INFO]: Descrição da publicação: $description"
+    echo "[INFO]: Situação da publicação: $description"
     echo "[INFO]: Esta versão contém o(s) ticket(s)"
     echo "$changelog"
     echo "[INFO]: Foram aplicado(s) $(echo "$changelog" | wc -l) ticket(s) a esta Versão"

@@ -36,3 +36,7 @@ Tipo de Publicação ou Descrição: Normal
 [a2823e6][TICKET][FLEX-041124] Feat: Ajuste de estruturação do GymHome.
 [62b00e2][TICKET][Master] Fix: Ajuste no versionInfo.
 
+## [v1.5.6] - 2024-11-04 às 23:23:36
+- Situação: Normal
+- [d9cabe4][TICKET]Master atualizada com a versão v1.5.5
+

@@ -1,7 +1,5 @@
-[INFO]: Versão v1.5.5 criada em produção por Rudnick Stefane (rudnick.nogueira@gmail.com)
-[INFO]: Descrição da publicação: Normal
+[INFO]: Versão v1.5.6 criada em produção por Rudnick Stefane (rudnick.nogueira@gmail.com)
+[INFO]: Situação da publicação: Normal
 [INFO]: Esta versão contém o(s) ticket(s)
-[5609906][TICKET]Merge branch 'FLEX-041124'
-[a2823e6][TICKET][FLEX-041124] Feat: Ajuste de estruturação do GymHome.
-[62b00e2][TICKET][Master] Fix: Ajuste no versionInfo.
-[INFO]: Foram aplicado(s) 3 ticket(s) a esta Versão
+[d9cabe4][TICKET]Master atualizada com a versão v1.5.5
+[INFO]: Foram aplicado(s) 1 ticket(s) a esta Versão
