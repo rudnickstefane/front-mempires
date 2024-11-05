@@ -66,7 +66,7 @@ echo "10. Chore: Atualizações de tarefas sem alteração no código de produç
 echo "11. Env: Modificações em arquivos de configuração de CI."
 read -p "Número do Tipo de Commit: " commit_type
 
-# Mapear número do commit type para incrementos de versão
+# Mapeamento dos tipos de commit para o incremento
 case "$commit_type" in
   1|2|3|10|11) increment="0.0.0" ;; # Não altera a versão principal
   4) increment="0.1.0" ;;            # Feat
@@ -84,19 +84,32 @@ fi
 IFS='.' read -r major minor patch <<< "${revision:1}" # Remove 'v' para processar
 IFS='.' read -r inc_major inc_minor inc_patch <<< "$increment"
 
-# Calcula nova versão
+# Garante que a nova versão é válida
 new_major=$((major + inc_major))
 new_minor=$((minor + inc_minor))
 new_patch=$((patch + inc_patch))
 
-# Garante que a nova versão é válida
-if [[ "$new_major" -gt "$major" ]]; then
-    new_revision="v${new_major}.0.0"
-elif [[ "$new_minor" -gt "$minor" ]]; then
-    new_revision="v${new_major}.${new_minor}.0"
-else
-    new_revision="v${new_major}.${new_minor}.${new_patch}"
-fi
+# Inicia nova versão com os valores calculados
+new_revision="v${new_major}.${new_minor}.${new_patch}"
+
+# Verifica se a nova tag já existe
+while git rev-parse "$new_revision" >/dev/null 2>&1; do
+  # Se a tag já existe, incrementa na parte correspondente
+  case "$increment" in
+    0.1.0) 
+      new_minor=$((new_minor + 1)) 
+      new_patch=0
+      ;;
+    0.0.1)
+      new_patch=$((new_patch + 1))
+      ;;
+    0.0.0)
+      echo "[AVISO]: Tag $new_revision já existe, mas não houve alteração em versões principais ou menores."
+      exit 1 # Não faz nada se não houver mudança na versão
+      ;;
+  esac
+  new_revision="v${new_major}.${new_minor}.${new_patch}"
+done
 
 # Captura o changelog e adiciona o prefixo [TICKET]: em cada linha
 changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" | awk '{printf "[TICKET]: %s\n", $0}')
@@ -126,10 +139,13 @@ description=$(echo "$description" | tr '\n' '')
 git tag "$new_revision" || { echo "[ERRO]: Falha ao criar a tag no Git."; exit 1; }
 git push origin "$new_revision" || { echo "[ERRO]: Falha ao fazer push da tag para o repositório."; exit 1; }
 
+# Aqui estamos capturando a versão anterior corretamente
+previous_revision=$(git tag | grep -v "$new_revision" | sort -V | tail -n 1)
+
 echo
 echo "---------------- TAG DE VERSÃO ----------------"
-printf "Versão Atual: %s\n" "$revision"
-printf "Nova Versão: %s\n" "$new_revision"
+printf "Versão Anterior: %s\n" "$previous_revision"
+printf "Versão Atual: %s\n" "$new_revision"
 echo "-----------------------------------------------"
 echo
 echo "==============================================="
