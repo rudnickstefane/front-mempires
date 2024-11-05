@@ -112,7 +112,7 @@ while git rev-parse "$new_revision" >/dev/null 2>&1; do
 done
 
 # Captura o changelog e adiciona o prefixo [TICKET]: em cada linha
-changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" | awk '{printf "[%s][TICKET]: %s\n", $1, substr($0, index($0,$2))}')
+changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s" | awk '{printf "[%s][TICKET]: %s\n", $1, substr($0, index($0,$2))}')
 
 # Atualizar CHANGELOG.md
 changelog_file="CHANGELOG.md"
@@ -122,9 +122,6 @@ changelog_file="CHANGELOG.md"
   echo "$changelog"
   echo ""
 } >> "$changelog_file"
-
-# Formata as variáveis
-description=$(echo "$description" | tr '\n' '')
 
 # Preencher o arquivo com as informações
 {
