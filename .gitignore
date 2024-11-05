@@ -12,8 +12,9 @@ dist
 dist-ssr
 *.local
 
-CHANGELOG.md
+# Ignorar o arquivo de versão
 versionInfo.inf
+CHANGELOG.md
 
 # Editor directories and files
 .vscode/*
