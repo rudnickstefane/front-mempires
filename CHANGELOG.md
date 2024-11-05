@@ -22,3 +22,7 @@ Tipo de Publicação ou Descrição: Normal
 - Tipo de Publicação ou Descrição: Normal\n
 [658959e][TICKET][Master] Fix: Ajuste no versionInfo.
 
+## [v1.2.4] - 2024-11-04 às 23:04:54
+- Tipo de Publicação ou Descrição: Normal
+- [a89644c][TICKET][Master] Fix: Ajuste no versionInfo.
+

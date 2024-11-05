@@ -37,16 +37,16 @@ printf "E-mail: %s\n" "$email"
 echo "-----------------------------------------------"
 echo
 
-# Solicita ao usuário o Tipo de Publicação ou uma Descrição
-echo "Insira o Tipo de Publicação ou Descrição (Exemplos):"
+# Solicita ao usuário a Situação para essa Publicação
+echo "Insira a situação para essa publicação (Exemplos):"
 echo "- Emergencial"
 echo "- Normal"
 echo "- Correção do problema XYZ"
-read -p "Tipo de Publicação ou Descrição: " description
+read -p "Situação: " description
 
 # Verifica se a descrição não está vazia
 if [[ -z "$description" ]]; then
-  echo "[ERRO]: A descrição da publicação não pode estar vazia."
+  echo "[ERRO]: A situação da publicação não pode estar vazia."
   exit 1
 fi
 
@@ -120,7 +120,7 @@ description=$(echo "$description" | tr -d '\n')
 changelog_file="CHANGELOG.md"
 {
   echo "## [${new_revision}] - $(date +'%Y-%m-%d às %H:%M:%S')"
-  echo "- Tipo de Publicação ou Descrição: $description"
+  echo "- Situação: $description"
   echo "- $changelog"
   echo ""
 } >> "$changelog_file"
