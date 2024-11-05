@@ -47,3 +47,11 @@ Tipo de Publicação ou Descrição: Normal
 [041455e][TICKET][Master] Fix: Ajuste no versionInfo.
 [e8c0b00][TICKET]Master atualizada com a versão v1.5.6
 
+## [v1.5.7] - 2024-11-04 às 23:32:13
+- Situação: Normal
+- [37bdcd4][TICKET][Master] Fix: Ajuste no versionInfo.
+[250f3c5][TICKET]Merge branch 'FLEX-041124'
+[c4c4e91][TICKET][FLEX-041124] Feat: Ajuste de estruturação do GymHome.
+[041455e][TICKET][Master] Fix: Ajuste no versionInfo.
+[e8c0b00][TICKET]Master atualizada com a versão v1.5.6
+

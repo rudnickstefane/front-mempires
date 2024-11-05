@@ -141,9 +141,26 @@ git push origin "$new_revision" || { echo "[ERRO]: Falha ao fazer push da tag pa
 # Aqui estamos capturando a versão anterior corretamente
 previous_revision=$(git tag | grep -v "$new_revision" | sort -V | tail -n 1)
 
-# Atualiza a Master com as alterações realizadas.
+# Adiciona as alterações ao último commit
 git add CHANGELOG.md versionInfo.inf
+if [ $? -ne 0 ]; then
+    echo "[ERRO]: Falha ao adicionar arquivos. Verifique se os arquivos existem e estão acessíveis."
+    exit 1
+fi
+
+# Atualiza o último commit para incluir as novas alterações
 git commit --amend --no-edit
+if [ $? -ne 0 ]; then
+    echo "[ERRO]: Falha ao atualizar o commit. Pode haver conflitos. Verifique as mensagens do git."
+    exit 1
+fi
+
+# Faz push das alterações para o repositório remoto
+git push origin master
+if [ $? -ne 0 ]; then
+    echo "[ERRO]: Falha ao fazer push para o repositório. Verifique se você está atualizado com a branch remota."
+    exit 1
+fi
 
 echo
 echo "---------------- TAG DE VERSÃO ----------------"
@@ -156,6 +173,7 @@ echo "       FIM DE REGISTRO PARA PUBLICAÇÃO         "
 echo "==============================================="
 echo
 
-echo "Arquivo versionInfo.inf atualizado com sucesso!"
-echo "CHANGELOG.md atualizado com a nova versão!"
-echo "Versão registrada com sucesso: $new_revision!"
+echo "[INFO]: As alterações foram adicionadas ao último commit e o push foi realizado com sucesso!"
+echo "[INFO]: Arquivo versionInfo.inf atualizado com sucesso!"
+echo "[INFO]: CHANGELOG.md atualizado com a nova versão!"
+echo "[INFO]: Versão registrada com sucesso: $new_revision!"
