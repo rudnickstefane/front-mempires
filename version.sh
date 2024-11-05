@@ -70,11 +70,8 @@ read -p "Número do Tipo de Commit: " commit_type
 case "$commit_type" in
   1|2|3|10|11) increment="0.0.0" ;; # Não altera a versão principal
   4) increment="0.1.0" ;;            # Feat
-  5) increment="0.0.1" ;;            # Fix
-  6) increment="0.0.1" ;;            # Perf
-  7) increment="0.0.0" ;;            # Refactor
-  8) increment="0.0.0" ;;            # Style
-  9) increment="0.0.1" ;;            # Test
+  5|6|9) increment="0.0.1" ;;        # Fix, Perf, Test
+  7|8) increment="0.0.0" ;;          # Refactor, Style
   *) echo "[ERRO]: Tipo de commit inválido." ; exit 1 ;;
 esac
 
@@ -87,11 +84,19 @@ fi
 IFS='.' read -r major minor patch <<< "${revision:1}" # Remove 'v' para processar
 IFS='.' read -r inc_major inc_minor inc_patch <<< "$increment"
 
+# Calcula nova versão
 new_major=$((major + inc_major))
 new_minor=$((minor + inc_minor))
 new_patch=$((patch + inc_patch))
 
-new_revision="v${new_major}.${new_minor}.${new_patch}"
+# Garante que a nova versão é válida
+if [[ "$new_major" -gt "$major" ]]; then
+    new_revision="v${new_major}.0.0"
+elif [[ "$new_minor" -gt "$minor" ]]; then
+    new_revision="v${new_major}.${new_minor}.0"
+else
+    new_revision="v${new_major}.${new_minor}.${new_patch}"
+fi
 
 # Captura o changelog e adiciona o prefixo [TICKET]: em cada linha
 changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" | awk '{printf "[TICKET]: %s\n", $0}')
@@ -106,8 +111,7 @@ changelog_file="CHANGELOG.md"
 } >> "$changelog_file"
 
 # Formata as variáveis
-revision=$(echo "$revision" | tr '\n' '')
-description=$(echo "$description" | tr '\n' ' ')
+description=$(echo "$description" | tr '\n' '')
 
 # Preencher o arquivo com as informações
 {
