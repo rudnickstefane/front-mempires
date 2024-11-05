@@ -12,10 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Ignorar o arquivo de versão
-versionInfo.inf
-CHANGELOG.md
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

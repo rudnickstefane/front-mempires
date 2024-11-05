@@ -114,12 +114,14 @@ done
 # Captura o changelog e adiciona o prefixo [TICKET]: em cada linha
 changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s" | awk '{printf "[%s][TICKET]%s\n", $1, substr($0, index($0,$2))}')
 
+description=$(echo "$description" | tr -d '\n')
+
 # Atualizar CHANGELOG.md
 changelog_file="CHANGELOG.md"
 {
-  echo "## [${new_revision}] - $(date +'%Y-%m-%d %H:%M:%S')"
-  echo "- Tipo de Publicação ou Descrição: $description\n"
-  echo "$changelog"
+  echo "## [${new_revision}] - $(date +'%Y-%m-%d às %H:%M:%S')"
+  echo "- Tipo de Publicação ou Descrição: $description"
+  echo "- $changelog"
   echo ""
 } >> "$changelog_file"
 
