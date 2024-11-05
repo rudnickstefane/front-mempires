@@ -42,7 +42,7 @@ echo "Insira o Tipo de Publicação ou Descrição (Exemplos):"
 echo "- Emergencial"
 echo "- Normal"
 echo "- Correção do problema XYZ"
-read -p "Tipo de Publicação: " description
+read -p "Tipo de Publicação ou Descrição: " description
 
 # Verifica se a descrição não está vazia
 if [[ -z "$description" ]]; then
@@ -118,7 +118,7 @@ changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h 
 changelog_file="CHANGELOG.md"
 {
   echo "## [${new_revision}] - $(date +'%Y-%m-%d')"
-  echo "- $description"
+  echo "Tipo de Publicação ou Descrição: $description"
   echo "$changelog"
   echo ""
 } >> "$changelog_file"
