@@ -141,6 +141,11 @@ git push origin "$new_revision" || { echo "[ERRO]: Falha ao fazer push da tag pa
 # Aqui estamos capturando a versão anterior corretamente
 previous_revision=$(git tag | grep -v "$new_revision" | sort -V | tail -n 1)
 
+# Atualiza a Master com as alterações realizadas.
+git add .
+git commit -m "Master atualizada com a versão $new_revision"
+git push origin master
+
 echo
 echo "---------------- TAG DE VERSÃO ----------------"
 printf "Versão Anterior: %s\n" "$previous_revision"
