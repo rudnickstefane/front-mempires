@@ -117,8 +117,8 @@ changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h 
 # Atualizar CHANGELOG.md
 changelog_file="CHANGELOG.md"
 {
-  echo "## [${new_revision}] - $(date +'%Y-%m-%d')"
-  echo "Tipo de Publicação ou Descrição: $description"
+  echo "## [${new_revision}] - $(date +'%Y-%m-%d %H:%M:%S')"
+  echo "- Tipo de Publicação ou Descrição: $description\n"
   echo "$changelog"
   echo ""
 } >> "$changelog_file"
