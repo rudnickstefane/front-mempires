@@ -30,3 +30,9 @@ Tipo de Publicação ou Descrição: Normal
 - Situação: Normal
 - [f28a300][TICKET][Master] Feat: Ajuste de situação no versionInfo.
 
+## [v1.5.5] - 2024-11-04 às 23:21:26
+- Situação: Normal
+- [5609906][TICKET]Merge branch 'FLEX-041124'
+[a2823e6][TICKET][FLEX-041124] Feat: Ajuste de estruturação do GymHome.
+[62b00e2][TICKET][Master] Fix: Ajuste no versionInfo.
+
