@@ -4,19 +4,20 @@
 user=$(git config user.name)
 email=$(git config user.email)
 
-
 # Verifica se há tags no repositório
 tags=$(git tag)
 if [[ -z "$tags" ]]; then
-  echo "[ERRO]: Nenhuma tag encontrada no repositório."
-  exit 1
-fi
-
-# Obtém a última versão
-revision=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null)
-if [[ -z "$revision" ]]; then
-  echo "[ERRO]: Não foi possível obter a versão atual."
-  exit 1
+  echo "[INFO]: Nenhuma tag encontrada no repositório. Criando a tag v1.0.0."
+  git tag "v1.0.0" || { echo "[ERRO]: Falha ao criar a tag v1.0.0."; exit 1; }
+  git push origin "v1.0.0" || { echo "[ERRO]: Falha ao fazer push da tag v1.0.0 para o repositório."; exit 1; }
+  revision="v1.0.0"
+else
+  # Obtém a última versão
+  revision=$(git describe --tags --abbrev=0 2>/dev/null)
+  if [[ -z "$revision" ]]; then
+    echo "[ERRO]: Não foi possível obter a versão atual."
+    exit 1
+  fi
 fi
 
 # Nome do arquivo onde as informações da versão serão salvas
@@ -67,7 +68,7 @@ read -p "Número do Tipo de Commit: " commit_type
 
 # Mapear número do commit type para incrementos de versão
 case "$commit_type" in
-  1|2|3|10|11) increment="0.0.0" ;; # Nao altera a versão principal
+  1|2|3|10|11) increment="0.0.0" ;; # Não altera a versão principal
   4) increment="0.1.0" ;;            # Feat
   5) increment="0.0.1" ;;            # Fix
   6) increment="0.0.1" ;;            # Perf
@@ -77,13 +78,13 @@ case "$commit_type" in
   *) echo "[ERRO]: Tipo de commit inválido." ; exit 1 ;;
 esac
 
-# Se o revision não tem um formato de versão válido, iniciar em 0.0.0
-if [[ ! "$revision" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+# Se o revision não tem um formato de versão válido, iniciar em v0.0.0
+if [[ ! "$revision" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     revision="v0.0.0"
 fi
 
 # Incrementa a versão
-IFS='.' read -r major minor patch <<< "$revision"
+IFS='.' read -r major minor patch <<< "${revision:1}" # Remove 'v' para processar
 IFS='.' read -r inc_major inc_minor inc_patch <<< "$increment"
 
 new_major=$((major + inc_major))
@@ -98,7 +99,7 @@ changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h 
 # Atualizar CHANGELOG.md
 changelog_file="CHANGELOG.md"
 {
-  echo "## [v${new_revision}] - $(date +'%Y-%m-%d')"
+  echo "## [${new_revision}] - $(date +'%Y-%m-%d')"
   echo "- $description"
   echo "$changelog"
   echo ""
