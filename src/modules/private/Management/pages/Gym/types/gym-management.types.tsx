@@ -4,7 +4,7 @@ export type RendersGymManagement = {
     Finance: 'Finance',
     Integration: 'Integration',
     Dashboard: 'Dashboard',
-    Program: 'Program',
+    Programs: 'Programs',
     Profile: 'Profile'
 };
 

@@ -1,7 +1,7 @@
 import { validatePassword } from "./validate-password";
 import { validatePhoneNumber } from "./validate-phone";
 
-export const validateName = (name: string): string => {
+export const ValidateName = (name: string): string => {
     if (!name) {
         return 'O nome completo é obrigatório.';
     } else if (name.split(' ').length < 2) {

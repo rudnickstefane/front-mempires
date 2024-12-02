@@ -1,24 +1,30 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Skeleton } from '@mui/material';
 import { useState } from 'react';
 import { PiUserCircleLight } from 'react-icons/pi';
-import admin from '../../../../../assets/svg/admin.svg';
-import finance from '../../../../../assets/svg/finance.svg';
-import home from '../../../../../assets/svg/home.svg';
-import integration from '../../../../../assets/svg/integration.svg';
 import notification from '../../../../../assets/svg/notification.svg';
-import report from '../../../../../assets/svg/report.svg';
 import settings from '../../../../../assets/svg/settings.svg';
-import userHeart from '../../../../../assets/svg/user-heart.svg';
 import '../../../../../input.css';
-import { GymManagementType } from '../../../gym/types/gym-management.types';
+import { useGymData } from '../../pages/Gym/hooks/dbHome';
+import { GymManagementType } from '../../pages/Gym/types/gym-management.types';
+import { RoutesIcons } from './RoutesIcons';
 
 interface ManagementGymHeaderProps {
     setActiveComponent: (component: GymManagementType) => void;
 }
 
+interface Route {
+    id: number;
+    type: string;
+    name: string;
+    button: GymManagementType;
+    route: string;
+}
+
 export function ManagementGymHeader({ setActiveComponent }: ManagementGymHeaderProps) {
     const [activeButton, setActiveButton] = useState<GymManagementType>('Home');
 
+    const { data: routes, loading } = useGymData<Route[]>('http://localhost:5000/RoutesManagement');
+    
     const handleButtonClick = (component: GymManagementType) => {
         setActiveButton(component);
         setActiveComponent(component);
@@ -27,90 +33,46 @@ export function ManagementGymHeader({ setActiveComponent }: ManagementGymHeaderP
     return (
         <Box className='flex flex-row w-full my-7 justify-between'>
             <Box className='flex flex-row'>
-                <Button
-                    onClick={() => handleButtonClick('Home')}
-                    startIcon={<img src={home} className='w-5' />}
-                    className='flex flex-row items-center font-poppins !text-[16px] !mr-1 !rounded-none'
-                    style={{ textTransform: 'none', color: '#08041b' }}
-                    sx={{
-                        borderBottom: activeButton === 'Home' ? '2px solid #ff0336' : '2px solid #f8fafb',
-                        fontWeight: 'light',
-                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                        '&:hover': {
-                            borderBottom: '2px solid #ff0336',
-                        },
-                    }}>Início
-                </Button>
-                <Button
-                    onClick={() => handleButtonClick('Admin')}
-                    startIcon={<img src={admin} className='w-5' />}
-                    className='flex flex-row items-center ml-5 font-poppins !text-[16px] !mx-1 !rounded-none'
-                    style={{ textTransform: 'none', color: '#08041b' }}
-                    sx={{
-                        borderBottom: activeButton === 'Admin' ? '2px solid #ff0336' : '2px solid #f8fafb',
-                        fontWeight: 'light',
-                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                        '&:hover': {
-                            borderBottom: '2px solid #ff0336',
-                        },
-                    }}>Administrativo
-                </Button>
-                <Button
-                    onClick={() => handleButtonClick('Finance')}
-                    startIcon={<img src={finance} className='w-5' />}
-                    className='flex flex-row items-center ml-5 font-poppins !text-[16px] !mx-1 !rounded-none'
-                    style={{ textTransform: 'none', color: '#08041b' }}
-                    sx={{
-                        borderBottom: activeButton === 'Finance' ? '2px solid #ff0336' : '2px solid #f8fafb',
-                        fontWeight: 'light',
-                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                        '&:hover': {
-                            borderBottom: '2px solid #ff0336',
-                        },
-                    }}>Financeiro
-                </Button>
-                <Button
-                    onClick={() => handleButtonClick('Integration')}
-                    startIcon={<img src={integration} className='w-5' />}
-                    className='flex flex-row items-center ml-5 font-poppins !text-[16px] !mx-1 !rounded-none'
-                    style={{ textTransform: 'none', color: '#08041b' }}
-                    sx={{
-                        borderBottom: activeButton === 'Integration' ? '2px solid #ff0336' : '2px solid #f8fafb',
-                        fontWeight: 'light',
-                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                        '&:hover': {
-                            borderBottom: '2px solid #ff0336',
-                        },
-                    }}>Integrações
-                </Button>
-                <Button
-                    onClick={() => handleButtonClick('Dashboard')}
-                    startIcon={<img src={report} className='w-5' />}
-                    className='flex flex-row items-center ml-5 font-poppins !text-base !mx-1 !rounded-none'
-                    style={{ textTransform: 'none', color: '#08041b' }}
-                    sx={{
-                        borderBottom: activeButton === 'Dashboard' ? '2px solid #ff0336' : '2px solid #f8fafb',
-                        fontWeight: 'light',
-                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                        '&:hover': {
-                            borderBottom: '2px solid #ff0336',
-                        },
-                    }}>Relatórios
-                </Button>
-                <Button
-                    onClick={() => handleButtonClick('Program')}
-                    startIcon={<img src={userHeart} className='w-5' />}
-                    className='flex flex-row items-center ml-5 font-poppins !text-base !mx-1 !rounded-none'
-                    style={{ textTransform: 'none', color: '#08041b' }}
-                    sx={{
-                        borderBottom: activeButton === 'Program' ? '2px solid #ff0336' : '2px solid #f8fafb',
-                        fontWeight: 'light',
-                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                        '&:hover': {
-                            borderBottom: '2px solid #ff0336',
-                        },
-                    }}>Programas
-                </Button>
+                {loading ? (
+                    routes?.map((_, index) => (
+                        <Box className="flex flex-row items-center mr-5 mb-1">
+                            <Skeleton
+                                key={index}
+                                variant="circular"
+                                animation="wave"
+                                width={20}
+                                height={20}
+                                className="mr-2"
+                            />
+                            <Skeleton
+                                key={index}
+                                variant="text"
+                                animation="wave"
+                                width={88}
+                                height={38}
+                            />
+                        </Box>
+                    ))
+                ) : (
+                    routes?.map((route) => (
+                        <Button
+                            key={route.id}
+                            onClick={() => handleButtonClick(route.button)}
+                            startIcon={<img src={RoutesIcons[route.button as keyof typeof RoutesIcons]} style={{ width: '1.25rem'}} alt={route.name}/>}
+                            className='flex flex-row items-center ml-5 font-poppins !text-[16px] !mx-1 !rounded-none'
+                            style={{ textTransform: 'none', color: '#08041b' }}
+                            sx={{
+                                borderBottom: activeButton === route.button ? '2px solid #ff0336' : '2px solid #f8fafb',
+                                fontWeight: 'light',
+                                transition: 'transform 0.3s, background-color 0.3s, color 0.3s',
+                                '&:hover': {
+                                    borderBottom: '2px solid #ff0336',
+                                },
+                            }}
+                        >{route.name}</Button>
+                    ))
+                )
+                }
             </Box>
             <Box className='flex flex-row items-center'>
                 <Button

@@ -1,8 +1,8 @@
 export const formatPhoneNumber = (value: string): string => {
-    // Remove qualquer caractere que n„o seja dÌgito e limita o comprimento a 11 para celular ou 10 para fixo
+    // Remove qualquer caractere que n√£o seja d√≠gito e limita o comprimento a 11 para celular ou 10 para fixo
     const digits = value.replace(/\D/g, '').slice(0, 11);
 
-    // Adiciona a formataÁ„o para telefone fixo e celular
+    // Adiciona a formata√ß√£o para telefone fixo e celular
     if (digits.length <= 10) {
         // Formato (00) 0000-0000
         return digits.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');

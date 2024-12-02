@@ -1,0 +1,193 @@
+{
+  "RoutesManagement": [
+    {
+      "id": 1,
+      "type": "Gym",
+      "name": "Início",
+      "button": "Home",
+      "route": ""
+    },
+    {
+      "id": 2,
+      "type": "Gym",
+      "name": "Administrativo",
+      "button": "Admin",
+      "route": ""
+    },
+    {
+      "id": 3,
+      "type": "Gym",
+      "name": "Financeiro",
+      "button": "Finance",
+      "route": ""
+    },
+    {
+      "id": 4,
+      "type": "Gym",
+      "name": "Integrações",
+      "button": "Integration",
+      "route": ""
+    },
+    {
+      "id": 5,
+      "type": "Gym",
+      "name": "Relatórios",
+      "button": "Dashboard",
+      "route": ""
+    },
+    {
+      "id": 6,
+      "type": "Gym",
+      "name": "Programas",
+      "button": "Programs",
+      "route": ""
+    }
+  ],
+  "UserRoutePermission": [
+    {
+      "id": 1,
+      "userId": 1
+    }
+  ],
+  "GroupRoutePermission": [
+    {
+      "id": 1,
+      "accessGroupId": 1,
+      "permissionType": ""
+    }
+  ],
+  "UserDetails": [
+    {
+      "id": 1,
+      "name": "Rudnick Stefane Nogueira Santana"
+    }
+  ],
+  "NotificationManagement": [
+    {
+      "id": 1,
+      "userId": 1,
+      "icon": "FiInfo",
+      "colorName": "0071ff",
+      "colorBackIcon": "e2edfc",
+      "name": "+ Alunos",
+      "describe": "Participe agora do nosso Programa de Incentivos."
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "icon": "FiAlertTriangle",
+      "colorName": "ff3a41",
+      "colorBackIcon": "ffe9ea",
+      "name": "TotalPass",
+      "describe": "Sua integração está pendente de configuração."
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "icon": "LuAlertCircle",
+      "colorName": "f24e1e",
+      "colorBackIcon": "feede8",
+      "name": "Fatura vencida",
+      "describe": "Sua fatura está vencida."
+    }
+  ],
+  "PendingGymPayments": [
+    {
+      "id": 1,
+      "userId": 1,
+      "paymentType": "Plan",
+      "name": "Plano iFlex Mensal",
+      "describe": "Assinatura",
+      "colorName": "58c866",
+      "colorBackIcon": "dff4e1"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "paymentType": "Students",
+      "name": "Edilânia Ferreira de Queiroz",
+      "describe": "Mensalidade Dez/24",
+      "colorName": "f2b326",
+      "colorBackIcon": "f9eeda"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "paymentType": "Supplier",
+      "name": "Profitness Equipamentos",
+      "describe": "Aguardando seu pagamento",
+      "colorName": "bf64a9",
+      "colorBackIcon": "faeff7"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "paymentType": "Supplier",
+      "name": "Konnen Equipamentos",
+      "describe": "Aguardando seu pagamento",
+      "colorName": "bf64a9",
+      "colorBackIcon": "faeff7"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "paymentType": "Students",
+      "name": "Rudnick Stefane Nogueira Santana",
+      "describe": "Mensalidade Nov/24",
+      "colorName": "f2b326",
+      "colorBackIcon": "f9eeda"
+    }
+  ],
+  "PendingStudentPayments": [
+    {
+      "id": 1,
+      "userId": 1,
+      "studentId": 1,
+      "PaymentType": "Gym"
+    }
+  ],
+  "Plans": [
+    {
+      "id": 1,
+      "userId": 1,
+      "type": [
+        {
+          "id": 1,
+          "Mensal": "Mensal (Pagamento por mês.)"
+        },
+        {
+          "id": 2,
+          "Anual": "Anual (Pagamento a cada 12 meses.)"
+        }
+      ]
+    }
+  ],
+  "Modalidades": [
+    {
+      "id": 1,
+      "userId": 1,
+      "type": [
+        {
+          "id": 1,
+          "Muscle": "Musculação"
+        },
+        {
+          "id": 2,
+          "Box": "Boxe"
+        },
+        {
+          "id": 3,
+          "Spinning": "Spinning"
+        },
+        {
+          "id": 4,
+          "Spinning2": "Natação"
+        },
+        {
+          "id": 5,
+          "Spinning3": "Luta"
+        }
+      ]
+    }
+  ]
+}

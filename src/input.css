@@ -23,6 +23,10 @@
     font-family: 'Poppins', sans-serif !important;
 }
 
+.font-roboto {
+    font-family: 'Roboto', sans-serif !important;
+}
+
 /* Afters */
 .after-arrow::after {
     content: '';
@@ -49,7 +53,7 @@
 
 .MuiInputLabel-root {
     font-family: 'Poppins', sans-serif !important;
-    color: #6b7280 !important;
+    /* color: #6b7280 !important; */
 }
 
 .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
@@ -78,6 +82,15 @@
 
 .MuiFormControlLabel-root:hover {
     border-color: #ff0336 !important;
+}
+
+.cropper-point, .cropper-line {
+    background-color: #ff0336 !important; /* Altere a cor desejada */
+}
+
+.cropper-view-box {
+    outline: 1px solid #ff0336 !important;
+    outline-color: #ff0336bf;
 }
 
 .Mui-checked,
@@ -127,4 +140,12 @@
 
 .MuiSwitch-track {
     background: #bdbdbd !important;
+}
+
+.MuiStepLabel-label.MuiStepLabel-alternativeLabel {
+    margin-top: 0 !important;
+    width: 200px;
+    text-align: left;
+    padding: 8px !important;
+    font-size: .9rem;
 }

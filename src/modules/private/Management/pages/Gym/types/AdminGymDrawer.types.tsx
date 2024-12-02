@@ -1,0 +1,18 @@
+export type AdminGymDrawerType = {
+    Application: 'Application',
+    StudentRegister: 'StudentRegister',
+    ClassCreate: 'ClassCreate',
+    VisitRegister: 'VisitRegister',
+    ContactCreate: 'ContactCreate',
+    ChatCreate: 'ChatCreate',
+    NotificationCreate: 'NotificationCreate',
+    EventCreate: 'EventCreate',
+    AdvertisementCreate: 'AdvertisementCreate',
+    PlanCreate: 'PlanCreate',
+    MarketCreate: 'MarketCreate',
+    SupplierRegister: 'SupplierRegister',
+    ContributorRegister: 'ContributorRegister',
+    UserRegister: 'UserRegister',
+    GroupCreate: 'GroupCreate',
+    HourCreate: 'HourCreate',
+};

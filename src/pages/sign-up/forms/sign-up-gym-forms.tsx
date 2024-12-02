@@ -9,7 +9,7 @@ import {
     validateCompanyPhone,
     validateEmail,
     validateFantasyName,
-    validateName,
+    ValidateName,
     validatePasswordField
 } from '../../../utils/validate-sign-up';
 import { SignUpGymErrors } from '../types/sign-up-gym-errors.types';
@@ -44,7 +44,7 @@ export function SignUpGymForm() {
 
     const handleContinue = () => {
         const newErrors = {
-            name: validateName(formData.name),
+            name: ValidateName(formData.name),
             email: validateEmail(formData.email),
             password: '',
             fantasyName: '',
