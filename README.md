@@ -1,5 +1,5 @@
 
-# iFlex fit
+# iFlex Fit
 
 ## Descrição
 iFlex fit é um projeto desenvolvido para gerenciar a matrícula de alunos e suas informações em uma plataforma de fitness. O sistema permite a definição de grupos de acesso, gerenciamento de usuários e configurações de periodicidade de pagamentos.
