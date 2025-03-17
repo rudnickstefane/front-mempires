@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import logo from '../../../assets/images/machine.png';
+import { Box } from '@mui/material';
 import '../../../input.css';
-import { ButtonHeader, Container, Img } from './styles.d';
+import logo from '../../../modules/assets/images/icon.png';
+import { ButtonHeader, Container } from './styles.d';
 
 export function HeaderLight() {
 
@@ -15,9 +15,14 @@ export function HeaderLight() {
                 `}
             </style>
             <Container className='page-clean relative z-10'>
-                <Link to="/"><div className='flex w-32 justify-between items-center'><Img src={logo} alt="Logo" /><h1 className='text-[40px] text-[#08041b]'>iFlex</h1></div></Link>
+                <a href='/'>
+                    <Box className='flex w-32 items-center'>
+                        <img src={logo} alt="Logo" className='w-[3.7rem]' />
+                        <Box className='ml-3 text-[2rem] color-primary font-intro mt-[.35rem]'>iFlex</Box>
+                    </Box>
+                </a>
                 <nav>
-                    <ButtonHeader href="/" className='after-arrowMenu'>Voltar</ButtonHeader>
+                    <ButtonHeader href="/" className='after-arrowMenu'>Início</ButtonHeader>
                 </nav>
             </Container>
         </>

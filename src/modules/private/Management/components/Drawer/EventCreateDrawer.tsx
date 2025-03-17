@@ -268,7 +268,7 @@ export const EventCreateDrawer = ({
                       <Box className='!mt-5 z-[2]'>
                         <InputLabel
                           id="modalities"
-                          className={`!absolute z-[1] bg-white ml-2 -mt-2 !px-2 scale-[0.75] transition-all duration-300 transform ${
+                          className={`!absolute z-[1] bg-white ml-2 -mt-3 !px-2 scale-[0.75] transition-all duration-300 transform ${
                             formData.modalities?.length || focusedFields.modalities
                               ? 'opacity-100 translate-y-0'
                               : 'opacity-0 translate-y-2'

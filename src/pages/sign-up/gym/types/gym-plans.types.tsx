@@ -1,5 +1,5 @@
 export type PlansType = {
-    label: string,
+    name: string,
     value: number,
     description: string,
 };

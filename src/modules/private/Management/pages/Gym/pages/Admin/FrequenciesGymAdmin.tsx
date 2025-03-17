@@ -1,74 +1,29 @@
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
+import { MdKeyboardArrowRight } from 'react-icons/md';
 
-const dadosSimulados = [
-    {
-        turma: 'Ballet',
-        modalidade: 'Geral',
-        dias: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-        professores: 'Bruna',
-        local: 'Sala A',
-    },
-    {
-        turma: 'Natação',
-        modalidade: 'Geral',
-        dias: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-        professores: 'Gabriel',
-        local: 'Sala C',
-    }
-];
-
-export default function FrequenciesGymAdmin() {
+export default function FrequenciesGymAdmin () {
     return (
         <Box>
-            <Box className='border border-neutral-300 rounded-lg'>
-                <TableContainer>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>
-                                    <Box>
-                                        <Typography>
-                                            Aluno
-                                        </Typography>
-                                    </Box>
-                                </TableCell>
-
-                                <TableCell>
-                                    <Box>
-                                        <Typography>
-                                            Modalidade
-                                        </Typography>
-                                    </Box>
-                                </TableCell>
-
-                                <TableCell></TableCell>
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-                            {dadosSimulados.map((dado, index) => (
-                                <TableRow key={index} hover>
-                                    <TableCell>
-                                        <Typography noWrap>{dado.turma}</Typography>
-                                    </TableCell>
-
-                                    <TableCell>
-                                        <Typography noWrap>{dado.modalidade}</Typography>
-                                    </TableCell>
-
-                                    <TableCell>
-                                        <Box textAlign="center">
-                                            <IconButton>
-                                                <MoreHorizIcon />
-                                            </IconButton>
-                                        </Box>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+            <Box className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem]">
+                <Box className="flex flex-row w-full">
+                    <Box className="bg-white w-full rounded-3xl shadow-md p-5 border border-[#EAECF0]">
+                        <Box className='flex flex-row justify-between items-center'>
+                            <Box>
+                                <Typography className='flex flex-row items-center !text-[2.25rem] text-[#212121]'>
+                                    Frequências
+                                </Typography>
+                                <Typography className='flex flex-row items-center !text-[.85rem] !mt-4'>
+                                    Administrativo<MdKeyboardArrowRight />Frequências
+                                </Typography>
+                            </Box>
+                        </Box>
+                        <Divider className='!my-5 w-full bg-[#e2e2e4]' />
+                        <Box className="flex flex-col items-center mb-5">
+                            <Box className="text-[#E94560] text-[2.5rem] mb-3">Oops!</Box>
+                            <Typography>Essa funcionalidade estará disponível em breve.</Typography>
+                        </Box>
+                    </Box>
+                </Box>
             </Box>
         </Box>
     );

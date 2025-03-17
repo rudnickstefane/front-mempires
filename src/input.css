@@ -2,14 +2,132 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Colors */
+/* Definir as variáveis para o tema claro */
+:root {
+    --bg-disabled: #d9dde2;
+    --color-disabled: #00000042;
+    --input: #ff0;
+    --label: #0009;
+    --bg-primary-color: #FFFFFF;
+    --bg-secondary-color: #ff0336;
+    --text-primary: #020204;
+    --color-gray: #0000001f;
+    --text-gray: #333333;
+    --primary-color: #ff0336;
+    --secondary-color: #ff0336;
+}
+
+/* Definir as variáveis para o tema escuro */
+[data-theme="dark"] {
+    --bg-disabled: #1d202b;
+    --color-disabled: #afb4bd;
+    --input: #3d4048;
+    --label: #b1b7be;
+    --bg-primary-color: #020204;
+    --bg-secondary-color: #ff0336;
+    --text-primary: #FFFFFF;
+    --color-gray: #3d4048;
+    --text-gray: #9E9FA3;
+    --primary-color: #ff0336;
+    --secondary-color: #ff0336;
+}
+
 .bg-primary {
-    background-color: #ff0336;
+    background-color: var(--bg-primary-color) !important;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.bg-secondary {
+    background-color: #ff0336 !important;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.text-primary {
+    color: var(--text-primary) !important;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.border-gray {
+    border-color: var(--color-gray) !important;
+    transition: border-color 0.4s ease, background-color 0.4s ease, color 0.4s ease;
+}
+
+.text-gray {
+    color: var(--text-gray) !important;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .color-primary {
-    color: #ff0336;
+    color: var(--primary-color) !important;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
+/* 
+.MuiButton-root.Mui-disabled {
+    background-color: var(--bg-disabled) !important;
+    color: var(--color-disabled) !important;
+    transition: background-color 0.4s ease, color 0.4s ease;
+} */
+
+/* .MuiOutlinedInput-notchedOutline {
+    border-color: var(--input);
+    transition: border-color 0.4s ease, background-color 0.4s ease, color 0.4s ease;
+}
+
+.MuiInputLabel-root.Mui-error {
+    border-color: #d32f2f;
+    transition: border-color 0.4s ease, background-color 0.4s ease, color 0.4s ease;
+} */
+
+.MuiInputLabel-root {
+    font-family: 'Poppins', sans-serif !important;
+    /* color: var(--label) !important; */
+}
+
+.MuiFormLabel-asterisk {
+    color: #ff0336 !important;
+}
+
+/* Fontes */
+@font-face {
+    font-family: "Intro";
+    src: url("/src/modules/assets/fonts/Intro.otf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Intro";
+    src: url("/src/modules/assets/fonts/Intro-Light.otf") format("truetype");
+    font-style: light;
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "TT Norms";
+    src: url("/src/modules/assets/fonts/TTNorms-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.MuiPaginationItem-root.Mui-selected {
+    background-color: #ff0336 !important;
+    color: white !important;
+    border: 0px !important;
+}
+
+.MuiPaginationItem-circular:hover {
+    background-color: #ff0336 !important;
+    border: 1px solid #ff0336 !important;
+    color: white !important;
+}
+
+.MuiPaginationItem-root {
+    border-radius: 10px !important;
+    border: 1px solid #c4c4c4 !important;
+    margin: 0 .2rem !important;
+}
+
+/* Colors */
 
 .color-secondary {
     color: #08041b;
@@ -21,6 +139,14 @@
 
 .font-poppins {
     font-family: 'Poppins', sans-serif !important;
+}
+
+.font-intro {
+    font-family: 'Intro', sans-serif !important;
+}
+
+.font-tt-norms {
+    font-family: 'TT Norms' !important;
 }
 
 .font-roboto {
@@ -49,11 +175,6 @@
 
 .MuiOutlinedInput-root {
     font-family: 'Poppins', sans-serif !important;
-}
-
-.MuiInputLabel-root {
-    font-family: 'Poppins', sans-serif !important;
-    /* color: #6b7280 !important; */
 }
 
 .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,

@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react';
 import { MultiValue, SingleValue } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { OptionSelect } from '../../../common/ui/types';
-import { FormatPhone, FormatText, FormatTime, ValidateFormContactCreate } from '../../../common/utils';
+import { FormatName, FormatPhone, FormatTime, ValidateFormContactCreate } from '../../../common/utils';
 import { ContactCreateProps } from '../components/Drawer/types';
 
 export const useChatCreateForm = ({
@@ -71,7 +71,7 @@ export const useChatCreateForm = ({
         const { name, value } = e.target;
         let updatedValue = value;
 
-        updatedValue = FormatText(value);
+        updatedValue = FormatName(value);
 
         if (name === 'hours' && value) {
             updatedValue = FormatTime(value);
@@ -120,9 +120,7 @@ export const useChatCreateForm = ({
 
     const validateForm = () => {
         let newErrors: ContactCreateProps['errors'] = {};
-        console.log(formData);
         newErrors = ValidateFormContactCreate(formData, activeStep);
-        console.log(newErrors);
         setErrors(newErrors);
         
         return Object.keys(newErrors).length === 0;

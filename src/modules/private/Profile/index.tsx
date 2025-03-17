@@ -1,260 +1,532 @@
-import {
-    Box,
-    Button,
-    Divider,
-    Typography
-} from "@mui/material";
-
-import { useState } from "react";
-import { CgMenuRightAlt } from "react-icons/cg";
-import { LiaUserCogSolid } from "react-icons/lia";
-import { MdKeyboardArrowRight, MdOutlineAssignment } from "react-icons/md";
+import { Box, Button, Divider, Drawer, Skeleton, Tooltip, Typography } from "@mui/material";
+import { LuShieldAlert } from "react-icons/lu";
+import { MdDeleteOutline } from "react-icons/md";
 import { PiUserSquareLight } from "react-icons/pi";
-import { GymIntegrationManagementType } from "../../gym/types/gym-integration.types";
-import { ResourceBoxProps } from "../../gym/types/gym-resource-box.types";
-import GymIntegrationAccessManagement from "../Management/pages/Gym/pages/Integration/access-gym-integration";
-import GymIntegrationCameraManagement from "../Management/pages/Gym/pages/Integration/camera-gym-integration";
-import GymIntegrationGympassManagement from "../Management/pages/Gym/pages/Integration/gympass-gym-integration";
-import GymIntegrationKeyboardManagement from "../Management/pages/Gym/pages/Integration/keyboard-gym-integration";
-import GymIntegrationMiniPrinterManagement from "../Management/pages/Gym/pages/Integration/mini-printer-gym-integration";
-import GymIntegrationReaderManagement from "../Management/pages/Gym/pages/Integration/reader-gym-integration";
-import GymIntegrationTotalPassManagement from "../Management/pages/Gym/pages/Integration/totalpass-gym-integration";
-import GymIntegrationTurnstileManagement from "../Management/pages/Gym/pages/Integration/turnstile-gym-integration";
-import GymAccountManagement from "./home-gym-integration";
+import { TbEdit, TbPhotoEdit } from "react-icons/tb";
+import styled from "styled-components";
+import { FindProfileDetailsResponse } from "../../common/types";
+import { FormatIdentity, FormatZipCode } from "../../common/utils";
+import { ImageCropModal } from "../Management/components/Modals";
+import { useProfileGymManagement } from "../Management/pages/Gym/hooks";
 
-const resources: ResourceBoxProps[] = [
-    {
-        icon: LiaUserCogSolid,
-        type: 'teste',
-        name: 'Minha Conta',
-        subName: 'Tipos de Acesso',
-        description: 'Minha <span class="color-primary">Conta</span>',
-    },
-    {
-        icon: MdOutlineAssignment,
-        type: 'CardOperator',
-        name: 'Dados da Assinatura',
-        description: 'Gerenciamento de <span class="color-primary">Operadoras de Cartão</span>',
-    },
-];
+type GymProfileManagementProps = {
+    data: FindProfileDetailsResponse | undefined;
+    refresh: () => Promise<void>;
+    isProfileLoading: boolean;
+}
 
-const subResources: ResourceBoxProps[] = [
-    {
-        icon: MdKeyboardArrowRight,
-        type: 'Turnstile',
-        name: 'Catracas',
-        description: 'Configurações de <span class="color-primary">Catracas</span>',
-    },
-    {
-        icon: MdKeyboardArrowRight,
-        type: 'Reader',
-        name: 'Leitores',
-        description: 'Configurações de <span class="color-primary">Leitores</span>',
-    },
-    {
-        icon: MdKeyboardArrowRight,
-        type: 'Camera',
-        name: 'Câmeras',
-        description: 'Configurações de <span class="color-primary">Câmeras</span>',
-    },
-    {
-        icon: MdKeyboardArrowRight,
-        type: 'Keyboard',
-        name: 'Teclados',
-        description: 'Configurações de <span class="color-primary">Teclados</span>',
-    },
-    {
-        icon: MdKeyboardArrowRight,
-        type: 'Gympass',
-        name: 'Gympass',
-        description: 'Integração com <span class="color-primary">Gympass</span>',
-    },
-    {
-        icon: MdKeyboardArrowRight,
-        type: 'TotalPass',
-        name: 'TotalPass',
-        description: 'Integração com <span class="color-primary">TotalPass</span>',
-    },
-];
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
-const ResourceBox = ({ icon: Icon, name, onClick, isSelected }: ResourceBoxProps & { onClick: () => void, isSelected: boolean }) => (
-    <Button
-        startIcon={<Icon className='color-primary' />}
-        className='font-poppins !text-[1rem] !rounded-none !px-5'
-        style={{
-            textTransform: 'none',
-            color: isSelected ? '#ff0336' : '#08041b',
-            justifyContent: 'flex-start',
-            height: '50px',
-            background: isSelected ? '#f3f3f3' : 'transparent',
-            borderRight: isSelected ? '2px solid #ff0336' : 'none'
-        }}
-        sx={{
-            fontWeight: 'light',
-            transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-            '&:hover': {
-                background: '#f3f3f3 !important'
-            },
-        }}
-        onClick={onClick}
-    >
-        {name}
-    </Button>
-);
+export default function GymProfileManagement({ data, refresh, isProfileLoading }: GymProfileManagementProps) {
 
-const SubResourceBox = ({ icon: Icon, name, onClick, isSelected }: ResourceBoxProps & { onClick: () => void, isSelected: boolean }) => (
-    <Button
-        endIcon={<Icon />}
-        className='font-poppins !text-[1rem] !px-5 !rounded-xl !mt-4'
-        style={{
-            textTransform: 'none',
-            color: '#08041b',
-            justifyContent: 'space-between',
-            height: '50px',
-            background: isSelected ? '#f6fbef' : 'transparent',
-        }}
-        sx={{
-            fontWeight: 'light',
-            transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-            '&:hover': {
-                background: '#f6fbef !important'
-            },
-        }}
-        onClick={onClick}
-    >
-        {name}
-    </Button>
-);
-
-const renderComponents: { [key in GymIntegrationManagementType]: React.ComponentType } = {
-    Home: GymAccountManagement,
-    Access: GymIntegrationAccessManagement,
-    CardOperator: GymAccountManagement,
-    MiniPrinter: GymIntegrationMiniPrinterManagement,
-    Turnstile: GymIntegrationTurnstileManagement,
-    Reader: GymIntegrationReaderManagement,
-    Camera: GymIntegrationCameraManagement,
-    Keyboard: GymIntegrationKeyboardManagement,
-    Gympass: GymIntegrationGympassManagement,
-    TotalPass: GymIntegrationTotalPassManagement
-};
-
-export default function GymProfileManagement() {
-    const [selectedResource, setSelectedResource] = useState<ResourceBoxProps | null>(null); // Guarda o recurso principal selecionado
-    const [selectedSubResource, setSelectedSubResource] = useState<ResourceBoxProps | null>(null); // Guarda o sub-recurso selecionado
-    const [activeComponent, setActiveComponent] = useState<GymIntegrationManagementType>('Home'); // Controle para o componente ativo
-
-
-    const handleResourceClick = (resource: ResourceBoxProps) => {
-        setSelectedResource(resource);
-        setSelectedSubResource(null); // Reseta o sub-recurso quando o recurso principal muda
-        if (resource.type in renderComponents) {
-            setActiveComponent(resource.type as GymIntegrationManagementType);
-        }
-    };
-
-    const handleSubResourceClick = (subResource: ResourceBoxProps) => {
-        setSelectedSubResource(subResource);
-        if (subResource.type in renderComponents) {
-            setActiveComponent(subResource.type as GymIntegrationManagementType);
-        }
-    };
-
-    const ActiveComponent = renderComponents[activeComponent];
+    const {
+        isLoading,
+        renderDrawerContent,
+        isDrawerOpen,
+        openDrawer,
+        closeDrawer,
+        handleImageUpload,
+        handleCrop,
+        image,
+        croppedImage,
+        isDialogOpen,
+        setIsDialogOpen,
+        cropperRef,
+        profileCode,
+        handleDeleteImage,
+    } = useProfileGymManagement({ data, refresh });
 
     return (
-        <Box>
-            <Box className='flex flex-row'>
-                <PiUserSquareLight className='text-[6rem] mr-3' />
-                <Box>
-                    <Typography className='!text-[2rem] !mt-2.5'>Alexandre Lindote Martins</Typography>
-                    <Typography className='flex flex-row items-center !text-[.9rem]'>@alexandre | alexandre@gmail.com</Typography>
-                    <Typography className='!mt-4'>Plano Mensal</Typography>
-                    <Typography className='!text-[.9rem]'>Assinante desde 14 de Setembro de 2024</Typography>
-                </Box>
-            </Box>
-            <Box className='flex flex-row bg-white rounded-3xl shadow-md w-full mt-5'>
-                {/* Menu Principal */}
-                <Box className='flex flex-col min-h-full py-5 bg-[#fbfbfb] rounded-l-3xl border-r-[1px] border-[##efefef] min-w-[16.1rem]'>
-                    <Button
-                        endIcon={<CgMenuRightAlt />}
-                        className='font-poppins !text-[1rem] !rounded-none !px-5'
-                        style={{ textTransform: 'none', color: '#08041b', justifyContent: 'space-between', height: '50px' }}
-                        sx={{
-                            fontWeight: 'light',
-                            transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                            '&:hover': {
-                                background: '#f3f3f3'
-                            },
-                        }}>Navegue abaixo
-                    </Button>
-                    {resources.map((resource, index) => (
-                        <ResourceBox
-                            key={index}
-                            icon={resource.icon}
-                            name={resource.name}
-                            type={''}
-                            description={resource.description}
-                            isSelected={selectedResource?.name === resource.name}
-                            onClick={() => handleResourceClick(resource)}
-                        />
-                    ))}
-                </Box>
+        <>
+            <Drawer
+                anchor="right"
+                open={isDrawerOpen}
+                onClose={closeDrawer}
+                disableEnforceFocus
+                PaperProps={{
+                    className: "w-[60%] p-8"
+                }}
+            >
+                {renderDrawerContent()}
+            </Drawer>
 
-                {/* Submenu */}
-                {selectedResource?.type === 'Access' && (
-                    <Box className='flex flex-col min-w-[12rem] h-full m-5 mr-0'>
-                        <Typography className='flex flex-row items-center !text-[.75rem] !m-3 !mb-0 uppercase'>{selectedResource && <>{selectedResource.subName}</>}</Typography>
-                        {subResources.map((subResource, index) => (
-                            <SubResourceBox
-                                key={index}
-                                icon={subResource.icon}
-                                name={subResource.name}
-                                type={''}
-                                description={subResource.description}
-                                isSelected={selectedSubResource?.name === subResource.name}
-                                onClick={() => handleSubResourceClick(subResource)}
-                            />
-                        ))}
+            {/* Modal de recorte */}
+            <ImageCropModal
+                isOpen={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+                onCrop={handleCrop}
+                image={image}
+                cropperRef={cropperRef}
+                isLoading={isLoading}
+            />
+
+            <Box className='overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem]'>
+                <Box className='flex flex-row items-center'>
+                    <Box
+                        component="label"
+                        className="relative md:w-[8.373rem] md:h-[7.407rem] w-[8.373rem] h-[7.4067rem] !mr-3 !rounded-3xl !mt-1 group !color-secondary shadow-md">
+                        {croppedImage ? (
+                                <>
+                                    <img
+                                        src={croppedImage}
+                                        alt="Cropped"
+                                        className="w-full h-full rounded-3xl absolute"
+                                        style={{
+                                        maxWidth: '300px',
+                                        }}
+                                    />
+                                    <Box className='flex flex-row justify-between w-full h-full'>
+                                        <Tooltip
+                                            placement="bottom"
+                                            title={'Alterar Foto'}
+                                            arrow
+                                        >
+                                            <Button
+                                                component="label"
+                                                className='!h-full !min-w-[56%]'
+                                                sx={{
+                                                    color: '#79808a',
+                                                    fontWeight: 'normal',
+                                                    padding: 0,
+                                                    transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                                    '&:hover': {
+                                                        color: '#ff0336',
+                                                    },
+                                                }}
+                                            >
+                                                <VisuallyHiddenInput
+                                                    type="file"
+                                                    onChange={handleImageUpload}
+                                                    multiple
+                                                    accept="image/*"
+                                                />
+                                                <Box className='flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-l-3xl w-full h-full'>
+                                                    <Box className="p-2 bg-white bg-opacity-60 rounded-full">
+                                                        <TbPhotoEdit className="text-[2rem] color-primary" />
+                                                    </Box>
+                                                </Box>
+                                            </Button>
+                                        </Tooltip>
+                                        <Tooltip
+                                            placement="right"
+                                            title={'Excluir Foto'}
+                                            arrow
+                                        >
+                                            <Button
+                                                className='!h-full !min-w-[5%]'
+                                                sx={{
+                                                    color: '#79808a',
+                                                    fontWeight: 'normal',
+                                                    padding: 0,
+                                                    transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                                    '&:hover': {
+                                                        color: '#ff0336',
+                                                    },
+                                                }}
+                                                onClick={() => handleDeleteImage()}
+                                            >
+                                                <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-r-3xl w-full h-full px-1.5">
+                                                    <Box className="p-2 bg-white bg-opacity-60 rounded-full">
+                                                        <MdDeleteOutline className="text-[1.5rem] color-primary" />
+                                                    </Box>
+                                                </Box>
+                                            </Button>
+                                        </Tooltip>
+                                    </Box> 
+                                </>
+                            ) : data?.findProfileDetails.photo ? (
+                                <>
+                                    <img
+                                        src={data?.findProfileDetails.photo}
+                                        alt="Foto do usuário"
+                                        className="w-full h-full rounded-3xl absolute"
+                                    />
+                                    <Box className='flex flex-row justify-between w-full h-full'>
+                                        <Tooltip
+                                            placement="bottom"
+                                            title={'Alterar Foto'}
+                                            arrow
+                                        >
+                                            <Button
+                                                component="label"
+                                                className='!h-full !min-w-[56%]'
+                                                sx={{
+                                                    color: '#79808a',
+                                                    fontWeight: 'normal',
+                                                    padding: 0,
+                                                    transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                                    '&:hover': {
+                                                        color: '#ff0336',
+                                                    },
+                                                }}
+                                            >
+                                                <VisuallyHiddenInput
+                                                    type="file"
+                                                    onChange={handleImageUpload}
+                                                    multiple
+                                                    accept="image/*"
+                                                />
+                                                <Box className='flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-l-3xl w-full h-full'>
+                                                    <Box className="p-2 bg-white bg-opacity-60 rounded-full">
+                                                        <TbPhotoEdit className="text-[2rem] color-primary" />
+                                                    </Box>
+                                                </Box>
+                                            </Button>
+                                        </Tooltip>
+                                        <Tooltip
+                                            placement="right"
+                                            title={'Excluir Foto'}
+                                            arrow
+                                        >
+                                            <Button
+                                                className='!h-full !min-w-[5%]'
+                                                sx={{
+                                                    color: '#79808a',
+                                                    fontWeight: 'normal',
+                                                    padding: 0,
+                                                    transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                                    '&:hover': {
+                                                        color: '#ff0336',
+                                                    },
+                                                }}
+                                                onClick={() => handleDeleteImage()}
+                                            >
+                                                <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-r-3xl w-full h-full px-1.5">
+                                                    <Box className="p-2 bg-white bg-opacity-60 rounded-full">
+                                                        <MdDeleteOutline className="text-[1.5rem] color-primary" />
+                                                    </Box>
+                                                </Box>
+                                            </Button>
+                                        </Tooltip>
+                                    </Box>  
+                                </>
+                            ) : (
+                                <>
+                                    <Button
+                                            component="label"
+                                            className='!m-0 !p-0 w-full h-full'
+                                    >
+                                        <PiUserSquareLight className="text-[7rem] text-[#646464]" />
+                                        <VisuallyHiddenInput
+                                            type="file"
+                                            onChange={handleImageUpload}
+                                            multiple
+                                            accept="image/*"
+                                        />
+                                        <Box className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-3xl'>
+                                            <Box className="p-2 bg-white bg-opacity-60 rounded-full">
+                                                <TbPhotoEdit className="text-[2rem] color-primary" />
+                                            </Box>
+                                        </Box>
+                                    </Button>
+                                </>
+                            )
+                        }
                     </Box>
-                )}
+                    <Box className='w-full md:mt-0 mt-5'>
+                        {isProfileLoading ? (
+                                <>
+                                    <Skeleton variant="text" className='w-[40%] !h-[4rem]' animation="wave" />
+                                    <Box className='flex flex-row items-center -mt-3'>
+                                        <Skeleton variant="text" className='!w-[20%] mr-1.5' animation="wave" />
+                                    </Box>
+                                    <Skeleton variant="text" className='!w-[15%] !h-[1.7rem] mr-1.5 !mt-1' animation="wave" />
+                                    <Skeleton variant="text" className='!w-[35%] !h-[1.6rem] !-mt-[.1rem]' animation="wave" />
+                                </>
+                            ) : (
+                                <>
+                                    <Typography className='md:!text-[2rem] !text-[1.5rem] whitespace-nowrap overflow-hidden text-ellipsis max-w-[55vw]'>
+                                        {data?.findProfileDetails.name}
+                                    </Typography>
+                                    <Typography className='flex flex-row items-center !text-[.9rem]'>
+                                        {data?.findProfileDetails.username 
+                                        ? `@${data.findProfileDetails.username} | ${data.findProfileDetails.contact[0].email}` 
+                                        : data?.findProfileDetails.contact[0].email}
+                                    </Typography>
+                                    <Typography className='!mt-4'>
+                                        {data?.findProfileDetails.companyStatus === 'FREE_PERIOD' 
+                                        ? 'Você está no período gratuito de 15 dias' 
+                                        : data?.findProfileDetails?.clientsPlan?.name}
+                                    </Typography>
+                                    <Typography className='!text-[.9rem]'>
+                                        {data?.findProfileDetails.companyStatus === 'FREE_PERIOD' 
+                                        ? '' 
+                                        : `Assinante desde ${data?.findProfileDetails?.clientsPlan?.createdAt}`}
+                                    </Typography>
+                                </>
+                            )
+                        }
+                    </Box>
+                </Box>
 
-                {/* Breadcrumb */}
-                <Box className='flex flex-col m-5 w-full'>
-                    <Box className='w-full'>
-                        {selectedSubResource ? (
-                            // Renderiza o conteúdo com HTML usando dangerouslySetInnerHTML
-                            <>
+                <Box className='flex flex-row w-full mt-5'>
+                    <Box className='bg-white w-full rounded-3xl shadow-md p-5 border border-[#EAECF0]'>
+                        <Box className='flex flex-row justify-between items-center'>
+                            <Box>
                                 <Typography className='flex flex-row items-center !text-[2.25rem] text-[#212121]'>
-                                    <Box dangerouslySetInnerHTML={{ __html: selectedSubResource.description }} />
+                                    Meus Dados
                                 </Typography>
                                 <Typography className='flex flex-row items-center !text-[.85rem] !mt-4'>
-                                    Perfil e Configurações
-                                    {selectedResource && <><MdKeyboardArrowRight /> {selectedResource.name}</>}
-                                    {selectedSubResource && <><MdKeyboardArrowRight /> {selectedSubResource.name}</>}
+                                    Informações Cadastrais
                                 </Typography>
-                                <Divider className='!my-5 w-full bg-[#e2e2e4]' />
-                            </>
-                        ) : (
-                            // Caso contrário, exibe o nome do recurso principal
-                            selectedResource && <>
-                                <Typography className='flex flex-row items-center !text-[2.25rem] text-[#212121]'>
-                                    <Box dangerouslySetInnerHTML={{ __html: selectedResource.description }} />
-                                </Typography>
+                            </Box>
+                            <Box>
                                 <Typography className='flex flex-row items-center !text-[.85rem] !mt-4'>
-                                    Perfil e Configurações
-                                    {selectedResource && <><MdKeyboardArrowRight /> {selectedResource.name}</>}
+                                    Código: PFL-{profileCode}
                                 </Typography>
-                                <Divider className='!my-5 w-full bg-[#e2e2e4]' />
-                            </>
+                            </Box>
+                        </Box>
+                        <Divider className='!my-5 w-full bg-[#e2e2e4]' />
+                        <Box className='mt-5 border border-neutral-300 rounded-lg p-5'>
+                            <Box className='!text-neutral20 !font-roboto !text-base !font-semibold !flex !items-center !gap-4'>Detalhes do Plano</Box>
+                            {data?.findProfileDetails?.clientsPlan ? (
+                                isProfileLoading ? (
+                                    <>
+                                    {Array.from({ length: 2 }).map((_, index) => (
+                                        <Box key={index} className="flex flex-col">
+                                        <Skeleton variant="text" animation="wave" className="w-[30%] !h-[2.1rem] !mt-2" />
+                                        </Box>
+                                    ))}
+                                    </>
+                                ) : (
+                                    <>
+                                    <Box className='grid grid-cols-[10rem,1fr]'>
+                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Tipo</Typography>
+                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                        {data.findProfileDetails.clientsPlan.name || ''}
+                                        </Typography>
+                                    </Box>
+                                    <Box className='grid grid-cols-[10rem,1fr]'>
+                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Assinante desde</Typography>
+                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                        {data.findProfileDetails.clientsPlan.createdAt || ''}
+                                        </Typography>
+                                    </Box>
+                                    <Box className='grid grid-cols-[10rem,1fr]'>
+                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Valor</Typography>
+                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                        {data.findProfileDetails.clientsPlan.amount || ''}
+                                        </Typography>
+                                    </Box>
+                                    <Box className='grid grid-cols-[10rem,1fr]'>
+                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Próximo vencimento</Typography>
+                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                        {data.findProfileDetails.clientsPlan.nextDueDate || ''}
+                                        </Typography>
+                                    </Box>
+                                    </>
+                                )
+                                ) : (
+                                <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">Você está no período gratuito de 15 dias.</Typography>
+                                )
+                            }
+                        </Box>
 
-                        )}
-                    </Box>
-                    <Box>
-                        <ActiveComponent />
+                        <Box className='mt-5 border border-neutral-300 rounded-lg p-5'>
+                            <Box className='!text-neutral20 !font-roboto !text-base !font-semibold !flex !items-center !gap-4'>Dados Pessoais
+                                <Button
+                                    className='!min-w-5 !mr-5'
+                                    sx={{
+                                        color: '#4b5563',
+                                        fontWeight: 'normal',
+                                        padding: 0,
+                                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                        '&:hover': {
+                                            background: 'white',
+                                            color: '#ff0336',
+                                        },
+                                    }}
+                                    onClick={() => openDrawer('EditInfos', 0)}
+                                >
+                                    <TbEdit size={24} />
+                                </Button>
+                            </Box>
+                            {isProfileLoading ? (
+                                    <>
+                                        {Array.from({ length: Math.min(5) }).map((_, index) => (
+                                            <Box key={index} className="flex flex-col">
+                                                <Skeleton variant="text" animation="wave" className="w-[30%] !h-[2.1rem] !mt-2" />
+                                            </Box>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Nome</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.findProfileDetails.name || ''}</Typography>
+                                        </Box>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Data de Nascimento</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.findProfileDetails.birthDate || ''}</Typography>
+                                        </Box>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>CPF</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                                {data?.findProfileDetails.identity ? FormatIdentity(data?.findProfileDetails.identity) : ''}
+                                                </Typography>
+                                        </Box>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Nome de Usuário</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>@{data?.findProfileDetails.username || ''}</Typography>
+                                        </Box>
+                                    </>
+                                )
+                            }
+                        </Box>
+
+                        <Box className='mt-5 border border-neutral-300 rounded-lg p-5'>
+                            <Box className='!text-neutral20 !font-roboto !text-base !font-semibold !flex !items-center !gap-4'>Endereço
+                                <Button
+                                    className='!min-w-5 !mr-5'
+                                    sx={{
+                                        color: '#4b5563',
+                                        fontWeight: 'normal',
+                                        padding: 0,
+                                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                        '&:hover': {
+                                            background: 'white',
+                                            color: '#ff0336',
+                                        },
+                                    }}
+                                    onClick={() => openDrawer('EditInfos', 1)}
+                                >
+                                    <TbEdit size={24} />
+                                </Button>
+                            </Box>
+                            {isProfileLoading ? (
+                                    <>
+                                        {Array.from({ length: Math.min(7) }).map((_, index) => (
+                                            <Box key={index} className="flex flex-col">
+                                                <Skeleton variant="text" animation="wave" className="w-[30%] !h-[2.1rem] !mt-2" />
+                                            </Box>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>CEP</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                                {data?.findProfileDetails.zipCode ? FormatZipCode(data.findProfileDetails.zipCode) : ''}
+                                            </Typography>
+                                        </Box>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Logradouro</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.findProfileDetails.address || ''}</Typography>
+                                        </Box>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Número</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.findProfileDetails.number || ''}</Typography>
+                                        </Box>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Complemento</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.findProfileDetails.complement || ''}</Typography>
+                                        </Box>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Bairro</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.findProfileDetails.district || ''}</Typography>
+                                        </Box>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Cidade</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.findProfileDetails.city || ''}</Typography>
+                                        </Box>
+                                        <Box className='grid grid-cols-[10rem,1fr]'>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Estado</Typography>
+                                            <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.findProfileDetails.state || ''}</Typography>
+                                        </Box>
+                                    </>
+                                )
+                            }
+                        </Box>
+
+                        <Box className='mt-5 border border-neutral-300 rounded-lg p-5 pb-0'>
+                            <Box className='!text-neutral20 !font-roboto text-base font-semibold flex md:items-center !gap-4 mb-3 md:flex-row flex-col justify-between'>
+                                <Box>
+                                    Contato
+                                    <Button
+                                        className='!min-w-5 !ml-4'
+                                        sx={{
+                                            color: '#4b5563',
+                                            fontWeight: 'normal',
+                                            padding: 0,
+                                            transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                            '&:hover': {
+                                                background: 'white',
+                                                color: '#ff0336',
+                                            },
+                                        }}
+                                        onClick={() => openDrawer('EditInfos', 2)}
+                                    >
+                                        <TbEdit size={24} />
+                                    </Button>
+                                </Box>
+                                {data && data.findProfileDetails?.contact?.filter((contact) => contact.emailStatus === 'PENDING').length > 0 && (
+                                    <Box className='bg-[#fff9ee] border border-[#faa200] rounded-lg font-semibold flex flex-row items-center justify-center text-[#faa200] py-1 px-2 uppercase text-[.8rem] font-poppins'>
+                                        <LuShieldAlert className='text-[#faa200] text-[1.3rem] mr-2' /> 
+                                        {data.findProfileDetails?.contact?.filter((contact) => contact.emailStatus === 'PENDING').length > 1 
+                                        ? 'Existem e-mails não confirmados' 
+                                        : 'Existe um e-mail não confirmado'}
+                                    </Box>
+                                )}
+                            </Box>
+                            {isProfileLoading ? (
+                                    <Skeleton variant="text" animation="wave" className="w-[30%] !h-[10rem] !-my-[2.1rem]" />
+                                ) : (
+                                    <Box className='flex flex-wrap justify-between'>
+                                        {data?.findProfileDetails.contact
+                                            .sort((a) => (a.type === 'MAIN' ? -1 : 1))
+                                            .map((contact) => (
+                                            <Box
+                                                key={contact.contactCode}
+                                                className="bg-[#F3F3F4] md:w-[49%] w-full rounded-lg p-5 pt-[14px] grid grid-cols-[5.5rem,1fr] mb-5"
+                                            >
+                                                <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">Descrição</Typography>
+                                                <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold break-words overflow-hidden">
+                                                    {contact.description || ''}
+                                                </Typography>
+                                                <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">Telefone</Typography>
+                                                <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold">
+                                                    {contact.phone || ''}
+                                                </Typography>
+                                                <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">E-mail</Typography>
+                                                {contact.emailStatus === 'PENDING' ? (
+                                                    <Tooltip
+                                                        placement="bottom"
+                                                        title={
+                                                            <>
+                                                                Este e-mail ainda não foi confirmado. Clique para reenviar o e-mail de confirmação.<br /><br />
+                                                                Após o envio, não se esqueça de verificar sua caixa de entrada e a pasta de spam.
+                                                            </>
+                                                        }
+                                                        arrow
+                                                    >
+                                                        <Typography className="!font-roboto !text-sm !mt-4 !font-semibold !text-[#faa200] cursor-pointer break-words overflow-hidden">
+                                                            {contact.email || ''}
+                                                        </Typography>
+                                                    </Tooltip>
+                                                ): (
+                                                    <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold break-words overflow-hidden">
+                                                    {contact.email || ''}
+                                                    </Typography>
+                                                )}
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                )
+                            }
+                        </Box>
                     </Box>
                 </Box>
             </Box>
-        </Box>
+        </>
     );
 }

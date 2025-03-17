@@ -13,8 +13,8 @@ export type GymConfigErrorStepTwo = {
     addressError?: string | null;
     numberError?: string | null;
     complementError?: string | null;
-    neighborhoodError?: string | null;
-    cepError?: string | null;
+    districtError?: string | null;
+    zipCodeError?: string | null;
     cityError?: string | null;
     stateError?: string | null;
 };
@@ -22,4 +22,10 @@ export type GymConfigErrorStepTwo = {
 export type GymConfigErrorStepThree = {
     workFormError?: string | null;
     plansError?: string | null;
+};
+
+export type GymConfigErrorStepFour = {
+    modalitiesError?: string | null;
+    servicesError?: string | null;
+    segmentsError?: string | null;
 };

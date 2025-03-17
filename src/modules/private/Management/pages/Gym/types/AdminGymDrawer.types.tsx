@@ -1,6 +1,7 @@
 export type AdminGymDrawerType = {
     Application: 'Application',
     StudentRegister: 'StudentRegister',
+    ShortcutCreate: 'ShortcutCreate',
     ClassCreate: 'ClassCreate',
     VisitRegister: 'VisitRegister',
     ContactCreate: 'ContactCreate',
@@ -15,4 +16,9 @@ export type AdminGymDrawerType = {
     UserRegister: 'UserRegister',
     GroupCreate: 'GroupCreate',
     HourCreate: 'HourCreate',
+    PlanAlter: 'PlanAlter',
+    ClassAlter: 'ClassAlter',
+    ClassDetails: 'ClassDetails',
+    EditStudent: 'EditStudent',
+    TicketCreate: 'TicketCreate'
 };

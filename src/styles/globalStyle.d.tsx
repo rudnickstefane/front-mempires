@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        background-color: #FFF;
+        background-color: #f2f2f280;
         color: #646464;
         font-family: var(--fontPrimary);
     }

@@ -15,6 +15,7 @@ export type RendersHomeGymAdmin = {
     Users: 'Users',
     Groups: 'Groups',
     Hours: 'Hours'
+    Protocols: 'Protocols'
 };
 
 export type HomeGymAdminType = keyof RendersHomeGymAdmin;

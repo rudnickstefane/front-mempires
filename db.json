@@ -1,4 +1,161 @@
 {
+  "Menus": [
+    {
+      "id": 1,
+      "menuCode": 1,
+      "type": "GYM",
+      "name": "Início",
+      "description": "Página Inicial",
+      "path": "Home",
+      "icon": "TbSmartHome"
+    },
+    {
+      "id": 2,
+      "menuCode": 2,
+      "type": "GYM",
+      "name": "Administrativo",
+      "description": "Administrativo",
+      "path": "Admin",
+      "icon": "MdOutlineAdminPanelSettings"
+    },
+    {
+      "id": 3,
+      "menuCode": 3,
+      "type": "GYM",
+      "name": "Financeiro",
+      "description": "Financeiro",
+      "path": "Finance",
+      "icon": "LuCircleDollarSign"
+    },
+    {
+      "id": 4,
+      "menuCode": 4,
+      "type": "GYM",
+      "name": "Integrações",
+      "description": "Integrações",
+      "path": "Integration",
+      "icon": "TbServerCog"
+    },
+    {
+      "id": 5,
+      "menuCode": 5,
+      "type": "GYM",
+      "name": "Relatórios",
+      "description": "Relatórios",
+      "path": "Dashboard",
+      "icon": "RxDashboard"
+    },
+    {
+      "id": 6,
+      "menuCode": 6,
+      "type": "GYM",
+      "name": "Programas",
+      "description": "Programas",
+      "path": "Programs",
+      "icon": "TbUserHeart"
+    }
+  ],
+  "SubMenus": [
+    {
+      "id": 1,
+      "subMenuCode": 1,
+      "menuCode": 2,
+      "name": "Aplicativo",
+      "description": "Aplicativo",
+      "path": "Application",
+      "icon": "CiMobile3"
+    },
+    {
+      "id": 1,
+      "subMenuCode": 1,
+      "menuCode": 2,
+      "name": "Alunos",
+      "description": "Alunos",
+      "path": "Students",
+      "icon": "PiIdentificationCardThin"
+    },
+    {
+      "id": 1,
+      "subMenuCode": 1,
+      "menuCode": 2,
+      "name": "Turmas",
+      "description": "Turmas",
+      "path": "Classes",
+      "icon": "PiUsersThreeLight"
+    },
+    {
+      "id": 1,
+      "subMenuCode": 1,
+      "menuCode": 2,
+      "name": "Frequências",
+      "description": "Frequências",
+      "path": "Frequencies",
+      "icon": "IoCalendarOutline"
+    },
+    {
+      "id": 1,
+      "subMenuCode": 1,
+      "menuCode": 2,
+      "name": "Relacionamento",
+      "description": "Relacionamento",
+      "path": "Relationship",
+      "icon": "PiHandWavingThin"
+    },
+    {
+      "id": 1,
+      "subMenuCode": 1,
+      "menuCode": 2,
+      "name": "Planos",
+      "description": "Planos",
+      "path": "Plans",
+      "icon": "PiCurrencyCircleDollarLight"
+    },
+    {
+      "id": 1,
+      "subMenuCode": 1,
+      "menuCode": 2,
+      "name": "Marketplace",
+      "description": "Marketplace",
+      "path": "Marketplace",
+      "icon": "PiStorefrontLight"
+    },
+    {
+      "id": 1,
+      "subMenuCode": 1,
+      "menuCode": 2,
+      "name": "Fornecedores",
+      "description": "Fornecedores",
+      "path": "Suppliers",
+      "icon": "LiaTruckLoadingSolid"
+    },
+    {
+      "id": 1,
+      "subMenuCode": 1,
+      "menuCode": 2,
+      "name": "Colaboradores",
+      "description": "Colaboradores",
+      "path": "Contributors",
+      "icon": "LiaUserTieSolid"
+    },
+    {
+      "id": 2,
+      "menuCode": 2,
+      "type": "GYM",
+      "name": "Administrativo",
+      "description": "Página inicial",
+      "path": "Admin",
+      "icon": "PiGearSixLight"
+    },
+    {
+      "id": 3,
+      "menuCode": 2,
+      "type": "GYM",
+      "name": "Configurações",
+      "description": "Acessos e <span class='color-primary'>Integrações</span>",
+      "path": "Application",
+      "icon": "PiGearSixLight"
+    }
+  ],
   "RoutesManagement": [
     {
       "id": 1,
@@ -54,6 +211,12 @@
       "id": 1,
       "accessGroupId": 1,
       "permissionType": ""
+    }
+  ],
+  "Photos": [
+    {
+      "id": 1,
+      "url": "./rud.jpg"
     }
   ],
   "UserDetails": [

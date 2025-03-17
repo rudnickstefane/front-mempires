@@ -1,9 +1,9 @@
 import { Button as ButtonLink } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import backgroundImage from '../../assets/images/header.jpg';
 import sectionTitle from '../../assets/images/section-title.svg';
 import backgroundShape from '../../assets/images/shape.png';
+import backgroundImage from '../../modules/assets/images/back-header.png';
 
 interface MenuProps {
     scrolled: boolean;
@@ -26,7 +26,6 @@ background: #08041b;
 export const ContentImage = styled.div`
     background: url(${backgroundImage}) left/cover no-repeat;
     width: 100%;
-    background-position-x: -10rem;
 `;
 
 export const GradientOverlay = styled.div`
@@ -115,9 +114,7 @@ export const MenuCustom = styled.div<MenuProps>`
 
 export const Img = styled.img`
     transition: all .3s ease-in-out;
-    transform: scale(1.02);
-    width: 33px;
-    height: 31px;
+    width: 60px;
 `;
 
 export const Link = styled(RouterLink)`

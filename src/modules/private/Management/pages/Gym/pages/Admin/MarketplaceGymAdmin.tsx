@@ -1,14 +1,30 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 export default function MarketplaceGymAdmin() {
     return (
-        <Box className='text-center'>
-            <Box className='text-black text-[1.5rem] mt-[4rem]'>
-                Explore as diversas opções de integrações para controle de acesso ao lado.
+        <Box>
+            <Box className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem]">
+                <Box className="flex flex-row w-full">
+                    <Box className="bg-white w-full rounded-3xl shadow-md p-5 border border-[#EAECF0]">
+                        <Box className='flex flex-row justify-between items-center'>
+                            <Box>
+                                <Typography className='flex flex-row items-center !text-[2.25rem] text-[#212121]'>
+                                    Marketplace
+                                </Typography>
+                                <Typography className='flex flex-row items-center !text-[.85rem] !mt-4'>
+                                    Administrativo<MdKeyboardArrowRight />Marketplace
+                                </Typography>
+                            </Box>
+                        </Box>
+                        <Divider className='!my-5 w-full bg-[#e2e2e4]' />
+                        <Box className="flex flex-col items-center mb-5">
+                            <Box className="text-[#E94560] text-[2.5rem] mb-3">Oops!</Box>
+                            <Typography>Essa funcionalidade estará disponível em breve.</Typography>
+                        </Box>
+                    </Box>
+                </Box>
             </Box>
-            <Typography className='text-[#6c6c6c] !text-[1rem] !mt-5'>
-                Selecione a categoria que deseja configurar, como catracas, leitores, câmeras e mais, e personalize os detalhes para atender às suas necessidades.
-            </Typography>
         </Box>
     );
 }

@@ -1,24 +1,510 @@
-import { Box, Button } from "@mui/material";
-import { MdAddBox } from "react-icons/md";
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import {
+    Box,
+    Button,
+    Divider,
+    Drawer,
+    Fade,
+    IconButton,
+    InputAdornment,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    Modal,
+    Pagination,
+    Select,
+    Switch,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextField,
+    Tooltip,
+    Typography
+} from "@mui/material";
+import { BiEditAlt } from 'react-icons/bi';
+import { CiFolderOff, CiSearch } from "react-icons/ci";
+import { MdKeyboardArrowRight, MdOutlineDeleteOutline } from "react-icons/md";
+import { PiUserPlus } from "react-icons/pi";
+import { TbListDetails, TbProgressAlert } from 'react-icons/tb';
+import { usePlansGymAdmin } from "../../hooks";
+import { GymManagementProps } from "../../types";
 
-export default function PlansGymAdmin() {
+export default function PlansGymAdmin({ enqueueSnackbar }: GymManagementProps) {
+    const {
+        isDrawerOpen,
+        renderDrawerContent,
+        openDrawer,
+        closeDrawer,
+        itemsPerPage,
+        handleItemsPerPageChange,
+        startIndex,
+        endIndex,
+        totalItems,
+        totalPages,
+        currentPage,
+        handlePageChange,
+        handleMoreDetails,
+        searchText,
+        setSearchText,
+        anchorEls,
+        handleOpenMore,
+        handleCloseMore,
+        handleAlterPlan,
+        handleDeletePlan,
+        handleConfirmDelete,
+        modalConfirmDelete,
+        handleCloseConfirmDelete,
+        handleStatusPlan,
+        isMenuOpen,
+        plansToDisplay,
+        isDetailsView,
+        renderComponentContent
+    } = usePlansGymAdmin({ enqueueSnackbar });
+
     return (
         <Box>
-            <Button
-                className='bg-white w-[200px] h-[200px] !rounded-3xl items-center justify-center flex flex-col !mx-4 !font-normal !border-dashed !border-[1px]'
-                style={{ textTransform: 'none', fontFamily: 'Poppins' }}
-                sx={{
-                    background: '#ff033511',
-                    color: '#ff033524',
-                    transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                    '&:hover': {
-                        color: '#4b5563',
-                    },
+            {/* Drawer */}
+            <Drawer
+                disableEnforceFocus
+                anchor="right"
+                open={isDrawerOpen}
+                onClose={closeDrawer}
+                className='!z-[1300]'
+                PaperProps={{
+                    className: "w-[60%] p-8",
                 }}
             >
-                <MdAddBox className='text-[2.3rem] color-primary' />
-                <Box className='flex flex-col mt-3 color-primary'>Novo Plano</Box>
-            </Button>
+                {renderDrawerContent()}
+            </Drawer>
+
+            {!isDetailsView ? (
+                <Box className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem]">
+                    <Box className="flex flex-row w-full">
+                        <Box className="bg-white w-full rounded-3xl shadow-md p-5 border border-[#EAECF0]">
+                            <Box className="flex flex-row justify-between items-center">
+                                <Box>
+                                    <Typography className="flex flex-row items-center !text-[2.25rem] text-[#212121]">
+                                    Planos
+                                    </Typography>
+                                    <Typography className="flex flex-row items-center !text-[.85rem] !mt-4">
+                                    Administrativo
+                                    <MdKeyboardArrowRight className='mx-1.5'/>
+                                    Planos
+                                    </Typography>
+                                </Box>
+                                <Button
+                                    startIcon={<PiUserPlus />}
+                                    variant="contained"
+                                    color="primary"
+                                    style={{
+                                        color: "white",
+                                        fontFamily: "Poppins",
+                                        width: "12.5rem",
+                                        height: "3rem",
+                                    }}
+                                    sx={{
+                                        background: "#ff0336",
+                                        transition: "transform 0.3s, background-color 0.3s",
+                                        "&:hover": {
+                                            background: "#FF0000",
+                                        },
+                                    }}
+                                    onClick={() => openDrawer("PlanCreate")}
+                                >
+                                    Novo Plano
+                                </Button>
+                            </Box>
+                            <Divider className="!my-5 w-full bg-[#e2e2e4]" />
+                            <Box className="flex items-center gap-4 mb-5">
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
+                                    placeholder="Buscar por código do plano, nome ou valor"
+                                    className='!w-[50%] !rounded-lg'
+                                    value={searchText}
+                                    onChange={(e) => setSearchText(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <CiSearch size={20} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Box>
+                            <Box className="overflow-x-auto border border-neutral-300 rounded-lg w-full">
+                                <TableContainer>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                            <TableCell className='!text-center w-[1rem]'>Ativo</TableCell>
+                                            <TableCell>Plano</TableCell>
+                                            <TableCell>Periodicidade</TableCell>
+                                            <TableCell>Modalidades</TableCell>
+                                            <TableCell>Serviços Personalizados</TableCell>
+                                            <TableCell>Valor</TableCell>
+                                            <TableCell></TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                        {plansToDisplay && plansToDisplay.length > 0 ? (
+                                            plansToDisplay.sort((a, b) => 
+                                                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                                            ).map((plan, index) => (
+                                            <TableRow
+                                                key={index}
+                                                sx={{
+                                                    transition: "transform 0.3s, background-color 0.3s, border-color 0.3s ease",
+                                                    borderLeft: '3px solid transparent',
+                                                    borderRight: '3px solid transparent',
+                                                    "&:hover": {
+                                                        background: "#f9fafb",
+                                                        borderLeft: '3px solid red',
+                                                    },
+                                                }}
+                                            >
+                                                <TableCell>
+                                                    <Switch
+                                                        checked={plan.status === 'ACTIVE' ? true : false}
+                                                        onClick={() => handleStatusPlan(plan.planCode, plan.status)}
+                                                    /></TableCell>
+                                                <TableCell className="max-w-[10rem]">
+                                                    <Box
+                                                        className='cursor-pointer color-primary hover:!text-red-600 whitespace-nowrap overflow-hidden text-ellipsis'
+                                                        onClick={() => handleMoreDetails(plan.planCode)}
+                                                        sx={{
+                                                            transition: "transform 0.3s, background-color 0.3s",
+                                                        }}
+                                                    >
+                                                            {plan.name}
+                                                    </Box>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Box className='!flex !flex-row items-center'>
+                                                        {plan.periodicities && plan.periodicities.length > 0 ? (
+                                                            <>
+                                                            {plan.periodicities[0].name} {/* Exibe a primeira periodicidade */}
+                                                            {plan.periodicities.length > 1 && (
+                                                                <Tooltip
+                                                                title={
+                                                                    <>
+                                                                    {plan.periodicities.slice(1).map((periodicity, idx) => (
+                                                                        <div key={idx}>{periodicity.name}</div>
+                                                                    ))}
+                                                                    </>
+                                                                }
+                                                                placement="right"
+                                                                arrow
+                                                                >
+                                                                <Box
+                                                                    className="bg-[#e8ebf4] rounded-full ml-2 px-2 py-[.1rem] text-[.8rem] cursor-pointer"
+                                                                    sx={{
+                                                                        transition: "transform 0.3s, background-color 0.3s",
+                                                                        "&:hover": {
+                                                                            background: "#ff0336",
+                                                                            color: 'white',
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    + {plan.periodicities.length - 1}
+                                                                </Box>
+                                                                </Tooltip>
+                                                            )}
+                                                            </>
+                                                        ) : (
+                                                            "Sem periodicidade"
+                                                        )}
+                                                    </Box>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Box className='!flex !flex-row items-center'>
+                                                        {plan.modalities && plan.modalities.length > 0 ? (
+                                                            <>
+                                                            {plan.modalities[0].name} {/* Exibe a primeira modalidade */}
+                                                            {plan.modalities.length > 1 && (
+                                                                <Tooltip
+                                                                title={
+                                                                    <>
+                                                                    {plan.modalities.slice(1).map((modality, idx) => (
+                                                                        <div key={idx}>{modality.name}</div>
+                                                                    ))}
+                                                                    </>
+                                                                }
+                                                                placement="right"
+                                                                arrow
+                                                                >
+                                                                <Box
+                                                                    className="bg-[#e8ebf4] rounded-full ml-2 px-2 py-[.1rem] text-[.8rem] cursor-pointer"
+                                                                    sx={{
+                                                                        transition: "transform 0.3s, background-color 0.3s",
+                                                                        "&:hover": {
+                                                                            background: "#ff0336",
+                                                                            color: 'white',
+                                                                        },
+                                                                    }}
+                                                                >
+                                                                    + {plan.modalities.length - 1}
+                                                                </Box>
+                                                                </Tooltip>
+                                                            )}
+                                                            </>
+                                                        ) : (
+                                                            "Sem modalidades"
+                                                        )}
+                                                    </Box>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Box className='!flex !flex-row items-center'>
+                                                        {plan.customServices && plan.customServices.length > 0 ? (
+                                                            <>
+                                                            {plan.customServices[0].name} {/* Exibe a primeira modalidade */}
+                                                            {plan.customServices.length > 1 && (
+                                                                <Tooltip
+                                                                    title={
+                                                                        <>
+                                                                        {plan.customServices.slice(1).map((modality, idx) => (
+                                                                            <div key={idx}>{modality.name}</div>
+                                                                        ))}
+                                                                        </>
+                                                                    }
+                                                                    placement="right"
+                                                                    arrow
+                                                                    >
+                                                                    <Box
+                                                                        className="bg-[#e8ebf4] rounded-full ml-2 px-2 py-[.1rem] text-[.8rem] cursor-pointer"
+                                                                        sx={{
+                                                                            transition: "transform 0.3s, background-color 0.3s",
+                                                                            "&:hover": {
+                                                                                background: "#ff0336",
+                                                                                color: 'white',
+                                                                            },
+                                                                        }}
+                                                                    >
+                                                                        + {plan.customServices.length - 1}
+                                                                    </Box>
+                                                                </Tooltip>
+                                                            )}
+                                                            </>
+                                                        ) : (
+                                                            "Sem serviços personalizados"
+                                                        )}
+                                                    </Box>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Box className='!flex !flex-row items-center'>
+                                                        {plan.periodicities && plan.periodicities.length > 0 ? (
+                                                            <Box className='flex flex-col'>
+                                                                {plan.periodicities.length > 1 && (
+                                                                    <Box className='text-[.8rem]'>A partir de</Box>
+                                                                )}
+                                                                R$ {plan.periodicities[0].amount}
+                                                            </Box>
+                                                        ) : (
+                                                            "Sem valores"
+                                                        )}
+                                                    </Box>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Box textAlign="center">
+                                                        <IconButton
+                                                            className='w-[2rem] h-[2rem]'
+                                                            onClick={(event) => handleOpenMore(event, plan.planCode)}
+                                                            style={{
+                                                                backgroundColor: isMenuOpen(plan.planCode) ? '#0000000a' : '',
+                                                            }}
+                                                        >
+                                                            <MoreHorizIcon />
+                                                        </IconButton>
+                                                        <Menu
+                                                            anchorEl={anchorEls[plan.planCode]}
+                                                            open={Boolean(anchorEls[plan.planCode])}
+                                                            onClose={() => handleCloseMore(plan.planCode)}
+                                                            slotProps={{
+                                                                paper: {
+                                                                    sx: {
+                                                                        borderRadius: '.7rem',
+                                                                        padding: '0 .4rem',
+                                                                        mt: 1.5,
+                                                                    },
+                                                                },
+                                                            }}
+                                                            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                                        >
+                                                            <MenuItem
+                                                                onClick={() => handleMoreDetails(plan.planCode)}
+                                                                sx={{
+                                                                    borderRadius: '.4rem',
+                                                                    margin: '.2rem 0',
+                                                                    '&:hover': {
+                                                                        backgroundColor: '#0000000a !important',
+                                                                        color: '#000000de !important'
+                                                                    }
+                                                                }}
+                                                            >
+                                                                <ListItemIcon className='!-mr-1.5'>
+                                                                    <TbListDetails className='text-[1.5rem]' />
+                                                                </ListItemIcon>
+                                                                <ListItemText primary="Mais detalhes" />
+                                                            </MenuItem>
+                                                            <MenuItem
+                                                                onClick={() => handleAlterPlan(plan.planCode)}
+                                                                sx={{
+                                                                    borderRadius: '.4rem',
+                                                                    margin: '.2rem 0',
+                                                                    '&:hover': {
+                                                                        backgroundColor: '#0000000a !important',
+                                                                        color: '#000000de !important'
+                                                                    }
+                                                                }}
+                                                            >
+                                                                <ListItemIcon className='!-mr-1.5'>
+                                                                    <BiEditAlt className='text-[1.5rem]' />
+                                                                </ListItemIcon>
+                                                                <ListItemText primary="Alterar" />
+                                                            </MenuItem>
+                                                            <MenuItem
+                                                                onClick={handleConfirmDelete}
+                                                                sx={{ 
+                                                                    borderRadius: '.4rem',
+                                                                    margin: '.2rem 0',
+                                                                    '&:hover': {
+                                                                        backgroundColor: '#0000000a !important',
+                                                                        color: '#000000de !important'
+                                                                    }
+                                                                }}
+                                                                style={{
+                                                                    backgroundColor: modalConfirmDelete ? '#0000000a' : '',
+                                                                }}
+                                                            >
+                                                                <ListItemIcon className='!-mr-1.5'>
+                                                                    <MdOutlineDeleteOutline className='text-[1.5rem]' />
+                                                                </ListItemIcon>
+                                                                <ListItemText primary="Excluir" />
+                                                            </MenuItem>
+                                                            <Modal
+                                                                aria-labelledby="transition-modal-title"
+                                                                aria-describedby="transition-modal-description"
+                                                                open={modalConfirmDelete}
+                                                                onClose={handleCloseConfirmDelete}
+                                                                closeAfterTransition
+                                                                className='flex items-center justify-center'
+                                                                slotProps={{
+                                                                backdrop: {
+                                                                    timeout: 500,
+                                                                },
+                                                                }}
+                                                            >
+                                                                <Fade in={modalConfirmDelete}>
+                                                                    <Box className="bg-white rounded-lg w-[500px] flex flex-col items-center p-7">
+                                                                        <MdOutlineDeleteOutline className="text-[#ff0336] text-[5.5rem] bg-[#ffe7ec] rounded-3xl p-5" />
+                                                                        <Typography className='text-center !text-[1.2rem] !mt-5'>Deseja excluir o plano {plan.name}?</Typography>
+                                                                        <Box className='bg-[#fef7e5] text-[#744600] p-5 rounded-3xl mt-5 text-[.9rem] w-full'>
+                                                                            <Box className='flex flex-row items-center mb-2'>
+                                                                            <TbProgressAlert className="text-[#744600] text-[1.5rem] mr-2" />
+                                                                            <Typography variant="h6" component="h2">Atenção</Typography>
+                                                                            </Box>
+                                                                            <Typography className='!text-[.9rem]'>Esta ação é irreversível e todos os dados associados a este plano serão permanentemente removidos.</Typography>
+                                                                        </Box>
+                                                                        <Box className='flex flex-row justify-between mt-8 w-full'>
+                                                                            <Button
+                                                                                onClick={handleCloseConfirmDelete}
+                                                                                variant="outlined"
+                                                                                className='w-[45%]'
+                                                                                sx={{
+                                                                                    backgroundColor: 'transparent',
+                                                                                    color: '#4b5563',
+                                                                                    borderColor: '#4b5563',
+                                                                                    '&:hover': {
+                                                                                        backgroundColor: '#d4d4d8',
+                                                                                        borderColor: '#4b5563',
+                                                                                    },
+                                                                                }}
+                                                                            >
+                                                                                Cancelar
+                                                                            </Button>
+                                                                            <Button
+                                                                                variant="contained"
+                                                                                color="primary"
+                                                                                className='w-[45%]'
+                                                                                sx={{
+                                                                                backgroundColor: '#ff0336',
+                                                                                color: '#fff',
+                                                                                height: '3rem',
+                                                                                '&:hover': {
+                                                                                    backgroundColor: '#e6001b',
+                                                                                },
+                                                                                }}
+                                                                                onClick={() => handleDeletePlan(plan.planCode)}
+                                                                            >
+                                                                                Excluir
+                                                                            </Button>
+                                                                        </Box>
+                                                                    </Box>
+                                                                </Fade>
+                                                            </Modal>
+                                                        </Menu>
+                                                    </Box>
+                                                </TableCell>
+                                            </TableRow>
+                                            ))
+                                        ) : (
+                                            <TableRow>
+                                                <TableCell colSpan={7} align="center">
+                                                    <Box className='flex flex-col items-center my-4'>
+                                                        <CiFolderOff className='text-[3rem] mb-4 text-gray-600'/>
+                                                        Nenhum registro encontrado
+                                                    </Box>
+                                                </TableCell>
+                                            </TableRow>
+                                        )}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                                {/* Paginação e Itens por Página */}
+                                <Box className="flex justify-between items-center px-6 py-3 border-l border-r border-b border-[#EAECF0] rounded-b-lg">
+                                    {/* Selecionar Itens por Página */}
+                                    <Box className="flex items-center gap-2">
+                                        <Select
+                                            value={itemsPerPage}
+                                            onChange={handleItemsPerPageChange}
+                                            size="small"
+                                            className="w-[5rem]"
+                                        >
+                                            {[5, 10, 15, 20, 25, 50].map((value) => (
+                                            <MenuItem key={value} value={value}>
+                                                {value}
+                                            </MenuItem>
+                                        ))}
+                                        </Select>
+                                        <Typography variant="body2">Itens por página</Typography>
+                                        <Box className='border-l border-gray-400 mx-2 h-4'></Box>
+                                        <Typography variant="body2">
+                                            {startIndex + 1} - {Math.min(endIndex, totalItems)} de{" "}
+                                            {totalItems} registro(s)
+                                        </Typography>
+                                    </Box>
+
+                                    {/* Navegação por Páginas */}
+                                    <Pagination
+                                        count={totalPages}
+                                        page={currentPage}
+                                        onChange={handlePageChange}
+                                        color="primary"
+                                        size="small"
+                                    />
+                                </Box>
+                            </Box>
+                        </Box>
+                    </Box>
+                </Box>
+            ) : (
+                renderComponentContent()
+            )}
         </Box>
     );
 }

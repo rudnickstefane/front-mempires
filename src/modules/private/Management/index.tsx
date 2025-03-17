@@ -1,21 +1,19 @@
-import { Container } from '@mui/material';
-import FooterManagement from './components/Footer';
+import { AccessRestrict } from '../../common/pages/AccessRestrict';
+import InactivitySignIn from '../../common/pages/InactivitySignIn';
+import { useManagement } from './hooks';
 import GymManagement from './pages/Gym';
 
 export default function Management() {
+
+    const {
+        isAuthorized,
+        role,
+    } = useManagement();
+
     return (
-        <>
-            <style>
-                {`
-                    body {
-                        background-color: #f8fafb;
-                    }
-                `}
-            </style>
-            <Container>
-                <GymManagement />
-                <FooterManagement />
-            </Container>
-        </>
+        <AccessRestrict isAuthorized={isAuthorized}>
+            <InactivitySignIn />
+            {role === 'GYM' && <GymManagement />}
+        </AccessRestrict>
     );
 }

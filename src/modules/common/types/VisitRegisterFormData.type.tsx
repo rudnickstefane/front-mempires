@@ -1,8 +1,11 @@
 export type VisitRegisterFormData = {
+    assignment: number;
     name: string;
     identity: string;
     referralSource: string;
-    phone: string;
+    indicationSearch: string;
     modalities: string[];
-    details: string;
+    observation: string;
+    email: string;
+    phone: string;
 }

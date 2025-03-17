@@ -45,6 +45,35 @@ export const validateWorkForms = (workForms: string[]): string | null => {
     return null;
 };
 
+export const validateModalitiesForm = (modalitiesForms: { name: string, description: string }[]): string | null => {
+    // Verifica se pelo menos uma modalidade foi selecionada
+    if (modalitiesForms.length === 0) {
+        return 'Selecione pelo menos uma modalidade.';
+    }
+
+    return null; // Retorna null se estiver tudo certo
+};
+
+export const validateServicesForm = (modalitiesForms: { name: string, description: string }[]): string | null => {
+    // Verifica se pelo menos uma modalidade foi selecionada
+    if (modalitiesForms.length === 0) {
+        return 'Selecione pelo menos um serviço.';
+    }
+
+    return null; // Retorna null se estiver tudo certo
+};
+
+
+export const validateSegmentsForm = (modalitiesForms: { name: string, description: string }[]): string | null => {
+    // Verifica se pelo menos uma modalidade foi selecionada
+    if (modalitiesForms.length === 0) {
+        return 'Selecione pelo menos um segmento.';
+    }
+
+    return null; // Retorna null se estiver tudo certo
+};
+
+
 // Validação de planos
 export const validatePlans = (plans: string[]): string => {
     if (plans.length === 0) {
@@ -96,9 +125,9 @@ export const validateNumber = (number: string): string | null => {
 };
 
 // Validação do Bairro
-export const validateNeighborhood = (neighborhood: string): string | null => {
+export const validateDistrict = (district: string): string | null => {
 
-    if (!neighborhood) {
+    if (!district) {
         return 'O bairro é obrigatório.';
     }
 

@@ -1,0 +1,1 @@
+export { useSignUpPersonalForm } from './useSignUpPersonalForm';

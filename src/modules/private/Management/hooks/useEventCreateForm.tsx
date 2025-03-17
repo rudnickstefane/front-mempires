@@ -3,7 +3,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { MultiValue, SingleValue } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { OptionSelect } from '../../../common/ui/types';
-import { FormatAndValidateIdentity, FormatPhone, FormatText, ValidateFormVisitRegister } from '../../../common/utils';
+import { FormatAndValidateCPF, FormatName, FormatPhone, ValidateFormVisitRegister } from '../../../common/utils';
 import { VisitRegisterProps } from '../components/Drawer/types/VisitRegisterProps.type';
 
 export const useEventCreateForm = ({
@@ -96,7 +96,7 @@ export const useEventCreateForm = ({
         const { name, value } = e.target;
         let updatedValue = value;
 
-        updatedValue = FormatText(value);
+        updatedValue = FormatName(value);
 
         if (name === 'phone' && value) {
             updatedValue = FormatPhone(value);
@@ -104,7 +104,7 @@ export const useEventCreateForm = ({
 
         // Lógica para formatação e validação do documento de identidade
         if (name === 'identity' && value) {
-            const { formatted, isValid } = FormatAndValidateIdentity(value);
+            const { formatted, isValid } = FormatAndValidateCPF(value);
             
             // Atualiza o valor no estado com a formatação do documento
             setFormData(prevState => ({

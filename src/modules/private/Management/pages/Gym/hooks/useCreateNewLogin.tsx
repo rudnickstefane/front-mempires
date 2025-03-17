@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { useBackendForFrontend } from '../../../../../common/hooks/backend-for-frontend/useBackendForFrontend';
+
+import { useBackendForFrontend } from '../../../../../common/hooks/useBackendForFrontend';
 import { MutationNewStudent } from '../graphql';
 
 export function useCreateNewLogin() {

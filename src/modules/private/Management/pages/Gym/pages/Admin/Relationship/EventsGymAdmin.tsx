@@ -76,6 +76,7 @@ export default function EventsGymAdmin() {
         <Box>
             {/* Drawer */}
             <Drawer
+                disableEnforceFocus
                 anchor="right"
                 open={isDrawerOpen}
                 onClose={closeDrawer}

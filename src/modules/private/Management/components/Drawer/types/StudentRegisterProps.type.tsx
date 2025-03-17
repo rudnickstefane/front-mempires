@@ -1,8 +1,8 @@
-import { StudentRegisterFormData, StudentRegisterFormErrors } from "../../../../../common/types";
+import { StudentRegisterFormErrors, StudentUpsertFormData } from "../../../../../common/types";
 
 export type StudentRegisterProps = {
-    formData: StudentRegisterFormData;
-    setFormData: React.Dispatch<React.SetStateAction<StudentRegisterFormData>>;
+    formData: StudentUpsertFormData;
+    setFormData: React.Dispatch<React.SetStateAction<StudentUpsertFormData>>;
     errors: StudentRegisterFormErrors;
     setErrors: React.Dispatch<React.SetStateAction<StudentRegisterFormErrors>>;
     closeDrawer: () => void;

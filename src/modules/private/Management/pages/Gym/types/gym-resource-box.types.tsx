@@ -1,11 +1,13 @@
-import { IconType } from "react-icons/lib";
 
 export type ResourceBoxProps = {
-    icon: IconType;
+    icon: string;
     type?: string;
     menu?: string;
     name: string;
     subName?: string;
-    description: string;
+    description?: string;
     isMenuCollapsed?: boolean;
+    hasSubMenu?: boolean;
+    isExpanded?: boolean;
+    onClick: () => void;
 }

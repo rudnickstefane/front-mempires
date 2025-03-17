@@ -150,11 +150,11 @@ export const NutritionistPlans = () => {
                     </Typography>
                 </Box>
                 <Box className='w-full pt-10 pb-20 flex flex-col items-center mt-10'>
-                    <DestaqueTitle className="bg-primary text-white w-[15.5rem]">Planos Academias</DestaqueTitle>
+                    <DestaqueTitle className="bg-secondary text-white w-[15.5rem]">Planos Academias</DestaqueTitle>
                     <Box className='flex md:flex-row flex-col md:mt-10 mt-16'>
                         <Box className='shadow-2xl rounded-lg mx-5 p-6 flex flex-col items-center w-[350px] transition-transform duration-500 hover:scale-105 cursor-pointer bg-[#F6F6F7] text-[#7B7E86]'>
                             <Box className='px-4 py-4 rounded-lg -mt-24 -skew-x-12 -ml-20'>
-                                <Box className='bg-primary w-[115px] h-[110px] -skew-x-6 rounded-2xl flex items-center justify-center text-white text-[20px]'>
+                                <Box className='bg-secondary w-[115px] h-[110px] -skew-x-6 rounded-2xl flex items-center justify-center text-white text-[20px]'>
                                     <Img src={plansIconOne} />
                                 </Box>
                             </Box>
@@ -250,7 +250,7 @@ export const NutritionistPlans = () => {
                         </Box>
                         <Box className='shadow-2xl rounded-lg mx-5 p-6 flex flex-col items-center w-[350px] transition-transform duration-500 hover:scale-105 cursor-pointer bg-[#F6F6F7] text-[#7B7E86] md:mt-0 mt-24'>
                             <Box className='px-4 py-4 rounded-lg -mt-24 -skew-x-12 -ml-20'>
-                                <Box className='bg-primary w-[115px] h-[110px] -skew-x-6 rounded-2xl flex items-center justify-center text-white text-[20px]'>
+                                <Box className='bg-secondary w-[115px] h-[110px] -skew-x-6 rounded-2xl flex items-center justify-center text-white text-[20px]'>
                                     <Img src={plansIconThree} />
                                 </Box>
                             </Box>
@@ -291,7 +291,7 @@ export const NutritionistPlans = () => {
 
                 {/* Seção de Recursos */}
                 <Box className='flex flex-col items-center mt-14' ref={recursosRef}>
-                    <DestaqueTitle className="bg-primary text-white w-[16rem]">Todos os Recursos</DestaqueTitle>
+                    <DestaqueTitle className="bg-secondary text-white w-[16rem]">Todos os Recursos</DestaqueTitle>
                     <Typography>Confira abaixo todos os recursos disponíveis em nossos planos.</Typography>
                     <Box className='flex flex-row flex-wrap justify-center'>
                         {resources.map((resource, index) => (

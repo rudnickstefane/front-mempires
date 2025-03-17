@@ -1,6 +1,10 @@
 export type ClassCreateFormErrors = {
-    classError?: string;
+    nameError?: string;
     modalitiesError?: string;
-    numberStudentError?: string;
+    studentsPerHourError?: string;
     minimumAlertError?: string;
+    startDateError?: string;
+    endDateError?: string;
+    customHoursError?: string;
+    endTimeError?: string;
 }

@@ -1,4 +1,4 @@
-import { GymConfigErrorStepOne, GymConfigErrorStepThree, GymConfigErrorStepTwo } from "./gym-errors.types";
+import { GymConfigErrorStepFour, GymConfigErrorStepOne, GymConfigErrorStepThree, GymConfigErrorStepTwo } from "./gym-errors.types";
 import { GymStepOneFormsConfig, GymStepOthersFormsConfig, GymStepThreeFormsConfig, GymStepTwoFormsConfig } from "./gym-forms-config.types";
 
 export type StepOneProps = {
@@ -30,6 +30,8 @@ export type StepThreeProps = {
 export type StepFourProps = {
     formData: GymStepOthersFormsConfig;
     setFormData: React.Dispatch<React.SetStateAction<GymStepOthersFormsConfig>>;
+    errors: GymConfigErrorStepFour;
+    setErrors: React.Dispatch<React.SetStateAction<GymConfigErrorStepFour>>;
     handleContinue: () => void;
     handleBack: () => void;
 }
@@ -37,6 +39,13 @@ export type StepFourProps = {
 export type StepFiveProps = {
     formData: GymStepOthersFormsConfig;
     setFormData: React.Dispatch<React.SetStateAction<GymStepOthersFormsConfig>>;
-    handleContinue: () => void;
+    errors: GymConfigErrorStepFour;
+    setErrors: React.Dispatch<React.SetStateAction<GymConfigErrorStepFour>>;
+    handleFinish: () => void;
     handleBack: () => void;
+    isLoading: boolean;
+}
+
+export type StepFinishProps = {
+    handleAccess: () => void;
 }

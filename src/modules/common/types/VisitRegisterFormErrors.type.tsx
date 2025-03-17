@@ -2,6 +2,9 @@ export type VisitRegisterFormErrors = {
     nameError?: string;
     identityError?: string;
     referralSourceError?: string;
-    phoneError?: string;
     modalitiesError?: string;
+    emailError?: string;
+    phoneError?: string;
+    indicationSearchError?: string;
+    searchFindStudentError?: string;
 }

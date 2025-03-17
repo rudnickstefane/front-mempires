@@ -15,25 +15,24 @@ export type GymStepTwoFormsConfig = {
     address: string;
     number: string;
     complement: string;
-    cep: string;
-    neighborhood: string;
+    zipCode: string;
+    district: string;
     city: string;
     state: string;
 };
 
 export type PlansType = {
-    label: string;
+    name: string;
     value: number;
     description: string;
 };
 
 export type GymStepThreeFormsConfig = {
     workForms: string[];
-    plans?: PlansType[];
 };
 
 export type GymStepOthersFormsConfig = {
-    selectedModalities: string[];
-    selectedServices: string[];
-    selectedSegments: string[];
+    selectedModalities: { name: string; description: string }[];
+    selectedServices: { name: string; description: string }[];
+    selectedSegments: { name: string; description: string }[];
 };

@@ -1,10 +1,10 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { MenuItem } from '@mui/material';
+import { Box, MenuItem } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import React, { useEffect, useState } from 'react';
-import logo from '../../assets/images/machine.png';
 import '../../input.css';
-import { Button, Container, Img, Link, MenuCustom } from '../Header/styles.d';
+import logo from '../../modules/assets/images/icon.png';
+import { Button, Container, Link, MenuCustom } from '../Header/styles.d';
 
 export function HeaderMenu() {
     const [scrolled, setScrolled] = useState(false);
@@ -36,9 +36,14 @@ export function HeaderMenu() {
     return (
         <Container className='relative z-10'>
             <MenuCustom scrolled={scrolled}>
-                <Link to="/"><div className='flex w-32 justify-between items-center'><Img src={logo} alt="Logo" /><h1 className='text-[40px] text-[#fff]'>iFlex</h1></div></Link>
+                <a href='/'>
+                    <Box className='flex w-32 items-center'>
+                        <img src={logo} alt="Logo" className='w-[3.7rem]' />
+                        <Box className='ml-3 text-[2rem] text-white font-intro mt-[.35rem]'>iFlex</Box>
+                    </Box>
+                </a>
                 <nav>
-                    <Button href="/" className='after-arrowMenu'>Inicio</Button>
+                    <Button href="/" className='after-arrowMenu'>Início</Button>
                     <Button
                         aria-controls={open ? 'mouse-over-popover' : undefined}
                         aria-haspopup="true"
@@ -62,7 +67,7 @@ export function HeaderMenu() {
                     </Menu>
                     <Button href="/ajuda">Ajuda</Button>
                     <Button href="/entrar">Entrar</Button>
-                    <a href="/cadastro" className='bg-primary text-[white] p-3 rounded-lg ml-10'>Testar Grátis</a>
+                    <a href="/cadastro" className='bg-secondary text-[white] p-3 rounded-lg ml-10'>Testar Grátis</a>
                 </nav>
             </MenuCustom>
         </Container>

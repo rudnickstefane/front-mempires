@@ -124,7 +124,7 @@ export const SupplierRegisterDrawer = ({
                             </Typography>
                           </Box>
                           <Typography className='text-left !font-roboto !font-normal !text-sm'>
-                            Por favor, verifique os dados inseridos ou entre em contato com o nosso SAC para suporte.
+                            Por favor, verifique os dados inseridos ou entre em contato com o nosso suporte.
                           </Typography>
                         </Box>
                       )}

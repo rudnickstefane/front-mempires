@@ -1,0 +1,44 @@
+export type FindTicketsResponse = {
+  findTickets: Array<{
+    ticketCode: string;
+    issuerUserCode: string;
+    nameIssuerUser: string;
+    issuerCompanyCode: string;
+    nameIssuerCompany: string;
+    recipientUserCode: string;
+    nameRecipientUser: string;
+    recipientCompanyCode: string;
+    nameRecipientCompany: string;
+    name: string;
+    description: string;
+    method: string;
+    queue: string;
+    type: string;
+    category: string;
+    status: string;
+    priority: string;
+    sentMessage: string;
+    duration: string;
+    observation: string;
+    responsibleCode: string;
+    responsible: string;
+    scheduledAt: string;
+    rescheduledAt: string;
+    finishedAt: string;
+    messages: Array<{
+      messageCode: string;
+      title: string;
+      email: string;
+      phone: string;
+      message: string;
+      read: string;
+      observation: string;
+      createdAt: string;
+      updatedAt: string;
+      deletedAt: string;
+    }>;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string;
+  }>;
+};

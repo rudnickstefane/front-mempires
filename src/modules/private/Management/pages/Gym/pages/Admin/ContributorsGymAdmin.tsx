@@ -43,94 +43,100 @@ const dadosSimulados = [
 
 export default function ContributorsGymAdmin() {
     return (
-        <Box>
-            <Box className='flex flex-row justify-between items-center'>
-                <Box>
-                    <Typography className='flex flex-row items-center !text-[2.25rem] text-[#212121]'>
-                        Colaboradores
-                    </Typography>
-                    <Typography className='flex flex-row items-center !text-[.85rem] !mt-4'>
-                        Administrativo<MdKeyboardArrowRight />Colaboradores
-                    </Typography>
+        <>
+            <Box className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem]">
+                <Box className="flex flex-row w-full">
+                    <Box className="bg-white w-full rounded-3xl shadow-md p-5 border border-[#EAECF0]">
+                        <Box className='flex flex-row justify-between items-center'>
+                            <Box>
+                                <Typography className='flex flex-row items-center !text-[2.25rem] text-[#212121]'>
+                                    Colaboradores
+                                </Typography>
+                                <Typography className='flex flex-row items-center !text-[.85rem] !mt-4'>
+                                    Administrativo<MdKeyboardArrowRight />Colaboradores
+                                </Typography>
+                            </Box>
+                            <Button
+                                startIcon={<LiaUserTieSolid />}
+                                variant="contained"
+                                href="#"
+                                color="primary"
+                                style={{ color: 'white', fontFamily: 'Poppins', width: '14rem', height: '3rem' }}
+                                sx={{
+                                    background: '#ff0336',
+                                    transition: 'transform 0.3s, background-color 0.3s',
+                                    '&:hover': {
+                                        background: '#FF0000'
+                                    },
+                                }}
+                            >Novo Colaborador</Button>
+                        </Box>
+                        <Divider className='!my-5 w-full bg-[#e2e2e4]' />
+                        <Box className='border border-neutral-300 rounded-lg'>
+                            <TableContainer>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>
+                                                <Box>
+                                                    <Typography>
+                                                        Ativo
+                                                    </Typography>
+                                                </Box>
+                                            </TableCell>
+
+                                            <TableCell>
+                                                <Box>
+                                                    <Typography>
+                                                        Nome
+                                                    </Typography>
+                                                </Box>
+                                            </TableCell>
+
+                                            <TableCell>
+                                                <Box>
+                                                    <Typography>Cargo</Typography>
+                                                </Box>
+                                            </TableCell>
+
+                                            <TableCell></TableCell>
+                                        </TableRow>
+                                    </TableHead>
+
+                                    <TableBody>
+                                        {dadosSimulados.map((dado, index) => (
+                                            <TableRow key={index} hover>
+                                                <TableCell>
+                                                    <Switch checked={dado.ativo} />
+                                                </TableCell>
+
+                                                <TableCell>
+                                                    {/* Link específico para cada aluno */}
+                                                    <Link href={`/aluno/${dado.documento}`} underline="none">
+                                                        <Typography noWrap>{dado.nome}</Typography>
+                                                    </Link>
+                                                </TableCell>
+
+                                                <TableCell>
+                                                    <Typography noWrap>{dado.periodicidade}</Typography>
+                                                </TableCell>
+
+                                                <TableCell>
+                                                    <Box textAlign="center">
+                                                        <IconButton>
+                                                            <MoreHorizIcon />
+                                                        </IconButton>
+                                                    </Box>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Box>
+                    </Box>
                 </Box>
-                <Button
-                    startIcon={<LiaUserTieSolid />}
-                    variant="contained"
-                    href="#"
-                    color="primary"
-                    style={{ color: 'white', fontFamily: 'Poppins', width: '14rem', height: '3rem' }}
-                    sx={{
-                        background: '#ff0336',
-                        transition: 'transform 0.3s, background-color 0.3s',
-                        '&:hover': {
-                            background: '#FF0000'
-                        },
-                    }}
-                >Novo Colaborador</Button>
             </Box>
-            <Divider className='!my-5 w-full bg-[#e2e2e4]' />
-            <Box className='border border-neutral-300 rounded-lg'>
-                <TableContainer>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>
-                                    <Box>
-                                        <Typography>
-                                            Ativo
-                                        </Typography>
-                                    </Box>
-                                </TableCell>
-
-                                <TableCell>
-                                    <Box>
-                                        <Typography>
-                                            Nome
-                                        </Typography>
-                                    </Box>
-                                </TableCell>
-
-                                <TableCell>
-                                    <Box>
-                                        <Typography>Cargo</Typography>
-                                    </Box>
-                                </TableCell>
-
-                                <TableCell></TableCell>
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-                            {dadosSimulados.map((dado, index) => (
-                                <TableRow key={index} hover>
-                                    <TableCell>
-                                        <Switch checked={dado.ativo} />
-                                    </TableCell>
-
-                                    <TableCell>
-                                        {/* Link específico para cada aluno */}
-                                        <Link href={`/aluno/${dado.documento}`} underline="none">
-                                            <Typography noWrap>{dado.nome}</Typography>
-                                        </Link>
-                                    </TableCell>
-
-                                    <TableCell>
-                                        <Typography noWrap>{dado.periodicidade}</Typography>
-                                    </TableCell>
-
-                                    <TableCell>
-                                        <Box textAlign="center">
-                                            <IconButton>
-                                                <MoreHorizIcon />
-                                            </IconButton>
-                                        </Box>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Box>
-        </Box>
+        </>
     );
 }

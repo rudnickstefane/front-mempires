@@ -1,10 +1,10 @@
-export const FormatZipCode = (cep: string) => {
+export const FormatZipCode = (ZipCode: string) => {
     // Remove tudo que não é número
-    const cleanedCep = cep.replace(/\D/g, '');
+    const cleanedZipCode = ZipCode.replace(/\D/g, '');
 
     // Verifica se tem o comprimento adequado
-    if (cleanedCep.length <= 5) return cleanedCep;
+    if (cleanedZipCode.length <= 5) return cleanedZipCode;
 
     // Retorna no formato XXXXX-XXX
-    return `${cleanedCep.slice(0, 5)}-${cleanedCep.slice(5, 8)}`;
+    return `${cleanedZipCode.slice(0, 5)}-${cleanedZipCode.slice(5, 8)}`;
 };

@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Page404 from '../modules/common/pages/Error404'
+import { GymConfig } from '../modules/private/InitialConfig'
 import Management from '../modules/private/Management'
+import SignIn from '../modules/public/SignIn'
+import SignUp from '../modules/public/SignUp'
 import Carreiras from '../pages/Carreiras'
 import Home from '../pages/Home'
 import PageBase from '../pages/PageBase'
 import { GymPlans } from '../pages/plans/gym'
 import { NutritionistPlans } from '../pages/plans/nutritionist'
 import Incentivo from '../pages/Programas/Incentivo'
-import Entrar from '../pages/sign-in'
-import SignUp from '../pages/sign-up'
-import { GymConfig } from '../pages/sign-up/gym'
 
 function AppRoutes() {
     return (
@@ -17,7 +17,7 @@ function AppRoutes() {
             <Routes>
                 <Route path="/" element={<PageBase />}>
                     <Route index element={<Home />} />
-                    <Route path='/entrar' element={<Entrar />} />
+                    <Route path='/entrar' element={<SignIn />} />
                     <Route path='/cadastro' element={<SignUp />} />
                     <Route path='/programas/incentivo' element={<Incentivo />} />
                     <Route path='/academia/configuracoes' element={<GymConfig />} />

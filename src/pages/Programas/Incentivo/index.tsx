@@ -14,11 +14,11 @@ function Incentivo() {
                 <GradientBottomHeader></GradientBottomHeader>
                 <TextContainer>
                     <PromoText>
-                        <DestaqueTitle className="bg-primary text-white">Entenda</DestaqueTitle>
+                        <DestaqueTitle className="bg-secondary text-white">Entenda</DestaqueTitle>
                         <div className='flex flex-col'>
                             <span className="text-[24px]">Como funciona <span className='text-[17px]'>o</span></span><span className="text-[34px] mb-10">Programas de Incentivo</span>
                             <p className='text-[17px] font-light text-[#cbcbcb]'>Acesse um sistema <b className='font-bold '>completo</b> para gestão de academias, com <b className='font-bold'>programas de incentivo</b> e treinos personalizados.</p><br />
-                            <a href="/cadastro" className='bg-primary text-[white] p-3 rounded-lg flex flex-row items-center justify-center w-[33%]'>Experimentar agora <FaArrowRight className='ml-2' /></a>
+                            <a href="/cadastro" className='bg-secondary text-[white] p-3 rounded-lg flex flex-row items-center justify-center w-[33%]'>Experimentar agora <FaArrowRight className='ml-2' /></a>
                         </div>
                     </PromoText>
                 </TextContainer>

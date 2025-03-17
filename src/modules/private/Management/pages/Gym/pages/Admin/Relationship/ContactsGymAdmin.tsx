@@ -75,6 +75,7 @@ export default function ContactsGymAdmin() {
         <Box>
             {/* Drawer */}
             <Drawer
+                disableEnforceFocus
                 anchor="right"
                 open={isDrawerOpen}
                 onClose={closeDrawer}

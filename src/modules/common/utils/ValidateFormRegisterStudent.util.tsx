@@ -1,12 +1,14 @@
-import { StudentRegisterFormData, StudentRegisterFormErrors } from "../types";
+import { StudentRegisterFormErrors, StudentUpsertFormData } from "../types";
+import { EmailValidator } from "./EmailValidator.util";
 import { ValidateDate } from "./ValidateDate.util";
-import { ValidateEmail } from "./ValidateEmail.util";
 import { ValidateName } from "./ValidateName.util";
 import { ValidatePhone } from "./ValidatePhone.util";
 
 export const ValidateFormRegisterStudent= (
-  formData: StudentRegisterFormData,
-  activeStep: number
+  formData: StudentUpsertFormData,
+  activeStep: number,
+  indicationCode?: number,
+  isIndication?: boolean
 ): StudentRegisterFormErrors => {
 
   const errors: StudentRegisterFormErrors = {};
@@ -36,6 +38,10 @@ export const ValidateFormRegisterStudent= (
         errors.identityError = 'O documento de identificação é obrigatório.';
       }
 
+      if (!indicationCode && isIndication) {
+        errors.indicationSearchError = 'O aluno que fez a indicação é obrigatório.';
+      }
+
       break;
     }
 
@@ -46,16 +52,16 @@ export const ValidateFormRegisterStudent= (
         errors.zipCodeError = 'O CEP deve conter 8 dígitos.';
       }
 
-      if (!formData.streetAddress) {
-        errors.streetAddressError = 'O endereço é obrigatório.';
+      if (!formData.address) {
+        errors.addressError = 'O endereço é obrigatório.';
       }
 
-      if (!formData.streetNumber) {
-        errors.streetNumberError = 'O número é obrigatório.';
+      if (!formData.number) {
+        errors.numberError = 'O número é obrigatório.';
       }
 
-      if (!formData.neighborhood) {
-         errors.neighborhoodError = 'O bairro é obrigatório.';
+      if (!formData.district) {
+         errors.districtError = 'O bairro é obrigatório.';
       }
 
       if (!formData.city) {
@@ -70,12 +76,21 @@ export const ValidateFormRegisterStudent= (
     }
 
     case 2: {
-      if (!formData.gymPlan) {
-        errors.gymPlanError = 'O tipo do plano é obrigatório.';
+      if (!formData.periodicityCode) {
+        errors.periodicityCodeError = 'O plano é obrigatório.';
       }
 
-      if (!Array.isArray(formData.modalities) || formData.modalities.length === 0) {
-        errors.modalitiesError = 'Selecione ao menos uma modalidade.';
+      if (formData.paymentDay) {
+        const [year, month, day] = formData.paymentDay.split('-').map(Number);
+        const startDate = new Date(year, month - 1, day);
+        startDate.setHours(0, 0, 0, 0);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+      
+        // Comparação
+        if (startDate < today) {
+          errors.paymentDayError = 'A data de vencimento não pode ser anterior ao dia atual.';
+        }
       }
 
       break;
@@ -88,18 +103,25 @@ export const ValidateFormRegisterStudent= (
         errors.phoneError = 'O telefone deve estar no formato (xx) xxxx xxxx ou (xx) x xxxx xxxx.';
       }
 
+      const isEmail = EmailValidator(formData.email);
       if (!formData.email) {
         errors.emailError = 'O e-mail é obrigatório.';
-      } else if (!ValidateEmail(formData.email)) {
-        errors.emailError = 'O e-mail deve ser válido.';
+      } else if (formData.email === 'S/E') {
+        break;
+      } else if (isEmail) {
+        errors.emailError = isEmail;
       }
 
       break;
     }
 
     case 4: {
-      if (!formData.guardianName) {
-        errors.guardianNameError = 'O nome do responsável é obrigatório.';
+      if (!formData.responsible) {
+        errors.responsibleError = 'O nome do responsável é obrigatório.';
+      }
+
+      if (!formData.financeResponsible) {
+        errors.responsibleError = 'O responsável financeiro é obrigatório.';
       }
 
       break;

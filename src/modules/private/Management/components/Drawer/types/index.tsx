@@ -1,3 +1,9 @@
 export type { ContactCreateProps } from './ContactCreateProps.type';
+export type { EditInfosCompanyProps } from './EditInfosCompanyProps.type';
+export type { EditProfileDrawerProps } from './EditProfileDrawerProps.types';
+export type { PlanCreateProps } from './PlanCreateProps.type';
+export type { ReviewsProps } from './ReviewsProps.type';
 export type { StudentRegisterProps } from './StudentRegisterProps.type';
 export type { SupplierRegisterProps } from './SupplierRegisterProps.type';
+export type { TicketsProps } from './TicketsProps.type';
+export type { TransactionsProps } from './TransactionsProps.type';
