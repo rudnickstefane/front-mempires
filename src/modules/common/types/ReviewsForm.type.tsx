@@ -1,3 +1,3 @@
 export type ReviewsForm = {
-    [key: string]: string | number | boolean;
+    [key: string]: string | number | boolean | string[] | null;
 }

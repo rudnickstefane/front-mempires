@@ -1,7 +1,7 @@
 import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { FaUserShield } from "react-icons/fa";
 import { MdOpenInNew } from "react-icons/md";
-import { TbLockOff } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import logo from '../../../../modules/assets/images/icon.png';
 import { AccessRestrictProps } from "../../types";
@@ -75,7 +75,7 @@ export const AccessRestrict: React.FC<AccessRestrictProps> = ({ isAuthorized, ch
                         </Box>
                     </Box>
                     <Box className='ml-[5rem]'>
-                        <TbLockOff className='text-[17rem] text-[#d7d7d8]'/>
+                        <FaUserShield className='text-[17rem] text-[#d7d7d8]'/>
                     </Box>
                 </Box>
             </Box>

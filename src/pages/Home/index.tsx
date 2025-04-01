@@ -114,7 +114,7 @@ export default function Home() {
                             </Box>
                         </Box>
                         <Button
-                            href="/programas/incentivo"
+                            href="/cadastro"
                             color="primary"
                             sx={{
                                 width: '176px',
@@ -204,7 +204,7 @@ export default function Home() {
                             </Box>
                             <Button
                                 variant="contained"
-                                href="/planos/nutricionista"
+                                href="/cadastro"
                                 color="primary"
                                 style={{ color: 'white', fontFamily: 'Poppins', height: '3rem', width: '205px', marginTop: '2rem' }}
                                 sx={{
@@ -237,7 +237,7 @@ export default function Home() {
                                 </Box>
                                 <Button
                                     variant="contained"
-                                    href="/planos/fornecedor"
+                                    href="/cadastro"
                                     color="primary"
                                     style={{ color: 'white', fontFamily: 'Poppins', height: '3rem', width: '205px', marginTop: '2rem' }}
                                     sx={{
@@ -279,7 +279,7 @@ export default function Home() {
                             </Box>
                             <Button
                                 variant="contained"
-                                href="/planos/personal"
+                                href="/cadastro"
                                 color="primary"
                                 style={{ color: 'white', fontFamily: 'Poppins', height: '3rem', width: '205px', marginTop: '2rem' }}
                                 sx={{

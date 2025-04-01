@@ -15,5 +15,9 @@ export const StatusMapper: Record<string, { label: string; color: string, backgr
     CLOSED: { label: 'Encerrado', color: '#FFF', backgroundColor: '#27ae60' },
     FAILED: { label: 'Falhou', color: '#FFF', backgroundColor: '#e74c3c' }, // Vermelho para falha
     ESCALATED: { label: 'Escalado', color: '#FFF', backgroundColor: '#8e44ad' }, // Roxo para escalonamento
-    BLACKLISTED: { label: 'Bloqueado', color: '#FFF', backgroundColor: '#2c3e50' }
+    BLACKLISTED: { label: 'Bloqueado', color: '#FFF', backgroundColor: '#2c3e50' },
+    FEATURE: { label: 'Novidade', color: '#4c2c17', backgroundColor: '#fca347'},
+    FIX: { label: 'Correção', color: '#FFF', backgroundColor: '#ff0336'},
+    EVOLUTION: { label: 'Evolução', color: '#FFF', backgroundColor: '#007bff'},
+    UPDATE: { label: 'Atualização', color: '#FFF', backgroundColor: '#27ae60'},
 };

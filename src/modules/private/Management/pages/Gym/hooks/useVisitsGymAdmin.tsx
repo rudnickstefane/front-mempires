@@ -2,12 +2,11 @@ import { SelectChangeEvent } from '@mui/material';
 import { VariantType } from 'notistack';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useBackendForFrontend } from '../../../../../common/hooks/useBackendForFrontend';
-import { FindVisitsResponse, StudentData } from '../../../../../common/types';
+import { FindVisitsResponse, VisitData } from '../../../../../common/types';
 import { GetErrorMessage } from '../../../../../common/utils';
-import { EditStudentDrawer, VisitRegisterDrawer } from '../../../components/Drawer';
+import { EditVisitDrawer, VisitDetailDrawer, VisitRegisterDrawer } from '../../../components/Drawer';
 import { MutationStudentUpsert, QueryFindVisits } from '../../../components/Graphql';
-import { GymStudentDetails } from '../pages/Admin/Students/Details';
-import { AdminGymDetailsProps, AdminGymDrawerType } from '../types';
+import { AdminGymDrawerType } from '../types';
 
 export const useVisitsGymAdmin = ({
     enqueueSnackbar
@@ -19,14 +18,12 @@ export const useVisitsGymAdmin = ({
     const [isLoading, setIsLoading] = useState(false);
     const companyCode = Number(localStorage.getItem('@iflexfit:companyCode'));
     const [responsePlans, setResponsePlans] = useState<FindVisitsResponse | null>();
-    const [alterStudent, setAlterStudent] = useState<StudentData | null>();
-    const [studentDetails, setStudentDetails] = useState<StudentData | null>();
+    const [alterVisit, setAlterVisit] = useState<VisitData | null>();
+    const [visitDetail, setVisitDetails] = useState<VisitData | null>();
     const [attemptCount, setAttemptCount] = useState(0);
-    const [isDetailsView, setIsDetailsView] = useState(false);
     const calledRef = useRef(false);
     const [modalConfirmDelete, setModalConfirmDelete] = useState(false);
     const [activeDrawerStep, setActiveDrawerStep] = useState(0);
-    const [activeContentStep, setActiveContentStep] = useState(0);
 
     // Estado de controle de paginação e busca
     const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -34,7 +31,7 @@ export const useVisitsGymAdmin = ({
     const [searchText, setSearchText] = useState("");
 
     // Aplicar filtragem de alunos
-    const filteredPlans = (responsePlans?.findVisits || []).filter((student) => {
+    const filteredPlans = (responsePlans?.findVisits || []).filter((visit) => {
         const searchLower = searchText.trim().toLowerCase();
 
         // Extrair número do formato STD-52
@@ -46,12 +43,12 @@ export const useVisitsGymAdmin = ({
         const sanitize = (value: string) => value?.replace(/[.\-/]/g, '').toLowerCase();
 
         // Documento sanitizado e busca sanitizada
-        const sanitizedIdentity = sanitize(student.identity);
+        const sanitizedIdentity = sanitize(visit.identity);
         const sanitizedSearch = sanitize(searchText);
 
         return (
-            student.name?.toLowerCase().includes(searchLower) || // Filtrar pelo nome
-            (student.profileCode && extractedProfileCode && student.profileCode.toString() === extractedProfileCode) ||
+            visit.name?.toLowerCase().includes(searchLower) || // Filtrar pelo nome
+            (visit.visitCode && extractedProfileCode && visit.visitCode.toString() === extractedProfileCode) ||
             (sanitizedIdentity?.startsWith(sanitizedSearch))
         );
     });
@@ -85,56 +82,22 @@ export const useVisitsGymAdmin = ({
         setAnchorEls((prev) => ({ ...prev, [profileCode]: null }));
     };
 
-    const handleMoreDetails = (profileCode: string) => {
-        const studentDetail = responsePlans?.findVisits?.find((student) => student.profileCode === profileCode);
-        if (studentDetail) {
-            setStudentDetails(studentDetail);
+    const handleMoreDetails = (visitCode: string) => {
+        const visitDetails = responsePlans?.findVisits?.find((visit) => visit.visitCode === visitCode);
+        if (visitDetails) {
+            setVisitDetails(visitDetails);
         } 
-        setIsDetailsView(true);
-        openContent('StudentDetails');
-        handleCloseMore(profileCode);
+        openDrawer('VisitDetails');
+        handleCloseMore(visitCode);
     };
 
-    const handleAlterStudent = (profileCode: string) => {
-        const studentDetail = responsePlans?.findVisits?.find((plan) => plan.profileCode === profileCode);
+    const handleAlterVisit = (visitCode: string) => {
+        const studentDetail = responsePlans?.findVisits?.find((visit) => visit.visitCode === visitCode);
         if (studentDetail) {
-            setAlterStudent(studentDetail);
+            setAlterVisit(studentDetail);
         }    
-        openDrawer('EditStudent');
-        handleCloseMore(profileCode);
-    };
-
-    const handleStatusPlan = async (profileCode: string, status: string) => {
-        try {
-            const variables = {
-                data: {
-                    origin: 'GYM',
-                    type: 'UPDATE',
-                    input: {
-                        action: 'HANDLE_STATUS',
-                        studentCode: Number(profileCode),
-                        status: status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE',
-                    }
-                }
-            };
-
-            await request(MutationStudentUpsert, variables);
-
-            const message = status === 'ACTIVE' 
-            ? 'Aluno desativado com sucesso!' 
-            : 'Aluno ativado com sucesso!';
-            enqueueSnackbar(message, { variant: 'success' });
-            refresh('findVisits');
-        } catch (error: unknown) {
-            setAttemptCount(prevCount => prevCount + 1);
-            if (attemptCount >= 5) {
-                return enqueueSnackbar('Erro ao ativar/desativar aluno. Entre em contato com nosso suporte.', { variant: 'error' });
-            }
-
-            const genericError = 'Ops! Algo deu errado ao ativar/desativar aluno. Tente novamente!'
-            const errorMessage = GetErrorMessage(error, genericError);
-            enqueueSnackbar(errorMessage, { variant: 'error' });
-        }
+        openDrawer('EditVisit');
+        handleCloseMore(visitCode);
     };
 
     const handleConfirmDelete = () => {
@@ -176,8 +139,6 @@ export const useVisitsGymAdmin = ({
     };
 
     const isMenuOpen = (profileCode: string) => Boolean(anchorEls[profileCode]);
-
-    const [componentType, setComponentType] = useState<AdminGymDetailsProps[keyof AdminGymDetailsProps] | null>(null);
 
     {/* Drawers */}
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -223,38 +184,23 @@ export const useVisitsGymAdmin = ({
                     />
                 );
 
-            case 'EditStudent':
+            case 'EditVisit':
                 return (
-                    <EditStudentDrawer 
+                    <EditVisitDrawer 
                         closeDrawer={closeDrawer} 
                         enqueueSnackbar={enqueueSnackbar}
-                        data={alterStudent}
+                        data={alterVisit}
                         initialStep={activeDrawerStep}
                         refresh={() => refresh('findVisits')}
                     />
                 );
 
-            default:
-                break;
-        }
-    };
-
-    const handleBackToTable = () => {
-        setIsDetailsView(false);
-    };
-
-    const renderComponentContent = () => {
-        switch (componentType) {
-            case 'StudentDetails':
+            case 'VisitDetails':
                 return (
-                    <GymStudentDetails
-                        key={reloadKey}
+                    <VisitDetailDrawer 
                         closeDrawer={closeDrawer} 
                         enqueueSnackbar={enqueueSnackbar}
-                        data={studentDetails}
-                        initialStep={activeContentStep}
-                        refresh={() => refresh('findVisits')}
-                        onBack={handleBackToTable}
+                        data={visitDetail}
                     />
                 );
 
@@ -262,19 +208,6 @@ export const useVisitsGymAdmin = ({
                 break;
         }
     };
-
-    const [reloadKey, setReloadKey] = useState(0);
-
-    useEffect(() => {
-        if (responsePlans) {
-            const studentDetail = responsePlans.findVisits?.find(student => student.profileCode === studentDetails?.profileCode);
-
-            if (studentDetail) {
-                setReloadKey(prevKey => prevKey + 1);  // Força o recarregamento do componente
-                setStudentDetails(studentDetail);
-            }
-        }
-    }, [studentDetails?.profileCode, responsePlans]);
 
     const refresh = async (source: unknown) => {
 
@@ -299,11 +232,6 @@ export const useVisitsGymAdmin = ({
         setActiveDrawerStep(initialStep);
     };
 
-    const openContent = (type: AdminGymDetailsProps[keyof AdminGymDetailsProps], initialStep: number = 0) => {
-        setComponentType(type);
-        setActiveContentStep(initialStep);
-    };
-
     return {
         isLoading,
         responsePlans,
@@ -326,15 +254,12 @@ export const useVisitsGymAdmin = ({
         handleOpenMore,
         handleCloseMore,
         handleMoreDetails,
-        handleAlterStudent,
+        handleAlterVisit,
         handleDeletePlan,
         handleConfirmDelete,
         modalConfirmDelete,
         handleCloseConfirmDelete,
-        handleStatusPlan,
         isMenuOpen,
         visitsToDisplay,
-        isDetailsView,
-        renderComponentContent
     };
 };

@@ -5,7 +5,7 @@ import { BiSupport } from 'react-icons/bi';
 import { CiFolderOff } from 'react-icons/ci';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { TbListDetails } from 'react-icons/tb';
-import { StatusBadge } from '../../../../components/Badges/PaymentBadge';
+import { QueueBadge, StatusBadge } from '../../../../components/Badges/PaymentBadge';
 import { useTicket } from '../../../Gym/hooks';
 
 export default function Protocols() {
@@ -117,7 +117,7 @@ export default function Protocols() {
                                         <TableCell className="max-w-[10rem]">
                                             <Box
                                                 className='cursor-pointer color-primary hover:!text-red-600 whitespace-nowrap overflow-hidden text-ellipsis'
-                                                onClick={() => handleMoreDetails(ticket.ticketCode)}
+                                                onClick={() => handleMoreDetails(ticket.ticketCode, 'PROTOCOL')}
                                                 sx={{
                                                     transition: "transform 0.3s, background-color 0.3s",
                                                 }}
@@ -129,7 +129,7 @@ export default function Protocols() {
                                             <Box
                                                 className='whitespace-nowrap overflow-hidden text-ellipsis'
                                             >
-                                                {ticket.queue === 'GYM_SUPPORT' ? 'Atendimento & Suporte' : 'Financeiro'}
+                                                <QueueBadge payment={ticket.queue} />
                                             </Box>
                                         </TableCell>
                                         <TableCell>
@@ -160,7 +160,7 @@ export default function Protocols() {
                                                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                                 >
                                                     <MenuItem
-                                                        onClick={() => handleMoreDetails(ticket.ticketCode)}
+                                                        onClick={() => handleMoreDetails(ticket.ticketCode, 'PROTOCOL')}
                                                         sx={{
                                                             borderRadius: '.4rem',
                                                             margin: '.2rem 0',

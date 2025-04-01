@@ -1,52 +1,16 @@
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Box, Button, Divider, Drawer, Fade, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Modal, Pagination, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
+import { useSnackbar } from 'notistack';
 import { BiEditAlt } from 'react-icons/bi';
 import { CiFolderOff } from 'react-icons/ci';
 import { MdKeyboardArrowRight, MdOutlineDeleteOutline } from 'react-icons/md';
 import { PiUserPlus } from 'react-icons/pi';
 import { TbListDetails, TbProgressAlert } from 'react-icons/tb';
 import { useVisitsGymAdmin } from '../../../hooks';
-import { GymManagementProps } from '../../../types';
 
-const dadosSimulados = [
-    {
-        ativo: true,
-        nome: 'Igor Anthony Vicente de Paula',
-        documento: '8879492',
-        periodicidade: 'Mensal',
-        valor: '100,00',
-    },
-    {
-        ativo: true,
-        nome: 'Beatriz Betina Fogaça',
-        documento: '0173977',
-        periodicidade: 'Mensal',
-        valor: '140,00',
-    },
-    {
-        ativo: false,
-        nome: 'Rudnick Stefane Nogueira Santana',
-        documento: '8879492',
-        periodicidade: 'Mensal',
-        valor: '100,00',
-    },
-    {
-        ativo: false,
-        nome: 'Elisa Raimunda Teixeira',
-        documento: '3296972',
-        periodicidade: 'Mensal',
-        valor: '140,00',
-    },
-    {
-        ativo: true,
-        nome: 'Eloá Isabella Maya Barbosa',
-        documento: '9564339',
-        periodicidade: 'Mensal',
-        valor: '140,00',
-    },
-];
+export default function VisitsGymAdmin() {
 
-export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) {
+    const { enqueueSnackbar } = useSnackbar();
 
     const {
         itemsPerPage,
@@ -58,21 +22,16 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
         currentPage,
         handlePageChange,
         handleMoreDetails,
-        searchText,
-        setSearchText,
         anchorEls,
         handleOpenMore,
         handleCloseMore,
-        handleAlterStudent,
+        handleAlterVisit,
         handleDeletePlan,
         handleConfirmDelete,
         modalConfirmDelete,
         handleCloseConfirmDelete,
-        handleStatusPlan,
         isMenuOpen,
         visitsToDisplay,
-        isDetailsView,
-        renderComponentContent,
         renderDrawerContent,
         isDrawerOpen,
         closeDrawer,
@@ -116,7 +75,7 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                         },
                     }}
                     onClick={() => openDrawer('VisitRegister')}
-                >Nova Visita</Button>
+                >Novo Visitante</Button>
             </Box>
             <Divider className='!my-5 w-full bg-[#e2e2e4]' />
             <Box className="overflow-x-auto border border-neutral-300 rounded-lg w-full">
@@ -135,7 +94,7 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                         {visitsToDisplay && visitsToDisplay.length > 0 ? (
                             visitsToDisplay.sort((a, b) => 
                                 new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                            ).map((student, index) => (
+                            ).map((visit, index) => (
                             <TableRow
                                 key={index}
                                 sx={{
@@ -149,22 +108,22 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                                 }}
                             >
                                 <TableCell>
-                                    {student.createdAt}
+                                    {visit.createdAt}
                                 </TableCell>
                                 <TableCell className="max-w-[10rem]">
                                     <Box
                                         className='cursor-pointer color-primary hover:!text-red-600 whitespace-nowrap overflow-hidden text-ellipsis'
-                                        onClick={() => handleMoreDetails(student.profileCode)}
+                                        onClick={() => handleMoreDetails(visit.visitCode)}
                                         sx={{
                                             transition: "transform 0.3s, background-color 0.3s",
                                         }}
                                     >
-                                            {student.name}
+                                            {visit.name}
                                     </Box>
                                 </TableCell>
                                 <TableCell>
                                     {(() => {
-                                        const id = student.identity;
+                                        const id = visit.identity;
                                         const len = id.length;
                                         const start = Math.floor((len - 5) / 2); // Início dos 5 do meio
                                         const end = start + 5; // Fim dos 5 do meio
@@ -183,19 +142,19 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                                 </TableCell>
                                 <TableCell>
                                     <Box className='!flex !flex-row items-center'>
-                                        {student.plan && student.plan.length > 0 ? (
+                                        {visit.categories && visit.categories.length > 0 ? (
                                             <>
                                             <Box
                                                 className='max-w-[10rem] whitespace-nowrap overflow-hidden text-ellipsis'
                                             >
-                                                {student.plan[0].name}
+                                                {visit.categories[0].name}
                                             </Box>
-                                            {student.plan.length > 1 && (
+                                            {visit.categories.length > 1 && (
                                                 <Tooltip
                                                 title={
                                                     <>
-                                                    {student.plan.slice(1).map((plan, idx) => (
-                                                        <div key={idx}>{plan.name}</div>
+                                                    {visit.categories.slice(1).map((category, idx) => (
+                                                        <div key={idx}>{category.name}</div>
                                                     ))}
                                                     </>
                                                 }
@@ -212,7 +171,7 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                                                         },
                                                     }}
                                                 >
-                                                    + {student.plan.length - 1}
+                                                    + {visit.categories.length - 1}
                                                 </Box>
                                                 </Tooltip>
                                             )}
@@ -226,17 +185,17 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                                     <Box textAlign="center">
                                         <IconButton
                                             className='w-[2rem] h-[2rem]'
-                                            onClick={(event) => handleOpenMore(event, student.profileCode)}
+                                            onClick={(event) => handleOpenMore(event, visit.visitCode)}
                                             style={{
-                                                backgroundColor: isMenuOpen(student.profileCode) ? '#0000000a' : '',
+                                                backgroundColor: isMenuOpen(visit.visitCode) ? '#0000000a' : '',
                                             }}
                                         >
                                             <MoreHorizIcon />
                                         </IconButton>
                                         <Menu
-                                            anchorEl={anchorEls[student.profileCode]}
-                                            open={Boolean(anchorEls[student.profileCode])}
-                                            onClose={() => handleCloseMore(student.profileCode)}
+                                            anchorEl={anchorEls[visit.visitCode]}
+                                            open={Boolean(anchorEls[visit.visitCode])}
+                                            onClose={() => handleCloseMore(visit.visitCode)}
                                             slotProps={{
                                                 paper: {
                                                     sx: {
@@ -250,7 +209,7 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                                             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                         >
                                             <MenuItem
-                                                onClick={() => handleMoreDetails(student.profileCode)}
+                                                onClick={() => handleMoreDetails(visit.visitCode)}
                                                 sx={{
                                                     borderRadius: '.4rem',
                                                     margin: '.2rem 0',
@@ -266,7 +225,7 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                                                 <ListItemText primary="Mais detalhes" />
                                             </MenuItem>
                                             <MenuItem
-                                                onClick={() => handleAlterStudent(student.profileCode)}
+                                                onClick={() => handleAlterVisit(visit.visitCode)}
                                                 sx={{
                                                     borderRadius: '.4rem',
                                                     margin: '.2rem 0',
@@ -316,7 +275,7 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                                                 <Fade in={modalConfirmDelete}>
                                                     <Box className="bg-white rounded-lg w-[500px] flex flex-col items-center p-7">
                                                         <MdOutlineDeleteOutline className="text-[#ff0336] text-[5.5rem] bg-[#ffe7ec] rounded-3xl p-5" />
-                                                        <Typography className='text-center !text-[1.2rem] !mt-5'>Deseja excluir {student.name}?</Typography>
+                                                        <Typography className='text-center !text-[1.2rem] !mt-5'>Deseja excluir {visit.name}?</Typography>
                                                         <Box className='bg-[#fef7e5] text-[#744600] p-5 rounded-3xl mt-5 text-[.9rem] w-full'>
                                                             <Box className='flex flex-row items-center mb-2'>
                                                             <TbProgressAlert className="text-[#744600] text-[1.5rem] mr-2" />
@@ -353,7 +312,7 @@ export default function VisitsGymAdmin({ enqueueSnackbar }: GymManagementProps) 
                                                                     backgroundColor: '#e6001b',
                                                                 },
                                                                 }}
-                                                                onClick={() => handleDeletePlan(student.profileCode)}
+                                                                onClick={() => handleDeletePlan(visit.visitCode)}
                                                             >
                                                                 Excluir
                                                             </Button>

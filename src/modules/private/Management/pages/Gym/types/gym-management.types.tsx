@@ -12,12 +12,18 @@ export type RendersGymManagement = {
     Application: 'Application';
     Frequencies: 'Frequencies';
     Relationship: 'Relationship';
+    Products: 'Products';
     Marketplace: 'Marketplace';
     Suppliers: 'Suppliers';
     Contributors: 'Contributors';
     Settings: 'Settings';
     Company: 'Company';
-    Support: '';
+    Support: 'Support';
+    Personal: 'Personal';
+    Nutritionist: 'Nutritionist';
+    Notifications: 'Notifications';
+    GroupAccess: 'GroupAccess';
+    Signature: 'Signature';
 };
 
 export type GymManagementType = keyof RendersGymManagement;

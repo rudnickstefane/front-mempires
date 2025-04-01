@@ -1,7 +1,7 @@
 import { Box, Divider, Typography } from "@mui/material";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
-export default function MarketplaceGymAdmin() {
+export default function ProductsGymAdmin() {
     return (
         <Box>
             <Box className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem]">
@@ -10,10 +10,10 @@ export default function MarketplaceGymAdmin() {
                         <Box className='flex flex-row justify-between items-center'>
                             <Box>
                                 <Typography className='flex flex-row items-center !text-[2.25rem] text-[#212121]'>
-                                    Marketplace
+                                    Produtos
                                 </Typography>
                                 <Typography className='flex flex-row items-center !text-[.85rem] !mt-4'>
-                                    Administrativo<MdKeyboardArrowRight />Marketplace
+                                    Administrativo<MdKeyboardArrowRight />Produtos
                                 </Typography>
                             </Box>
                         </Box>

@@ -2,10 +2,12 @@ import { SelectChangeEvent } from '@mui/material';
 import { VariantType } from 'notistack';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useBackendForFrontend } from '../../../../../common/hooks/useBackendForFrontend';
-import { FindTicketsResponse, TicketData } from '../../../../../common/types';
-import { EditStudentDrawer, TicketCreateDrawer } from '../../../components/Drawer';
-import { QueryFindTickets } from '../../../components/Graphql';
+import { FindTicketsResponse, FindUpdatesResponse, TicketData, UpdateData } from '../../../../../common/types';
+import { SuggestionCreateDrawer, TicketCreateDrawer } from '../../../components/Drawer';
+import { QueryFindTickets, QueryFindUpdates } from '../../../components/Graphql';
 import { TicketDetails } from '../../Support/pages/Protocols/Details';
+import { SuggestionDetails } from '../../Support/pages/Suggestions/Details';
+import { UpdateDetails } from '../../Support/pages/Updates/Details';
 import { AdminGymDetailsProps, AdminGymDrawerType } from '../types';
 
 export const useTicket = ({
@@ -17,9 +19,13 @@ export const useTicket = ({
     const { request } = useBackendForFrontend();
     const [isLoading, setIsLoading] = useState(false);
     const companyCode = Number(localStorage.getItem('@iflexfit:companyCode'));
-    const [responseTickets, setresponseTickets] = useState<FindTicketsResponse | null>();
-    const [alterStudent, setAlterStudent] = useState<TicketData | null>();
+    const role = String(localStorage.getItem('@iflexfit:role'));
+    const [responseTickets, setResponseTickets] = useState<FindTicketsResponse | null>();
+    const [responseSuggestions, setResponseSuggestions] = useState<FindTicketsResponse | null>();
+    const [responseUpdates, setResponseUpdates] = useState<FindUpdatesResponse | null>();
+    const [updateDetails, setUpdateDetails] = useState<UpdateData | null>();
     const [ticketDetails, setTicketDetails] = useState<TicketData | null>();
+    const [suggestionDetails, setSuggestionDetails] = useState<TicketData | null>();
     const [attemptCount, setAttemptCount] = useState(0);
     const [isDetailsView, setIsDetailsView] = useState(false);
     const calledRef = useRef(false);
@@ -75,14 +81,37 @@ export const useTicket = ({
         setAnchorEls((prev) => ({ ...prev, [ticketCode]: null }));
     };
 
-    const handleMoreDetails = (ticketCode: string) => {
-        const ticketDetail = responseTickets?.findTickets?.find((ticket) => ticket.ticketCode === ticketCode);
-        if (ticketDetail) {
-            setTicketDetails(ticketDetail);
-        } 
-        setIsDetailsView(true);
-        openContent('TicketDetail');
-        handleCloseMore(ticketCode);
+    const handleMoreDetails = (ticketCode: string, type: string) => {
+        
+        if (type === 'PROTOCOL') {
+            const ticketDetail = responseTickets?.findTickets?.find((ticket) => ticket.ticketCode === ticketCode);
+            if (ticketDetail) {
+                setTicketDetails(ticketDetail);
+            } 
+            setIsDetailsView(true);
+            openContent('TicketDetail');
+            handleCloseMore(ticketCode);
+        }
+
+        if (type === 'SUGGESTION') {
+            const suggestionDetail = responseSuggestions?.findTickets?.find((ticket) => ticket.ticketCode === ticketCode);
+            if (suggestionDetail) {
+                setSuggestionDetails(suggestionDetail);
+            } 
+            setIsDetailsView(true);
+            openContent('SuggestionDetail');
+            handleCloseMore(ticketCode);
+        }
+
+        if (type === 'UPDATES') {
+            const updateDetail = responseUpdates?.findUpdates?.find((ticket) => ticket.updateCode === ticketCode);
+            if (updateDetail) {
+                setUpdateDetails(updateDetail);
+            } 
+            setIsDetailsView(true);
+            openContent('UpdateDetail');
+            handleCloseMore(ticketCode);
+        }
     };
 
     const isMenuOpen = (ticketCode: string) => Boolean(anchorEls[ticketCode]);
@@ -94,21 +123,57 @@ export const useTicket = ({
     const [drawerType, setDrawerType] = useState<AdminGymDrawerType[keyof AdminGymDrawerType] | null>(null);
 
     const findTickets = useCallback(async () => {
-            setIsLoading(true);
-            try {
-                const response: FindTicketsResponse = await request(QueryFindTickets, { request: 'COMPANY_ISSUER_TO_ALL', issuerCode: companyCode });
+        setIsLoading(true);
+        try {
+            const response: FindTicketsResponse = await request(QueryFindTickets, { request: 'COMPANY_ISSUER_TO_ALL', issuerCode: companyCode });
 
-                setresponseTickets(response);
-            } catch (error) {
-                setAttemptCount(prevCount => prevCount + 1);
-                if (attemptCount >= 5) {
-                    return enqueueSnackbar('Erro ao buscar protocolos. Entre em contato com nosso suporte.', { variant: 'error' });
-                }
-                enqueueSnackbar('Erro ao buscar seus protocolos.', { variant: 'error' });
-            } finally {
-                setIsLoading(false);
+            setResponseTickets(response);
+        } catch (error) {
+            setAttemptCount(prevCount => prevCount + 1);
+            if (attemptCount >= 5) {
+                return enqueueSnackbar('Erro ao buscar protocolos. Entre em contato com nosso suporte.', { variant: 'error' });
             }
-        }, [attemptCount, companyCode, enqueueSnackbar, request]);
+            enqueueSnackbar('Erro ao buscar seus protocolos.', { variant: 'error' });
+        } finally {
+            setIsLoading(false);
+        }
+    }, [attemptCount, companyCode, enqueueSnackbar, request]);
+
+    const findUpdates = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const response: FindUpdatesResponse = await request(QueryFindUpdates, { request: role });
+
+            setResponseUpdates(response);
+        } catch (error) {
+            setAttemptCount(prevCount => prevCount + 1);
+            if (attemptCount >= 5) {
+                return enqueueSnackbar('Erro ao encontrar atualizações. Entre em contato com nosso suporte.', { variant: 'error' });
+            }
+            enqueueSnackbar('Erro ao encontrar atualizações.', { variant: 'error' });
+        } finally {
+            setIsLoading(false);
+        }
+    }, [attemptCount, enqueueSnackbar, request, role]);
+
+    const findSuggestions = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const response: FindTicketsResponse = await request(QueryFindTickets, { request: 'COMPANY_ISSUER_SUGGESTION_TO_ALL', issuerCode: companyCode });
+
+            setResponseSuggestions(response);
+        } catch (error) {
+            setAttemptCount(prevCount => prevCount + 1);
+            if (attemptCount >= 5) {
+                return enqueueSnackbar('Erro ao buscar sugestões. Entre em contato com nosso suporte.', { variant: 'error' });
+            }
+            enqueueSnackbar('Erro ao buscar sugestões.', { variant: 'error' });
+        } finally {
+            setIsLoading(false);
+        }
+    }, [attemptCount, companyCode, enqueueSnackbar, request]);
+
+    const [reloadKey, setReloadKey] = useState(0);
 
     useEffect(() => {
         if (!calledRef.current) {
@@ -116,11 +181,33 @@ export const useTicket = ({
 
             const fetchData = async () => {
                 await findTickets();
+                await findSuggestions();
+                await findUpdates();
             };
 
             fetchData();
         }
-    }, [findTickets]);
+    }, [findTickets, findSuggestions, findUpdates]);
+
+    useEffect(() => {
+        if (responseTickets) {
+            const ticketMessageReceived = responseTickets.findTickets?.find(ticket => ticket.ticketCode === ticketDetails?.ticketCode);
+
+            if (ticketMessageReceived) {
+                setReloadKey(prevKey => prevKey + 1);
+                setTicketDetails(ticketMessageReceived);
+            }
+        }
+
+        if (responseSuggestions) {
+            const ticketMessageReceived = responseSuggestions.findTickets?.find(ticket => ticket.ticketCode === suggestionDetails?.ticketCode);
+
+            if (ticketMessageReceived) {
+                setReloadKey(prevKey => prevKey + 1);
+                setSuggestionDetails(ticketMessageReceived);
+            }
+        }
+    }, [responseSuggestions, responseTickets, suggestionDetails?.ticketCode, ticketDetails?.ticketCode]);
 
     const renderDrawerContent = () => {
         switch (drawerType) {
@@ -133,14 +220,12 @@ export const useTicket = ({
                     />
                 );
 
-            case 'EditStudent':
+            case 'SuggestionCreate':
                 return (
-                    <EditStudentDrawer 
+                    <SuggestionCreateDrawer 
                         closeDrawer={closeDrawer} 
-                        enqueueSnackbar={enqueueSnackbar}
-                        data={alterStudent}
-                        initialStep={activeDrawerStep}
-                        refresh={() => refresh('findTickets')}
+                        enqueueSnackbar={enqueueSnackbar} 
+                        refresh={() => refresh('findSuggestions')}
                     />
                 );
 
@@ -158,11 +243,36 @@ export const useTicket = ({
             case 'TicketDetail':
                 return (
                     <TicketDetails
+                        key={reloadKey}
                         closeDrawer={closeDrawer} 
                         enqueueSnackbar={enqueueSnackbar}
                         data={ticketDetails}
                         initialStep={activeContentStep}
-                        refresh={() => refresh('findStudents')}
+                        refresh={() => refresh('findTickets')}
+                        onBack={handleBackToTable}
+                    />
+                );
+
+            case 'SuggestionDetail':
+                return (
+                    <SuggestionDetails
+                        key={reloadKey}
+                        closeDrawer={closeDrawer} 
+                        enqueueSnackbar={enqueueSnackbar}
+                        data={suggestionDetails}
+                        initialStep={activeContentStep}
+                        refresh={() => refresh('findSuggestions')}
+                        onBack={handleBackToTable}
+                    />
+                );
+
+            case 'UpdateDetail':
+                return (
+                    <UpdateDetails
+                        closeDrawer={closeDrawer} 
+                        enqueueSnackbar={enqueueSnackbar}
+                        data={updateDetails}
+                        initialStep={activeContentStep}
                         onBack={handleBackToTable}
                     />
                 );
@@ -177,6 +287,10 @@ export const useTicket = ({
         switch (source) {
             case 'findTickets':
                 await findTickets();
+                break;
+
+            case 'findSuggestions':
+                await findSuggestions();
                 break;
             
             default:
@@ -203,6 +317,8 @@ export const useTicket = ({
     return {
         isLoading,
         responseTickets,
+        responseUpdates,
+        responseSuggestions,
         renderDrawerContent,
         openDrawer,
         closeDrawer,
@@ -225,6 +341,6 @@ export const useTicket = ({
         isMenuOpen,
         ticketsToDisplay,
         isDetailsView,
-        renderComponentContent
+        renderComponentContent,
     };
 };

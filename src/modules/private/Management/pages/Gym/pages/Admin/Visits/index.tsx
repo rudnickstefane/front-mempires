@@ -405,7 +405,7 @@ export const GymVisitsDetails = ({
                                                             </Box>
                                                             <Box className='grid grid-cols-[10.5rem,1fr]'>
                                                                 <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Estado Civil</Typography>
-                                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.stateMarital === 'MARRIED' ? 'Casado(a)' : data?.stateMarital === 'SINGLE' ? 'Solteiro(a)' : data?.stateMarital ? 'Outros' : ''}</Typography>
+                                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.stateMarital === 'MARRIED' ? 'Casado' : data?.stateMarital === 'SINGLE' ? 'Solteiro' : data?.stateMarital ? 'Outros' : ''}</Typography>
                                                             </Box>
                                                             <Box className='grid grid-cols-[10.5rem,1fr]'>
                                                                 <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Profissão</Typography>

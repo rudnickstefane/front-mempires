@@ -137,7 +137,7 @@ export const useSignUpGymForm = ({enqueueSnackbar}: {
             const assignment = responseCreateToken.createToken.user.profiles[0].assignment;
 
             localStorage.setItem('@iflexfit:token', responseCreateToken.createToken.token);
-            localStorage.setItem('@iflexfit:origin', responseCreateToken.createToken.user.profiles[0].role);
+            localStorage.setItem('@iflexfit:role', responseCreateToken.createToken.user.profiles[0].role);
             localStorage.setItem('@iflexfit:status', responseCreateToken.createToken.user.profiles[0].status);
             localStorage.setItem('@iflexfit:email', responseCreateToken.createToken.user.email);
             localStorage.setItem('@iflexfit:name', responseCreateToken.createToken.user.name);

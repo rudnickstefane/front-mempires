@@ -2,13 +2,9 @@ export type FindTicketsResponse = {
   findTickets: Array<{
     ticketCode: string;
     issuerUserCode: string;
-    nameIssuerUser: string;
     issuerCompanyCode: string;
-    nameIssuerCompany: string;
     recipientUserCode: string;
-    nameRecipientUser: string;
     recipientCompanyCode: string;
-    nameRecipientCompany: string;
     name: string;
     description: string;
     method: string;
@@ -27,6 +23,14 @@ export type FindTicketsResponse = {
     finishedAt: string;
     messages: Array<{
       messageCode: string;
+      sentUserCode: string;
+      sentCompanyCode: string;
+      receivedUserCode: string;
+      receivedCompanyCode: string;
+      nameSentUser: string;
+      nameSentCompany: string;
+      nameReceivedUser: string;
+      nameReceivedCompany: string;
       title: string;
       email: string;
       phone: string;

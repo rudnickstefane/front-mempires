@@ -50,7 +50,7 @@ export default function UsersGymAdmin() {
                         Usuários
                     </Typography>
                     <Typography className='flex flex-row items-center !text-[.85rem] !mt-4'>
-                        Administrativo<MdKeyboardArrowRight />Perfil e Configurações<MdKeyboardArrowRight />Usuários
+                        Administrativo<MdKeyboardArrowRight />Configurações<MdKeyboardArrowRight />Usuários
                     </Typography>
                 </Box>
                 <Button

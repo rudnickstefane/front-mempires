@@ -1,13 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import { MdKeyboardArrowRight } from 'react-icons/md';
-import AdvertisementsGymAdmin from "../Gym/pages/Admin/Relationship/AdvertisementsGymAdmin";
-import ChatsGymAdmin from "../Gym/pages/Admin/Relationship/ChatsGymAdmin";
-import ContactsGymAdmin from "../Gym/pages/Admin/Relationship/ContactsGymAdmin";
-import EventsGymAdmin from "../Gym/pages/Admin/Relationship/EventsGymAdmin";
 import { HomeGymAdminType } from "../Gym/pages/Admin/types/AdminGym.types";
 import { ResourceBoxProps } from "../Gym/types/gym-resource-box.types";
 import Protocols from "./pages/Protocols";
+import Suggestions from "./pages/Suggestions";
+import Updates from "./pages/Updates";
 
 const subResources: ResourceBoxProps[] = [
     // ... (keeping your existing subResources array unchanged)
@@ -21,14 +19,14 @@ const subResources: ResourceBoxProps[] = [
     {
         icon: MdKeyboardArrowRight,
         menu: 'Relationship',
-        type: 'Contacts',
+        type: 'Updates',
         name: 'Atualizações',
         description: 'Contatos',
     },
     {
         icon: MdKeyboardArrowRight,
         menu: 'Relationship',
-        type: 'Chats',
+        type: 'Suggestions',
         name: 'Sugestões',
         description: 'Conversas',
     },
@@ -61,10 +59,8 @@ const SubResourceBox = ({ icon: Icon, name, onClick, isSelected }: ResourceBoxPr
 
 const renderComponents: { [key in HomeGymAdminType]: React.ComponentType } = {
     Protocols: Protocols,
-    Contacts: ContactsGymAdmin,
-    Chats: ChatsGymAdmin,
-    Events: EventsGymAdmin,
-    Advertisements: AdvertisementsGymAdmin,
+    Updates: Updates,
+    Suggestions: Suggestions,
 };
 
 export default function Support () {

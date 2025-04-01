@@ -1,0 +1,42 @@
+export type FindProductsResponse = {
+  findProducts: Array<{
+    productCode: string;
+    companyCode: string;
+    fantasyName: string;
+    type: string;
+    ean: string;
+    sku: string;
+    brand: string;
+    model: string;
+    images: Array<{
+      imageCode: string;
+      image: string;
+      primary: boolean;
+    }>;
+    name: string;
+    description: string;
+    inventory: string;
+    price: string;
+    width: string;
+    height: string;
+    length: string;
+    weight: string;
+    discountPercent: string;
+    discountAmount: string;
+    sale: boolean;
+    warranty: string;
+    status: string;
+    shippingType: string;
+    shippingCost: string;
+    freeShipping: boolean;
+    soldQuantity: string;
+    totalRatings: string;
+    averageRating: string;
+    installments: string;
+    freeInstallments: string;
+    installmentRate: string;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string;
+  }>;
+};

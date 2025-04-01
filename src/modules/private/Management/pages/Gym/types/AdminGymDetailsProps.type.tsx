@@ -13,5 +13,12 @@ export type AdminGymDetailsProps = {
     ReviewDetail: 'ReviewDetail',
     ReviewEdit: 'ReviewEdit',
     ClassDetail: 'ClassDetail',
-    TicketDetail: 'TicketDetail'
+    TicketDetail: 'TicketDetail',
+    SuggestionDetail: 'SuggestionDetail',
+    UpdateDetail: 'UpdateDetail',
+    VisitDetails: 'VisitDetails',
+    ContributorDetails: 'ContributorDetails',
+    EditContributor: 'EditContributor',
+    GroupDetails: 'GroupDetails',
+    EditGroup: 'EditGroup',
 };

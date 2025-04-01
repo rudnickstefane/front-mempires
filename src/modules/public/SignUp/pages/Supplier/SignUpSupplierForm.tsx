@@ -103,7 +103,6 @@ export const SignUpSupplierForm = ({
                         <>
                             <Box className='w-[500px] rounded-lg p-10 shadow-lg bg-white items-center flex flex-col'>
                                 <Box className='flex flex-col justify-center items-center w-full'>
-                                    <Typography className='!text-3xl !text-[#333333]'>Experimente 15 dias <span className='color-primary'>grátis</span></Typography>
                                     <Typography className='!mt-5 text-center'>Quase lá! Preencha os dados abaixo.</Typography>
                                     <Divider className='!my-5 w-full' />
                                     <Box className='items-center justify-center flex flex-col w-full'>

@@ -1,0 +1,37 @@
+export type ProductData = {
+  productCode: number;
+  companyCode: number;
+  companyName: string;
+  type: string;
+  ean: string;
+  sku: string;
+  brand: string;
+  model: string;
+  images: Array<{
+    imageCode: number;
+    image: string;
+    primary: boolean;
+  }>;
+  name: string;
+  description: string;
+  inventory: number;
+  price: number;
+  width: number;
+  height: number;
+  length: number;
+  weight: number;
+  discountPercent: number;
+  discountAmount: number;
+  sale: boolean;
+  warranty: string;
+  status: string;
+  shippingType: string;
+  shippingCost: number;
+  freeShipping: boolean;
+  soldQuantity: number;
+  totalRatings: number;
+  averageRating: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+};

@@ -1,15 +1,15 @@
 import { Box } from '@mui/material';
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp, FaYoutube } from 'react-icons/fa';
-import { FaXTwitter } from "react-icons/fa6";
-import logo from '../../assets/images/machine.png';
-import { Img, Link } from './styles.d';
+// import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp, FaYoutube } from 'react-icons/fa';
+// import { FaXTwitter } from "react-icons/fa6";
+// import logo from '../../assets/images/machine.png';
+// import { Img, Link } from './styles.d';
 
 function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
         <Box className="text-[#08041b] flex flex-col justify-center">
-            <Box className="flex flex-col md:flex-row justify-center items-start py-32 px-20 pb-10 w-full">
+            {/* <Box className="flex flex-col md:flex-row justify-center items-start py-32 px-20 pb-10 w-full">
                 <Box className="mb-6 md:mb-0 mx-5">
                     <Link to="/"><Box className='flex w-32 justify-between items-center'><Img src={logo} alt="Logo" /><Box className='text-[40px] text-[#000]'>iFlex</Box></Box></Link>
                     <p className="mt-2 text-[#646464]">Descubra tudo o que a iFlex pode<br />fazer por você.
@@ -26,8 +26,8 @@ function Footer() {
                     <h2 className="text-[22px] font-semibold color-primary after-arrow">Empresa</h2>
                     <ul className="mt-5 space-y-2 leading-8">
                         <li><a href="/carreiras" className='text-[#646464] hover:text-[#ff0336] transition-colors duration-300'>Carreiras</a></li>
-                        {/* <li><a href="/clientes" className='text-[#646464] hover:text-[#ff0336] transition-colors duration-300'>Clientes</a></li>
-                        <li><a href="/parceiros" className='text-[#646464] hover:text-[#ff0336] transition-colors duration-300'>Parceiros</a></li> */}
+                        <li><a href="/clientes" className='text-[#646464] hover:text-[#ff0336] transition-colors duration-300'>Clientes</a></li>
+                        <li><a href="/parceiros" className='text-[#646464] hover:text-[#ff0336] transition-colors duration-300'>Parceiros</a></li>
                         <li><a href="/quem-somos" className='text-[#646464] hover:text-[#ff0336] transition-colors duration-300'>Quem Somos</a></li>
                     </ul>
                 </Box>
@@ -47,7 +47,7 @@ function Footer() {
                     <a href="https://wa.me/551100000000?text=Ol%C3%A1%2C%20encontrei%20o%20site%20iFlex%20e%20tenho%20algumas%20d%C3%BAvidas." target="_blank" className="mt-2 text-[#212121] flex text-[24px] items-center font-semibold hover:text-[#ff0336] transition-colors duration-300"><FaWhatsapp size={25} className='color-primary mr-2' /> 11 0000 0000</a>
                     <a href='mailto:contato@iflex.fit' className="mt-2 text-[#646464] flex items-center hover:text-[#ff0336] transition-colors duration-300">comercial@iflexfit.com.br</a>
                 </Box>
-            </Box>
+            </Box> */}
             <Box className="flex text-center text-[#646464] h-[92px] items-center justify-center">
                 <p>Copyright &copy; {currentYear} iFlex.</p>
             </Box>

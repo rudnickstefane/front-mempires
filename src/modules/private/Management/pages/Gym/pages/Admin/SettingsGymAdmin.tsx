@@ -2,18 +2,18 @@ import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { ResourceBoxProps } from "../../types/gym-resource-box.types";
-import GroupsGymAdmin from "./GroupsGymAdmin";
+import ContributorsGymAdmin from "./ContributorsGymAdmin";
+import GroupAccessGymAdmin from "./GroupAccessGymAdmin";
 import HoursGymAdmin from "./HoursGymAdmin";
 import { HomeGymAdminType } from "./types/AdminGym.types";
-import UsersGymAdmin from "./UsersGymAdmin";
 
 const subResources: ResourceBoxProps[] = [
     {
         icon: MdKeyboardArrowRight,
-        type: 'Users',
+        type: 'Contributors',
         menu: 'Settings',
-        name: 'Usuários',
-        description: 'Usuários',
+        name: 'Colaboradores',
+        description: 'Colaboradores',
     },
     {
         icon: MdKeyboardArrowRight,
@@ -21,13 +21,6 @@ const subResources: ResourceBoxProps[] = [
         menu: 'Settings',
         name: 'Grupos de Acesso',
         description: 'Grupos de <span class="color-primary">Acesso</span>',
-    },
-    {
-        icon: MdKeyboardArrowRight,
-        type: 'Hours',
-        menu: 'Settings',
-        name: 'Funcionamento',
-        description: 'Horário de <span class="color-primary">Funcionamento</span>',
     },
 ];
 
@@ -57,13 +50,13 @@ const SubResourceBox = ({ icon: Icon, name, onClick, isSelected }: ResourceBoxPr
 );
 
 const renderComponents: { [key in HomeGymAdminType]: React.ComponentType } = {
-    Users: UsersGymAdmin,
-    Groups: GroupsGymAdmin,
+    Contributors: ContributorsGymAdmin,
+    Groups: GroupAccessGymAdmin,
     Hours: HoursGymAdmin
 };
 
 export default function SettingsGymAdmin() {
-    const [selectedType, setSelectedType] = useState<HomeGymAdminType>('Users'); // Default to 'Visits'
+    const [selectedType, setSelectedType] = useState<HomeGymAdminType>('Contributors'); // Default to 'Visits'
     
     const relationshipResources = subResources.filter(resource => resource.menu === 'Settings');
     const SelectedComponent = renderComponents[selectedType];

@@ -24,7 +24,6 @@ export const QueryFindProfileDetails = gql`
       responsible
       profession
       company
-      companyStatus
       contact {
         contactCode
         type
@@ -35,15 +34,17 @@ export const QueryFindProfileDetails = gql`
         emergencyContact
         emergencyPhone
       }
-      clientsPlan {
+      userPlan {
         name
         description
+        level
+        status
         amount
         startDate
         endDate
         nextDueDate
         createdAt
-      },
+      }
     }
   }
 `;

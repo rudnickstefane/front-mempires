@@ -14,8 +14,10 @@ export type RendersHomeGymAdmin = {
     Contributors: 'Contributors',
     Users: 'Users',
     Groups: 'Groups',
-    Hours: 'Hours'
-    Protocols: 'Protocols'
+    Hours: 'Hours',
+    Protocols: 'Protocols',
+    Suggestions: 'Suggestions',
+    Updates: 'Updates'
 };
 
 export type HomeGymAdminType = keyof RendersHomeGymAdmin;

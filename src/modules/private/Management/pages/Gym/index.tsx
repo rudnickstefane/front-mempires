@@ -1,18 +1,20 @@
-import { Box, Button, Collapse, Divider, Skeleton, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Collapse, Divider, ListItemText, Menu, MenuItem, Skeleton, Tooltip, Typography } from "@mui/material";
 import { BiSupport } from "react-icons/bi";
 import { CgMenuRightAlt } from "react-icons/cg";
-import { HiMiniChevronRight } from "react-icons/hi2";
-import { PiStorefront, PiUserCircleLight } from "react-icons/pi";
+import { HiMiniChevronRight, HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { PiConfettiLight, PiStorefront, PiUserCircleLight } from "react-icons/pi";
 import { RiExchange2Line } from "react-icons/ri";
 import { RxExit } from "react-icons/rx";
 import notification from '../../../../../assets/svg/notification.svg';
 import logo from '../../../../../modules/assets/images/icon.png';
+import { ManagementProps } from "../../../../common/types/ManagementProps.type";
 import MenuBox from "../../components/Menus/MenuBox";
 import SubMenuBox from "../../components/Menus/SubMenuBox";
 import { useGymManagement } from "./hooks";
-import { GymManagementType } from "./types/gym-management.types";
+import { GymManagementType, RendersGymManagement } from "./types/gym-management.types";
 
-export default function GymManagement() {
+export default function GymManagement({ permissions }: ManagementProps ) {
 
     const {
         isMenuLoading,
@@ -32,7 +34,17 @@ export default function GymManagement() {
         setSelectedResource,
         finishSession,
         renderComponentContent,
-    } = useGymManagement();
+        anchorEls,
+        handleOpen,
+        handleClose,
+        responseNotifications,
+        formatNotificationTime,
+        handleNotificationRead,
+        menuExcludedPaths,
+        isCompanyDisabled
+    } = useGymManagement({ permissions });
+
+    console.log(permissions);
 
     return (
         <>
@@ -110,7 +122,7 @@ export default function GymManagement() {
                         <Tooltip title={'Informações da Academia'} placement="right" arrow>
                             <Button
                                 className="flex flex-row !rounded-3xl !bg-transparent !justify-start !mt-5 w-full items-center"
-                                endIcon={<RiExchange2Line className={`${isMenuCollapsed ? '!ml-[1rem]' : ''}`}/>}
+                                endIcon={<RiExchange2Line className={`${isMenuCollapsed ? '!ml-[1rem]' : ''} ${isCompanyDisabled ? 'hidden' : ''}`}/>}
                                 style={{ color: '#08041b' }}
                                 sx={{
                                     textTransform: 'none',
@@ -118,6 +130,7 @@ export default function GymManagement() {
                                         color: '#ff0336 !important'
                                     },
                                 }}
+                                disabled={isCompanyDisabled}
                                 onClick={() => {
                                     setSelectedResource(null);
                                     setExpandedMenus([]);
@@ -192,7 +205,9 @@ export default function GymManagement() {
                             </>
                         ) : (
                             <>
-                                {responseMenus?.findMenus?.map((menu) => {
+                                {responseMenus?.findMenus
+                                    ?.filter((menu) => !menuExcludedPaths.includes(menu.path))
+                                    .map((menu) => {
                                     const hasSubMenu = menu?.SubMenus?.length > 0;
                                     const isExpanded = expandedMenus.includes(menu.menuCode);
 
@@ -307,20 +322,177 @@ export default function GymManagement() {
             </Box>
             <Box className="flex flex-col w-full">
                 <Box className="flex flex-row w-full min-h-[6rem] bg-white justify-end items-center px-4">
+                    <Tooltip title={'Planos'} placement="bottom" arrow>
+                        <Button
+                            className='flex flex-row items-center font-poppins !min-w-12 !mx-2 !rounded-full !min-h-12 !bg-[#f3f3f3]'
+                            style={{ color: '#08041b' }}
+                            onClick={() => {
+                                setSelectedResource(null);
+                                setExpandedMenus([]);
+                                setActiveComponent('Signature')
+                            }}>
+                            <HiOutlineClipboardDocumentCheck className='text-[1.5rem]' />
+                        </Button>
+                    </Tooltip>
                     <Tooltip title={'Marketplace'} placement="bottom" arrow>
                         <Button
                             className='flex flex-row items-center font-poppins !min-w-12 !mx-2 !rounded-full !min-h-12 !bg-[#f3f3f3]'
-                            style={{ color: '#08041b' }}>
+                            style={{ color: '#08041b' }}
+                            onClick={() => {
+                                setSelectedResource(null);
+                                setExpandedMenus([]);
+                                setActiveComponent('Marketplace')
+                            }}>
                             <PiStorefront className='text-[1.5rem]' />
                         </Button>
                     </Tooltip>
-                    <Tooltip title={'Notificações'} placement="bottom" arrow>
-                        <Button
-                            className='flex flex-row items-center font-poppins !min-w-12 !mx-2 !rounded-full !min-h-12 !bg-[#f3f3f3]'
-                            style={{ color: '#08041b' }}>
-                            <img src={notification} className='w-[1.5rem]' />
-                        </Button>
-                    </Tooltip>
+                    <Box textAlign="center">
+                        <Tooltip title={'Notificações'} placement="bottom" arrow>
+                            <Button
+                                className='flex flex-row items-center font-poppins !min-w-12 !mx-2 !rounded-full !min-h-12 !bg-[#f3f3f3]'
+                                style={{ color: '#08041b' }}
+                                onClick={(event) => handleOpen(event, 'notification')}
+                            >
+                                <img src={notification} className='w-[1.5rem]' />
+                                {responseNotifications?.findNotifications?.some(n => !n.read) && (
+                                    <Box className="w-2 h-2 bg-secondary rounded-xl !font-intro text-white text-[.7rem] flex items-center justify-center absolute top-3 right-[.9rem]"></Box>
+                                )}
+                            </Button>
+                        </Tooltip>
+                        <Menu
+                            anchorEl={anchorEls['notification']}
+                            open={Boolean(anchorEls['notification'])}
+                            onClose={() => handleClose('notification')}
+                            slotProps={{
+                                paper: {
+                                    elevation: 0,
+                                    sx: {
+                                        borderRadius: '.7rem',
+                                        padding: '0 .6rem',
+                                        overflow: 'visible',
+                                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                        mt: 2,
+                                        ml: -.5,
+                                        '& .MuiAvatar-root': {
+                                            width: 32,
+                                            height: 32,
+                                            ml: -0.5,
+                                            mr: 1,
+                                        },
+                                        '&::before': {
+                                            content: '""',
+                                            display: 'block',
+                                            position: 'absolute',
+                                            top: 0,
+                                            right: 14,
+                                            width: 10,
+                                            height: 10,
+                                            bgcolor: 'background.paper',
+                                            transform: 'translateY(-50%) rotate(45deg)',
+                                            zIndex: 0,
+                                        },
+                                    },
+                                },
+                            }}
+                            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                        >
+                            <Box className='w-full p-3 flex flex-row justify-between items-center'>
+                                <Typography className="!text-[1.2rem]">Notificações</Typography>
+                                <Button
+                                    onClick={() => handleClose('notification')}
+                                    className='flex flex-row items-center font-poppins !min-w-10 !rounded-full !min-h-10 !-mr-2'
+                                    sx={{
+                                        color: '#4b5563',
+                                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                        '&:hover': {
+                                            color: '#ff0336',
+                                        },
+                                    }}
+                                    >
+                                    <IoIosCloseCircleOutline className='text-[1.5rem]' />
+                                </Button>
+                            </Box>
+                            <Box className='overflow-x-auto max-h-[calc(100vh-250px)] pr-2 pb-2'>
+                            {responseNotifications?.findNotifications?.filter(n => !n.read).slice(0, 10).length ? (
+                                responseNotifications?.findNotifications
+                                    ?.filter(n => !n.read) // Filtra apenas as notificações não lidas
+                                    ?.slice(0, 10) // Limita a 10 notificações
+                                    ?.map((notification, index) => (
+                                        <MenuItem
+                                            key={index}
+                                            onClick={() => {
+                                                setSelectedResource(null);
+                                                setExpandedMenus([]);
+                                                handleClose('notification');
+                                                handleNotificationRead(notification.notificationCode)
+                                                setActiveComponent(notification.path as keyof RendersGymManagement)
+                                            }}
+                                            sx={{
+                                                borderRadius: '.4rem',
+                                                margin: '.2rem 0',
+                                                '&:hover': {
+                                                    backgroundColor: '#0000000a !important',
+                                                    color: '#000000de !important',
+                                                },
+                                            }}
+                                        >
+                                            <Box className="flex flex-row py-2">
+                                                <Box className="w-2 h-2 bg-secondary rounded-full mr-4 mt-[.5rem]" />
+                                                <Box className="flex flex-col w-[340px]">
+                                                    <ListItemText primary={notification.title} />
+                                                    <Typography className="whitespace-normal break-words !text-[14px] text-neutral-500">
+                                                        {notification.description}
+                                                    </Typography>
+                                                    <Typography className="whitespace-normal break-words !text-[12px] text-neutral-400 !mt-1">
+                                                        {formatNotificationTime(notification.createdAt)}
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
+                                        </MenuItem>
+                                    ))
+                                ) : (
+                                    <Box className="flex flex-col w-[396px] py-2 pb-8 items-center justify-center" sx={{
+                                        borderRadius: '.4rem',
+                                        margin: '.2rem 0',
+                                    }}>
+                                        <PiConfettiLight className='text-[3.5rem] text-neutral-500' />
+                                        <Typography className="!text-[14px] text-neutral-500 !mt-3">
+                                            Tudo certo por aqui!
+                                        </Typography>
+                                        <Typography className="!text-[14px] text-neutral-500">
+                                            Nenhuma notificação no momento.
+                                        </Typography>
+                                    </Box>
+                                )}
+                            </Box>
+                            <Divider className='w-full my-5' />
+                            <Box className='w-full p-3 flex justify-center mt-2'>
+                                <Button
+                                    className='w-[13rem]'
+                                    style={{ textTransform: 'none', fontFamily: 'Poppins' }}
+                                    sx={{
+                                        color: '#4b5563',
+                                        fontWeight: 'normal',
+                                        padding: 0,
+                                        transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                        '&:hover': {
+                                            background: 'white',
+                                            color: '#ff0336',
+                                        },
+                                    }}
+                                    onClick={() => {
+                                        setSelectedResource(null);
+                                        setExpandedMenus([]);
+                                        handleClose('notification');
+                                        setActiveComponent('Notifications')
+                                    }}
+                                >
+                                    Exibir todas as notificações
+                                </Button>
+                            </Box>                      
+                        </Menu>
+                    </Box>
                     <Tooltip title={'Central de Serviços'} placement="bottom" arrow>
                         <Button
                             className='flex flex-row items-center font-poppins !min-w-12 !mx-2 !rounded-full !min-h-12 !bg-[#f3f3f3]'

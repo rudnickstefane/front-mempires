@@ -9,5 +9,6 @@ export type ResourceBoxProps = {
     isMenuCollapsed?: boolean;
     hasSubMenu?: boolean;
     isExpanded?: boolean;
+    hasPermission?:boolean;
     onClick: () => void;
 }

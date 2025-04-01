@@ -14,23 +14,6 @@ export const StudentUpsertVariables = (
     ))
   : new Date(new Date().setUTCHours(0, 0, 0, 0));
 
-  const referralSourceOptions = [
-    { value: 'billboard', label: 'Outdoor' },
-    { value: 'call', label: 'Ligação' },
-    { value: 'email', label: 'E-mail Marketing' },
-    { value: 'facebook', label: 'Facebook' },
-    { value: 'flyer', label: 'Panfleto' },
-    { value: 'friend', label: 'Indicação de amigo' },
-    { value: 'google', label: 'Google' },
-    { value: 'instagram', label: 'Instagram' },
-    { value: 'student', label: 'Indicação de aluno ou colaborador' },
-    { value: 'website', label: 'Site' },
-    { value: 'whatsapp', label: 'WhatsApp' },
-    { value: 'others', label: 'Outros' },
-  ];
-
-  const selectedReferral = referralSourceOptions.find(option => option.value === formData.referralSource);
-
   return {
     data: {
       origin: formData.origin,
@@ -69,7 +52,7 @@ export const StudentUpsertVariables = (
             emergencyPhone: formData.emergencyPhone,
           },
           responsible: formData.responsible,
-          referralSource: selectedReferral ? selectedReferral.label : null,
+          referralSource: formData.referralSource,
           financeResponsible: financeResponsibleCode,
           indicationCode: indicationCode,
           studentCode: formData.studentCode,

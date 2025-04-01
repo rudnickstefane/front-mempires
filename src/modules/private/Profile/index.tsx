@@ -253,16 +253,20 @@ export default function GymProfileManagement({ data, refresh, isProfileLoading }
                                         ? `@${data.findProfileDetails.username} | ${data.findProfileDetails.contact[0].email}` 
                                         : data?.findProfileDetails.contact[0].email}
                                     </Typography>
-                                    <Typography className='!mt-4'>
-                                        {data?.findProfileDetails.companyStatus === 'FREE_PERIOD' 
-                                        ? 'Você está no período gratuito de 15 dias' 
-                                        : data?.findProfileDetails?.clientsPlan?.name}
-                                    </Typography>
-                                    <Typography className='!text-[.9rem]'>
-                                        {data?.findProfileDetails.companyStatus === 'FREE_PERIOD' 
-                                        ? '' 
-                                        : `Assinante desde ${data?.findProfileDetails?.clientsPlan?.createdAt}`}
-                                    </Typography>
+                                    {data?.findProfileDetails?.userPlan && (
+                                        <>
+                                            <Typography className='!mt-4'>
+                                            {data?.findProfileDetails.userPlan.level === 'FREE_PERIOD' 
+                                            ? 'Você está no período gratuito de 15 dias' 
+                                            : data?.findProfileDetails?.userPlan?.name}
+                                            </Typography>
+                                            <Typography className='!text-[.9rem]'>
+                                                {data?.findProfileDetails.userPlan.level === 'FREE_PERIOD' 
+                                                ? '' 
+                                                : `Assinante desde ${data?.findProfileDetails?.userPlan?.createdAt}`}
+                                            </Typography>
+                                        </>
+                                    )}
                                 </>
                             )
                         }
@@ -287,50 +291,52 @@ export default function GymProfileManagement({ data, refresh, isProfileLoading }
                             </Box>
                         </Box>
                         <Divider className='!my-5 w-full bg-[#e2e2e4]' />
-                        <Box className='mt-5 border border-neutral-300 rounded-lg p-5'>
-                            <Box className='!text-neutral20 !font-roboto !text-base !font-semibold !flex !items-center !gap-4'>Detalhes do Plano</Box>
-                            {data?.findProfileDetails?.clientsPlan ? (
-                                isProfileLoading ? (
-                                    <>
-                                    {Array.from({ length: 2 }).map((_, index) => (
-                                        <Box key={index} className="flex flex-col">
-                                        <Skeleton variant="text" animation="wave" className="w-[30%] !h-[2.1rem] !mt-2" />
-                                        </Box>
-                                    ))}
-                                    </>
-                                ) : (
-                                    <>
-                                    <Box className='grid grid-cols-[10rem,1fr]'>
-                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Tipo</Typography>
-                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
-                                        {data.findProfileDetails.clientsPlan.name || ''}
-                                        </Typography>
-                                    </Box>
-                                    <Box className='grid grid-cols-[10rem,1fr]'>
-                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Assinante desde</Typography>
-                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
-                                        {data.findProfileDetails.clientsPlan.createdAt || ''}
-                                        </Typography>
-                                    </Box>
-                                    <Box className='grid grid-cols-[10rem,1fr]'>
-                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Valor</Typography>
-                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
-                                        {data.findProfileDetails.clientsPlan.amount || ''}
-                                        </Typography>
-                                    </Box>
-                                    <Box className='grid grid-cols-[10rem,1fr]'>
-                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Próximo vencimento</Typography>
-                                        <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
-                                        {data.findProfileDetails.clientsPlan.nextDueDate || ''}
-                                        </Typography>
-                                    </Box>
-                                    </>
-                                )
-                                ) : (
-                                <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">Você está no período gratuito de 15 dias.</Typography>
-                                )
-                            }
-                        </Box>
+                        {data?.findProfileDetails?.userPlan && (
+                            <Box className='mt-5 border border-neutral-300 rounded-lg p-5'>
+                                <Box className='!text-neutral20 !font-roboto !text-base !font-semibold !flex !items-center !gap-4'>Detalhes do Plano</Box>
+                                {data?.findProfileDetails?.userPlan && data?.findProfileDetails.userPlan.level != 'FREE_PERIOD' ? (
+                                        isProfileLoading ? (
+                                            <>
+                                            {Array.from({ length: 2 }).map((_, index) => (
+                                                <Box key={index} className="flex flex-col">
+                                                <Skeleton variant="text" animation="wave" className="w-[30%] !h-[2.1rem] !mt-2" />
+                                                </Box>
+                                            ))}
+                                            </>
+                                        ) : (
+                                            <>
+                                            <Box className='grid grid-cols-[10rem,1fr]'>
+                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Tipo</Typography>
+                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                                {data.findProfileDetails.userPlan.name || ''}
+                                                </Typography>
+                                            </Box>
+                                            <Box className='grid grid-cols-[10rem,1fr]'>
+                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Assinante desde</Typography>
+                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                                {data.findProfileDetails.userPlan.createdAt || ''}
+                                                </Typography>
+                                            </Box>
+                                            <Box className='grid grid-cols-[10rem,1fr]'>
+                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Valor</Typography>
+                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                                {data.findProfileDetails.userPlan.amount || ''}
+                                                </Typography>
+                                            </Box>
+                                            <Box className='grid grid-cols-[10rem,1fr]'>
+                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Próximo vencimento</Typography>
+                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
+                                                {data.findProfileDetails.userPlan.nextDueDate || ''}
+                                                </Typography>
+                                            </Box>
+                                            </>
+                                        )
+                                    ) : (
+                                        <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">Você está no período gratuito de 15 dias.</Typography>
+                                    )
+                                }
+                            </Box>
+                        )}
 
                         <Box className='mt-5 border border-neutral-300 rounded-lg p-5'>
                             <Box className='!text-neutral20 !font-roboto !text-base !font-semibold !flex !items-center !gap-4'>Dados Pessoais

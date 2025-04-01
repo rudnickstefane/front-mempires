@@ -6,6 +6,7 @@ export const TicketUpsertVariables = (
   return {
     input: {
       action: formData.action,
+      ticketCode: formData.ticketCode,
       issuerUserCode: formData.issuerUserCode ? formData.issuerUserCode : null,
       issuerCompanyCode: formData.issuerCompanyCode ? formData.issuerCompanyCode : null,
       recipientUserCode: formData.recipientUserCode ? formData.recipientUserCode : null,
@@ -13,7 +14,7 @@ export const TicketUpsertVariables = (
       name: formData.name,
       description: formData.description ? formData.description : null,
       method: formData.method,
-      queue: formData.queue,
+      queue: formData.queue ? formData.queue : null,
       type: formData.type,
       category: formData.category,
       status: formData.status,

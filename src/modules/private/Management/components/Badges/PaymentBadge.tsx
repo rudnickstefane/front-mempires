@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import { iconMap } from "../../../../common/ui/Icons/IconsMap";
 import { PaymentMapper } from "../../../../common/ui/types/PaymentMapper.type";
+import { PositionMapper } from "../../../../common/ui/types/PositionMapper.type";
+import { QueueMapper } from "../../../../common/ui/types/QueueMapper.type";
 import { StatusMapper } from "../../../../common/ui/types/StatusMapper.type";
 
 interface PaymentBadgeProps {
@@ -95,6 +97,32 @@ export const PaymentTypeBadge: React.FC<PaymentBadgeProps> = ({ payment }) => {
             />
             {paymentInfo.label}
         </Box>
+    );
+};
+
+export const QueueBadge: React.FC<PaymentBadgeProps> = ({ payment }) => {
+    const paymentInfo = QueueMapper[payment] || {
+        label: payment,
+        color: '#7f8c8d',
+    };
+
+    return (
+        <>
+            {paymentInfo.label}
+        </>
+    );
+};
+
+export const PositionBadge: React.FC<PaymentBadgeProps> = ({ payment }) => {
+    const paymentInfo = PositionMapper[payment] || {
+        label: payment,
+        color: '#7f8c8d',
+    };
+
+    return (
+        <>
+            {paymentInfo.label}
+        </>
     );
 };
 

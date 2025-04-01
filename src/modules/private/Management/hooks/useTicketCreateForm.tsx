@@ -1,16 +1,18 @@
 import { SelectChangeEvent } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import makeAnimated from 'react-select/animated';
 import { useBackendForFrontend } from '../../../common/hooks/useBackendForFrontend';
 import { DrawerProps } from '../../../common/types';
 import { FormatText, GetErrorMessage, TicketValidateForm } from '../../../common/utils';
 import { TicketsProps } from '../components/Drawer/types';
+import { MutationNotificationUpsert } from '../pages/Gym/graphql';
 import { MutationTicketUpsert } from '../pages/Gym/graphql/MutationTicketUpsert';
 import { TicketUpsertVariables } from '../pages/Gym/utils';
 
 export const useTicketCreateForm = ({
     closeDrawer,
     enqueueSnackbar,
+    data,
     refresh,
 }: DrawerProps) => {
     
@@ -30,20 +32,12 @@ export const useTicketCreateForm = ({
     ];
 
     const [formData, setFormData] = useState<TicketsProps['formData']>({
-        action: 'TICKET_CREATE',
         issuerUserCode: profileCode,
         issuerCompanyCode: companyCode,
-        recipientUserCode: '',
-        recipientCompanyCode: '',
+        recipientUserCode: data?.recipientUserCode ? data.recipientUserCode : null,
+        recipientCompanyCode: data?.recipientCompanyCode ? data.recipientCompanyCode : null,
         name: '',
         description: '',
-        method: 'TICKET',
-        queue: '',
-        type: 'IFLEXFIT',
-        category: 'PROTOCOL',
-        status: 'NEW',
-        priority: 'NORMAL',
-        sentMessage: false,
         duration: '',
         observation: '',
         responsibleCode: '',
@@ -53,8 +47,8 @@ export const useTicketCreateForm = ({
         message: '',
         sentUserCode: profileCode,
         sentCompanyCode: companyCode,
-        receivedUserCode: '',
-        receivedCompanyCode: '',
+        receivedUserCode: data?.messages[0].receivedUserCode ? data.messages[0].receivedUserCode : null,
+        receivedCompanyCode: data?.messages[0].receivedCompanyCode ? data.messages[0].receivedCompanyCode : null,
     });
 
     const [errors, setErrors] = useState<TicketsProps['errors']>({
@@ -115,7 +109,19 @@ export const useTicketCreateForm = ({
         if (validateForm()) {
             setIsLoading(true);
             try {
-                const variables = TicketUpsertVariables(formData);
+                const ticket = {
+                    action: 'TICKET_CREATE',
+                    method: 'TICKET',
+                    queue: formData.queue === 'GYM_SUPPORT' ? 'GYM_SUPPORT' : 'FINANCIAL',
+                    type: 'IFLEXFIT',
+                    category: 'PROTOCOL',
+                    status: 'NEW',
+                    priority: 'NORMAL',
+                    sentMessage: true,
+                    ...formData
+                }
+
+                const variables = TicketUpsertVariables(ticket);
                 await request(MutationTicketUpsert, variables);
                 enqueueSnackbar('Protocolo aberto com sucesso!', { variant: 'success' });
                 closeDrawer();
@@ -135,6 +141,116 @@ export const useTicketCreateForm = ({
         }
     };
 
+    const handleSuggestionCreate = async () => {
+        if (validateForm()) {
+            setIsLoading(true);
+            try {
+                const ticket = {
+                    action: 'TICKET_CREATE',
+                    queue: 'TRIAGE',
+                    method: 'TICKET',
+                    type: 'IFLEXFIT',
+                    category: 'SUGGESTION',
+                    status: 'NEW',
+                    priority: 'NORMAL',
+                    sentMessage: true,
+                    ...formData
+                }
+
+                const variables = TicketUpsertVariables(ticket);
+                await request(MutationTicketUpsert, variables);
+                enqueueSnackbar('Sugestão enviada com sucesso!', { variant: 'success' });
+                closeDrawer();
+                refresh?.();
+            } catch (error: unknown) {
+                setAttemptCount(prevCount => prevCount + 1);
+                if (attemptCount >= 5) {
+                    return enqueueSnackbar('Erro ao enviar sugestão. Entre em contato por outro método de comunicação.', { variant: 'error' });
+                }
+
+                const genericError = 'Ops! Algo deu errado ao enviar sugestão. Tente novamente!'
+                const errorMessage = GetErrorMessage(error, genericError);
+                enqueueSnackbar(errorMessage, { variant: 'error' });
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
+
+    const handleMessageCreate = async (ticketCode: string) => {
+        setIsLoading(true);
+        try {
+            const ticket = {
+                action: 'TICKET_MESSAGE_CREATE',
+                ticketCode: ticketCode,
+                sentMessage: true,
+                title: '',
+                email: '',
+                phone: '',
+                observation: '',
+                ...formData,
+            }
+            
+            const variables = TicketUpsertVariables(ticket);
+            await request(MutationTicketUpsert, variables);
+            await notificationPush();
+            enqueueSnackbar('Mensagem enviada com sucesso!', { variant: 'success' });
+            refresh?.();
+        } catch (error: unknown) {
+            setAttemptCount(prevCount => prevCount + 1);
+            if (attemptCount >= 5) {
+                return enqueueSnackbar('Erro ao enviar mensagem. Entre em contato por outro método de comunicação.', { variant: 'error' });
+            }
+
+            const genericError = 'Ops! Algo deu errado ao enviar mensagem. Tente novamente!'
+            const errorMessage = GetErrorMessage(error, genericError);
+            enqueueSnackbar(errorMessage, { variant: 'error' });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const notificationPush = async () => {
+        const variables = {
+            input: {
+                action: 'CREATE',
+                title: `Resposta ao seu protocolo de nº ${data.ticketCode}`,
+                description: `Você tem 1 mensagem não lida relacionada ao protocolo de nº ${data.ticketCode}. Para um atendimento mais ágil e eficiente, verifique-a o quanto antes.`,
+                issuerUserCode: profileCode,
+                issuerCompanyCode: companyCode,
+                recipientUserCode: data?.recipientUserCode ? data.recipientUserCode : null,
+                recipientCompanyCode: data?.recipientCompanyCode ? data.recipientCompanyCode : null,
+                path: 'Support'
+            },
+        }
+
+        await request(MutationNotificationUpsert, variables);
+    };
+
+    const notificationRead = useCallback(async() => {
+        const variables = {
+            input: {
+                action: 'READ_MESSAGE',
+                recipientUserCode: profileCode,
+                recipientCompanyCode: companyCode,
+                title: `Resposta ao seu protocolo de nº ${data.ticketCode}`,
+            },
+        }
+
+        await request(MutationNotificationUpsert, variables);
+    }, [companyCode, data?.ticketCode, profileCode, request]);
+        
+    useEffect(() => {
+        // Configura o intervalo para chamar a cada 30 segundos
+        const intervalId = setInterval(() => {
+            refresh?.();
+            notificationRead?.();
+        }, 30 * 1000); // 30 segundos em milissegundos
+
+        // Limpa o intervalo quando o componente desmontar
+        return () => clearInterval(intervalId);
+    }, [notificationRead, refresh]);
+
     return {
         setFormData,
         setErrors,
@@ -148,6 +264,8 @@ export const useTicketCreateForm = ({
         handleTextFieldChange,
         handleSelectMuiChange,
         handleFinish,
+        handleSuggestionCreate,
         charactersRemaining,
+        handleMessageCreate,
     };
 };

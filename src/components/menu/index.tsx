@@ -61,11 +61,11 @@ export function HeaderMenu() {
                         disableScrollLock
                     >
                         <MenuItem onClick={handleClose} component={Link} to="/planos/academia">Academia</MenuItem>
-                        <MenuItem onClick={handleClose} component={Link} to="/planos/fornecedor">Fornecedor</MenuItem>
+                        {/* <MenuItem onClick={handleClose} component={Link} to="/planos/fornecedor">Fornecedor</MenuItem>
                         <MenuItem onClick={handleClose} component={Link} to="/planos/nutricionista">Nutricionista</MenuItem>
-                        <MenuItem onClick={handleClose} component={Link} to="/planos/personal">Personal Trainer</MenuItem>
+                        <MenuItem onClick={handleClose} component={Link} to="/planos/personal">Personal Trainer</MenuItem> */}
                     </Menu>
-                    <Button href="/ajuda">Ajuda</Button>
+                    {/* <Button href="/ajuda">Ajuda</Button> */}
                     <Button href="/entrar">Entrar</Button>
                     <a href="/cadastro" className='bg-secondary text-[white] p-3 rounded-lg ml-10'>Testar Grátis</a>
                 </nav>

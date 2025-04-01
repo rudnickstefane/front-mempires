@@ -14,6 +14,8 @@ type CompanyManagementProps = {
     data: FindCompanyDetailsResponse | undefined;
     refresh: () => Promise<void>;
     isCompanyLoading: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    permissions: any;
 }
 
 const VisuallyHiddenInput = styled('input')({
@@ -28,7 +30,7 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-export default function CompanyDetailsManagement({ data, refresh, isCompanyLoading }: CompanyManagementProps) {
+export default function CompanyDetailsManagement({ data, refresh, isCompanyLoading, permissions }: CompanyManagementProps) {
 
     const {
         isLoading,
@@ -46,6 +48,8 @@ export default function CompanyDetailsManagement({ data, refresh, isCompanyLoadi
         companyCode,
         handleDeleteImage,
     } = useCompanyGymManagement({ data, refresh });
+
+    const enableView = permissions === "VIEW";
 
     return (
         <>
@@ -76,163 +80,187 @@ export default function CompanyDetailsManagement({ data, refresh, isCompanyLoadi
                     <Box
                         component="label"
                         className="relative md:w-[8.373rem] md:h-[7.407rem] w-[8.373rem] h-[7.4067rem] !mr-3 !rounded-3xl !mt-1 group !color-secondary shadow-md">
-                        {croppedImage ? (
+                            {enableView === false ? (
                                 <>
-                                    <img
-                                        src={croppedImage}
-                                        alt="Cropped"
-                                        className="w-full h-full rounded-3xl absolute"
-                                        style={{
-                                        maxWidth: '300px',
-                                        }}
-                                    />
-                                    <Box className='flex flex-row justify-between w-full h-full'>
-                                        <Tooltip
-                                            placement="bottom"
-                                            title={'Alterar Foto'}
-                                            arrow
-                                        >
-                                            <Button
-                                                component="label"
-                                                className='!h-full !min-w-[56%]'
-                                                sx={{
-                                                    color: '#79808a',
-                                                    fontWeight: 'normal',
-                                                    padding: 0,
-                                                    transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                                                    '&:hover': {
-                                                        color: '#ff0336',
-                                                    },
+                                    {croppedImage ? (
+                                        <>
+                                            <img
+                                                src={croppedImage}
+                                                alt="Cropped"
+                                                className="w-full h-full rounded-3xl absolute"
+                                                style={{
+                                                maxWidth: '300px',
                                                 }}
+                                            />
+                                            <Box className='flex flex-row justify-between w-full h-full'>
+                                                <Tooltip
+                                                    placement="bottom"
+                                                    title={'Alterar Foto'}
+                                                    arrow
+                                                >
+                                                    <Button
+                                                        component="label"
+                                                        className='!h-full !min-w-[56%]'
+                                                        sx={{
+                                                            color: '#79808a',
+                                                            fontWeight: 'normal',
+                                                            padding: 0,
+                                                            transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                                            '&:hover': {
+                                                                color: '#ff0336',
+                                                            },
+                                                        }}
+                                                    >
+                                                        <VisuallyHiddenInput
+                                                            type="file"
+                                                            onChange={handleImageUpload}
+                                                            multiple
+                                                            accept="image/*"
+                                                        />
+                                                        <Box className='flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-l-3xl w-full h-full'>
+                                                            <Box className="p-2 bg-white bg-opacity-60 rounded-full">
+                                                                <TbPhotoEdit className="text-[2rem] color-primary" />
+                                                            </Box>
+                                                        </Box>
+                                                    </Button>
+                                                </Tooltip>
+                                                <Tooltip
+                                                    placement="right"
+                                                    title={'Excluir Foto'}
+                                                    arrow
+                                                >
+                                                    <Button
+                                                        className='!h-full !min-w-[5%]'
+                                                        sx={{
+                                                            color: '#79808a',
+                                                            fontWeight: 'normal',
+                                                            padding: 0,
+                                                            transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                                            '&:hover': {
+                                                                color: '#ff0336',
+                                                            },
+                                                        }}
+                                                        onClick={() => handleDeleteImage()}
+                                                    >
+                                                        <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-r-3xl w-full h-full px-1.5">
+                                                            <Box className="p-2 bg-white bg-opacity-60 rounded-full">
+                                                                <MdDeleteOutline className="text-[1.5rem] color-primary" />
+                                                            </Box>
+                                                        </Box>
+                                                    </Button>
+                                                </Tooltip>
+                                            </Box> 
+                                        </>
+                                    ) : data?.findCompanyDetails.photo ? (
+                                        <>
+                                            <img
+                                                src={data?.findCompanyDetails.photo}
+                                                alt="Foto do usuário"
+                                                className="w-full h-full rounded-3xl absolute"
+                                            />
+                                            <Box className='flex flex-row justify-between w-full h-full'>
+                                                <Tooltip
+                                                    placement="bottom"
+                                                    title={'Alterar Foto'}
+                                                    arrow
+                                                >
+                                                    <Button
+                                                        component="label"
+                                                        className='!h-full !min-w-[56%]'
+                                                        sx={{
+                                                            color: '#79808a',
+                                                            fontWeight: 'normal',
+                                                            padding: 0,
+                                                            transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                                            '&:hover': {
+                                                                color: '#ff0336',
+                                                            },
+                                                        }}
+                                                    >
+                                                        <VisuallyHiddenInput
+                                                            type="file"
+                                                            onChange={handleImageUpload}
+                                                            multiple
+                                                            accept="image/*"
+                                                        />
+                                                        <Box className='flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-l-3xl w-full h-full'>
+                                                            <Box className="p-2 bg-white bg-opacity-60 rounded-full">
+                                                                <TbPhotoEdit className="text-[2rem] color-primary" />
+                                                            </Box>
+                                                        </Box>
+                                                    </Button>
+                                                </Tooltip>
+                                                <Tooltip
+                                                    placement="right"
+                                                    title={'Excluir Foto'}
+                                                    arrow
+                                                >
+                                                    <Button
+                                                        className='!h-full !min-w-[5%]'
+                                                        sx={{
+                                                            color: '#79808a',
+                                                            fontWeight: 'normal',
+                                                            padding: 0,
+                                                            transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
+                                                            '&:hover': {
+                                                                color: '#ff0336',
+                                                            },
+                                                        }}
+                                                        onClick={() => handleDeleteImage()}
+                                                    >
+                                                        <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-r-3xl w-full h-full px-1.5">
+                                                            <Box className="p-2 bg-white bg-opacity-60 rounded-full">
+                                                                <MdDeleteOutline className="text-[1.5rem] color-primary" />
+                                                            </Box>
+                                                        </Box>
+                                                    </Button>
+                                                </Tooltip>
+                                            </Box>  
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Button
+                                                    component="label"
+                                                    className='!m-0 !p-0 w-full h-full'
                                             >
+                                                <PiUserSquareLight className="text-[7rem] text-[#646464]" />
                                                 <VisuallyHiddenInput
                                                     type="file"
                                                     onChange={handleImageUpload}
                                                     multiple
                                                     accept="image/*"
                                                 />
-                                                <Box className='flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-l-3xl w-full h-full'>
+                                                <Box className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-3xl'>
                                                     <Box className="p-2 bg-white bg-opacity-60 rounded-full">
                                                         <TbPhotoEdit className="text-[2rem] color-primary" />
                                                     </Box>
                                                 </Box>
                                             </Button>
-                                        </Tooltip>
-                                        <Tooltip
-                                            placement="right"
-                                            title={'Excluir Foto'}
-                                            arrow
-                                        >
-                                            <Button
-                                                className='!h-full !min-w-[5%]'
-                                                sx={{
-                                                    color: '#79808a',
-                                                    fontWeight: 'normal',
-                                                    padding: 0,
-                                                    transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                                                    '&:hover': {
-                                                        color: '#ff0336',
-                                                    },
-                                                }}
-                                                onClick={() => handleDeleteImage()}
-                                            >
-                                                <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-r-3xl w-full h-full px-1.5">
-                                                    <Box className="p-2 bg-white bg-opacity-60 rounded-full">
-                                                        <MdDeleteOutline className="text-[1.5rem] color-primary" />
-                                                    </Box>
-                                                </Box>
-                                            </Button>
-                                        </Tooltip>
-                                    </Box> 
-                                </>
-                            ) : data?.findCompanyDetails.photo ? (
-                                <>
-                                    <img
-                                        src={data?.findCompanyDetails.photo}
-                                        alt="Foto do usuário"
-                                        className="w-full h-full rounded-3xl absolute"
-                                    />
-                                    <Box className='flex flex-row justify-between w-full h-full'>
-                                        <Tooltip
-                                            placement="bottom"
-                                            title={'Alterar Foto'}
-                                            arrow
-                                        >
-                                            <Button
-                                                component="label"
-                                                className='!h-full !min-w-[56%]'
-                                                sx={{
-                                                    color: '#79808a',
-                                                    fontWeight: 'normal',
-                                                    padding: 0,
-                                                    transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                                                    '&:hover': {
-                                                        color: '#ff0336',
-                                                    },
-                                                }}
-                                            >
-                                                <VisuallyHiddenInput
-                                                    type="file"
-                                                    onChange={handleImageUpload}
-                                                    multiple
-                                                    accept="image/*"
-                                                />
-                                                <Box className='flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-l-3xl w-full h-full'>
-                                                    <Box className="p-2 bg-white bg-opacity-60 rounded-full">
-                                                        <TbPhotoEdit className="text-[2rem] color-primary" />
-                                                    </Box>
-                                                </Box>
-                                            </Button>
-                                        </Tooltip>
-                                        <Tooltip
-                                            placement="right"
-                                            title={'Excluir Foto'}
-                                            arrow
-                                        >
-                                            <Button
-                                                className='!h-full !min-w-[5%]'
-                                                sx={{
-                                                    color: '#79808a',
-                                                    fontWeight: 'normal',
-                                                    padding: 0,
-                                                    transition: 'transform 0.3s, background-color 0.3s, color 0.3s,',
-                                                    '&:hover': {
-                                                        color: '#ff0336',
-                                                    },
-                                                }}
-                                                onClick={() => handleDeleteImage()}
-                                            >
-                                                <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-r-3xl w-full h-full px-1.5">
-                                                    <Box className="p-2 bg-white bg-opacity-60 rounded-full">
-                                                        <MdDeleteOutline className="text-[1.5rem] color-primary" />
-                                                    </Box>
-                                                </Box>
-                                            </Button>
-                                        </Tooltip>
-                                    </Box>  
+                                        </>
+                                    )
+                                }
                                 </>
                             ) : (
                                 <>
-                                    <Button
-                                            component="label"
-                                            className='!m-0 !p-0 w-full h-full'
-                                    >
-                                        <PiUserSquareLight className="text-[7rem] text-[#646464]" />
-                                        <VisuallyHiddenInput
-                                            type="file"
-                                            onChange={handleImageUpload}
-                                            multiple
-                                            accept="image/*"
+                                    {data?.findCompanyDetails.photo ? (
+                                        <img
+                                            src={data?.findCompanyDetails.photo}
+                                            alt="Foto do usuário"
+                                            className="w-full h-full rounded-3xl absolute"
                                         />
-                                        <Box className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-3xl'>
-                                            <Box className="p-2 bg-white bg-opacity-60 rounded-full">
-                                                <TbPhotoEdit className="text-[2rem] color-primary" />
-                                            </Box>
-                                        </Box>
-                                    </Button>
+                                    ) : (
+                                        <>
+                                            <Button
+                                                    component="label"
+                                                    className='!m-0 !p-0 w-full h-full'
+                                                    disabled={true}
+                                            >
+                                                <PiUserSquareLight className="text-[7rem] text-[#646464]" />
+                                            </Button>
+                                        </>
+                                    )}
                                 </>
-                            )
-                        }
+                            )}
                     </Box>
                     <Box className='w-full md:mt-0 mt-5'>
                         {isCompanyLoading ? (
@@ -297,6 +325,7 @@ export default function CompanyDetailsManagement({ data, refresh, isCompanyLoadi
                                             color: '#ff0336',
                                         },
                                     }}
+                                    disabled={enableView}
                                     onClick={() => openDrawer('EditInfos', 0)}
                                 >
                                     <TbEdit size={24} />
@@ -349,6 +378,7 @@ export default function CompanyDetailsManagement({ data, refresh, isCompanyLoadi
                                             color: '#ff0336',
                                         },
                                     }}
+                                    disabled={enableView}
                                     onClick={() => openDrawer('EditInfos', 1)}
                                 >
                                     <TbEdit size={24} />
@@ -415,6 +445,7 @@ export default function CompanyDetailsManagement({ data, refresh, isCompanyLoadi
                                                 color: '#ff0336',
                                             },
                                         }}
+                                        disabled={enableView}
                                         onClick={() => openDrawer('EditInfos', 2)}
                                     >
                                         <TbEdit size={24} />

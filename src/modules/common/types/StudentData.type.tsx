@@ -20,6 +20,8 @@ export type StudentData = {
     profession?: string;
     company?: string;
     referralSource: string;
+    position?: string;
+    groupCode?: string;
     contact: Array<{
       contactCode: string;
       type: string;

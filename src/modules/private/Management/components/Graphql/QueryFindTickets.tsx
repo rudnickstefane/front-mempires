@@ -5,13 +5,9 @@ export const QueryFindTickets = gql`
     findTickets(request: $request, issuerCode: $issuerCode, recipientCode: $recipientCode) {
       ticketCode
       issuerUserCode
-      nameIssuerUser
       issuerCompanyCode
-      nameIssuerCompany
       recipientUserCode
-      nameRecipientUser
       recipientCompanyCode
-      nameRecipientCompany
       name
       description
       method
@@ -30,6 +26,14 @@ export const QueryFindTickets = gql`
       finishedAt
       messages {
         messageCode
+        sentUserCode
+        sentCompanyCode
+        receivedUserCode
+        receivedCompanyCode
+        nameSentUser
+        nameSentCompany
+        nameReceivedUser
+        nameReceivedCompany
         title
         email
         phone

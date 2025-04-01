@@ -20,5 +20,13 @@ export type AdminGymDrawerType = {
     ClassAlter: 'ClassAlter',
     ClassDetails: 'ClassDetails',
     EditStudent: 'EditStudent',
-    TicketCreate: 'TicketCreate'
+    TicketCreate: 'TicketCreate',
+    SuggestionCreate: 'SuggestionCreate',
+    SuggetionDetail: 'SuggetionDetail',
+    VisitDetails: 'VisitDetails',
+    EditVisit: 'EditVisit',
+    GroupRegister: 'GroupRegister',
+    GroupDetails: 'GroupDetails',
+    EditGroup: 'EditGroup',
+    EditContributor: 'EditContributor',
 };

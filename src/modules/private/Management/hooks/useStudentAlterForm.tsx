@@ -299,7 +299,12 @@ export const useStudentAlterForm = ({
                             closeDrawer={closeDrawerDetails} 
                             enqueueSnackbar={enqueueSnackbar}
                             data={data}
-                            refreshInternal={() => refreshInternal('findStudentPlans')}
+                            refreshInternal={async () => {
+                                await Promise.all([
+                                    refreshInternal('findStudentPlans'),
+                                    refreshInternal('findTransactions')
+                                ]);
+                            }}
                         />
                     );
 

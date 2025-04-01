@@ -127,6 +127,23 @@ export const GymStudentDetails = ({
         handleAlterReview
     } = useStudentAlterForm({ closeDrawer, enqueueSnackbar, data, refresh });
 
+    const referralSourceOptions = [
+        { value: 'billboard', label: 'Outdoor' },
+        { value: 'call', label: 'Ligação' },
+        { value: 'email', label: 'E-mail Marketing' },
+        { value: 'facebook', label: 'Facebook' },
+        { value: 'flyer', label: 'Panfleto' },
+        { value: 'friend', label: 'Indicação de amigo' },
+        { value: 'google', label: 'Google' },
+        { value: 'instagram', label: 'Instagram' },
+        { value: 'student', label: 'Indicação de aluno ou colaborador' },
+        { value: 'website', label: 'Site' },
+        { value: 'whatsapp', label: 'WhatsApp' },
+        { value: 'others', label: 'Outros' },
+    ];
+    
+    const selectedReferral = referralSourceOptions.find(option => option.value === data.referralSource);
+
     return (
         <>
             <Drawer
@@ -405,7 +422,7 @@ export const GymStudentDetails = ({
                                                             </Box>
                                                             <Box className='grid grid-cols-[10.5rem,1fr]'>
                                                                 <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Estado Civil</Typography>
-                                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.stateMarital === 'MARRIED' ? 'Casado(a)' : data?.stateMarital === 'SINGLE' ? 'Solteiro(a)' : data?.stateMarital ? 'Outros' : ''}</Typography>
+                                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data?.stateMarital === 'MARRIED' ? 'Casado' : data?.stateMarital === 'SINGLE' ? 'Solteiro' : data?.stateMarital ? 'Outros' : ''}</Typography>
                                                             </Box>
                                                             <Box className='grid grid-cols-[10.5rem,1fr]'>
                                                                 <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Profissão</Typography>
@@ -417,7 +434,7 @@ export const GymStudentDetails = ({
                                                             </Box>
                                                             <Box className='grid grid-cols-[10.5rem,1fr]'>
                                                                 <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Como nos conheceu?</Typography>
-                                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{data.referralSource}</Typography>
+                                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>{selectedReferral?.label}</Typography>
                                                             </Box>
                                                             {data.indicationCode && (
                                                                 <Box className='flex flex-col gap-4 p-6 bg-neutral-100 rounded-xl mt-5'>

@@ -80,6 +80,7 @@ function SignUp() {
                                     borderColor: '#ff0336',
                                 },
                                 }}
+                                disabled={true}
                             >
                                 <Box className='flex flex-col font-poppins'>Fornecedor
                                     <Typography className='!text-[0.8rem]'>
@@ -103,6 +104,7 @@ function SignUp() {
                                     borderColor: '#ff0336',
                                 },
                                 }}
+                                disabled={true}
                             >
                                 <Box className='flex flex-col font-poppins'>Nutricionista
                                     <Typography className='!text-[0.8rem]'>
@@ -126,6 +128,7 @@ function SignUp() {
                                     borderColor: '#ff0336',
                                 },
                                 }}
+                                disabled={true}
                             >
                                 <Box className='flex flex-col font-poppins'>Personal Trainer
                                     <Typography className='!text-[0.8rem]'>

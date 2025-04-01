@@ -1,0 +1,18 @@
+export const PositionMapper: Record<string, { label: string }> = {
+    MANAGER: { label: 'Gerente' },
+    COORDINATOR: { label: 'Coordenador' },
+    INSTRUCTOR: { label: 'Instrutor' },
+    PERSONAL_TRAINER: { label: 'Personal Trainer' },
+    RECEPTIONIST: { label: 'Recepcionista' },
+    CLEANING_STAFF: { label: 'Equipe de limpeza' },
+    MAINTENANCE: { label: 'Manutenção' },
+    SALES: { label: 'Vendas' },
+    NUTRITIONIST: { label: 'Nutricionista' },
+    PHYSIOTHERAPIST: { label: 'Fisioterapeuta' },
+    INTERN: { label: 'Estagiário' },
+    SECURITY: { label: 'Segurança' },
+    ACCOUNTANT: { label: 'Contador' },
+    MARKETING: { label: 'Marketing' },
+    HR: { label: 'Recursos Humanos' },
+    IT_SUPPORT: { label: 'Suporte de TI' },
+};

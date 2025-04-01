@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request';
 
 export const QueryFindMenus = gql`
-  query FindMenus($companyCode: Int!, $profileCode: Int!) {
-    findMenus(companyCode: $companyCode, profileCode: $profileCode) {
+  query FindMenus($companyCode: Int!) {
+    findMenus(companyCode: $companyCode) {
       menuCode
       name
       description

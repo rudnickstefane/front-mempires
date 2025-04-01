@@ -1,52 +1,19 @@
 export type FindVisitsResponse = {
   findVisits: Array<{
-    profileCode: string;
-    status: string;
-    username: string;
-    identity: string;
-    photo: string;
-    rewardsCredit: string;
+    visitCode: string;
     name: string;
-    stateMarital: string;
-    gender: string;
-    address: string;
-    number: string;
-    complement: string;
-    zipCode: string;
-    district: string;
-    city: string;
-    state: string;
-    birthDate: string;
-    responsible?: string;
-    profession?: string;
-    company?: string;
+    identity: string;
     referralSource: string;
     indicationCode: string;
     indicationStatus: string;
     nameIndication: string;
-    contact: Array<{
-      contactCode: string;
-      type: string;
-      description: string;
-      phone: string;
-      email: string;
-      emailStatus?: string;
-      emergencyContact?: string;
-      emergencyPhone?: string;
-    }>;
-    plan: Array<{
-      studentPlanCode: string;
+    phone: string;
+    email: string;
+    observation: string;
+    categories: Array<{
+      categoryCode: string;
       name: string;
-      periodicityName: string;
-      paymentDay: string;
-      modalities: string[];
-      amount: string;
-      observation: string;
-      status: string;
-      reEnrollmentAt: string;
-      planPayment: string;
-      createdAt: string;
-      deletedAt: string;
+      description: string;
     }>;
     createdAt: string;
     updatedAt: string;

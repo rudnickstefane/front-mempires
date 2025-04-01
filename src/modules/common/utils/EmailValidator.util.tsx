@@ -3,7 +3,7 @@ export const EmailValidator = (email: string): string => {
     if (!email) return "O e-mail fornecido é inválido.";
 
     // Regex para validar o e-mail com as regras definidas
-    const emailRegex = /^[a-zA-Z0-9][a-zA-Z0-9.]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailRegex = /^[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (/[À-ÿ]/.test(email)) {
         return "O e-mail não pode conter caracteres acentuados.";

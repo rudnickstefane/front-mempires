@@ -90,7 +90,7 @@ export const useVisitRegisterForm = ({
         { value: 'friend', label: 'Indicação de amigo' },
         { value: 'google', label: 'Google' },
         { value: 'instagram', label: 'Instagram' },
-        { value: 'student', label: 'Indicação de aluno' },
+        { value: 'student', label: 'Indicação de aluno ou colaborador' },
         { value: 'website', label: 'Site' },
         { value: 'whatsapp', label: 'WhatsApp' },
         { value: 'others', label: 'Outros' },

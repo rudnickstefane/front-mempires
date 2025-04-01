@@ -21,7 +21,6 @@ export type FindProfileDetailsResponse = {
     responsible: string;
     profession: string;
     company: string;
-    companyStatus: string;
     contact: Array<{
       contactCode: string;
       type: string;
@@ -30,14 +29,16 @@ export type FindProfileDetailsResponse = {
       email: string;
       emailStatus?: string;
     }>;
-    clientsPlan: {
+    userPlan: {
       name: string;
       description: string;
+      level: string;
+      status: string;
       amount: string;
       startDate: string;
       endDate: string;
       nextDueDate: string;
       createdAt: string;
-    },
+    };
   };
 };

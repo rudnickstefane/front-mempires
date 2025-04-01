@@ -78,6 +78,36 @@ export const  useEditStudentForm = ({
         { value: 'others', label: 'Outros' },
     ];
 
+    const stateMap: Record<string, string> = {
+        'Acre': 'AC',
+        'Alagoas': 'AL',
+        'Amapá': 'AP',
+        'Amazonas': 'AM',
+        'Bahia': 'BA',
+        'Ceará': 'CE',
+        'Distrito Federal': 'DF',
+        'Espírito Santo': 'ES',
+        'Goiás': 'GO',
+        'Maranhão': 'MA',
+        'Mato Grosso': 'MT',
+        'Mato Grosso do Sul': 'MS',
+        'Minas Gerais': 'MG',
+        'Pará': 'PA',
+        'Paraíba': 'PB',
+        'Paraná': 'PR',
+        'Pernambuco': 'PE',
+        'Piauí': 'PI',
+        'Rio de Janeiro': 'RJ',
+        'Rio Grande do Norte': 'RN',
+        'Rio Grande do Sul': 'RS',
+        'Rondônia': 'RO',
+        'Roraima': 'RR',
+        'Santa Catarina': 'SC',
+        'São Paulo': 'SP',
+        'Sergipe': 'SE',
+        'Tocantins': 'TO'
+    };
+
     const [formData, setFormData] = useState<EditInfosProfileProps['formData']>({
         profileCode: data?.profileCode,
         name: data?.name ?? '',
@@ -99,13 +129,13 @@ export const  useEditStudentForm = ({
             : '',
         district: data?.district ?? '',
         city: data?.city ?? '',
-        state: data?.state ?? '',
+        state: stateMap[data?.state] || '',
         description: '',
         phone: '',
         emergencyContact: '',
         emergencyPhone: '',
         email: '',
-        referralSource: '',
+        referralSource: data.referralSource,
         indicationSearch: '',
     } as EditInfosProfileProps['formData']);
 

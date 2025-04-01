@@ -83,7 +83,7 @@ export const useInactivity = ({enqueueSnackbar}: {
                 const assignment = response.createToken.user.profiles[0].assignment;
 
                 localStorage.setItem('@iflexfit:token', response.createToken.token);
-                localStorage.setItem('@iflexfit:origin', response.createToken.user.profiles[0].role);
+                localStorage.setItem('@iflexfit:role', response.createToken.user.profiles[0].role);
                 localStorage.setItem('@iflexfit:status', response.createToken.user.profiles[0].status);
                 localStorage.setItem('@iflexfit:email', response.createToken.user.email);
                 localStorage.setItem('@iflexfit:name', response.createToken.user.name);

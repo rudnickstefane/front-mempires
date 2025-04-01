@@ -195,7 +195,7 @@ export const EditStudentDrawer = ({
                               <Tooltip
                                 title={
                                   <>
-                                    Se a sua academia estiver participando do nosso <b>programa de incentivo</b>, tanto você quanto o aluno que fez a indicação poderão ganhar prêmios.<br /><br />
+                                    Caso sua academia esteja participando do nosso <b>programa de incentivo</b>, tanto você quanto o aluno que fez a indicação terão a chance de ganhar recompensas incríveis!.<br /><br />
                                     Para mais detalhes, acesse no menu: <br />
                                     <b>Programas &gt; Incentivo &gt; Regulamento</b>
                                   </>

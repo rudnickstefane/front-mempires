@@ -161,7 +161,7 @@ export const useSignUpConfigGym = () => {
 
     const handleAccess = () => {
         if (gymConfiguredData) {
-            localStorage.setItem('@iflexfit:status', 'FREE_PERIOD');
+            localStorage.setItem('@iflexfit:status', 'ACTIVE');
             navigate('/gestao');
         }
     };

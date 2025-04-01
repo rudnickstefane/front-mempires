@@ -18,34 +18,34 @@ const subResources: ResourceBoxProps[] = [
         name: 'Visitas',
         description: 'Visitas',
     },
-    {
-        icon: MdKeyboardArrowRight,
-        menu: 'Relationship',
-        type: 'Contacts',
-        name: 'Contatos',
-        description: 'Contatos',
-    },
-    {
-        icon: MdKeyboardArrowRight,
-        menu: 'Relationship',
-        type: 'Chats',
-        name: 'Conversas',
-        description: 'Conversas',
-    },
-    {
-        icon: MdKeyboardArrowRight,
-        menu: 'Relationship',
-        type: 'Events',
-        name: 'Eventos',
-        description: 'Eventos',
-    },
-    {
-        icon: MdKeyboardArrowRight,
-        menu: 'Relationship',
-        type: 'Advertisements',
-        name: 'Publicidades',
-        description: 'Publicidades',
-    }
+    // {
+    //     icon: MdKeyboardArrowRight,
+    //     menu: 'Relationship',
+    //     type: 'Contacts',
+    //     name: 'Contatos',
+    //     description: 'Contatos',
+    // },
+    // {
+    //     icon: MdKeyboardArrowRight,
+    //     menu: 'Relationship',
+    //     type: 'Chats',
+    //     name: 'Conversas',
+    //     description: 'Conversas',
+    // },
+    // {
+    //     icon: MdKeyboardArrowRight,
+    //     menu: 'Relationship',
+    //     type: 'Events',
+    //     name: 'Eventos',
+    //     description: 'Eventos',
+    // },
+    // {
+    //     icon: MdKeyboardArrowRight,
+    //     menu: 'Relationship',
+    //     type: 'Advertisements',
+    //     name: 'Publicidades',
+    //     description: 'Publicidades',
+    // }
 ];
 
 const SubResourceBox = ({ icon: Icon, name, onClick, isSelected }: ResourceBoxProps & { onClick: () => void, isSelected: boolean }) => (
