@@ -35,8 +35,6 @@ export default function ClassesGymAdmin ({ enqueueSnackbar }: GymManagementProps
         currentPage,
         handlePageChange,
         handleMoreDetails,
-        searchText,
-        setSearchText,
         anchorEls,
         handleOpenMore,
         handleCloseMore,
@@ -50,7 +48,7 @@ export default function ClassesGymAdmin ({ enqueueSnackbar }: GymManagementProps
         classesToDisplay,
         isDetailsView,
         renderComponentContent,
-        handleStatusDay
+        // handleStatusDay
     } = useClassesGymAdmin({ enqueueSnackbar });
 
     return (
@@ -198,14 +196,14 @@ export default function ClassesGymAdmin ({ enqueueSnackbar }: GymManagementProps
                                                 <TableCell>
                                                     <Box className='!flex !flex-row items-center'>
                                                         {diasSemana.map(({ label, key }) => {
-                                                            const isActive = classes[key];
+                                                            const isActive = classes[key as keyof typeof classes];
                                                             
                                                             return (
                                                                 <Chip
                                                                     key={label}
                                                                     label={label}
                                                                     clickable
-                                                                    onClick={() => handleStatusDay(classes.classCode, key, isActive)}
+                                                                    // onClick={() => handleStatusDay(classes.classCode, key, isActive)}
                                                                     sx={{
                                                                         marginRight: '10px',
                                                                         backgroundColor: isActive ? '#ff0336' : '#e0e0e0',

@@ -1773,7 +1773,7 @@ export const useReviewUpsertForm = ({
         const questionKey = question.question.replace(/[\s?]/g, '').toLowerCase();
         
         // Se o protocolo selecionado tiver um mapeamento, filtra as perguntas permitidas
-        const allowedKeys = protocolMapping[formData.protocolCardio];
+        const allowedKeys = protocolMapping[formData.protocolCardio as keyof typeof protocolMapping] || [];
         if (allowedKeys) {
         return allowedKeys.includes(questionKey);
         }

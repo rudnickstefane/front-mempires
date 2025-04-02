@@ -3,13 +3,13 @@ import { MdCheckCircle, MdMiscellaneousServices, MdSegment } from 'react-icons/m
 import { StepFiveProps } from '../../../../../../pages/sign-up/gym/types/gym-steps.types';
 import { useFiveStepConfigGym } from '../hooks';
 
-export const FiveStepConfigGym = ({ formData, setFormData, errors, setErrors, handleFinish, handleBack, isLoading }: StepFiveProps) => {
+export const FiveStepConfigGym = ({ formData, setFormData, errors, handleFinish, handleBack, isLoading }: StepFiveProps) => {
 
     const {
         services,
         segments,
         handleCheckboxChange
-    } = useFiveStepConfigGym(formData, setFormData, setErrors);
+    } = useFiveStepConfigGym(formData, setFormData);
 
     return (
         <Box className='flex flex-col w-[80vw]'>

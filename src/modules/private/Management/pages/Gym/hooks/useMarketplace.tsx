@@ -2,7 +2,7 @@ import { SelectChangeEvent } from '@mui/material';
 import { VariantType } from 'notistack';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useBackendForFrontend } from '../../../../../common/hooks/useBackendForFrontend';
-import { FindProductsResponse, ProductData } from '../../../../../common/types';
+import { FindProductsResponse } from '../../../../../common/types';
 import { GetErrorMessage } from '../../../../../common/utils';
 import { EditStudentDrawer, StudentRegisterDrawer } from '../../../components/Drawer';
 import { MutationStudentUpsert, QueryFindProducts } from '../../../components/Graphql';
@@ -18,8 +18,8 @@ export const useMarketplace = ({
     const { request } = useBackendForFrontend();
     const [isLoading, setIsLoading] = useState(false);
     const [responseProducts, setResponseProducts] = useState<FindProductsResponse | null>();
-    const [alterStudent, setAlterStudent] = useState<ProductData | null>();
-    const [studentDetails, setStudentDetails] = useState<ProductData | null>();
+    // const [alterStudent, setAlterStudent] = useState<ProductData | null>();
+    // const [studentDetails, setStudentDetails] = useState<ProductData | null>();
     const [attemptCount, setAttemptCount] = useState(0);
     const [isDetailsView, setIsDetailsView] = useState(false);
     const calledRef = useRef(false);
@@ -80,7 +80,7 @@ export const useMarketplace = ({
     const handleMoreDetails = (productCode: string) => {
         const studentDetail = responseProducts?.findProducts?.find((product) => product.productCode === productCode);
         if (studentDetail) {
-            setStudentDetails(studentDetail);
+            // setStudentDetails(studentDetail);
         } 
         setIsDetailsView(true);
         openContent('StudentDetails');
@@ -90,7 +90,7 @@ export const useMarketplace = ({
     const handleAlterStudent = (productCode: string) => {
         const studentDetail = responseProducts?.findProducts?.find((product) => product.productCode === productCode);
         if (studentDetail) {
-            setAlterStudent(studentDetail);
+            // setAlterStudent(studentDetail);
         }    
         openDrawer('EditStudent');
         handleCloseMore(productCode);
@@ -220,7 +220,7 @@ export const useMarketplace = ({
                     <EditStudentDrawer 
                         closeDrawer={closeDrawer} 
                         enqueueSnackbar={enqueueSnackbar}
-                        data={alterStudent}
+                        // data={alterStudent}
                         initialStep={activeDrawerStep}
                         refresh={() => refresh('findProducts')}
                     />
@@ -243,7 +243,7 @@ export const useMarketplace = ({
                         key={reloadKey}
                         closeDrawer={closeDrawer} 
                         enqueueSnackbar={enqueueSnackbar}
-                        data={studentDetails}
+                        // data={studentDetails}
                         initialStep={activeContentStep}
                         refresh={() => refresh('findProducts')}
                         onBack={handleBackToTable}
@@ -255,18 +255,18 @@ export const useMarketplace = ({
         }
     };
 
-    const [reloadKey, setReloadKey] = useState(0);
+    const [reloadKey] = useState(0);
 
-    useEffect(() => {
-        if (responseProducts) {
-            const studentDetail = responseProducts.findProducts?.find(product => product.productCode === studentDetails?.productCode);
+    // useEffect(() => {
+    //     if (responseProducts) {
+    //         // const studentDetail = responseProducts.findProducts?.find(product => product.productCode === studentDetails?.productCode);
 
-            if (studentDetail) {
-                setReloadKey(prevKey => prevKey + 1);  // Força o recarregamento do componente
-                setStudentDetails(studentDetail);
-            }
-        }
-    }, [studentDetails?.productCode, responseProducts]);
+    //         // if (studentDetail) {
+    //         //     setReloadKey(prevKey => prevKey + 1);  // Força o recarregamento do componente
+    //         //     // setStudentDetails(studentDetail);
+    //         // }
+    //     }
+    // }, [studentDetails?.productCode, responseProducts]);
 
     const refresh = async (source: unknown) => {
 

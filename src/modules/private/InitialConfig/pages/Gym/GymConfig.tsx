@@ -35,7 +35,7 @@ export const GymConfig = () => {
     } = useSignUpConfigGym();
 
     return (
-        <AccessRestrict isAuthorized={isAuthorized}>
+        <AccessRestrict isAuthorized={isAuthorized.isAuthorized}>
             <Box>
                 <Box className='!flex flex-row justify-around items-center my-[1.1rem]'>
                     <Link to="/">

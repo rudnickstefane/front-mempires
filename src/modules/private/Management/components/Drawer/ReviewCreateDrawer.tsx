@@ -3232,7 +3232,7 @@ export const ReviewCreateDrawer = ({
                                                 <Typography className="text-black !mt-5">Referência em geral</Typography>
                                                 <Box className="flex flex-row mt-5">
                                                     <Typography variant="h4" className="!font-bold" style={{ color: imcColorIacAll }}>
-                                                        {formData.iac.toString().replace('.', ',')}
+                                                        {(formData.iac ?? 0).toString().replace('.', ',')}
                                                     </Typography>
                                                     <Typography className="!ml-1 !mt-[.9rem]" style={{ color: imcColorIacAll }}>%</Typography>
                                                 </Box>

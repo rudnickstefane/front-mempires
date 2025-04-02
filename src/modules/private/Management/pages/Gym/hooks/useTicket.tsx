@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { SelectChangeEvent } from '@mui/material';
 import { VariantType } from 'notistack';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -29,7 +30,7 @@ export const useTicket = ({
     const [attemptCount, setAttemptCount] = useState(0);
     const [isDetailsView, setIsDetailsView] = useState(false);
     const calledRef = useRef(false);
-    const [activeDrawerStep, setActiveDrawerStep] = useState(0);
+    const [, setActiveDrawerStep] = useState(0);
     const [activeContentStep, setActiveContentStep] = useState(0);
 
     // Estado de controle de paginação e busca

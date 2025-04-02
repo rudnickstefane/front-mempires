@@ -115,6 +115,8 @@ export const useVisitAlterForm = ({
         modalitiesError: '',
         emailError: '',
         phoneError: '',
+        indicationSearchError: '',
+        searchFindStudentError: '',
     });
 
     const dynamicSteps = ['Informações', 'Contato'];
@@ -398,7 +400,16 @@ export const useVisitAlterForm = ({
     };
 
     const validateForm = () => {
-        let newErrors: VisitRegisterProps['errors'] = {};
+        let newErrors: VisitRegisterProps['errors'] = {
+            nameError: '',
+            identityError: '',
+            referralSourceError: '',
+            modalitiesError: '',
+            emailError: '',
+            phoneError: '',
+            indicationSearchError: '',
+            searchFindStudentError: ''
+        };
         const indicationCode = responseStudent?.findStudent.profileCode ? responseStudent.findStudent.profileCode : data.indicationCode;
 
         newErrors = ValidateFormVisitRegister(formData, activeStep, indicationCode, isIndication);

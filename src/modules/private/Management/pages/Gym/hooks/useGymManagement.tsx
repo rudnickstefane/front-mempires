@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { LuScreenShareOff } from 'react-icons/lu';
+import { TbSmartHome } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { useBackendForFrontend } from '../../../../../common/hooks/useBackendForFrontend';
 import { FindCompanyDetailsResponse, FindMenusResponse, FindNotificationsResponse, FindProfileDetailsResponse } from '../../../../../common/types';
@@ -47,7 +48,7 @@ export const useGymManagement = ({
     const [activeComponent, setActiveComponent] = useState<GymManagementType>("Home");
     const [selectedResource, setSelectedResource] = useState<ResourceBoxProps | null>({
         name: 'Início',
-        icon: 'TbSmartHome',
+        icon: TbSmartHome,
         onClick: () => openComponent('Home'),
     });
     const [responseProfileDetails, setResponseProfileDetails] = useState<FindProfileDetailsResponse>();

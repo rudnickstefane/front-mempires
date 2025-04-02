@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import { ChangeEvent, useRef, useState } from 'react';
 import { MultiValue, SingleValue } from 'react-select';
@@ -169,7 +170,7 @@ export const  useEditStudentForm = ({
             };
             
             // Adiciona o novo contato abaixo do "MAIN"
-            setContacts((prevContacts) => {
+            setContacts((prevContacts: any[]) => {
                 const mainContact = prevContacts.find(contact => contact.type === "MAIN");
                 if (mainContact) {
                     const mainIndex = prevContacts.indexOf(mainContact);
@@ -225,7 +226,7 @@ export const  useEditStudentForm = ({
 
     const handleConfirmEditContact = () => {
         if (editingContact && validateForm()) {
-            setContacts((prevContacts) => {
+            setContacts((prevContacts: any[]) => {
             const updatedContacts = prevContacts.map(contact => 
                 contact.contactCode === editingContact.contactCode
                 ? { ...contact, description: formData.description, phone: formData.phone, email: formData.email, emergencyContact: formData.emergencyContact, emergencyPhone: formData.emergencyPhone }

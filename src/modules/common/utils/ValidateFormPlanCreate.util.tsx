@@ -66,7 +66,7 @@ export const ValidateFormPlanCreate= (
 
       const newSlot = `${startTime} às ${endTime}`;
 
-      if (selectedDay && formData[selectedDay]?.includes(newSlot)) {
+      if (selectedDay && Array.isArray(formData[selectedDay]) && formData[selectedDay].includes(newSlot)) {
         errors.endTimeError = `O horário das ${newSlot} já foi adicionado.`;
       }
 

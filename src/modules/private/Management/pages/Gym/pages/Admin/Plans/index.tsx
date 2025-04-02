@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, Divider, Drawer, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { Key, useEffect } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { TbArrowLeft, TbEdit } from "react-icons/tb";
 import { DrawerProps } from "../../../../../../../common/types";
@@ -152,7 +153,7 @@ export const GymPlansDetails = ({
                                                 <Box key={key} className="bg-[#F3F3F4] md:w-[24%] w-full rounded-lg p-5 pt-[14px] mt-3">
                                                     <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 uppercase">{label}</Typography>
                                                     <Divider className="!my-3" />
-                                                    {formData[key].map((slot, index) => (
+                                                    {(formData[key] as string[]).map((slot, index) => (
                                                     <>
                                                         <Box key={index} className='flex flex-row items-center justify-between'>
                                                         <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-[.1rem] !font-semibold">{slot}</Typography>
@@ -189,7 +190,7 @@ export const GymPlansDetails = ({
                                     <>
                                         <Box className="flex flex-wrap justify-between">
                                             {Array.isArray(data?.findPlans?.modalities) && data.findPlans.modalities.length > 0 ? (
-                                                data.findPlans.modalities.map((modality, index) => (
+                                                data.findPlans.modalities.map((modality: { name: any; description: any; amount: number | bigint | null; }, index: Key | null | undefined) => (
                                                     <Box
                                                             key={index}
                                                             className="bg-[#F3F3F4] md:w-[49%] w-full rounded-lg p-5 pt-[14px] grid grid-cols-[5.5rem,1fr]"
@@ -237,7 +238,7 @@ export const GymPlansDetails = ({
                                     <>
                                         <Box className="flex flex-wrap justify-between">
                                             {Array.isArray(data?.findPlans?.customServices) && data.findPlans.customServices.length > 0 ? (
-                                                data.findPlans.customServices.map((customServices, index) => (
+                                                data.findPlans.customServices.map((customServices: { name: any; description: any; amount: number | bigint | null; }, index: Key | null | undefined) => (
                                                     <Box
                                                             key={index}
                                                             className="bg-[#F3F3F4] md:w-[49%] w-full rounded-lg p-5 pt-[14px] grid grid-cols-[5.5rem,1fr]"
@@ -285,7 +286,7 @@ export const GymPlansDetails = ({
                                     <>
                                     <Box className="flex flex-wrap justify-between">
                                         {Array.isArray(data?.findPlans?.periodicities) && data.findPlans.periodicities.length > 0 ? (
-                                            data.findPlans.periodicities.map((periodicity, index) => {
+                                            data.findPlans.periodicities.map((periodicity: { amount: string | number | undefined; name: string; charge: null; fees: null; startDate: string; endDate: string; observation: any; }, index: Key | null | undefined) => {
                                                 const parseToFloat = (value: string | number | undefined): number => {
                                                     if (typeof value === 'number') return value;
                                                     if (!value) return 0;
@@ -294,13 +295,13 @@ export const GymPlansDetails = ({
                                             
                                                 // Calcula o total de amount de modalities
                                                 const totalModalityAmount = data.findPlans.modalities
-                                                    .map((modality) => parseToFloat(modality.amount))
-                                                    .reduce((sum, value) => sum + value, 0);
+                                                    .map((modality: { amount: string | number | undefined; }) => parseToFloat(modality.amount))
+                                                    .reduce((sum: any, value: any) => sum + value, 0);
                                             
                                                 // Calcula o total de amount de customServices
                                                 const totalCustomServiceAmount = data.findPlans.customServices
-                                                    .map((service) => parseToFloat(service.amount))
-                                                    .reduce((sum, value) => sum + value, 0);
+                                                    .map((service: { amount: string | number | undefined; }) => parseToFloat(service.amount))
+                                                    .reduce((sum: any, value: any) => sum + value, 0);
                                             
                                                 // Subtrai os valores do amount da periodicity
                                                 const adjustedAmount = parseToFloat(periodicity.amount) - (totalModalityAmount + totalCustomServiceAmount);

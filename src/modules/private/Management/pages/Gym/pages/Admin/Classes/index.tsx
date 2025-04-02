@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, Divider, Drawer, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { Key, useEffect } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { TbArrowLeft, TbEdit } from "react-icons/tb";
 import { DrawerProps } from "../../../../../../../common/types";
@@ -149,7 +150,7 @@ export const GymClassesDetails = ({
                                             <Box key={key} className="bg-[#F3F3F4] md:w-[24%] w-full rounded-lg p-5 pt-[14px] mt-3">
                                                 <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 uppercase">{label}</Typography>
                                                 <Divider className="!my-3" />
-                                                {formData[key].map((slot, index) => (
+                                                {(formData[key] as string[]).map((slot, index) => (
                                                 <>
                                                     <Box key={index} className='flex flex-row items-center justify-between'>
                                                     <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-[.1rem] !font-semibold">{slot}</Typography>
@@ -185,7 +186,7 @@ export const GymClassesDetails = ({
                                     <>
                                         <Box className="flex flex-wrap justify-between">
                                             {Array.isArray(data?.findClasses?.modalities) && data.findClasses.modalities.length > 0 ? (
-                                                data.findClasses.modalities.map((modality, index) => (
+                                                data.findClasses.modalities.map((modality: { name: any; description: any; }, index: Key | null | undefined) => (
                                                     <Box
                                                             key={index}
                                                             className="bg-[#F3F3F4] md:w-[49%] w-full rounded-lg p-5 pt-[14px] grid grid-cols-[5.5rem,1fr]"

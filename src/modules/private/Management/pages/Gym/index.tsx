@@ -1,4 +1,5 @@
 import { Box, Button, Collapse, Divider, ListItemText, Menu, MenuItem, Skeleton, Tooltip, Typography } from "@mui/material";
+import { IconType } from "react-icons";
 import { BiSupport } from "react-icons/bi";
 import { CgMenuRightAlt } from "react-icons/cg";
 import { HiMiniChevronRight, HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
@@ -227,7 +228,7 @@ export default function GymManagement({ permissions }: ManagementProps ) {
                                                 <Box>
                                                     <MenuBox
                                                         key={menu.menuCode}
-                                                        icon={menu.icon}
+                                                        icon={menu.icon as unknown as IconType}
                                                         name={isMenuCollapsed ? "" : menu.name}
                                                         isMenuCollapsed={isMenuCollapsed}
                                                         description={menu.description}
@@ -238,7 +239,7 @@ export default function GymManagement({ permissions }: ManagementProps ) {
                                                         onClick={() => {
                                                             setSelectedResource({
                                                                 name: menu.name,
-                                                                icon: menu.icon,
+                                                                icon: menu.icon as unknown as IconType,
                                                                 onClick: () => openComponent(menu.path as GymManagementType),
                                                             });
                                                             if (hasSubMenu) {
@@ -274,7 +275,7 @@ export default function GymManagement({ permissions }: ManagementProps ) {
                                                         <Box>
                                                             <SubMenuBox
                                                                 key={sub.subMenuCode}
-                                                                icon={sub.icon}
+                                                                icon={sub.icon as unknown as IconType}
                                                                 name={sub.name}
                                                                 description={menu.description}
                                                                 isMenuCollapsed={isMenuCollapsed}
@@ -282,7 +283,7 @@ export default function GymManagement({ permissions }: ManagementProps ) {
                                                                 onClick={() => {
                                                                     setSelectedResource({
                                                                         name: sub.name,
-                                                                        icon: sub.icon,
+                                                                        icon: sub.icon as unknown as IconType,
                                                                         onClick: () => openComponent(menu.path as GymManagementType),
                                                                     });
                                                                     setActiveComponent(sub.path as GymManagementType);

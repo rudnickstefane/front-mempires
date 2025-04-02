@@ -49,7 +49,7 @@ const SubResourceBox = ({ icon: Icon, name, onClick, isSelected }: ResourceBoxPr
     </Button>
 );
 
-const renderComponents: { [key in HomeGymAdminType]: React.ComponentType } = {
+const renderComponents: { [key in 'Contributors' | 'Groups' | 'Hours']: React.ComponentType } = {
     Contributors: ContributorsGymAdmin,
     Groups: GroupAccessGymAdmin,
     Hours: HoursGymAdmin
@@ -59,7 +59,7 @@ export default function SettingsGymAdmin() {
     const [selectedType, setSelectedType] = useState<HomeGymAdminType>('Contributors'); // Default to 'Visits'
     
     const relationshipResources = subResources.filter(resource => resource.menu === 'Settings');
-    const SelectedComponent = renderComponents[selectedType];
+    const SelectedComponent = renderComponents[selectedType as keyof typeof renderComponents];
 
     return (
         <Box>

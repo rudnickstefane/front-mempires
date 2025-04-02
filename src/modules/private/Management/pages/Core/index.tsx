@@ -1,4 +1,5 @@
 import { Box, Button, Collapse, Divider, ListItemText, Menu, MenuItem, Skeleton, Tooltip, Typography } from "@mui/material";
+import { IconType } from "react-icons";
 import { BiSupport } from "react-icons/bi";
 import { CgMenuRightAlt } from "react-icons/cg";
 import { HiMiniChevronRight } from "react-icons/hi2";
@@ -7,20 +8,19 @@ import { RiExchange2Line } from "react-icons/ri";
 import { RxExit } from "react-icons/rx";
 import notification from '../../../../../assets/svg/notification.svg';
 import logo from '../../../../../modules/assets/images/icon.png';
+import { ManagementProps } from "../../../../common/types/ManagementProps.type";
 import MenuBox from "../../components/Menus/MenuBox";
 import SubMenuBox from "../../components/Menus/SubMenuBox";
 import { useGymManagement } from "../Gym/hooks";
 import { GymManagementType, RendersGymManagement } from "../Gym/types/gym-management.types";
 
-export default function CoreManagement() {
+export default function GymManagement({ permissions }: ManagementProps ) {
 
     const {
         isMenuLoading,
         isProfileLoading,
-        isCompanyLoading,
         responseMenus,
         responseProfileDetails,
-        responseCompanyDetails,
         isMenuCollapsed,
         expandedMenus,
         setExpandedMenus,
@@ -37,7 +37,7 @@ export default function CoreManagement() {
         handleClose,
         responseNotifications,
         formatNotificationTime
-    } = useGymManagement();
+    } = useGymManagement({permissions});
 
     return (
         <>
@@ -194,7 +194,7 @@ export default function CoreManagement() {
                                                 <Box>
                                                     <MenuBox
                                                         key={menu.menuCode}
-                                                        icon={menu.icon}
+                                                        icon={menu.icon as unknown as IconType}
                                                         name={isMenuCollapsed ? "" : menu.name}
                                                         isMenuCollapsed={isMenuCollapsed}
                                                         description={menu.description}
@@ -205,7 +205,7 @@ export default function CoreManagement() {
                                                         onClick={() => {
                                                             setSelectedResource({
                                                                 name: menu.name,
-                                                                icon: menu.icon,
+                                                                icon: menu.icon as unknown as IconType,
                                                                 onClick: () => openComponent(menu.path as GymManagementType),
                                                             });
                                                             if (hasSubMenu) {
@@ -241,7 +241,7 @@ export default function CoreManagement() {
                                                         <Box>
                                                             <SubMenuBox
                                                                 key={sub.subMenuCode}
-                                                                icon={sub.icon}
+                                                                icon={sub.icon as unknown as IconType}
                                                                 name={sub.name}
                                                                 description={menu.description}
                                                                 isMenuCollapsed={isMenuCollapsed}
@@ -249,7 +249,7 @@ export default function CoreManagement() {
                                                                 onClick={() => {
                                                                     setSelectedResource({
                                                                         name: sub.name,
-                                                                        icon: sub.icon,
+                                                                        icon: sub.icon as unknown as IconType,
                                                                         onClick: () => openComponent(menu.path as GymManagementType),
                                                                     });
                                                                     setActiveComponent(sub.path as GymManagementType);

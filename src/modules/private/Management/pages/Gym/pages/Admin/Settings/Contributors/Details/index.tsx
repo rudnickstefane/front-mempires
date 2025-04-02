@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, Divider, Drawer, Tooltip, Typography } from "@mui/material";
+import { Key } from "react";
 import { LuShieldAlert } from "react-icons/lu";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { TbArrowLeft, TbEdit } from "react-icons/tb";
@@ -208,10 +210,10 @@ export const GymContributorDetails = ({
                             <TbEdit size={24} />
                         </Button>
                     </Box>
-                    {data && data?.contact?.filter((contact) => contact.emailStatus === 'PENDING').length > 0 && (
+                    {data && data?.contact?.filter((contact: { emailStatus: string; }) => contact.emailStatus === 'PENDING').length > 0 && (
                         <Box className='bg-[#fff9ee] border border-[#faa200] rounded-lg font-semibold flex flex-row items-center justify-center text-[#faa200] py-1 px-2 uppercase text-[.8rem] font-poppins'>
                             <LuShieldAlert className='text-[#faa200] text-[1.3rem] mr-2' /> 
-                            {data?.contact?.filter((contact) => contact.emailStatus === 'PENDING').length > 1 
+                            {data?.contact?.filter((contact: { emailStatus: string; }) => contact.emailStatus === 'PENDING').length > 1 
                             ? 'Existem e-mails não confirmados' 
                             : 'Existe um e-mail não confirmado'}
                         </Box>
@@ -219,8 +221,8 @@ export const GymContributorDetails = ({
                 </Box>
                 <Box className='flex flex-wrap justify-between'>
                     {data?.contact
-                        .sort((a) => (a.type === 'MAIN' ? -1 : 1))
-                        .map((contact) => (
+                        .sort((a: { type: string; }) => (a.type === 'MAIN' ? -1 : 1))
+                        .map((contact: { contactCode: Key | null | undefined; description: any; phone: any; emailStatus: string; email: any; emergencyContact: any; emergencyPhone: any; }) => (
                         <Box
                             key={contact.contactCode}
                             className="bg-[#F3F3F4] md:w-[49%] w-full rounded-lg p-5 pt-[14px] grid grid-cols-[11.5rem,1fr] mb-5"

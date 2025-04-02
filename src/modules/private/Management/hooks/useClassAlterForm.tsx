@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { MultiValue, SingleValue } from 'react-select';
 import { useBackendForFrontend } from '../../../common/hooks/useBackendForFrontend';
@@ -83,7 +84,7 @@ export const useClassAlterForm = ({
         endHours: data?.findClasses.endDate
             ? data?.findClasses.endDate.split('T')[1]?.slice(0, 5) || ''
             : '',
-        modalities: data.findClasses.modalities.map((item) => item.categoryCode),
+        modalities: data.findClasses.modalities.map((item: { categoryCode: any; }) => item.categoryCode),
         observation: data.findClasses.observation,
     });
 
@@ -389,7 +390,7 @@ export const useClassAlterForm = ({
 
                 setFormData((prev) => ({
                     ...prev,
-                    [selectedDay]: [...prev[selectedDay], newSlot].sort((a, b) => {
+                    [selectedDay]: [...(prev[selectedDay] as string[] || []), newSlot].sort((a, b) => {
                     const getHour = (time: string) => parseInt(time.split(":")[0]) * 60 + parseInt(time.split(":")[1]); 
                     return getHour(a.split(" às ")[0]) - getHour(b.split(" às ")[0]);
                     }),
@@ -402,7 +403,7 @@ export const useClassAlterForm = ({
     const handleRemoveTimeSlot = (day: string, index: number) => {
         setFormData((prev) => ({
             ...prev,
-            [day]: prev[day].filter((_, i) => i !== index),
+            [day]: (prev[day] as string[]).filter((_, i) => i !== index),
         }));
     };
 

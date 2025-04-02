@@ -1,4 +1,5 @@
 import { Box, Button, Divider, Typography } from '@mui/material';
+import { Key } from 'react';
 import { GrUserManager } from 'react-icons/gr';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { DrawerProps } from '../../../../common/types';
@@ -131,7 +132,8 @@ export const VisitDetailDrawer = ({
               <Box className='flex flex-col'>
                 <Box className="flex flex-wrap justify-between">
                   {Array.isArray(data.categories) && data.categories.length > 0 && (
-                    data.categories.map((category, index) => (
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    data.categories.map((category: { name: any; description: any; }, index: Key | null | undefined) => (
                       <Box
                         key={index}
                         className="bg-[#F3F3F4] md:w-[49%] w-full rounded-lg p-5 pt-[14px] grid grid-cols-[6.5rem,1fr]"

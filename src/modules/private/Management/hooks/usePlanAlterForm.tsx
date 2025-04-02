@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { MultiValue, SingleValue } from 'react-select';
 import { useBackendForFrontend } from '../../../common/hooks/useBackendForFrontend';
@@ -74,8 +75,8 @@ export const usePlanAlterForm = ({
         isAllHours: data.findPlans.hours === 'FULL_DAY',
         isCustomHours: data.findPlans.hours === 'CUSTOM',
         planCode: Number(data.findPlans.planCode),
-        periodicity: data.findPlans.periodicities.map((item) => item.periodicity),
-        periodicityDetails: data.findPlans.periodicities.map((item) => {
+        periodicity: data.findPlans.periodicities.map((item: { periodicity: any; }) => item.periodicity),
+        periodicityDetails: data.findPlans.periodicities.map((item: { amount: string | number | undefined; periodicity: any; name: string; charge: any; fees: any; observation: any; startDate: string; endDate: string; }) => {
             // Função para converter valores no formato "brasileiro" para float
             const parseToFloat = (value: string | number | undefined): number => {
               if (typeof value === 'number') return value;
@@ -85,13 +86,13 @@ export const usePlanAlterForm = ({
         
             // Calcula o total de amount de modalities
             const totalModalityAmount = data.findPlans.modalities
-              .map((modality) => parseToFloat(modality.amount))
-              .reduce((sum, value) => sum + value, 0);
+              .map((modality: { amount: string | number | undefined; }) => parseToFloat(modality.amount))
+              .reduce((sum: any, value: any) => sum + value, 0);
         
             // Calcula o total de amount de customServices
             const totalCustomServiceAmount = data.findPlans.customServices
-              .map((service) => parseToFloat(service.amount))
-              .reduce((sum, value) => sum + value, 0);
+              .map((service: { amount: string | number | undefined; }) => parseToFloat(service.amount))
+              .reduce((sum: any, value: any) => sum + value, 0);
         
             // Subtrai os valores do amount da periodicity
             const adjustedAmount = parseToFloat(item.amount) - (totalModalityAmount + totalCustomServiceAmount);
@@ -134,8 +135,8 @@ export const usePlanAlterForm = ({
         endHours: data?.findPlans.endDate
             ? data?.findPlans.endDate.split('T')[1]?.slice(0, 5) || ''
             : '',
-        modalities: data.findPlans.modalities.map((item) => item.categoryCode),
-        customService: data.findPlans.customServices.map((item) => item.categoryCode),
+        modalities: data.findPlans.modalities.map((item: { categoryCode: any; }) => item.categoryCode),
+        customService: data.findPlans.customServices.map((item: { categoryCode: any; }) => item.categoryCode),
         chargeRegistration: data.findPlans.typeCharge === 'PLAN' ? data.findPlans.periodicities[0].charge : '',
         isPlan: data.findPlans.typeCharge === 'PLAN' ? true : false,
         isPeriodicity: data.findPlans.typeCharge === 'PERIODICITY' ? true : false,
@@ -714,7 +715,7 @@ export const usePlanAlterForm = ({
 
                 setFormData((prev) => ({
                     ...prev,
-                    [selectedDay]: [...prev[selectedDay], newSlot].sort((a, b) => {
+                    [selectedDay]: [...(prev[selectedDay] as string[] || []), newSlot].sort((a, b) => {
                     const getHour = (time: string) => parseInt(time.split(":")[0]) * 60 + parseInt(time.split(":")[1]); 
                     return getHour(a.split(" às ")[0]) - getHour(b.split(" às ")[0]);
                     }),
@@ -727,7 +728,7 @@ export const usePlanAlterForm = ({
     const handleRemoveTimeSlot = (day: string, index: number) => {
         setFormData((prev) => ({
             ...prev,
-            [day]: prev[day].filter((_, i) => i !== index),
+            [day]: (prev[day] as string[]).filter((_, i) => i !== index),
         }));
     };
 

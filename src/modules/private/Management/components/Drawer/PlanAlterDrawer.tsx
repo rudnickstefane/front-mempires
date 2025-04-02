@@ -387,7 +387,7 @@ const animatedComponents = makeAnimated();
                             <Box key={key} className="bg-[#F3F3F4] md:w-[49%] w-full rounded-lg p-5 pt-[14px] mb-3">
                               <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 uppercase">{label}</Typography>
                               <Divider className="!my-3" />
-                              {formData[key].map((slot, index) => (
+                              {(formData[key] as string[]).map((slot, index) => (
                                 <>
                                   <Box key={index} className='flex flex-row items-center justify-between'>
                                     <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-[.1rem] !font-semibold">{slot}</Typography>

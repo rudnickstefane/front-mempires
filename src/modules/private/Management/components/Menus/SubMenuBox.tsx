@@ -9,7 +9,7 @@ const SubMenuBox = ({
     isSelected,
     isMenuCollapsed,
 }: ResourceBoxProps & { onClick: () => void; isSelected: boolean }) => {
-    const Icon = iconMap[icon];
+    const Icon = iconMap[icon as unknown as keyof typeof iconMap];
 
     return (
         <Button

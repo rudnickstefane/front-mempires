@@ -1,6 +1,7 @@
+import { IconType } from 'react-icons';
 
 export type ResourceBoxProps = {
-    icon: string;
+    icon: IconType;
     type?: string;
     menu?: string;
     name: string;
@@ -10,5 +11,5 @@ export type ResourceBoxProps = {
     hasSubMenu?: boolean;
     isExpanded?: boolean;
     hasPermission?:boolean;
-    onClick: () => void;
+    onClick?: () => void;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Box, Button, Checkbox, CircularProgress, FormControl, FormControlLabel, IconButton, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
 import { useEffect } from 'react';
@@ -385,7 +386,7 @@ export const EditProfileDrawer = ({
                         </Button>
                       )}
                       <Box className="flex flex-col justify-between mt-5">
-                        {contacts?.map((contact) => (
+                        {contacts?.map((contact: { contactCode: any; type?: any; description?: any; phone?: any; email?: any; }) => (
                           <Box
                             key={contact.contactCode}
                             className="bg-[#F3F3F4] w-full rounded-lg p-5 pt-[14px] mb-4 flex flex-col justify-end"
@@ -409,7 +410,12 @@ export const EditProfileDrawer = ({
                                             color: '#ff0336',
                                         },
                                     }}
-                                    onClick={() => handleEditContact(contact)}
+                                    onClick={() => handleEditContact({
+                                      contactCode: contact.contactCode,
+                                      description: contact.description || '',
+                                      phone: contact.phone || '',
+                                      email: contact.email || ''
+                                    })}
                                   >
                                     <TbEdit size={24} />
                                   </Button>

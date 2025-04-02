@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Box, Button, Collapse, Divider, Drawer, Fade, IconButton, InputAdornment, InputLabel, ListItemIcon, ListItemText, Menu, MenuItem, Modal, Select as MuiSelect, Pagination, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography } from "@mui/material";
+import { Key } from 'react';
 import { BiEditAlt } from "react-icons/bi";
 import { CiFolderOff, CiSearch } from "react-icons/ci";
 import { FaRegCircleCheck } from 'react-icons/fa6';
@@ -528,10 +530,10 @@ export const GymStudentDetails = ({
                                                             <TbEdit size={24} />
                                                         </Button>
                                                     </Box>
-                                                    {data && data?.contact?.filter((contact) => contact.emailStatus === 'PENDING').length > 0 && (
+                                                    {data && data?.contact?.filter((contact: { emailStatus: string; }) => contact.emailStatus === 'PENDING').length > 0 && (
                                                         <Box className='bg-[#fff9ee] border border-[#faa200] rounded-lg font-semibold flex flex-row items-center justify-center text-[#faa200] py-1 px-2 uppercase text-[.8rem] font-poppins'>
                                                             <LuShieldAlert className='text-[#faa200] text-[1.3rem] mr-2' /> 
-                                                            {data?.contact?.filter((contact) => contact.emailStatus === 'PENDING').length > 1 
+                                                            {data?.contact?.filter((contact: { emailStatus: string; }) => contact.emailStatus === 'PENDING').length > 1 
                                                             ? 'Existem e-mails não confirmados' 
                                                             : 'Existe um e-mail não confirmado'}
                                                         </Box>
@@ -539,8 +541,8 @@ export const GymStudentDetails = ({
                                                 </Box>
                                                 <Box className='flex flex-wrap justify-between'>
                                                     {data?.contact
-                                                        .sort((a) => (a.type === 'MAIN' ? -1 : 1))
-                                                        .map((contact) => (
+                                                        .sort((a: { type: string; }) => (a.type === 'MAIN' ? -1 : 1))
+                                                        .map((contact: { contactCode: Key | null | undefined; description: any; phone: any; emailStatus: string; email: any; emergencyContact: any; emergencyPhone: any; }) => (
                                                         <Box
                                                             key={contact.contactCode}
                                                             className="bg-[#F3F3F4] md:w-[49%] w-full rounded-lg p-5 pt-[14px] grid grid-cols-[11.5rem,1fr] mb-5"

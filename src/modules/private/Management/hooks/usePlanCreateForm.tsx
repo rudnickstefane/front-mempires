@@ -598,7 +598,7 @@ export const usePlanCreateForm = ({
 
                 setFormData((prev) => ({
                     ...prev,
-                    [selectedDay]: [...prev[selectedDay], newSlot].sort((a, b) => {
+                    [selectedDay]: [...(prev[selectedDay] as string[] || []), newSlot].sort((a, b) => {
                     const getHour = (time: string) => parseInt(time.split(":")[0]) * 60 + parseInt(time.split(":")[1]); 
                     return getHour(a.split(" às ")[0]) - getHour(b.split(" às ")[0]);
                     }),
@@ -611,7 +611,7 @@ export const usePlanCreateForm = ({
     const handleRemoveTimeSlot = (day: string, index: number) => {
         setFormData((prev) => ({
             ...prev,
-            [day]: prev[day].filter((_, i) => i !== index),
+            [day]: (prev[day] as string[]).filter((_, i) => i !== index),
         }));
     };
 

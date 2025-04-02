@@ -14,23 +14,11 @@ import { TiUserAdd } from "react-icons/ti";
 import { useHomeGymManagement } from '../../hooks';
 import { useGymData } from "../../hooks/dbHome";
 import { GymManagementProps } from '../../types';
-import Calendar from './Calendar';
 import Carousel from './Carousel';
 
 interface GymData {
     id: number;
     name: string;
-}
-
-interface Notification {
-    id: number;
-    type: string;
-    icon: string;
-    name: string;
-    describe: string;
-    route: string;
-    colorName: string;
-    colorBackIcon: string;
 }
 
 interface PendingGymPayments {
@@ -70,9 +58,7 @@ export default function HomeGymManagement({ enqueueSnackbar }: GymManagementProp
         handleDeleteShortcut
     } = useHomeGymManagement({ enqueueSnackbar });
 
-    const { data, loading } = useGymData<GymData[]>('http://localhost:5000/UserDetails');
-    const { data: notificationsData, loading: notificationsLoading } = useGymData<Notification[]>(`http://localhost:5000/NotificationManagement?userId=${data?.[0]?.id}&_expand=icon`);
-    const [notifications, setNotifications] = useState<Notification[]>([]);
+    const { data } = useGymData<GymData[]>('http://localhost:5000/UserDetails');
 
     const { data: pendingGymPaymentsData, loading: pendingGymPaymentsLoading } = useGymData<PendingGymPayments[]>(`http://localhost:5000/PendingGymPayments?userId=${data?.[0]?.id}`);
 
@@ -96,7 +82,7 @@ export default function HomeGymManagement({ enqueueSnackbar }: GymManagementProp
     const toggleFilterDrawer = (open: boolean) => {
         setIsFilterDrawerOpen(open);
         if (open) {
-            setIsRegisterDrawerOpen(false); // Fechar o Drawer de matrícula quando abrir o de filtro
+            setIsFilterDrawerOpen(false); // Fechar o Drawer de matrícula quando abrir o de filtro
         }
     };
 
@@ -111,12 +97,6 @@ export default function HomeGymManagement({ enqueueSnackbar }: GymManagementProp
             setFilteredPayments(pendingGymPaymentsData || []); // Se não houver filtro, mostra todos
         }
     }, [selectedPaymentTypes, pendingGymPaymentsData]);
-
-    useEffect(() => {
-        if (notificationsData) {
-            setNotifications(notificationsData);
-        }
-    }, [notificationsData]);
 
     const clearFilters = () => {
         setSelectedPaymentTypes([]);
@@ -627,7 +607,7 @@ export default function HomeGymManagement({ enqueueSnackbar }: GymManagementProp
 
                     <Box className='bg-white rounded-3xl shadow-md w-full mt-5 p-5'>
                         <Box className='color-secondary text-[1.3rem] mb-5'>Agendamentos e Reservas</Box>
-                        <Calendar />
+                        {/* <Calendar /> */}
                     </Box>
                 </Box>
                 <Box className='flex flex-col w-[52.5%]'>
@@ -728,7 +708,7 @@ export default function HomeGymManagement({ enqueueSnackbar }: GymManagementProp
                                             <Divider className='!mx-5 !my-3 bg-[#efefef]' />
                                         </Box>
                                     ))
-                                ) : pendingGymPaymentsData.length > 0 ? (
+                                ) : pendingGymPaymentsData && pendingGymPaymentsData.length > 0 ? (
                                     // Exibe as notificações com o ícone
                                     filteredPayments.map((payment, index) => (
                                         <Box key={index} className='flex flex-col'>

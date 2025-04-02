@@ -61,7 +61,11 @@ export const useEventCreateForm = ({
         nameError: '',
         identityError: '',
         referralSourceError: '',
-        modalitiesError: ''
+        modalitiesError: '',
+        emailError: '',
+        phoneError: '',
+        indicationSearchError: '',
+        searchFindStudentError: ''
     });
 
     const dynamicSteps = ['Informações'];
@@ -85,6 +89,7 @@ export const useEventCreateForm = ({
 
     const handleCrop = () => {
         if (cropperRef.current) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const cropper = (cropperRef.current as any).cropper;
         const croppedDataURL = cropper.getCroppedCanvas().toDataURL(); // Obtém a imagem recortada como base64
         setCroppedImage(croppedDataURL);
@@ -159,7 +164,16 @@ export const useEventCreateForm = ({
     };
 
     const validateForm = () => {
-        let newErrors: VisitRegisterProps['errors'] = {};
+        let newErrors: VisitRegisterProps['errors'] = {
+            nameError: '',
+            identityError: '',
+            referralSourceError: '',
+            modalitiesError: '',
+            emailError: '',
+            phoneError: '',
+            indicationSearchError: '',
+            searchFindStudentError: ''
+        };
         newErrors = ValidateFormVisitRegister(formData, activeStep);
         setErrors(newErrors);
         

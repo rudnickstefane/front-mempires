@@ -12,7 +12,7 @@ const MenuBox = ({
     hasSubMenu,
     isExpanded,
 }: ResourceBoxProps & { onClick: () => void; isSelected: boolean; isExpanded: boolean }) => {
-    const Icon = iconMap[icon];
+    const Icon = iconMap[icon as unknown as keyof typeof iconMap];
 
     return (
         <Button

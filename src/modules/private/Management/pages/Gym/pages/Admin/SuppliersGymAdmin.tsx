@@ -55,7 +55,7 @@ export default function SuppliersGymAdmin() {
         modalConfirmDelete,
         handleCloseConfirmDelete,
         isMenuOpen,
-        suppliersToDisplay,
+        visitsToDisplay,
     } = useVisitsGymAdmin({ enqueueSnackbar });
 
     return (
@@ -115,8 +115,8 @@ export default function SuppliersGymAdmin() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                    {suppliersToDisplay && suppliersToDisplay.length > 0 ? (
-                                        suppliersToDisplay.sort((a, b) => 
+                                    {visitsToDisplay && visitsToDisplay.length > 0 ? (
+                                        visitsToDisplay.sort((a, b) => 
                                             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
                                         ).map((visit, index) => (
                                         <TableRow

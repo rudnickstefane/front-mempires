@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, Divider, Typography } from '@mui/material';
+import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { DrawerProps } from '../../../../common/types';
 import { PaymentBadge, RulesAccessMapper, RulesFrequencyMapper } from '../Badges/PaymentBadge';
@@ -105,7 +107,7 @@ export const StudentPlanDetailDrawer = ({
                         <Box key={key} className="bg-[#F3F3F4] md:w-[24%] w-full rounded-lg p-5 pt-[14px] mt-3">
                             <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 uppercase">{label}</Typography>
                             <Divider className="!my-3" />
-                            {data[key].map((slot, index) => (
+                            {data[key].map((slot: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined, index: Key | null | undefined) => (
                             <>
                                 <Box key={index} className='flex flex-row items-center justify-between'>
                                 <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-[.1rem] !font-semibold">{slot}</Typography>

@@ -73,7 +73,7 @@ const SubResourceBox = ({ icon: Icon, name, onClick, isSelected }: ResourceBoxPr
     </Button>
 );
 
-const renderComponents: { [key in HomeGymAdminType]: React.ComponentType } = {
+const renderComponents: { [key in 'Visits' | 'Contacts' | 'Chats' | 'Events' | 'Advertisements']: React.ComponentType } = {
     Visits: VisitsGymAdmin,
     Contacts: ContactsGymAdmin,
     Chats: ChatsGymAdmin,
@@ -85,7 +85,7 @@ export default function RelationshipGymAdmin() {
     const [selectedType, setSelectedType] = useState<HomeGymAdminType>('Visits'); // Default to 'Visits'
     
     const relationshipResources = subResources.filter(resource => resource.menu === 'Relationship');
-    const SelectedComponent = renderComponents[selectedType];
+    const SelectedComponent = renderComponents[selectedType as keyof typeof renderComponents];
 
     return (
         <Box>

@@ -10,11 +10,20 @@ export const ValidateFormVisitRegister = (
   isIndication?: boolean,
 ): VisitRegisterFormErrors => {
 
-  const errors: VisitRegisterFormErrors = {};
+  const errors: VisitRegisterFormErrors = {
+    nameError: "",
+    identityError: "",
+    referralSourceError: "",
+    modalitiesError: "",
+    emailError: "",
+    phoneError: "",
+    indicationSearchError: "",
+    searchFindStudentError: ""
+  };
 
   switch (activeStep) {
     case 0: {
-      const nameError = ValidateName(formData.name);
+      const nameError = ValidateName(String(formData.name));
       if (nameError) {
         errors.nameError = nameError;
       }
@@ -45,7 +54,7 @@ export const ValidateFormVisitRegister = (
         errors.phoneError = 'O telefone deve estar no formato (xx) xxxx xxxx ou (xx) x xxxx xxxx.';
       }
 
-      const isEmail = EmailValidator(formData.email);
+      const isEmail = EmailValidator(String(formData.email));
       if (!formData.email) {
         errors.emailError = 'O e-mail é obrigatório.';
       } else if (formData.email === 'S/E') {

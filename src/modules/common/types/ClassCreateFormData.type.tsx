@@ -20,4 +20,5 @@ export type ClassCreateFormData = {
     fridayHours: string[],
     saturdayHours: string[],
     holidayHours: string[],
+    [key: string]: string | number | boolean | string[] | null | unknown,
 }

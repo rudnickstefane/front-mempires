@@ -17,12 +17,12 @@ import { TiCancel } from 'react-icons/ti';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import styled from "styled-components";
-import { DrawerProps } from "../../../../../../../../common/types";
-import { customNoOptionsMessage, customStyles } from '../../../../../../../../common/ui';
-import { FormatZipCode } from "../../../../../../../../common/utils";
-import { PaymentBadge } from "../../../../../../components/Badges/PaymentBadge";
-import { ImageCropModal } from "../../../../../../components/Modals";
-import { useStudentAlterForm } from "../../../../../../hooks";
+import { DrawerProps } from '../../../../../../../common/types';
+import { customNoOptionsMessage, customStyles } from '../../../../../../../common/ui';
+import { FormatZipCode } from "../../../../../../../common/utils";
+import { PaymentBadge } from "../../../../../components/Badges/PaymentBadge";
+import { ImageCropModal } from "../../../../../components/Modals";
+import { useStudentAlterForm } from "../../../../../hooks";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -511,10 +511,10 @@ export const GymVisitsDetails = ({
                                                             <TbEdit size={24} />
                                                         </Button>
                                                     </Box>
-                                                    {data && data?.contact?.filter((contact) => contact.emailStatus === 'PENDING').length > 0 && (
+                                                    {data && data?.contact?.filter((contact: { emailStatus: string }) => contact.emailStatus === 'PENDING').length > 0 && (
                                                         <Box className='bg-[#fff9ee] border border-[#faa200] rounded-lg font-semibold flex flex-row items-center justify-center text-[#faa200] py-1 px-2 uppercase text-[.8rem] font-poppins'>
                                                             <LuShieldAlert className='text-[#faa200] text-[1.3rem] mr-2' /> 
-                                                            {data?.contact?.filter((contact) => contact.emailStatus === 'PENDING').length > 1 
+                                                            {data?.contact?.filter((contact: { emailStatus: string }) => contact.emailStatus === 'PENDING').length > 1 
                                                             ? 'Existem e-mails não confirmados' 
                                                             : 'Existe um e-mail não confirmado'}
                                                         </Box>
@@ -522,8 +522,8 @@ export const GymVisitsDetails = ({
                                                 </Box>
                                                 <Box className='flex flex-wrap justify-between'>
                                                     {data?.contact
-                                                        .sort((a) => (a.type === 'MAIN' ? -1 : 1))
-                                                        .map((contact) => (
+                                                        .sort((a: { type: string}) => (a.type === 'MAIN' ? -1 : 1))
+                                                        .map((contact: { contactCode: string; description?: string; phone?: string; email?: string; emailStatus?: string; emergencyContact?: string; emergencyPhone?: string }) => (
                                                         <Box
                                                             key={contact.contactCode}
                                                             className="bg-[#F3F3F4] md:w-[49%] w-full rounded-lg p-5 pt-[14px] grid grid-cols-[11.5rem,1fr] mb-5"

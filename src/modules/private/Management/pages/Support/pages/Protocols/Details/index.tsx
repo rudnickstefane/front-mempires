@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, CircularProgress, Divider, FormControl, TextField, Typography } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { JSXElementConstructor, ReactElement, ReactNode, useEffect, useRef } from "react";
 import { MdCheckCircle, MdKeyboardArrowRight } from "react-icons/md";
 import { PiUserSquareLight } from "react-icons/pi";
 import { TbArrowLeft } from "react-icons/tb";
@@ -24,7 +25,7 @@ export const TicketDetails = ({
         handleMessageCreate
     } = useTicketCreateForm({ closeDrawer, enqueueSnackbar, data, refresh });
 
-    const chatContainerRef = useRef(null);
+    const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
     // Função para rolar o contêiner para o final
     const scrollToBottom = () => {
@@ -73,7 +74,7 @@ export const TicketDetails = ({
                     </Box>
                 </Box>
                 <Box ref={chatContainerRef} className='p-5 flex flex-col overflow-x-auto max-h-[calc(100vh-300px)]' >
-                    {data.messages.map((message, index) => (
+                    {data.messages.map((message: { sentUserCode: any; sentCompanyCode: any; nameSentUser: string; createdAt: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined; message: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined; }, index: number) => (
                         <Box key={index} className={`flex flex-col w-full ${index > 0 ? 'mt-5' : ''}`}>
                         {/* Verifica se a mensagem é do issuerUserCode ou issuerCompanyCode */}
                         {(message.sentUserCode === data.issuerUserCode || message.sentCompanyCode === data.issuerCompanyCode) ? (

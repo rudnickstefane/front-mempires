@@ -473,7 +473,7 @@ export const useEditTransactionForm = ({
 
     const validateForm = () => {
         let newErrors: TransactionsProps['errors'] = {};
-        newErrors = ValidateFormReceiveTransaction(formData, activeStep);
+        newErrors = ValidateFormReceiveTransaction(formData, activeStep, combinePaymentMethod);
         setErrors(newErrors);
         
         return Object.keys(newErrors).length === 0;

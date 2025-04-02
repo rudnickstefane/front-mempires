@@ -33,6 +33,7 @@ export type PlanCreateFormData = {
     isValue: boolean;
     isPercentage: boolean;
     observation?: string;
+    [key: string]: string | number | boolean | string[] | null | unknown,
 }
 
 export type PeriodicityDetail = {
