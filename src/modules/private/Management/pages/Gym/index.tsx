@@ -45,8 +45,6 @@ export default function GymManagement({ permissions }: ManagementProps ) {
         isCompanyDisabled
     } = useGymManagement({ permissions });
 
-    console.log(permissions);
-
     return (
         <>
         <style>

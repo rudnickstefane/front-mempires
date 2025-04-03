@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Page404 from '../modules/common/pages/Error404'
 import { GymConfig } from '../modules/private/InitialConfig'
 import Management from '../modules/private/Management'
+import ConfirmMail from '../modules/public/Account/ConfirmMail'
 import SignIn from '../modules/public/SignIn'
 import SignUp from '../modules/public/SignUp'
 import Carreiras from '../pages/Carreiras'
@@ -18,6 +19,7 @@ function AppRoutes() {
                 <Route path="/" element={<PageBase />}>
                     <Route index element={<Home />} />
                     <Route path='/entrar' element={<SignIn />} />
+                    <Route path='/confirm/mail/:uuid/:token' element={<ConfirmMail />} />
                     <Route path='/cadastro' element={<SignUp />} />
                     <Route path='/programas/incentivo' element={<Incentivo />} />
                     <Route path='/academia/configuracoes' element={<GymConfig />} />

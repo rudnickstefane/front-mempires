@@ -15,7 +15,7 @@ export const FinishStepConfigGym = ({ handleAccess }: StepFinishProps) => {
                                     <Typography className='!text-[2.5rem] !font-bold text-[#424242]'>Parabéns!<br />Você completou seu cadastro.</Typography>
                                 </Box>
                                 <Box className='mt-[1.56vh]'>
-                                    <Typography className=''><b>Importante:</b> Enviamos um e-mail de confirmação para validar o seu cadastro. Caso não encontre na sua caixa de entrada, verifique a pasta de spam ou lixo eletrônico.</Typography>
+                                    <Typography className=''><b>Importante:</b> Enviamos um e-mail de confirmação para validar o seu e-mail. Caso não encontre na sua caixa de entrada, verifique a pasta de spam ou lixo eletrônico.</Typography>
                                 </Box>
                             </Box>
                             <Box className='md:w-[10%] w-full mt-6 md:mt-0'>
