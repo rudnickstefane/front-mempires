@@ -1,13 +1,12 @@
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Box, Button, CircularProgress, Divider, FormControl, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/images/icon.png';
-import { useSignInForm } from '../../common/hooks';
-import { ImgSignIn } from './style.d';
+import { useResetPasswordForm } from '../../common/hooks';
+import { ImgSignIn } from '../SignIn/style.d';
 
-function SignIn() {
+function ResetPassword() {
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -16,12 +15,14 @@ function SignIn() {
         formData,
         errors,
         showPassword,
-        handleTextFieldChange,
+        showConfirmPassword,
         handleClickShowPassword,
+        handleClickShowConfirmPassword,
         handleMouseDownPassword,
-        handleAccess,
-        handleKeyPress,
-    } = useSignInForm({ enqueueSnackbar });
+        handleTextFieldChange,
+        handleRecovery,
+        handleKeyPress
+    } = useResetPasswordForm({ enqueueSnackbar });
 
     return (
         <Box className='flex flex-row w-full h-screen'>
@@ -34,26 +35,10 @@ function SignIn() {
                         </Box>
                     </Link>
                     <Box className='flex items-center justify-center flex-col mt-5'>
-                        <Typography className='!text-3xl text-gray !-ml-3'>Bem-vindo ao iFlex</Typography>
-                        <Typography className='!mt-1'>Não tem uma conta? <Link to="/cadastro" className="color-primary underline underline-offset-2 decoration-transparent transition-all hover:decoration-current">
-                            Crie agora mesmo
-                        </Link></Typography>
+                        <Typography className='!text-3xl text-gray !-ml-3'>Recuperar acesso</Typography>
+                        <Typography className='!mt-4 !text-sm !text-gray-700 text-center'>Digite sua nova senha abaixo.</Typography>
                     </Box>
                     <Divider className='!my-5 w-full border-gray' />
-                    <FormControl fullWidth>
-                        <TextField
-                            required
-                            label="CNPJ, CPF, E-mail ou Usuário"
-                            variant="outlined"
-                            margin="normal"
-                            name='login'
-                            className='!m-0'
-                            value={formData.login}
-                            onChange={handleTextFieldChange}
-                            error={!!errors.loginError}
-                            helperText={errors.loginError}
-                        />
-                    </FormControl>
                     <FormControl fullWidth>
                         <TextField
                             required
@@ -64,8 +49,8 @@ function SignIn() {
                             value={formData.password}
                             id="outlined-adornment-password"
                             type={showPassword ? 'text' : 'password'}
-                            label="Digite sua senha"
-                            className='!my-5'
+                            label="Nova senha"
+                            className='!m-0'
                             helperText={errors.passwordError}
                             InputProps={{
                                 endAdornment: (
@@ -84,13 +69,43 @@ function SignIn() {
                             }}
                         />
                     </FormControl>
+                    <FormControl fullWidth>
+                        <TextField
+                            required
+                            onChange={handleTextFieldChange}
+                            onKeyDown={handleKeyPress}
+                            error={!!errors.confirmPasswordError}
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            id="outlined-adornment-password"
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            label="Confirmar nova senha"
+                            className='!my-5'
+                            helperText={errors.confirmPasswordError}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            style={{ marginRight: '0' }}
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowConfirmPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </FormControl>
                     <Button
                         type="submit"
-                        disabled={isLoading || (!formData.login || !formData.password)}
+                        disabled={isLoading || !formData.password || (formData.confirmPassword !== formData.password)}
                         variant="contained"
                         color="primary"
                         fullWidth
-                        onClick={handleAccess}
+                        onClick={handleRecovery}
                         sx={{
                             backgroundColor: '#ff0336',
                             color: '#fff',
@@ -100,15 +115,9 @@ function SignIn() {
                             },
                         }}
                         >
-                        {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Entrar'}
+                        {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Redefinir Senha'}
                     </Button>
                 </Box>
-                <Button
-                    size="medium"
-                    href="/recovery"
-                    className='!mt-5'
-                    style={{ textTransform: 'none', color: '#ff0336', fontFamily: 'Poppins', fontWeight: 'normal' }}
-                >Esqueci minha senha</Button>
             </Box>
             <Box className='w-full bg-secondary md:flex hidden'>
                 <ImgSignIn />
@@ -133,4 +142,4 @@ function SignIn() {
     );
 }
 
-export default SignIn;
+export default ResetPassword;

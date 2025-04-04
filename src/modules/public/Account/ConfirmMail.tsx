@@ -1,7 +1,7 @@
 import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { MutationConfirmMail } from '../../common/graphql';
+import { MutationCheckCredentials, MutationConfirmMail } from '../../common/graphql';
 import { useBackendForFrontend } from '../../common/hooks/useBackendForFrontend';
 import { GetErrorMessage } from '../../common/utils';
 
@@ -13,7 +13,6 @@ function ConfirmMail() {
     const { enqueueSnackbar } = useSnackbar();
     const { request } = useBackendForFrontend();
     const [attemptCount, setAttemptCount] = useState(0);
-    const endpoint = import.meta.env.VITE_APP_BFF_FUNCIONAL_ACESSO_URL;
 
     useEffect(() => {
         if (!calledRef.current) {
@@ -28,9 +27,17 @@ function ConfirmMail() {
                 }
 
                 try {
+                    const variablesCheckCredentials = {
+                        validation: 'MAIL_CONFIRM',
+                        uuid: uuid,
+                        token: token,
+                    };
+
+                    await request(MutationCheckCredentials, variablesCheckCredentials);
+                    
                     const variables = {
                         uuid: uuid,
-                        token: `${uuid}/${token}`,
+                        token: token,
                     };
 
                     await request(MutationConfirmMail, variables);
@@ -51,7 +58,7 @@ function ConfirmMail() {
 
             confirmMail();
         }
-    }, [uuid, token, navigate, endpoint, request, attemptCount, enqueueSnackbar]);
+    }, [uuid, token, navigate, request, attemptCount, enqueueSnackbar]);
 
     return (
         <></>

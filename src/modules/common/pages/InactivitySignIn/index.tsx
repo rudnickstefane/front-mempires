@@ -97,6 +97,7 @@ function InactivitySignIn() {
                             </Box>
                             <Button
                                 size="medium"
+                                href="/recovery"
                                 className='!mt-5'
                                 style={{ textTransform: 'none', color: '#ff0336', fontFamily: 'Poppins', fontWeight: 'normal' }}
                             >Esqueci minha senha</Button>

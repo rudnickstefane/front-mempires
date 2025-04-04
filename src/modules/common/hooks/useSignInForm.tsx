@@ -43,7 +43,7 @@ export const useSignInForm = ({enqueueSnackbar}: {
 
         setFormData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: value.trim(),
         }));
 
         setErrors(prevErrors => ({
