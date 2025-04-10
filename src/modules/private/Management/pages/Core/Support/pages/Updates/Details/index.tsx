@@ -1,8 +1,8 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { TbArrowLeft } from "react-icons/tb";
-import { DrawerProps } from '../../../../../../../common/types';
-import { QueueBadge, StatusInternalBadge } from "../../../../../components/Badges/PaymentBadge";
+import { DrawerProps } from "../../../../../../../../common/types";
+import { QueueBadge, StatusInternalBadge } from "../../../../../../components/Badges/PaymentBadge";
 
 export const UpdateDetails = ({
     data,

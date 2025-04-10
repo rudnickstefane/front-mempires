@@ -231,7 +231,7 @@ export default function CoreManagement({ permissions }: ManagementProps ) {
                                 </Menu>
                             </Box>                            
                         </Box>
-                        <Tooltip title={'Informações da Academia'} placement="right" arrow>
+                        <Tooltip title={'Informações da Empresa'} placement="right" arrow>
                             <Button
                                 className="flex flex-row !rounded-3xl !bg-transparent !justify-start !mt-5 w-full items-center"
                                 endIcon={<RiExchange2Line className={`${isMenuCollapsed ? '!ml-[1rem]' : ''} ${isCompanyDisabled ? 'hidden' : ''}`}/>}
