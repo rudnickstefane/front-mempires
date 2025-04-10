@@ -8,7 +8,7 @@ export const useSignatureForm = ({
     refresh,
 }: {
     enqueueSnackbar: (message: string, options?: { variant: VariantType }) => void;
-    refresh: () => void;
+    refresh?: () => void;
 }) => {
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
     const [signaturePlan, setSignaturePlan] = useState<{ plan: string; periodicity: string } | null>(null);

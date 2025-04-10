@@ -4,9 +4,9 @@ import { JSXElementConstructor, ReactElement, ReactNode, useEffect, useRef } fro
 import { MdCheckCircle, MdKeyboardArrowRight } from "react-icons/md";
 import { PiUserSquareLight } from "react-icons/pi";
 import { TbArrowLeft } from "react-icons/tb";
-import { DrawerProps } from '../../../../../../../common/types';
-import { QueueBadge, StatusInternalBadge } from "../../../../../components/Badges/PaymentBadge";
-import { useTicketCreateForm } from '../../../../../hooks';
+import { DrawerProps } from "../../../../../../../../common/types";
+import { QueueBadge, StatusInternalBadge } from "../../../../../../components/Badges/PaymentBadge";
+import { useCoreTicketCreateForm } from "../../../../../../hooks";
 
 export const SuggestionDetails = ({
     closeDrawer,
@@ -33,7 +33,7 @@ export const SuggestionDetails = ({
         handleTextFieldChange,
         charactersRemaining,
         handleMessageCreate
-    } = useTicketCreateForm({ closeDrawer, enqueueSnackbar, data, refresh });
+    } = useCoreTicketCreateForm({ closeDrawer, enqueueSnackbar, data, refresh });
     
 
     const chatContainerRef = useRef<HTMLDivElement | null>(null);

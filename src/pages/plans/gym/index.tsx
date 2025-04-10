@@ -9,11 +9,7 @@ import { HeaderLight } from "../../../components/Header/light";
 import { useSignatureForm } from "../../../modules/private/Management/hooks";
 import { Img } from "../../Home/styles.d";
 
-type CompanyManagementProps = {
-    refresh: () => Promise<void>;
-}
-
-export const GymPlans = ({ refresh }: CompanyManagementProps) => {
+export const GymPlans = () => {
     const recursosRef = useRef<HTMLDivElement>(null);
     const collapseRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +30,7 @@ export const GymPlans = ({ refresh }: CompanyManagementProps) => {
         plans,
         selectedPlan,
         setSelectedPlan,
-    } = useSignatureForm({ enqueueSnackbar, refresh });
+    } = useSignatureForm({ enqueueSnackbar });
 
     const renderPaymentOptions = (plan: string) => {
         const currentPlan = plans[plan as keyof typeof plans];
