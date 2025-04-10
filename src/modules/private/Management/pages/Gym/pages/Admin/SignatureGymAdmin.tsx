@@ -1,4 +1,5 @@
-import { Box, Button, Collapse, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Collapse, Divider, Drawer, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { useRef } from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import plansIconOne from '../../../../../../../assets/images/plansOne.svg';
@@ -6,7 +7,11 @@ import plansIconThree from '../../../../../../../assets/images/plansThree.svg';
 import { Img } from "../../../../../../../pages/Home/styles.d";
 import { useSignatureForm } from "../../../../hooks";
 
-export default function SignatureGymAdmin() {
+type CompanyManagementProps = {
+    refresh: () => Promise<void>;
+}
+
+export default function SignatureGymAdmin({ refresh }: CompanyManagementProps) {
     const recursosRef = useRef<HTMLDivElement>(null);
     const collapseRef = useRef<HTMLDivElement>(null);
 
@@ -19,11 +24,17 @@ export default function SignatureGymAdmin() {
         collapseRef.current?.scrollIntoView();
     };
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const {
         plans,
         selectedPlan,
         setSelectedPlan,
-    } = useSignatureForm();
+        openDrawer,
+        closeDrawer,
+        isDrawerOpen,
+        renderDrawerContent
+    } = useSignatureForm({ enqueueSnackbar, refresh });
 
     const renderPaymentOptions = (plan: string) => {
         const currentPlan = plans[plan as keyof typeof plans];
@@ -46,6 +57,7 @@ export default function SignatureGymAdmin() {
                         <Box className='flex flex-col h-full items-center justify-end w-full'>
                             <Divider className='!my-5 w-full bg-[#e2e2e4]' />
                             <Button
+                                onClick={() => openDrawer('SignaturePlan', currentPlan.name, 'monthly')}
                                 variant="contained"
                                 color="primary"
                                 sx={{
@@ -76,12 +88,13 @@ export default function SignatureGymAdmin() {
                         <Divider className='!my-5 w-full bg-[#e2e2e4]' />
                         <Box className='flex flex-col items-center justify-center h-full'>
                             <Typography className='flex flex-row items-center !text-[23px] !font-bold'>10% de Desconto</Typography>
-                            <Typography className='flex flex-row items-center !mb-5 !text-[15px]'>Até 6x sem juros no cartão</Typography>
+                            <Typography className='flex flex-row items-center !mb-5 !text-[15px]'>Até 3x sem juros no cartão</Typography>
                             <Box className='flex flex-col text-[15px] items-center !mt-10'>Aproximadamente <Typography className='!font-bold !mt-1'>R$ {currentPlan.quarterlyMonthly}</Typography> mensais</Box>
                         </Box>
                         <Box className='flex flex-col items-center justify-end w-full'>
                             <Divider className='!my-5 w-full bg-[#e2e2e4]' />
                             <Button
+                                onClick={() => openDrawer('SignaturePlan', currentPlan.name, 'quarterly')}
                                 variant="contained"
                                 color="primary"
                                 sx={{
@@ -109,12 +122,13 @@ export default function SignatureGymAdmin() {
                         <Divider className='!my-5 w-full bg-[#E2E2E4]' />
                         <Box className='flex flex-col items-center justify-center h-full'>
                             <Typography className='flex flex-row items-center !text-[23px] !font-bold color-primary'>20% de Desconto</Typography>
-                            <Typography className='flex flex-row items-center !mb-5 !text-[15px]'>Até 12x sem juros no cartão</Typography>
+                            <Typography className='flex flex-row items-center !mb-5 !text-[15px]'>Até 6x sem juros no cartão</Typography>
                             <Box className='flex flex-col text-[15px] items-center !mt-10'>Aproximadamente <Typography className='!font-bold color-primary !mt-1'>R$ {currentPlan.yearlyMonthly}</Typography> mensais</Box>
                         </Box>
                         <Box className='flex flex-col items-center justify-end w-full'>
                             <Divider className='!my-5 w-full bg-[#e2e2e4]' />
                             <Button
+                                onClick={() => openDrawer('SignaturePlan', currentPlan.name, 'yearly')}
                                 variant="contained"
                                 color="primary"
                                 sx={{
@@ -137,6 +151,19 @@ export default function SignatureGymAdmin() {
 
     return (
         <Box>
+            {/* Drawer */}
+            <Drawer
+                disableEnforceFocus
+                anchor="right"
+                open={isDrawerOpen}
+                onClose={closeDrawer}
+                PaperProps={{
+                    className: "w-[60%] p-8"
+                }}
+            >
+                {renderDrawerContent()}
+            </Drawer>
+
             <Box className="overflow-x-auto max-h-[calc(100vh-98px)] p-5 pb-[4rem]">
                 <Box className='w-full flex flex-col'>
                     <Box className='w-full py-6 flex flex-col items-center'>
@@ -247,6 +274,7 @@ export default function SignatureGymAdmin() {
                                     <Button
                                         variant="contained"
                                         color="primary"
+                                        className='!bg-[#1d202b] !text-[#afb2bc]'
                                         sx={{
                                             backgroundColor: '#ff0336',
                                             color: '#fff',
@@ -256,6 +284,7 @@ export default function SignatureGymAdmin() {
                                             },
                                         }}
                                         onClick={() => scrollToCollapse("Business")}
+                                        disabled={true}
                                     >
                                         Mais informações
                                     </Button>
@@ -314,6 +343,7 @@ export default function SignatureGymAdmin() {
                                             },
                                         }}
                                         onClick={() => scrollToCollapse("Imaginative")}
+                                        disabled={true}
                                     >
                                         Mais informações
                                     </Button>
@@ -339,6 +369,7 @@ export default function SignatureGymAdmin() {
                                         style={{ color: selectedPlan === "Business" ? "#fff" : "#08041b" }}
                                         sx={{ textTransform: "none" }}
                                         onClick={() => setSelectedPlan("Business")}
+                                        disabled={true}
                                     >
                                         Business
                                     </Button>
@@ -347,6 +378,7 @@ export default function SignatureGymAdmin() {
                                         style={{ color: selectedPlan === "Imaginative" ? "#fff" : "#08041b" }}
                                         sx={{ textTransform: "none" }}
                                         onClick={() => setSelectedPlan("Imaginative")}
+                                        disabled={true}
                                     >
                                         Imaginative
                                     </Button>

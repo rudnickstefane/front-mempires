@@ -4,6 +4,7 @@ export { MutationDeleteShortcut } from './MutationDeleteShortcut';
 export { MutationEditCompany } from './MutationEditCompany';
 export { MutationEditProfile } from './MutationEditProfile';
 export { MutationGroupUpsert } from './MutationGroupUpsert';
+export { MutationPlanSignature } from './MutationPlanSignature';
 export { MutationPlanUpSert } from './MutationPlanUpSert';
 export { MutationReviewUpsert } from './MutationReviewUpsert';
 export { MutationShortcutCreate } from './MutationShortcutCreate';

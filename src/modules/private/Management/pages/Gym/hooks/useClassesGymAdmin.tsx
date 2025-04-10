@@ -81,7 +81,7 @@ export const useClassesGymAdmin = ({
         const classToAlter = responseClasses?.findClasses?.find((classes) => classes.classCode === classCode);
         if (classToAlter) {
             setclassDetails({
-                findClasses: [classToAlter],
+                findClasses: classToAlter,
             });
         } 
         setIsDetailsView(true);
@@ -93,7 +93,7 @@ export const useClassesGymAdmin = ({
         const classToAlter = responseClasses?.findClasses?.find((classes) => classes.classCode === classCode);
         if (classToAlter) {
             setAlterClasses({
-                findClasses: [classToAlter],
+                findClasses: classToAlter,
             });
         }    
         openDrawer('ClassAlter');
@@ -287,15 +287,15 @@ export const useClassesGymAdmin = ({
 
     useEffect(() => {
         if (responseClasses) {
-            const classToAlter = responseClasses.findClasses?.find(classes => classes.classCode === classDetails?.findClasses?.[0]?.classCode);
+            const classToAlter = responseClasses.findClasses?.find(classes => classes.classCode === classDetails?.findClasses?.classCode);
 
             if (classToAlter) {
                 setReloadKey(prevKey => prevKey + 1);  // Força o recarregamento do componente
-                setclassDetails({ findClasses: [classToAlter] });
+                setclassDetails({ findClasses: classToAlter });
             }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [classDetails?.findClasses, classDetails?.findClasses[0]?.classCode, responseClasses]);
+    }, [classDetails?.findClasses, classDetails?.findClasses?.classCode, responseClasses]);
 
     const refresh = async (source: unknown) => {
 

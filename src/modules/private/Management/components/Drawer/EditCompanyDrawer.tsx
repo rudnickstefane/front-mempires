@@ -131,7 +131,7 @@ export const EditCompanyDrawer = ({
                           } placement="left" arrow>
                           <IconButton
                             size="small"
-                            sx={{ marginLeft: '5px' }}
+                            sx={{ marginLeft: '5px', marginTop: '20px' }}
                           >
                             <HelpOutlineIcon fontSize="small" />
                           </IconButton>

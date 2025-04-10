@@ -40,6 +40,7 @@ export type { InitialConfigureResponse } from './InitialConfigureResponse.type';
 export type { PlanAlterData } from './PlanAlterData.type';
 export type { PlanCreateFormData } from './PlanCreateFormData.type';
 export type { PlanCreateFormErrors } from './PlanCreateFormErrors.type';
+export type { PreferenceData } from './PreferenceData.type';
 export type { ProductData } from './ProductData.type';
 export type { ReviewData } from './ReviewData.type';
 export type { ReviewsForm } from './ReviewsForm.type';

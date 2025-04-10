@@ -306,7 +306,7 @@ export default function GymProfileManagement({ data, refresh, isProfileLoading }
                                         ) : (
                                             <>
                                             <Box className='grid grid-cols-[10rem,1fr]'>
-                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Tipo</Typography>
+                                                <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Assinatura</Typography>
                                                 <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
                                                 {data.findProfileDetails.userPlan.name || ''}
                                                 </Typography>
@@ -320,7 +320,7 @@ export default function GymProfileManagement({ data, refresh, isProfileLoading }
                                             <Box className='grid grid-cols-[10rem,1fr]'>
                                                 <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4'>Valor</Typography>
                                                 <Typography className='!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold'>
-                                                {data.findProfileDetails.userPlan.amount || ''}
+                                                R$ {data.findProfileDetails.userPlan.amount || ''}
                                                 </Typography>
                                             </Box>
                                             <Box className='grid grid-cols-[10rem,1fr]'>

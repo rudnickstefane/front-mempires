@@ -1,7 +1,18 @@
+import { VariantType } from "notistack";
 import { useState } from "react";
+import { SignaturePlanDrawer } from "../components/Drawer";
+import { AdminGymDrawerType } from "../pages/Gym/types";
 
-export function useSignatureForm() {
+export const useSignatureForm = ({
+    enqueueSnackbar,
+    refresh,
+}: {
+    enqueueSnackbar: (message: string, options?: { variant: VariantType }) => void;
+    refresh: () => void;
+}) => {
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+    const [signaturePlan, setSignaturePlan] = useState<{ plan: string; periodicity: string } | null>(null);
+
 
     const handlePlanSelection = (plan: string) => {
         setSelectedPlan(selectedPlan === plan ? null : plan);
@@ -52,9 +63,49 @@ export function useSignatureForm() {
         },
     };
 
+    {/* Drawers */}
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [drawerType, setDrawerType] = useState<AdminGymDrawerType[keyof AdminGymDrawerType] | null>(null);
+
+    const renderDrawerContent = () => {
+        switch (drawerType) {
+            case 'SignaturePlan':
+                return (
+                    <SignaturePlanDrawer 
+                        closeDrawer={closeDrawer}
+                        data={signaturePlan}
+                        enqueueSnackbar={enqueueSnackbar}
+                        refresh={refresh}
+                    />
+                );
+
+            default:
+                break;
+        }
+    };
+
+    const closeDrawer = () => {
+        setDrawerType(null);
+        setIsDrawerOpen(false);
+    };
+
+    const openDrawer = (
+        type: AdminGymDrawerType[keyof AdminGymDrawerType], 
+        plan: string,
+        periodicity: string,
+    ) => {
+        setDrawerType(type);
+        setIsDrawerOpen(true);
+        setSignaturePlan({ plan, periodicity });
+    };
+
     return {
         plans,
         selectedPlan,
         setSelectedPlan: handlePlanSelection,
+        openDrawer,
+        closeDrawer,
+        isDrawerOpen,
+        renderDrawerContent
     };
 }

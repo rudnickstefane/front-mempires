@@ -11,6 +11,7 @@ import GymProfileManagement from '../../../../Profile';
 import { QueryFindMenus, QueryFindNotifications, QueryFindProfileDetails } from '../../../components/Graphql';
 import { QueryFindCompanyDetails } from '../../../components/Graphql/QueryFindCompanyDetails';
 import CompanyDetailsManagement from '../../Company';
+import Invoices from '../../Invoices';
 import Marketplace from '../../Marketplace';
 import Notifications from '../../Notifications';
 import Support from '../../Support';
@@ -290,7 +291,16 @@ export const useGymManagement = ({
                 return <Support />;
 
             case 'Signature':
-                return <SignatureGymAdmin />;
+                return <SignatureGymAdmin 
+                        refresh={async () => {
+                            await refresh('findProfileDetails');
+                            await refresh('findCompanyDetails');
+                            await refresh('findGymMenus');
+                        }}
+                        />;
+
+            case 'Invoices':
+                return <Invoices enqueueSnackbar={ enqueueSnackbar }/>;
 
             default:
                 return (

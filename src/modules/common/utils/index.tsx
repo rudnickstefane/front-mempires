@@ -34,6 +34,7 @@ export { ValidateFormEditProfile } from './ValidateFormEditProfile.util';
 export { ValidateFormEditStudent } from './ValidateFormEditStudent.util';
 export { ValidateFormPlanAlter } from './ValidateFormPlanAlter.util';
 export { ValidateFormPlanCreate } from './ValidateFormPlanCreate.util';
+export { ValidateFormPlanSignature } from './ValidateFormPlanSignature.util';
 export { ValidateFormReceiveTransaction } from './ValidateFormReceiveTransaction.util';
 export { ValidateFormRegisterContributor } from './ValidateFormRegisterContributor.util';
 export { ValidateFormRegisterGroup } from './ValidateFormRegisterGroup.util';

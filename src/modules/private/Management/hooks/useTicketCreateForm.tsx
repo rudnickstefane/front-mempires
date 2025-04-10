@@ -47,8 +47,8 @@ export const useTicketCreateForm = ({
         message: '',
         sentUserCode: profileCode,
         sentCompanyCode: companyCode,
-        receivedUserCode: data?.messages[0].receivedUserCode ? data.messages[0].receivedUserCode : null,
-        receivedCompanyCode: data?.messages[0].receivedCompanyCode ? data.messages[0].receivedCompanyCode : null,
+        receivedUserCode: data?.recipientUserCode ? data.recipientUserCode : null,
+        receivedCompanyCode: data?.recipientCompanyCode ? data.recipientCompanyCode : null,
     });
 
     const [errors, setErrors] = useState<TicketsProps['errors']>({

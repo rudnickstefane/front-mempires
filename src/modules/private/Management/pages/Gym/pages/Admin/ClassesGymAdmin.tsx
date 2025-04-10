@@ -48,7 +48,7 @@ export default function ClassesGymAdmin ({ enqueueSnackbar }: GymManagementProps
         classesToDisplay,
         isDetailsView,
         renderComponentContent,
-        // handleStatusDay
+        handleStatusDay
     } = useClassesGymAdmin({ enqueueSnackbar });
 
     return (
@@ -203,7 +203,7 @@ export default function ClassesGymAdmin ({ enqueueSnackbar }: GymManagementProps
                                                                     key={label}
                                                                     label={label}
                                                                     clickable
-                                                                    // onClick={() => handleStatusDay(classes.classCode, key, isActive)}
+                                                                    onClick={() => handleStatusDay(classes.classCode, key, Boolean(isActive))}
                                                                     sx={{
                                                                         marginRight: '10px',
                                                                         backgroundColor: isActive ? '#ff0336' : '#e0e0e0',

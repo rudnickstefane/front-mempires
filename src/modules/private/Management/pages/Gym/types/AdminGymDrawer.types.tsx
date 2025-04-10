@@ -29,4 +29,5 @@ export type AdminGymDrawerType = {
     GroupDetails: 'GroupDetails',
     EditGroup: 'EditGroup',
     EditContributor: 'EditContributor',
+    SignaturePlan: 'SignaturePlan',
 };

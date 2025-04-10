@@ -84,7 +84,7 @@ export const useClassAlterForm = ({
         endHours: data?.findClasses.endDate
             ? data?.findClasses.endDate.split('T')[1]?.slice(0, 5) || ''
             : '',
-        modalities: data.findClasses.modalities.map((item: { categoryCode: any; }) => item.categoryCode),
+        modalities: data.findClasses?.modalities?.map((item: { categoryCode: any; }) => item.categoryCode),
         observation: data.findClasses.observation,
     });
 

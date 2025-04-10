@@ -1,12 +1,14 @@
-import { Box, Button, Collapse, Divider, ListItemText, Menu, MenuItem, Skeleton, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Collapse, Divider, ListItemIcon, ListItemText, Menu, MenuItem, Skeleton, Tooltip, Typography } from "@mui/material";
 import { IconType } from "react-icons";
 import { BiSupport } from "react-icons/bi";
 import { CgMenuRightAlt } from "react-icons/cg";
-import { HiMiniChevronRight, HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
+import { HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import { PiConfettiLight, PiStorefront, PiUserCircleLight } from "react-icons/pi";
 import { RiExchange2Line } from "react-icons/ri";
 import { RxExit } from "react-icons/rx";
+import { TbFileInvoice, TbUserCircle } from "react-icons/tb";
 import notification from '../../../../../assets/svg/notification.svg';
 import logo from '../../../../../modules/assets/images/icon.png';
 import { ManagementProps } from "../../../../common/types/ManagementProps.type";
@@ -59,65 +61,177 @@ export default function GymManagement({ permissions }: ManagementProps ) {
             <Box className='flex flex-col justify-between'>
                 <Box className={`flex flex-col items-center transition-all duration-300 ease-in-out ${isMenuCollapsed ? 'max-w-[7.7rem]' : 'max-w-[16rem]'}`}>
                     <Box className='w-full p-5 pb-0 pt-0'>
-                        {/* Profile */}
-                        <Tooltip title={'Meus Dados'} placement="right" arrow>
-                            <Button
-                                className="flex flex-row !rounded-3xl !bg-[#f3f3f3] !justify-start !mt-5 w-full items-center"
-                                endIcon={<HiMiniChevronRight className={`${isMenuCollapsed ? '!-ml-4' : ''}`}/>}
-                                style={{ color: '#08041b' }}
-                                sx={{
-                                    textTransform: 'none',
-                                }}
-                                onClick={() => {
-                                    setSelectedResource(null);
-                                    setExpandedMenus([]);
-                                    setActiveComponent('Profile')}
-                                }
-                            >
-                                {isProfileLoading ? (
-                                    <>
-                                        <PiUserCircleLight className="text-[2.5rem] mr-3" />
-                                        <Box
-                                            className={`flex flex-col text-left overflow-hidden transition-all duration-300 ${
-                                                isMenuCollapsed ? 'opacity-0 max-w-0' : 'opacity-100 max-w-[7rem] min-w-[7rem]'
-                                            }`}
-                                        >
-                                            <Typography className="whitespace-nowrap overflow-hidden text-ellipsis">
-                                                <Skeleton variant="text" animation="wave" className="w-full" />
-                                            </Typography>
-                                            <Typography className="!font-light !text-[.9rem] whitespace-nowrap overflow-hidden text-ellipsis">
-                                                <Skeleton variant="text" animation="wave" className="w-full" />
-                                            </Typography>
-                                        </Box>
-                                    </>
-                                ) : (
-                                    <>
-                                        {responseProfileDetails?.findProfileDetails.photo ? (
-                                            <img
-                                                src={responseProfileDetails?.findProfileDetails.photo}
-                                                alt="Foto do usuário"
-                                                className="w-10 h-10 rounded-full mr-3"
+                        <Box className="flex flex-row !rounded-3xl !bg-[#f3f3f3] !justify-start !mt-5 w-full items-center">
+                            {/* Profile */}
+                            <Tooltip title={'Meus Dados'} placement="bottom" arrow>
+                                <Button
+                                    className={`flex flex-row !rounded-l-3xl !justify-start w-full items-center !pr-0 ${
+                                        isMenuCollapsed ? '!min-w-[3rem]' : 'w-full'
+                                    }`}
+                                    style={{ color: '#08041b' }}
+                                    sx={{
+                                        textTransform: 'none',
+                                    }}
+                                    onClick={() => {
+                                        setSelectedResource(null);
+                                        setExpandedMenus([]);
+                                        setActiveComponent('Profile')}
+                                    }
+                                >
+                                    {isProfileLoading ? (
+                                        <>
+                                            <PiUserCircleLight
+                                                className={`text-[2.5rem] ${
+                                                    isMenuCollapsed ? 'mr-0' : 'mr-3'
+                                                }`}
                                             />
-                                        ) : (
-                                            <PiUserCircleLight className="text-[2.5rem] mr-3" />
-                                        )}
+                                            <Box
+                                                className={`flex flex-col text-left overflow-hidden transition-all duration-300 ${
+                                                    isMenuCollapsed ? 'opacity-0 max-w-0' : 'opacity-100 max-w-[7rem] min-w-[7rem]'
+                                                }`}
+                                            >
+                                                <Typography className="whitespace-nowrap overflow-hidden text-ellipsis">
+                                                    <Skeleton variant="text" animation="wave" className="w-full" />
+                                                </Typography>
+                                                <Typography className="!font-light !text-[.9rem] whitespace-nowrap overflow-hidden text-ellipsis">
+                                                    <Skeleton variant="text" animation="wave" className="w-full" />
+                                                </Typography>
+                                            </Box>
+                                        </>
+                                    ) : (
+                                        <>
+                                            {responseProfileDetails?.findProfileDetails.photo ? (
+                                                <img
+                                                    src={responseProfileDetails?.findProfileDetails.photo}
+                                                    alt="Foto do usuário"
+                                                    className="w-10 h-10 rounded-full mr-3"
+                                                />
+                                            ) : (
+                                                <PiUserCircleLight
+                                                    className={`text-[2.5rem] ${
+                                                        isMenuCollapsed ? 'mr-0' : 'mr-3'
+                                                    }`}
+                                                />
+                                            )}
 
-                                        <Box
-                                            className={`flex flex-col text-left overflow-hidden transition-all duration-300 ${
-                                                isMenuCollapsed ? 'opacity-0 max-w-0' : 'opacity-100 max-w-[7rem] min-w-[7rem]'
-                                            }`}
-                                        >
-                                            <Typography className="whitespace-nowrap overflow-hidden text-ellipsis">
-                                                {responseProfileDetails?.findProfileDetails.name.split(' ')[0]}
-                                            </Typography>
-                                            <Typography className="!font-light !text-[.9rem] whitespace-nowrap overflow-hidden text-ellipsis">
-                                                {responseProfileDetails?.findProfileDetails.contact[0].email}
-                                            </Typography>
-                                        </Box>
-                                    </>
-                                )}
-                            </Button>
-                        </Tooltip>
+                                            <Box
+                                                className={`flex flex-col text-left overflow-hidden transition-all duration-300 ${
+                                                    isMenuCollapsed ? 'opacity-0 max-w-0' : 'opacity-100 max-w-[7rem] min-w-[7rem]'
+                                                }`}
+                                            >
+                                                <Typography className="whitespace-nowrap overflow-hidden text-ellipsis">
+                                                    {responseProfileDetails?.findProfileDetails.name.split(' ')[0]}
+                                                </Typography>
+                                                <Typography className="!font-light !text-[.9rem] whitespace-nowrap overflow-hidden text-ellipsis">
+                                                    {responseProfileDetails?.findProfileDetails.contact[0].email}
+                                                </Typography>
+                                            </Box>
+                                        </>
+                                    )}
+                                </Button>
+                            </Tooltip>
+                            <Box>
+                                <Tooltip title={'Menu'} placement="right" arrow>
+                                    <Button
+                                        className={`flex flex-row !rounded-r-3xl items-center !min-h-[3.5rem] !text-[1.25rem] ${
+                                            isMenuCollapsed ? '!min-w-[2.1rem]' : '!min-w-[2.7rem]'
+                                        }`}
+                                        style={{ color: '#08041b' }}
+                                        sx={{
+                                            textTransform: 'none',
+                                        }}
+                                        onClick={(event) => {
+                                            handleOpen(event, 'menuProfile');
+                                            setSelectedResource(null);
+                                            setExpandedMenus([]);
+                                        }}
+                                    >
+                                        {anchorEls['menuProfile'] ? (
+                                            <MdKeyboardArrowDown className={`${isMenuCollapsed ? '!-ml-1' : ''}`} />
+                                        ) : (
+                                            <MdKeyboardArrowRight className={`${isMenuCollapsed ? '!-ml-1' : ''}`} />
+                                        )}
+                                    </Button>
+                                </Tooltip>
+                                <Menu
+                                    anchorEl={anchorEls['menuProfile']}
+                                    open={Boolean(anchorEls['menuProfile'])}
+                                    onClose={() => handleClose('menuProfile')}
+                                    slotProps={{
+                                        paper: {
+                                            elevation: 0,
+                                            sx: {
+                                                borderRadius: '.7rem',
+                                                padding: '0 .6rem',
+                                                overflow: 'visible',
+                                                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                                mt: 2,
+                                                ml: -.5,
+                                                '& .MuiAvatar-root': {
+                                                    width: 32,
+                                                    height: 32,
+                                                    ml: -0.5,
+                                                    mr: 1,
+                                                },
+                                                '&::before': {
+                                                    content: '""',
+                                                    display: 'block',
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 14,
+                                                    width: 10,
+                                                    height: 10,
+                                                    bgcolor: 'background.paper',
+                                                    transform: 'translateY(-50%) rotate(45deg)',
+                                                    zIndex: 0,
+                                                },
+                                            },
+                                        },
+                                    }}
+                                    transformOrigin={{ horizontal: 'left', vertical: 'top' }}
+                                    anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                                >
+                                    <MenuItem
+                                        onClick={() => {
+                                            handleClose('menuProfile');
+                                            setActiveComponent('Profile');
+                                        }}
+                                        sx={{
+                                            borderRadius: '.4rem',
+                                            margin: '.2rem 0',
+                                            '&:hover': {
+                                                backgroundColor: '#0000000a !important',
+                                                color: '#000000de !important'
+                                            }
+                                        }}
+                                    >
+                                        <ListItemIcon className='!-mr-1.5'>
+                                            <TbUserCircle className='text-[1.5rem]' />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Meus Dados" />
+                                    </MenuItem>
+                                    <MenuItem
+                                        onClick={() => {
+                                            handleClose('menuProfile');
+                                            setActiveComponent('Invoices');
+                                        }}
+                                        sx={{
+                                            borderRadius: '.4rem',
+                                            margin: '.2rem 0',
+                                            '&:hover': {
+                                                backgroundColor: '#0000000a !important',
+                                                color: '#000000de !important'
+                                            }
+                                        }}
+                                    >
+                                        <ListItemIcon className='!-mr-1.5'>
+                                            <TbFileInvoice className='text-[1.5rem]' />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Faturas" />
+                                    </MenuItem>
+                                </Menu>
+                            </Box>                            
+                        </Box>
                         <Tooltip title={'Informações da Academia'} placement="right" arrow>
                             <Button
                                 className="flex flex-row !rounded-3xl !bg-transparent !justify-start !mt-5 w-full items-center"
@@ -321,18 +435,20 @@ export default function GymManagement({ permissions }: ManagementProps ) {
             </Box>
             <Box className="flex flex-col w-full">
                 <Box className="flex flex-row w-full min-h-[6rem] bg-white justify-end items-center px-4">
-                    <Tooltip title={'Planos'} placement="bottom" arrow>
-                        <Button
-                            className='flex flex-row items-center font-poppins !min-w-12 !mx-2 !rounded-full !min-h-12 !bg-[#f3f3f3]'
-                            style={{ color: '#08041b' }}
-                            onClick={() => {
-                                setSelectedResource(null);
-                                setExpandedMenus([]);
-                                setActiveComponent('Signature')
-                            }}>
-                            <HiOutlineClipboardDocumentCheck className='text-[1.5rem]' />
-                        </Button>
-                    </Tooltip>
+                    {permissions?.some((p: { plan: string; }) => p.plan === 'FREE_PERIOD') && (
+                        <Tooltip title={'Planos'} placement="bottom" arrow>
+                            <Button
+                                className='flex flex-row items-center font-poppins !min-w-12 !mx-2 !rounded-full !min-h-12 !bg-[#f3f3f3]'
+                                style={{ color: '#08041b' }}
+                                onClick={() => {
+                                    setSelectedResource(null);
+                                    setExpandedMenus([]);
+                                    setActiveComponent('Signature')
+                                }}>
+                                <HiOutlineClipboardDocumentCheck className='text-[1.5rem]' />
+                            </Button>
+                        </Tooltip>
+                    )}
                     <Tooltip title={'Marketplace'} placement="bottom" arrow>
                         <Button
                             className='flex flex-row items-center font-poppins !min-w-12 !mx-2 !rounded-full !min-h-12 !bg-[#f3f3f3]'

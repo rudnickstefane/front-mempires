@@ -22,6 +22,6 @@ export const PaymentMapper: Record<string, { label: string; color: string, backg
     SALE: { label: 'Venda', color: '#3498db', backgroundColor: '#a7ace6', icon: 'MdOutlinePointOfSale' },
     PURCHASE: { label: 'Compra', color: '#4a5df9', backgroundColor: '#eaedff', icon: 'TbShoppingCartDollar' },
     COMPANY: { label: 'Presencial', color: '#16ae6b', backgroundColor: '#eefef2', icon: 'TbShoppingCartDollar' },
-    WEB: { label: 'Portal do Aluno', color: '#16ae6b', backgroundColor: '#eefef2', icon: 'TbShoppingCartDollar' },
+    WEB: { label: 'Site', color: '#16ae6b', backgroundColor: '#eefef2', icon: 'TbShoppingCartDollar' },
     MOBILE_APP: { label: 'Aplicativo', color: '#16ae6b', backgroundColor: '#eefef2', icon: 'TbShoppingCartDollar' },
 };

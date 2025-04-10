@@ -1,5 +1,5 @@
 export type ClassAlterData = {
-  findClasses: Array<{
+  findClasses: {
     classCode: string;
     name: string;
     modalities: Array<{
@@ -32,5 +32,5 @@ export type ClassAlterData = {
     holidayStatus: string,
     createdAt: string;
     updatedAt: string;
-  }>;
+  };
 };

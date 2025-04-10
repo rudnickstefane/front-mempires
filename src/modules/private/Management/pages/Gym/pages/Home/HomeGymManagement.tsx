@@ -7,7 +7,7 @@ import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { LiaTruckLoadingSolid } from "react-icons/lia";
 import { LuAlertCircle, LuCircleDollarSign } from "react-icons/lu";
 import { MdAddBox, MdDeleteOutline } from 'react-icons/md';
-import { PiFireFill, PiUserPlus, PiUsersThree } from "react-icons/pi";
+import { PiUserPlus, PiUsersThree } from "react-icons/pi";
 import { RiUserSharedFill, RiUserStarFill, RiUserUnfollowFill } from 'react-icons/ri';
 import { TbFilterQuestion, TbUserDollar } from "react-icons/tb";
 import { TiUserAdd } from "react-icons/ti";
@@ -769,23 +769,6 @@ export default function HomeGymManagement({ enqueueSnackbar }: GymManagementProp
                                 </Button>
                             </Box>
                         </Box>
-                    </Box>
-                    <Box className='bg-[#08041b] rounded-3xl shadow-md w-full h-[330px] mt-7 flex flex-col justify-center items-center p-5'>
-                        <PiFireFill className='color-primary text-[3rem]' />
-                        <Box className='!text-white text-[14px] my-5 font-light'>Tenha acesso a uma variedade de benefícios projetados para aprimorar sua experiência.</Box>
-                        <Button
-                            variant="contained"
-                            href="/planos/fornecedor"
-                            color="primary"
-                            style={{ color: 'white', fontFamily: 'Poppins', height: '3rem' }}
-                            sx={{
-                                background: '#ff0336',
-                                transition: 'transform 0.3s, background-color 0.3s',
-                                '&:hover': {
-                                    background: '#FF0000'
-                                },
-                            }}
-                        >Assinar Plano</Button>
                     </Box>
                 </Box>
             </Box>

@@ -1,4 +1,5 @@
 import { Box, Button, Collapse, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { useRef } from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,11 @@ import { HeaderLight } from "../../../components/Header/light";
 import { useSignatureForm } from "../../../modules/private/Management/hooks";
 import { Img } from "../../Home/styles.d";
 
-export const GymPlans = () => {
+type CompanyManagementProps = {
+    refresh: () => Promise<void>;
+}
+
+export const GymPlans = ({ refresh }: CompanyManagementProps) => {
     const recursosRef = useRef<HTMLDivElement>(null);
     const collapseRef = useRef<HTMLDivElement>(null);
 
@@ -23,11 +28,13 @@ export const GymPlans = () => {
 
     const navigate = useNavigate();
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const {
         plans,
         selectedPlan,
         setSelectedPlan,
-    } = useSignatureForm();
+    } = useSignatureForm({ enqueueSnackbar, refresh });
 
     const renderPaymentOptions = (plan: string) => {
         const currentPlan = plans[plan as keyof typeof plans];
@@ -81,7 +88,7 @@ export const GymPlans = () => {
                         <Divider className='!my-5 w-full bg-[#e2e2e4]' />
                         <Box className='flex flex-col items-center justify-center h-full'>
                             <Typography className='flex flex-row items-center !text-[23px] !font-bold'>10% de Desconto</Typography>
-                            <Typography className='flex flex-row items-center !mb-5 !text-[15px]'>Até 6x sem juros no cartão</Typography>
+                            <Typography className='flex flex-row items-center !mb-5 !text-[15px]'>Até 3x sem juros no cartão</Typography>
                             <Box className='flex flex-col text-[15px] items-center !mt-10'>Aproximadamente <Typography className='!font-bold !mt-1'>R$ {currentPlan.quarterlyMonthly}</Typography> mensais</Box>
                         </Box>
                         <Box className='flex flex-col items-center justify-end w-full'>
@@ -115,7 +122,7 @@ export const GymPlans = () => {
                         <Divider className='!my-5 w-full bg-[#E2E2E4]' />
                         <Box className='flex flex-col items-center justify-center h-full'>
                             <Typography className='flex flex-row items-center !text-[23px] !font-bold color-primary'>20% de Desconto</Typography>
-                            <Typography className='flex flex-row items-center !mb-5 !text-[15px]'>Até 12x sem juros no cartão</Typography>
+                            <Typography className='flex flex-row items-center !mb-5 !text-[15px]'>Até 6x sem juros no cartão</Typography>
                             <Box className='flex flex-col text-[15px] items-center !mt-10'>Aproximadamente <Typography className='!font-bold color-primary !mt-1'>R$ {currentPlan.yearlyMonthly}</Typography> mensais</Box>
                         </Box>
                         <Box className='flex flex-col items-center justify-end w-full'>

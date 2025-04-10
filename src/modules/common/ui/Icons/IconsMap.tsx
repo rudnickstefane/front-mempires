@@ -5,15 +5,15 @@ import { FaFileInvoiceDollar, FaRegCreditCard } from "react-icons/fa";
 import { FaHandHoldingDollar, FaRegCircleCheck } from "react-icons/fa6";
 import { GrDirections } from "react-icons/gr";
 import { IoCalendarOutline } from "react-icons/io5";
-import { LiaTruckLoadingSolid, LiaUserTieSolid } from "react-icons/lia";
+import { LiaFileInvoiceDollarSolid, LiaTruckLoadingSolid, LiaUserTieSolid } from "react-icons/lia";
 import { IconType } from "react-icons/lib";
 import { LuCircleDollarSign, LuClock9 } from "react-icons/lu";
 import { MdDashboard, MdFitnessCenter, MdOutlineAdminPanelSettings, MdOutlineCancel, MdOutlineDesignServices, MdOutlinePix, MdOutlinePointOfSale, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { PiCurrencyCircleDollarLight, PiGearSixLight, PiHandWavingThin, PiIdentificationCardThin, PiPersonArmsSpreadThin, PiStorefrontLight, PiUsersThreeLight } from "react-icons/pi";
-import { RiUserReceivedLine } from "react-icons/ri";
+import { RiUserReceived2Line, RiUserReceivedLine } from "react-icons/ri";
 import { RxDashboard } from "react-icons/rx";
 import { SiFirewalla } from "react-icons/si";
-import { TbMessageDollar, TbMoodDollar, TbServerCog, TbShoppingCartDollar, TbSmartHome, TbTransactionDollar, TbTransformFilled, TbUserCog, TbUserHeart } from "react-icons/tb";
+import { TbCalendarDollar, TbDeviceImacDollar, TbMessageDollar, TbMoodDollar, TbServerCog, TbShoppingCartDollar, TbSmartHome, TbTransactionDollar, TbTransformFilled, TbUserCog, TbUserDollar, TbUserHeart } from "react-icons/tb";
 import { TiCancel } from "react-icons/ti";
 
 export const iconMap: Record<string, IconType> = {
@@ -59,5 +59,10 @@ export const iconMap: Record<string, IconType> = {
     TbUserCog,
     PiPersonArmsSpreadThin,
     CiMedicalClipboard,
-    MdOutlineProductionQuantityLimits
+    MdOutlineProductionQuantityLimits,
+    TbUserDollar,
+    RiUserReceived2Line,
+    LiaFileInvoiceDollarSolid,
+    TbDeviceImacDollar,
+    TbCalendarDollar
 };

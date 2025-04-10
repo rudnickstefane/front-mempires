@@ -24,6 +24,7 @@ export type RendersGymManagement = {
     Notifications: 'Notifications';
     GroupAccess: 'GroupAccess';
     Signature: 'Signature';
+    Invoices: 'Invoices';
 };
 
 export type GymManagementType = keyof RendersGymManagement;

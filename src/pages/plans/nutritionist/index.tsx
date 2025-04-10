@@ -227,7 +227,7 @@ export const NutritionistPlans = () => {
                             <Divider className='!my-5 w-full bg-[#e2e2e4]' />
                             <Box className='flex flex-col items-center justify-end h-full'>
                                 <Typography className='flex flex-row items-center !text-[23px] !font-bold'>8% de Desconto</Typography>
-                                <Typography className='flex flex-row items-center !mb-5 !text-[20px]'>Até 6x sem juros no cartão</Typography>
+                                <Typography className='flex flex-row items-center !mb-5 !text-[20px]'>Até 3x sem juros no cartão</Typography>
                                 <Box className='flex flex-row text-[14px] items-center'>Aproximadamente <Typography className='!font-bold !mx-1'>R$ 275,99</Typography> mensais</Box>
                             </Box>
                             <Box className='flex flex-col h-full items-center justify-end w-full'>
@@ -265,7 +265,7 @@ export const NutritionistPlans = () => {
                             <Divider className='!my-5 w-full bg-[#E2E2E4]' />
                             <Box className='flex flex-col items-center justify-end h-full'>
                                 <Typography className='flex flex-row items-center !text-[23px] !font-bold color-primary'>25% de Desconto</Typography>
-                                <Typography className='flex flex-row items-center !mb-5 !text-[20px]'>Até 12x sem juros no cartão</Typography>
+                                <Typography className='flex flex-row items-center !mb-5 !text-[20px]'>Até 6x sem juros no cartão</Typography>
                                 <Box className='flex flex-row text-[14px] items-center'>Aproximadamente <Typography className='!font-bold !mx-1 color-primary'>R$ 224,99</Typography> mensais</Box>
                             </Box>
                             <Box className='flex flex-col h-full items-center justify-end w-full'>
