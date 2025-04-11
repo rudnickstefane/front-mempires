@@ -149,10 +149,10 @@ export const useSignaturePlanForm = ({
                                 codeError: 'CNPJ não encontrado.',
                             }));
                         } else {
-                            const { logradouro, bairro, nome, cep, numero, municipio, complemento, uf } = response.data;
+                            const { logradouro, bairro, razao_social, cep, numero, municipio, complemento, uf } = response.data;
                             setFormData(prevState => ({
                                 ...prevState,
-                                businessName: nome || '',
+                                businessName: razao_social || '',
                                 zipCode: FormatZipCode(cep) || '',
                                 address: FormatName(logradouro) || '',
                                 district: FormatName(bairro) || '',
