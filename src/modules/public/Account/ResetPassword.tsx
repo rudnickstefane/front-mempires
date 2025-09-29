@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/images/icon.png';
 import { useResetPasswordForm } from '../../common/hooks';
-import { ImgSignIn } from '../SignIn/style.d';
+import { ImgSignIn } from '../signin/style.d';
 
 function ResetPassword() {
 

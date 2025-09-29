@@ -5,9 +5,8 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import plansIconOne from '../../../assets/images/plansOne.svg';
 import plansIconThree from '../../../assets/images/plansThree.svg';
-import { HeaderLight } from "../../../components/Header/light";
 import { useSignatureForm } from "../../../modules/private/Management/hooks";
-import { Img } from "../../Home/styles.d";
+import { Img } from "../../../modules/public/home/styles/styles.d";
 
 export const GymPlans = () => {
     const recursosRef = useRef<HTMLDivElement>(null);
@@ -147,7 +146,6 @@ export const GymPlans = () => {
 
     return (
         <Box>
-            <HeaderLight />
             <Box className="p-5 pb-[4rem]">
                 <Box className='w-full flex flex-col'>
                     <Box className='w-full py-6 flex flex-col items-center'>

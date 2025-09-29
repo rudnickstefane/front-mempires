@@ -2,9 +2,9 @@ import { Button, TextField } from "@mui/material";
 import { PiSmileySadLight } from "react-icons/pi";
 import Select, { StylesConfig } from 'react-select';
 import makeAnimated from 'react-select/animated';
-import { ContentHeader, ContentImage, GradientBottomHeader, GradientOverlay, GradientTopHeader, PromoText, TextContainer } from '../../components/Header/styles.d';
-import { Destaque, DestaqueTitle, GradientHeaderEnd } from '../../components/Styles/styles.d';
 import '../../input.css';
+import { ContentHeader, ContentImage, GradientBottomHeader, GradientOverlay, GradientTopHeader, PromoText, TextContainer } from '../../modules/components/Menu/styles/styles.d';
+import { Destaque, GradientHeaderEnd } from '../../modules/components/Styles/styles.d';
 
 interface Option {
     value: string;
@@ -80,7 +80,6 @@ function Carreiras() {
                 <GradientBottomHeader></GradientBottomHeader>
                 <TextContainer>
                     <PromoText>
-                        <DestaqueTitle className="bg-secondary text-white">Carreiras</DestaqueTitle>
                         <div className='flex flex-col'>
                             <span className="text-[24px]">Pronto para <span className='text-[17px]'>um</span></span><span className="text-[34px] mb-10">Upgrade na sua carreira?</span>
                             <p className='text-[17px] font-light text-[#cbcbcb]'>Venha se juntar ao nosso <b className='font-bold '>time</b> e descubra benefícios que vão além da academia. Com oportunidades para <b className='font-bold'>crescimento</b> e <b className='font-bold'>desenvolvimento</b>, nosso time é como um bom treino – só melhora com a companhia certa.</p><br />
@@ -93,7 +92,6 @@ function Carreiras() {
             {/* Highlight Section */}
             <Destaque className="py-16 shadow-lg rounded-lg">
                 <div className="container mx-auto">
-                    <DestaqueTitle className="bg-secondary text-white">Venha ser Flex</DestaqueTitle>
                     <p className="text-3xl text-black">Encontre sua vaga</p>
                     <div className="mt-5">
                         <p>Um bom treino começa com um ótimo time! Venha se juntar a nós e dê um impulso na sua carreira enquanto ajuda a moldar o futuro da nossa empresa.</p>

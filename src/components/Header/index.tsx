@@ -1,1 +1,0 @@
-export { HeaderAuthLight } from './AuthLight';

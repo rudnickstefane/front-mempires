@@ -21,6 +21,7 @@ export { GeneratePeriodDescription, GeneratePeriodLabel } from './GeneratePeriod
 export { GroupsUpsertVariables } from './GroupsUpsertVariables.util';
 export { PlanAlterVariables } from './PlanAlterVariables.util';
 export { PlanCreateVariables } from './PlanCreateVariables.util';
+export { RemoveAccentsLowercase } from './RemoveAccentsLowercase.util';
 export { RemovePunctuation } from './RemovePonctuacion.util';
 export { ReviewCreateVariables } from './ReviewCreateVariables.util';
 export { SendCroppedImageVariables } from './SendCroppedImageVariables.util';
@@ -47,3 +48,4 @@ export { ValidateFormVisitRegister } from './ValidateFormVisitRegister.util';
 export { ValidateName } from './ValidateName.util';
 export { ValidatePassport } from './ValidatePassport.util';
 export { ValidatePhone } from './ValidatePhone.util';
+

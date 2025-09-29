@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import logo from '../../../../../assets/images/machine.png';
-import { Img, Link } from '../../../../../components/Footer/styles.d';
+import { Img, Link } from '../../../../components/Footer/styles.d';
 
 function FooterManagement() {
     const currentYear = new Date().getFullYear();

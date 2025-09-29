@@ -19,7 +19,7 @@ export const useThemeDarkMode = () => {
         setDarkMode(savedTheme);
       } else {
         // Se o banco não tiver um valor salvo, usa a preferência do sistema
-        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: light)").matches;
         setDarkMode(systemPrefersDark);
       }
     };
@@ -27,7 +27,6 @@ export const useThemeDarkMode = () => {
     getDarkModeStatus();
   }, []);
 
-  // ⬇️ Atualiza o `data-theme` sempre que `darkMode` mudar
   useEffect(() => {
     if (darkMode !== null) {
       document.body.setAttribute("data-theme", darkMode ? "dark" : "light");

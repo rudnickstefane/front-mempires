@@ -1,0 +1,331 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variáveis do tema claro */
+:root {
+    --font-primary: 'Poppins', Arial, Helvetica, sans-serif;
+    --font-secondary: 'Open Sans', Arial, Helvetica, sans-serif;
+    --bg-base: #fff;                    /* Fundo principal */
+    --bg-accent: #3884fd;               /* Fundo secundário */
+    --bg-light: #1976d20a;              /* Fundo terciário claro */
+    --bg-muted: #0000000a;              /* Fundo quaternário sutil */
+    --color-base: #3884fd;              /* Cor principal */
+    --color-base-hover: #0d4599;        /* Cor principal em hover */
+    --color-accent: #4b5563;            /* Cor secundária */
+    --color-dark: #243762;              /* Cor terciária escura */
+    --color-disabled: #00000042;        /* Cor para elementos desativados */
+    --bg-disabled: #d9dde2;             /* Fundo para elementos desativados */
+    --input-border: #ff0;               /* Borda de inputs */
+    --label-color: #0009;               /* Cor dos labels */
+    --color-highlight: #ff0336;         /* Cor de destaque (ex.: botões, ícones) */
+    --color-gray: #0000001f;            /* Cor cinza para bordas */
+    --text-gray: #333333;               /* Texto cinza */
+    --color-white: #fff;                /* Cor branca */
+    --color-border: #c4c4c4;            /* Cor de borda padrão */
+    --color-switch-track: #bdbdbd;      /* Cor da trilha do switch */
+    --color-tooltip: #000000dc;         /* Cor de fundo do tooltip */
+    --color-highlight-transparent: rgba(255, 3, 54, 0.75); /* Cor de destaque com transparência */
+}
+
+/* Variáveis do tema escuro */
+[data-theme="dark"] {
+    --bg-base: #181B25;                 /* Fundo principal escuro */
+    --bg-accent: #181B25;               /* Fundo secundário escuro */
+    --color-base: #006aff;              /* Cor principal */
+    --text-base: #fff;                  /* Texto principal */
+    --bg-disabled: #1d202b;             /* Fundo para elementos desativados */
+    --color-disabled: #afb4bd;          /* Cor para elementos desativados */
+    --input-border: #3d4048;            /* Borda de inputs */
+    --label-color: #b1b7be;             /* Cor dos labels */
+    --color-highlight: #ff0336;         /* Cor de destaque */
+    --color-gray: #3d4048;              /* Cor cinza para bordas */
+    --text-gray: #9E9FA3;               /* Texto cinza */
+    --color-white: #fff;                /* Cor branca */
+    --color-border: #c4c4c4;            /* Cor de borda padrão */
+    --color-switch-track: #bdbdbd;      /* Cor da trilha do switch */
+    --color-tooltip: #000000dc;         /* Cor de fundo do tooltip */
+    --color-highlight-transparent: rgba(255, 3, 54, 0.75); /* Cor de destaque com transparência */
+}
+
+/* Estilos globais */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--bg-base);
+    color: #646464;
+    font-family: var(--font-primary);
+}
+
+/* Fundos */
+.bg-base {
+    background-color: var(--bg-base) !important;
+    transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+.bg-accent {
+    background-color: var(--bg-accent) !important;
+    transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Botões */
+.btn-primary {
+    color: var(--color-white) !important;
+    background-color: var(--color-base) !important;
+    transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-base-hover) !important;
+}
+
+.btn-secondary {
+    background: var(--bg-muted) !important;
+    transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+.btn-tertiary {
+    color: var(--color-base) !important;
+    background: var(--bg-light) !important;
+    transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+.btn-close {
+    color: var(--color-accent) !important;
+    transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+.btn-close:hover {
+    color: var(--color-base) !important;
+}
+
+/* Estilos do Material-UI */
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+.MuiOutlinedInput-root.MuiSelect-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: var(--color-base) !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+    color: var(--color-base) !important;
+    font-family: var(--font-primary);
+}
+
+.MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: var(--color-base) !important;
+    font-family: var(--font-primary);
+}
+
+.MuiIconButton-root:hover {
+    background-color: var(--color-base) !important;
+    color: var(--color-white) !important;
+}
+
+.MuiFormLabel-asterisk {
+    color: var(--color-highlight) !important;
+}
+
+.Mui-checked,
+.MuiLink-root,
+.MuiSwitch-switchBase {
+    color: var(--color-base) !important;
+}
+
+.MuiAutocomplete-listbox {
+    overflow: hidden;
+}
+
+.MuiFormControlLabel-root {
+    border-color: var(--color-border) !important;
+    margin: 0 !important;
+}
+
+.MuiFormControlLabel-root:hover {
+    border-color: var(--color-base) !important;
+}
+
+/* Textos */
+.text-base {
+    color: var(--color-dark) !important;
+    transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.text-base:hover {
+    color: var(--color-base) !important;
+}
+
+.text-accent {
+    color: var(--color-base) !important;
+}
+
+.text-gray {
+    color: var(--text-gray) !important;
+    transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-base);
+    border-radius: 10px;
+}
+
+/* Cores e bordas */
+.color-base {
+    color: var(--color-base) !important;
+    transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+.border-gray {
+    border-color: var(--color-gray) !important;
+    transition: border-color 0.4s ease, transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Fontes */
+.font-secondary {
+    font-family: var(--font-secondary) !important;
+}
+
+.font-poppins {
+    font-family: var(--font-primary) !important;
+}
+
+.font-intro {
+    font-family: 'Intro', sans-serif !important;
+}
+
+.font-tt-norms {
+    font-family: 'TT Norms', sans-serif !important;
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.font-nunito {
+    font-family: 'Nunito', sans-serif !important;
+}
+
+@font-face {
+    font-family: "Intro";
+    src: url("/src/modules/assets/fonts/Intro.otf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Intro";
+    src: url("/src/modules/assets/fonts/Intro-Light.otf") format("truetype");
+    font-weight: 300;
+    font-style: light;
+}
+
+@font-face {
+    font-family: "TT Norms";
+    src: url("/src/modules/assets/fonts/TTNorms-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Estilos do Material-UI adicionais */
+.MuiInputLabel-root {
+    font-family: var(--font-primary) !important;
+}
+
+.MuiOutlinedInput-root {
+    font-family: var(--font-primary) !important;
+}
+
+.MuiTypography-root {
+    font-family: var(--font-primary) !important;
+}
+
+.MuiPaginationItem-root {
+    border-radius: 10px !important;
+    border: 1px solid var(--color-border) !important;
+    margin: 0 .2rem !important;
+}
+
+.MuiPaginationItem-root.Mui-selected {
+    background-color: var(--color-highlight) !important;
+    color: var(--color-white) !important;
+    border: 0px !important;
+}
+
+.MuiPaginationItem-circular:hover {
+    background-color: var(--color-highlight) !important;
+    border: 1px solid var(--color-highlight) !important;
+    color: var(--color-white) !important;
+}
+
+/* Estilos de destaque */
+.after-arrow::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 37px;
+    background-color: var(--color-highlight);
+    margin-top: 16px;
+}
+
+.after-arrowMenu::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: var(--color-highlight);
+    margin-top: 3rem;
+    position: absolute;
+}
+
+/* Cropper e Tooltip */
+.cropper-point,
+.cropper-line {
+    background-color: var(--color-highlight) !important;
+}
+
+.cropper-view-box {
+    outline: 1px solid var(--color-highlight) !important;
+    outline-color: var(--color-highlight-transparent);
+}
+
+.MuiTooltip-tooltip {
+    background-color: var(--color-tooltip) !important;
+    color: var(--color-white) !important;
+    font-weight: normal !important;
+    font-size: 14px !important;
+    padding: .6rem 1rem !important;
+    font-family: var(--font-primary) !important;
+}
+
+/* Switch e Stepper */
+.Mui-checked+.MuiSwitch-track,
+.MuiSwitch-thumb {
+    background: var(--color-highlight) !important;
+}
+
+.MuiSwitch-track {
+    background: var(--color-switch-track) !important;
+}
+
+.MuiStepLabel-label.MuiStepLabel-alternativeLabel {
+    margin-top: 0 !important;
+    width: 200px;
+    text-align: left;
+    padding: 8px !important;
+    font-size: .9rem;
+}
+
+/* Utilitários */
+.no-uppercase {
+    text-transform: none;
+}
+
+.page-clean {
+    height: 6rem;
+}

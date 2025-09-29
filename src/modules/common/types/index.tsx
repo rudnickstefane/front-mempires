@@ -35,6 +35,7 @@ export type { FindTransactionsResponse } from './FindTransactionsResponse.type';
 export type { FindUpdatesResponse } from './FindUpdatesResponse.type';
 export type { FindUserShortcutsResponse } from './FindUserShortcutsResponse.type';
 export type { FindVisitsResponse } from './FindVisitsResponse.type';
+export type { FormType } from './FormType.type';
 export type { GroupData } from './GroupData.type';
 export type { InitialConfigureResponse } from './InitialConfigureResponse.type';
 export type { PlanAlterData } from './PlanAlterData.type';

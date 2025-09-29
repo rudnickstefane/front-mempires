@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import plansIconOne from '../../../../../../../assets/images/plansOne.svg';
 import plansIconThree from '../../../../../../../assets/images/plansThree.svg';
-import { Img } from "../../../../../../../pages/Home/styles.d";
+import { Img } from "../../../../../../public/home/styles/styles.d";
 import { useSignatureForm } from "../../../../hooks";
 
 type CompanyManagementProps = {

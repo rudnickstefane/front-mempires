@@ -1,7 +1,7 @@
 import { VariantType } from 'notistack';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ValidatePassword } from '../../public/SignUp/utils';
+import { ValidatePassword } from '../../public/signup/utils';
 import { MutationCheckCredentials, MutationResetPassword } from '../graphql';
 import { GetErrorMessage } from '../utils';
 import { useBackendForFrontend } from './useBackendForFrontend';

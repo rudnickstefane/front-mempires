@@ -1,12 +1,10 @@
 import { FaArrowLeft } from "react-icons/fa";
-import { HeaderLight } from "../../../../components/Header/light";
 import { Title } from './styles.d';
 
 function Page404() {
 
     return (
         <>
-            <HeaderLight />
             <Title className="mt-10">Oops!</Title>
             <div className="flex flex-col items-center">
                 <span className='text-3xl mt-5 text-black'>Erro 404</span>
