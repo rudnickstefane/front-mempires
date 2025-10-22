@@ -15,149 +15,99 @@ export const useMenuLogic = () => {
 
   const menus: Menu[] = [
     {
-      key: 'rent',
-      label: 'Alugar',
-      isMegaMenu: true,
-      sections: [
-        {
-          title: 'Principais',
-          subtitle: 'cidades',
-          items: [
-            {
-              name: 'São Paulo',
-              subItems: [
-                { name: 'Apartamentos para alugar', link: '/alugar/sao-paulo/apartamentos' },
-                { name: 'Casas para alugar', link: '/alugar/sao-paulo/casas' },
-                { name: 'Todos os imóveis para alugar', link: '/alugar/sao-paulo/todos-os-imoveis' },
-              ],
-            },
-            {
-              name: 'Rio de Janeiro',
-              subItems: [
-                { name: 'Apartamentos para alugar', link: '/alugar/rio-de-janeiro/apartamentos' },
-                { name: 'Casas para alugar', link: '/alugar/rio-de-janeiro/casas' },
-                { name: 'Todos os imóveis para alugar', link: '/alugar/rio-de-janeiro/todos-os-imoveis' },
-              ],
-            },
-            {
-              name: 'Brasília',
-              subItems: [
-                { name: 'Apartamentos para alugar', link: '/alugar/brasilia/apartamentos' },
-                { name: 'Casas para alugar', link: '/alugar/brasilia/casas' },
-                { name: 'Todos os imóveis para alugar', link: '/alugar/brasilia/todos-os-imoveis' },
-              ],
-            },
-            {
-              name: 'Salvador',
-              subItems: [
-                { name: 'Apartamentos para alugar', link: '/alugar/salvador/apartamentos' },
-                { name: 'Casas para alugar', link: '/alugar/salvador/casas' },
-                { name: 'Todos os imóveis para alugar', link: '/alugar/salvador/todos-os-imoveis' },
-              ],
-            },
-            {
-              name: 'Curitiba',
-              subItems: [
-                { name: 'Apartamentos para alugar', link: '/alugar/curitiba/apartamentos' },
-                { name: 'Casas para alugar', link: '/alugar/curitiba/casas' },
-                { name: 'Todos os imóveis para alugar', link: '/alugar/curitiba/todos-os-imoveis' },
-              ],
-            },
-            { name: 'Explorar outras cidades', subItems: [], link: '/alugar/explorar-outras-cidades' },
-          ],
-        },
-        {
-          title: 'Recursos',
-          items: [
-            { name: 'Guia de aluguel', subItems: [], link: '/alugar/guia-de-aluguel' },
-          ],
-        },
-      ],
-      sponsor: {
-        content: 'Espaço para anúncios',
-      },
-    },
-    {
-      key: 'buy',
-      label: 'Comprar',
-      isMegaMenu: true,
-      sections: [
-        {
-          title: 'Principais',
-          subtitle: 'cidades',
-          items: [
-            {
-              name: 'São Paulo',
-              subItems: [
-                { name: 'Apartamentos à venda', link: '/comprar/sao-paulo/apartamentos' },
-                { name: 'Casas à venda', link: '/comprar/sao-paulo/casas' },
-                { name: 'Todos os imóveis à venda', link: '/comprar/sao-paulo/todos-os-imoveis' },
-              ],
-            },
-            {
-              name: 'Goiânia',
-              subItems: [
-                { name: 'Apartamentos à venda', link: '/comprar/goiania/apartamentos' },
-                { name: 'Casas à venda', link: '/comprar/goiania/casas' },
-                { name: 'Todos os imóveis à venda', link: '/comprar/goiania/todos-os-imoveis' },
-              ],
-            },
-            {
-              name: 'Curitiba',
-              subItems: [
-                { name: 'Apartamentos à venda', link: '/comprar/curitiba/apartamentos' },
-                { name: 'Casas à venda', link: '/comprar/curitiba/casas' },
-                { name: 'Todos os imóveis à venda', link: '/comprar/curitiba/todos-os-imoveis' },
-              ],
-            },
-            {
-              name: 'Florianópolis',
-              subItems: [
-                { name: 'Apartamentos à venda', link: '/comprar/florianopolis/apartamentos' },
-                { name: 'Casas à venda', link: '/comprar/florianopolis/casas' },
-                { name: 'Todos os imóveis à venda', link: '/comprar/florianopolis/todos-os-imoveis' },
-              ],
-            },
-            {
-              name: 'Brasília',
-              subItems: [
-                { name: 'Apartamentos à venda', link: '/comprar/brasilia/apartamentos' },
-                { name: 'Casas à venda', link: '/comprar/brasilia/casas' },
-                { name: 'Todos os imóveis à venda', link: '/comprar/brasilia/todos-os-imoveis' },
-              ],
-            },
-            { name: 'Explorar outras cidades', subItems: [], link: '/comprar/explorar-outras-cidades' },
-          ],
-        },
-        {
-          title: 'Recursos',
-          items: [
-            { name: 'Guia de compra', subItems: [], link: '/comprar/guia-de-compra' },
-          ],
-        },
-      ],
-      sponsor: {
-        content: 'Espaço para anúncios',
-      },
-    },
-    {
-      key: 'announce',
-      label: 'Anunciar',
-      title: 'Anuncie no',
-      subtitle: 'alugabem',
-      items: [
-        { name: 'Alugar meu imóvel', link: '/anunciar/alugar-meu-imovel' },
-        { name: 'Vender meu imóvel', link: '/anunciar/vender-meu-imovel' },
-      ],
+      key: 'home',
+      label: 'Início',
+      link: '/',
     },
     {
       key: 'explore',
       label: 'Explorar',
+      isMegaMenu: true,
+      sections: [
+        {
+          title: 'Últimas',
+          subtitle: 'notícias',
+          items: [
+            {
+              name: 'Atualizações do jogo',
+              subItems: [
+                { name: 'Notas de atualizações', link: '/news/updates/patch-notes' },
+                { name: 'Novos recursos', link: '/news/updates/new-features' },
+                { name: 'Balanceamentos', link: '/news/updates/balance-changes' },
+                { name: 'Ver mais', link: '/news/updates' },
+              ],
+            },
+            {
+              name: 'Comunidade',
+              subItems: [
+                { name: 'Eventos', link: '/news/community/events' },
+                { name: 'Torneios', link: '/news/community/tournaments' },
+                { name: 'Ranking', link: '/news/community/leaderboards' },
+                { name: 'Ver mais', link: '/news/community' },
+              ],
+            },
+            {
+              name: 'Desenvolvimento',
+              subItems: [
+                { name: 'Devlog', link: '/news/development/devlog' },
+                { name: 'Sneak peeks', link: '/news/development/sneak-peeks' },
+                { name: 'Ver mais', link: '/news/development' },
+              ],
+            },
+            {
+              name: 'Gameplay',
+              subItems: [
+                { name: 'Modos de jogo', link: '/gameplay/game-modes' },
+                { name: 'Personagens', link: '/gameplay/characters' },
+                { name: 'Mapas', link: '/gameplay/maps' },
+                { name: 'Ver mais', link: '/gameplay' },
+              ],
+            },
+            {
+              name: 'História',
+              subItems: [
+                { name: 'Personagens', link: '/history/characters' },
+                { name: 'Mundo', link: '/history/world' },
+                { name: 'Ver mais', link: '/history' },
+              ],
+            },
+            { name: 'Todas as notícias', subItems: [], link: '/explore' },
+          ],
+        },
+        {
+          title: 'Acesso rápido',
+          items: [
+            { name: 'Download', subItems: [], link: '/download' },
+            { name: 'Registro beta', subItems: [], link: '/beta' },
+            { name: 'Roadmap', subItems: [], link: '/roadmap' },
+          ],
+        },
+      ],
+      sponsor: {
+        content: 'Espaço para anúncios',
+      },
+    },
+    {
+      key: 'community',
+      label: 'Comunidade',
+      title: 'Nossos',
+      subtitle: 'impérios',
+      items: [
+        { name: 'Discord', link: 'https://discord.gg/TYz9EWXBw', target: true },
+        { name: 'Fórum', link: '/community/forum' },
+        { name: 'Reddit', link: 'https://www.reddit.com/r/mobileempires/', target: true },
+        { name: 'YouTube', link: 'https://www.youtube.com/@mobileempires', target: true },
+      ],
+    },
+    {
+      key: 'faq',
+      label: 'FAQ',
       title: 'Conheça',
       subtitle: 'bem mais',
       items: [
-        { name: 'Aplicativo', link: '/explorar/aplicativo' },
-        { name: 'Avaliações de bairros', link: '/explorar/avaliacoes-de-bairros' },
+        { name: 'Perguntas frequentes', link: '/faq/questions' },
+        { name: 'Guia de iniciantes', link: '/faq/beginner-guide' },
+        { name: 'Dicas avançadas', link: '/faq/advanced-tips' },
       ],
     },
     {
@@ -165,11 +115,11 @@ export const useMenuLogic = () => {
       label: 'Ajuda',
       title: 'Tire suas dúvidas',
       items: [
-        { name: 'Central de ajuda', link: '/ajuda/central-de-ajuda' },
-        { name: 'Fale conosco', link: '/ajuda/fale-conosco' },
-        { name: 'Como funciona', link: '/ajuda/como-funciona' },
-        { name: 'Termos de uso', link: '/ajuda/termos-de-uso' },
-        { name: 'Política de privacidade', link: '/ajuda/politica-de-privacidade' },
+        { name: 'Central de ajuda', link: '/help/help-center' },
+        { name: 'Fale conosco', link: '/help/contact-us' },
+        { name: 'Como funciona', link: '/help/how-works' },
+        { name: 'Termos de uso', link: '/help/terms-of-use' },
+        { name: 'Política de privacidade', link: '/help/privacy-policy' },
       ],
     },
   ];
@@ -180,7 +130,22 @@ export const useMenuLogic = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Verifica se um menu tem dropdown (subitens, seções ou é mega menu)
+  const hasDropdown = (menu: Menu): boolean => {
+    return !!(menu.items && menu.items.length > 0) || 
+           !!(menu.sections && menu.sections.length > 0) || 
+           !!menu.isMegaMenu;
+  };
+
+  // Verifica se um menu é apenas um link simples
+  const isSimpleLink = (menu: Menu): boolean => {
+    return !!menu.link && !hasDropdown(menu);
+  };
+
   const handleMouseEnter = (key: string) => {
+    const menu = menus.find(m => m.key === key);
+    if (!menu || isSimpleLink(menu)) return; // Não abre dropdown para links simples
+    
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setOpenMenu(key);
     setAnimatingMenu(key);
@@ -278,5 +243,7 @@ export const useMenuLogic = () => {
     darkMode,
     setOpenLoginModal,
     openLoginModal,
+    hasDropdown,
+    isSimpleLink,
   };
 };

@@ -32,17 +32,17 @@ export function Menu() {
     openLoginModal,
   } = useMenuLogic();
 
-  const slides = [
-    { id: 1, imageUrl: "https://static.ifood-static.com.br/image/upload/t_high/discoveries/0605SMHOUSE18287TPMCAPAPRINCIPALTOPDESCONTAO1_Auvp.png?imwidth=1920", link: "#" },
-    { id: 2, imageUrl: "https://static.ifood-static.com.br/image/upload/t_high/discoveries/0605CUPOMR30TUDOPRAMIMCAPAPRINCIPAL1_hxLN.png?imwidth=1920", link: "#" },
-    { id: 3, imageUrl: "https://static.ifood-static.com.br/image/upload/t_high/discoveries/2606SMHOUSE19288FestiveldeInvernoCAPAPRINCIPAL_Q1CT.png?imwidth=1920", link: "#" },
+  const slides: { id: number; imageUrl: string; link: string; }[] = [
+    // { id: 1, imageUrl: "", link: "#" },
+    // { id: 2, imageUrl: "", link: "#" },
+    // { id: 3, imageUrl: "", link: "#" },
   ];
 
   return (
     <Box className="relative z-10 h-24">
       <Box
-        className={`fixed w-full h-24 flex items-center justify-between px-5 bg-primary transition-all duration-300 ${
-          scrolled ? 'shadow-md' : ''
+        className={`fixed w-full h-24 flex items-center justify-between px-5 transition-all duration-300 shadow-md ${
+          scrolled ? 'shadow-md bg-quaternary-80' : 'bg-quaternary'
         }`}
       >
         <Logo />
@@ -64,7 +64,7 @@ export function Menu() {
                     openMenu === menu.key ? 'button-tertiary' : 'text-primary'
                   }`}
                   disableElevation
-                  endIcon={<KeyboardArrowDownIcon />}
+                  endIcon={menu.sections && menu.sections?.length || menu.items && menu.items?.length > 0 ? <KeyboardArrowDownIcon /> : null}
                 >
                   {menu.label}
                 </Button>
@@ -107,6 +107,7 @@ export function Menu() {
                                       <MenuItem
                                         component={item.link ? 'a' : 'div'}
                                         href={item.link}
+                                        {...(item.target && { target: '_blank', rel: 'noopener noreferrer' })}
                                         className={`!py-4 flex flex-row !justify-between !rounded-xl ${
                                           openSubMenu === subMenuKey ? 'button-secondary' : ''
                                         }`}
@@ -122,15 +123,12 @@ export function Menu() {
                                           className="p-[1.25rem] border border-[#EAECF0] bg-white min-w-[300px] shadow-md rounded-xl z-10 absolute"
                                           positionAbove={shouldPositionAbove(subMenuKey)}
                                         >
-                                          <Typography className="!text-[1.3rem] !font-semibold flex flex-row">
-                                            Tipo de imóvel
-                                          </Typography>
-                                          <Divider className="!my-3" />
                                           {item.subItems.map((subItem, idx) => (
                                             <MenuItem
                                               key={subItem.name || idx}
                                               component="a"
                                               href={subItem.link!}
+                                              {...(subItem.target && { target: '_blank', rel: 'noopener noreferrer' })}
                                               className="!py-2 !rounded-xl"
                                             >
                                               {subItem.name}
@@ -163,6 +161,7 @@ export function Menu() {
                               key={item.name}
                               component="a"
                               href={item.link!}
+                              {...(item.target && { target: '_blank', rel: 'noopener noreferrer' })}
                               className="!py-4 flex flex-row !justify-between !rounded-xl"
                             >
                               {item.name}
@@ -187,14 +186,12 @@ export function Menu() {
               >
                 <Tooltip title={
                   <>
-                    Em breve você poderá escolher o tema do site.
+                    {darkMode ? 'Aplicar tema claro' : 'Aplicar tema escuro'}
                   </>
                 } placement="bottom" arrow>
-                  <Box className='cursor-not-allowed'>
-                    <Button className="text-primary !min-w-5 !mx-2 w-9 h-9 !rounded-full" onClick={toggleDarkMode} disabled>
+                    <Button className="text-primary !min-w-5 !mx-2 w-9 h-9 !rounded-full" onClick={toggleDarkMode}>
                       {darkMode ? <MdOutlineWbSunny className="!text-[1.5rem]" /> : <TbMoonStars className="!text-[1.5rem]" />}
                     </Button>
-                  </Box>
                 </Tooltip>
             </motion.div>
             </Box>
@@ -208,13 +205,16 @@ export function Menu() {
               ease: [0, 0.71, 0.2, 1.01],
             }}
           >
-            <Button
-              onClick={() => setOpenLoginModal(true)}
-              className="button-primary !px-7 !py-[.711rem] !rounded-xl !normal-case !ml-2 !text-[0.9375rem]"
-              endIcon={<IoEnter className="text-[#ffffff]" />}
-            >
-              Entrar
-            </Button>
+            <Box className='cursor-not-allowed'>
+              <Button
+                onClick={() => setOpenLoginModal(true)}
+                className="button-primary !px-7 !py-[.711rem] !rounded-xl !normal-case !ml-2 !text-[0.9375rem]"
+                endIcon={<IoEnter className="text-[#ffffff]" />}
+                disabled
+              >
+                Entrar
+              </Button>
+            </Box>
           </motion.div>
         </Box>
       </Box>

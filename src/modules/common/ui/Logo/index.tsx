@@ -1,5 +1,4 @@
 import { Box, Link } from '@mui/material';
-import IconLogo from '@sr/modules/assets/svg/icon.svg?react';
 import * as motion from "motion/react-client";
 
 export function Logo() {
@@ -14,15 +13,9 @@ export function Logo() {
       }}
     >
       <Link href="/" className="!no-underline flex flex-row items-center">
-        <Box className="w-[2.7rem] h-full overflow-hidden">
-          <IconLogo
-            className="w-[4.2rem] h-full mt-1 -translate-x-4 text-secondary"
-            aria-label="Ícone do logo"
-          />
-        </Box>
-        <Box className="flex flex-col items-end">
-          <Box className="text-[1.7rem] color-primary font-bold">alugabem</Box>
-          <Box className="-mt-[.35rem] text-[.6rem] text-primary font-bold uppercase">do jeito certo</Box>
+        <Box className="flex flex-col items-center font-nsr">
+          <Box className="text-[1.8rem] color-primary font-bold uppercase flex flex-row items-end">m<Box className="text-[1.6rem]">obil</Box>e</Box>
+          <Box className="-mt-[.95rem] text-[1.8rem] color-primary font-bold uppercase flex flex-row items-end">e<Box className="text-[1.6rem]">mpire</Box>s</Box>
         </Box>
       </Link>
     </motion.div>

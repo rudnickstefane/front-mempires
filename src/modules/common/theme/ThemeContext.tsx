@@ -19,7 +19,7 @@ export const useThemeDarkMode = () => {
         setDarkMode(savedTheme);
       } else {
         // Se o banco não tiver um valor salvo, usa a preferência do sistema
-        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: light)").matches;
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         setDarkMode(systemPrefersDark);
       }
     };

@@ -252,7 +252,7 @@ export const useHomeHeaderLogic = () => {
   // Conteúdo do header
   const { title, text, subtitle, description, fade } = useTextSwitcher([
     {
-      title: 'Descubra a sua',
+      title: 'Descubra a susa',
       text: 'Casa',
       subtitle: 'perfeita',
       description: (
