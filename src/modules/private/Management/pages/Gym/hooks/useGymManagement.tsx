@@ -200,7 +200,7 @@ export const useGymManagement = ({
     };
 
     const finishSession = () => {
-        localStorage.clear();
+        // localStorage.clear();
         enqueueSnackbar('Sua sessão foi encerrada com sucesso. Até logo!', { variant: 'success' });
         navigate('/entrar');
     };

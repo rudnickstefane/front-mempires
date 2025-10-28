@@ -7,7 +7,7 @@ import { useBackendForFrontend } from './useBackendForFrontend';
 export const useRecoveryForm = ({enqueueSnackbar}: {
     enqueueSnackbar: (message: string, options?: { variant: VariantType }) => void;
 }) => {
-    localStorage.clear();
+    // localStorage.clear();
     const { request } = useBackendForFrontend();
     const [isLoading, setIsLoading] = useState(false);
     const [emailSent, setEmailSent] = useState(false);

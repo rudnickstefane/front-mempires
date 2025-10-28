@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Menu } from '../types';
 
 export const useMenuLogic = () => {
-  const { darkMode, toggleDarkMode } = useThemeDarkMode();
+  const { themeMode, changeTheme } = useThemeDarkMode();
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [animatingMenu, setAnimatingMenu] = useState<string | null>(null);
@@ -238,9 +238,9 @@ export const useMenuLogic = () => {
     handleSubMenuMouseEnter,
     handleSubMenuMouseLeave,
     openSubMenu,
+    themeMode,
+    changeTheme,
     shouldPositionAbove,
-    toggleDarkMode,
-    darkMode,
     setOpenLoginModal,
     openLoginModal,
     hasDropdown,

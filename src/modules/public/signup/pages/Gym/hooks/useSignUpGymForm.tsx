@@ -13,7 +13,7 @@ import { CreateAccessVariables, ValidateFormCreateAccess, ValidatePassword } fro
 export const useSignUpGymForm = ({enqueueSnackbar}: {
     enqueueSnackbar: (message: string, options?: { variant: VariantType }) => void;
 }) => {
-    localStorage.clear();
+    // localStorage.clear();
     const jwtSecret = import.meta.env.VITE_APP_JWT_SECRET;
     const { request } = useBackendForFrontend(jwtSecret);
     const [isLoading, setIsLoading] = useState(false);

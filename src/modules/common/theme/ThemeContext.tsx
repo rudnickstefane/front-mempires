@@ -1,41 +1,67 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-const fetchDarkModeFromDatabase = async (): Promise<boolean | null> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(null); // Simula que o banco pode não ter um valor salvo (null)
-    }, 1000);
-  });
-};
+type ThemeMode = "default" | "system" | "light" | "dark";
+type EffectiveTheme = "light" | "dark" | "rainy" | "sunset";
 
 export const useThemeDarkMode = () => {
-  const [darkMode, setDarkMode] = useState<boolean | null>(null);
+  const [themeMode, setThemeMode] = useState<ThemeMode>("default");
 
-  useEffect(() => {
-    const getDarkModeStatus = async () => {
-      const savedTheme = await fetchDarkModeFromDatabase();
+  // 🔹 Função para determinar o tema baseado no horário (para modo default)
+  const getTimeBasedTheme = useCallback((): EffectiveTheme => {
+    const hour = new Date().getHours();
 
-      if (savedTheme !== null) {
-        setDarkMode(savedTheme);
-      } else {
-        // Se o banco não tiver um valor salvo, usa a preferência do sistema
-        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        setDarkMode(systemPrefersDark);
-      }
-    };
+    const themeRules = [
+      { test: hour >= 5 && hour < 12, value: 'light' as EffectiveTheme },
+      { test: hour >= 12 && hour < 17, value: Math.random() < 0.3 ? 'rainy' as EffectiveTheme : 'light' as EffectiveTheme },
+      { test: hour >= 17 && hour < 19, value: 'sunset' as EffectiveTheme },
+      { test: true, value: 'dark' as EffectiveTheme },
+    ];
 
-    getDarkModeStatus();
+    const rule = themeRules.find(rule => rule.test)!;
+    return rule.value;
   }, []);
 
-  useEffect(() => {
-    if (darkMode !== null) {
-      document.body.setAttribute("data-theme", darkMode ? "dark" : "light");
+  // 🔹 Função para aplicar tema no body
+  const applyTheme = useCallback((mode: ThemeMode) => {
+    let effectiveTheme: EffectiveTheme;
+
+    if (mode === "system") {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      effectiveTheme = prefersDark ? "dark" : "light";
+    } else if (mode === "default") {
+      // Para modo padrão, usa o tema baseado no horário
+      effectiveTheme = getTimeBasedTheme();
+    } else {
+      // Para light e dark, usa diretamente
+      effectiveTheme = mode;
     }
-  }, [darkMode]);
 
-  const toggleDarkMode = () => {
-    setDarkMode((prevMode) => !prevMode);
-  };
+    // Remove temas antigos e adiciona o novo
+    document.body.removeAttribute("data-theme");
+    document.body.setAttribute("data-theme", effectiveTheme);
 
-  return { darkMode, toggleDarkMode };
+    // Salva no cache apenas o modo selecionado, não o effectiveTheme
+    localStorage.setItem("themeMode", mode);
+  }, [getTimeBasedTheme]);
+
+  useEffect(() => {
+    // 🔹 Carrega o tema salvo do cache (localStorage)
+    const savedTheme = localStorage.getItem("themeMode") as ThemeMode | null;
+
+    if (savedTheme) {
+      applyTheme(savedTheme);
+      setThemeMode(savedTheme);
+    } else {
+      applyTheme("default");
+      setThemeMode("default");
+    }
+  }, [applyTheme]);
+
+  // 🔹 Altera o tema manualmente
+  const changeTheme = useCallback((mode: ThemeMode) => {
+    setThemeMode(mode);
+    applyTheme(mode);
+  }, [applyTheme]);
+
+  return { themeMode, changeTheme };
 };

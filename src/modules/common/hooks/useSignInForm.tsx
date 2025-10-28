@@ -9,7 +9,7 @@ import { useBackendForFrontend } from './useBackendForFrontend';
 export const useSignInForm = ({enqueueSnackbar}: {
     enqueueSnackbar: (message: string, options?: { variant: VariantType }) => void;
 }) => {
-    localStorage.clear();
+    // localStorage.clear();
     const navigate = useNavigate();
     const { request } = useBackendForFrontend();
     const [isLoading, setIsLoading] = useState(false);

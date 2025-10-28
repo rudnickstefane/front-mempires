@@ -1,6 +1,6 @@
-import { Box } from '@mui/material';
-import Announcement from '@sr/modules/components/sliders/announcement';
+import { Box, Button } from '@mui/material';
 import * as motion from "motion/react-client";
+import { BsAndroid2, BsApple, BsGooglePlay } from 'react-icons/bs';
 import { Menu } from '../../../../components/Menu';
 import { useHomeHeaderLogic } from './hooks';
 
@@ -11,10 +11,6 @@ export function HomeHeader() {
     containerVariants,
     childVariants,
   } = useHomeHeaderLogic();
-
-  const slides = [
-    { id: 1, imageUrl: "@sr/modules/assets/images/header-box.png", link: "#" },
-  ];
   
   return (
     <>
@@ -27,15 +23,48 @@ export function HomeHeader() {
             initial="hidden"
             animate={controls}
           >
-            <motion.div variants={childVariants} className='flex justify-center w-full z-10 relative'>
-              <Box className='logo'></Box>
-            </motion.div>
-            <Box className="bg-header-box rounded-3xl w-full md:w-[70rem] h-[30rem] -mt-56 flex flex-row items-end text-center">
-              <motion.div variants={childVariants} className='w-full'>
-                <Box className="w-full h-[30rem] flex items-center justify-center">
-                  <Announcement slides={slides} className='rounded-xl'/>
-                </Box>
+            <Box className='flex flex-col items-center justify-center w-full z-10 relative'>
+              <motion.div variants={childVariants}>
+                <Box className='logo'></Box>
               </motion.div>
+              <Box className='flex flex-row gap-16'>
+                <motion.div variants={childVariants}>
+                  <Button
+                    className='!normal-case font-secondary !rounded-xl !bg-black !text-white w-[190px] h-[60px] !leading-5'
+                    disableElevation
+                    startIcon={<BsApple size={34}/>}
+                  >
+                    <Box className='flex flex-col items-start'>
+                      <Box className='uppercase text-xs'>Em breve na</Box>
+                      <Box className='text-[1.2rem] font-bold'>App Store</Box>
+                    </Box>
+                  </Button>
+                </motion.div>
+                <motion.div variants={childVariants}>
+                  <Button
+                    className='!normal-case font-secondary !rounded-xl !bg-black !text-white w-[190px] h-[60px] !leading-5'
+                    disableElevation
+                    startIcon={<BsGooglePlay size={34}/>}
+                  >
+                    <Box className='flex flex-col items-start'>
+                      <Box className='uppercase text-xs'>Em breve no</Box>
+                      <Box className='text-[1.2rem] font-bold'>Google Play</Box>
+                    </Box>
+                  </Button>
+                </motion.div>
+                <motion.div variants={childVariants}>
+                  <Button
+                    className='!normal-case font-secondary !rounded-xl !bg-black !text-white w-[190px] h-[60px] !leading-5'
+                    disableElevation
+                    startIcon={<BsAndroid2 size={34}/>}
+                  >
+                    <Box className='flex flex-col items-start'>
+                      <Box className='uppercase text-xs'>Em breve o</Box>
+                      <Box className='text-[1.2rem] font-bold'>.APK</Box>
+                    </Box>
+                  </Button>
+                </motion.div>
+              </Box>
             </Box>
           </motion.div>
         </Box>

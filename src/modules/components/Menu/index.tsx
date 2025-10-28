@@ -1,12 +1,12 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box, Button, Divider, MenuItem, Tooltip, Typography } from '@mui/material';
-import { Logo } from '@sr/modules/common/ui/Logo';
 import SignIn from '@sr/modules/public/signin';
 import { motion } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { IoEnter } from 'react-icons/io5';
 import { MdOutlineWbSunny } from 'react-icons/md';
-import { TbMoonStars } from 'react-icons/tb';
+import { TbDeviceDesktopCog, TbHours24, TbMoonStars } from 'react-icons/tb';
 import Announcement from '../sliders/announcement';
 import { useMenuLogic } from './hooks';
 import { DropdownMenu, SubMenu } from './styles/styles.d';
@@ -26,8 +26,8 @@ export function Menu() {
     handleSubMenuMouseLeave,
     openSubMenu,
     shouldPositionAbove,
-    toggleDarkMode,
-    darkMode,
+    themeMode,
+    changeTheme,
     setOpenLoginModal,
     openLoginModal,
   } = useMenuLogic();
@@ -38,14 +38,52 @@ export function Menu() {
     // { id: 3, imageUrl: "", link: "#" },
   ];
 
+  // 🔹 Estados específicos para o menu de temas
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const [themeMenuAnimating, setThemeMenuAnimating] = useState(false);
+  const themeMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hoveringThemeMenuRef = useRef(false);
+
+  // 🔹 Funções para controlar o menu de temas
+  const handleThemeMenuEnter = () => {
+    if (themeMenuTimeoutRef.current) clearTimeout(themeMenuTimeoutRef.current);
+    hoveringThemeMenuRef.current = true;
+    setThemeMenuAnimating(true);
+    setThemeMenuOpen(true);
+  };
+
+  const handleThemeMenuLeave = () => {
+    hoveringThemeMenuRef.current = false;
+    themeMenuTimeoutRef.current = setTimeout(() => {
+      if (!hoveringThemeMenuRef.current) {
+        setThemeMenuOpen(false);
+        themeMenuTimeoutRef.current = setTimeout(() => setThemeMenuAnimating(false), 300);
+      }
+    }, 300); // 🔹 Aumentei para 300ms para dar tempo do usuário mover o mouse
+  };
+
+  const handleThemeDropdownEnter = () => {
+    if (themeMenuTimeoutRef.current) clearTimeout(themeMenuTimeoutRef.current);
+    hoveringThemeMenuRef.current = true;
+  };
+
+  const handleThemeDropdownLeave = () => {
+    hoveringThemeMenuRef.current = false;
+    themeMenuTimeoutRef.current = setTimeout(() => {
+      if (!hoveringThemeMenuRef.current) {
+        setThemeMenuOpen(false);
+        themeMenuTimeoutRef.current = setTimeout(() => setThemeMenuAnimating(false), 300);
+      }
+    }, 300);
+  };
+
   return (
     <Box className="relative z-10 h-24">
       <Box
-        className={`fixed w-full h-24 flex items-center justify-between px-5 transition-all duration-300 shadow-md ${
-          scrolled ? 'shadow-md bg-quaternary-80' : 'bg-quaternary'
+        className={`fixed w-full h-24 flex items-center justify-center px-5 transition-all duration-300 shadow-md ${
+          scrolled ? 'bg-primary' : 'bg-transparent'
         }`}
       >
-        <Logo />
         <Box className="flex gap-4 items-center">
           <Box className="flex gap-4 items-center">
             {menus.map((menu, index) => (
@@ -60,6 +98,8 @@ export function Menu() {
                 className={menu.isMegaMenu ? '' : 'relative'}
               >
                 <Button
+                  component={menu.link ? 'a' : 'button'}
+                  href={menu.link || undefined}
                   className={`!normal-case font-secondary !px-5 !py-[.735rem] !rounded-xl ${
                     openMenu === menu.key ? 'button-tertiary' : 'text-primary'
                   }`}
@@ -120,7 +160,7 @@ export function Menu() {
                                       {item.subItems?.length ? (
                                         <SubMenu
                                           isOpen={openSubMenu === subMenuKey}
-                                          className="p-[1.25rem] border border-[#EAECF0] bg-white min-w-[300px] shadow-md rounded-xl z-10 absolute"
+                                          className="p-[1.25rem] border border-[#515253] bg-primary min-w-[300px] shadow-md rounded-xl z-10 absolute"
                                           positionAbove={shouldPositionAbove(subMenuKey)}
                                         >
                                           {item.subItems.map((subItem, idx) => (
@@ -178,22 +218,46 @@ export function Menu() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.7,
-                  delay: 1,
-                  ease: [0, 0.71, 0.2, 1.01],
-                }}
+                transition={{ duration: 0.7, delay: 1 }}
               >
-                <Tooltip title={
-                  <>
-                    {darkMode ? 'Aplicar tema claro' : 'Aplicar tema escuro'}
-                  </>
-                } placement="bottom" arrow>
-                    <Button className="text-primary !min-w-5 !mx-2 w-9 h-9 !rounded-full" onClick={toggleDarkMode}>
-                      {darkMode ? <MdOutlineWbSunny className="!text-[1.5rem]" /> : <TbMoonStars className="!text-[1.5rem]" />}
-                    </Button>
-                </Tooltip>
-            </motion.div>
+                <Button 
+                  className="!text-[#646464] !min-w-5 !mx-2 w-9 h-9 !rounded-full relative !normal-case"
+                  onMouseEnter={handleThemeMenuEnter}
+                  onMouseLeave={handleThemeMenuLeave}
+                >
+                  {themeMode === 'default' ? <TbHours24 className="!text-[1.5rem]" /> : 
+                  themeMode === 'system' ? <TbDeviceDesktopCog className="!text-[1.5rem]" /> :
+                  themeMode === 'light' ? <MdOutlineWbSunny className="!text-[1.5rem]" /> :
+                  <TbMoonStars className="!text-[1.5rem]" />}
+                  
+                  {themeMenuAnimating && (
+                    <Box 
+                      className="absolute top-[3.1rem] left-0 bg-primary text-sm rounded-lg shadow-md z-50 min-w-[260px] p-5"
+                      onMouseEnter={handleThemeDropdownEnter}
+                      onMouseLeave={handleThemeDropdownLeave}
+                      style={{ 
+                        display: themeMenuOpen ? 'block' : 'none',
+                        animation: themeMenuOpen ? 'fadeIn 0.2s ease-in-out' : 'fadeOut 0.2s ease-in-out'
+                      }}
+                    >
+                      <Typography className="!text-[1.3rem] !font-semibold flex flex-row">Escolher um tema</Typography>
+                      <Divider className="!my-3" />
+                      <Tooltip title="Muda automaticamente conforme o horário: manhã, tarde, anoitecer e noite" placement="left" arrow>
+                        <MenuItem onClick={() => changeTheme('default')} className="!py-4 !rounded-xl">Padrão</MenuItem>
+                      </Tooltip>
+                      <Tooltip title="Sincroniza com as configurações do seu sistema" placement="left" arrow>
+                        <MenuItem onClick={() => changeTheme('system')} className="!py-4 !rounded-xl">Sistema</MenuItem>
+                      </Tooltip>
+                      <Tooltip title="Interface clara, ideal para ambientes com boa iluminação" placement="left" arrow>
+                        <MenuItem onClick={() => changeTheme('light')} className="!py-4 !rounded-xl">Claro</MenuItem>
+                      </Tooltip>
+                      <Tooltip title="Interface escura, perfeita para uso à noite ou em luz ambiente" placement="left" arrow>
+                        <MenuItem onClick={() => changeTheme('dark')} className="!py-4 !rounded-xl">Escuro</MenuItem>
+                      </Tooltip>
+                    </Box>
+                  )}
+                </Button>
+              </motion.div>
             </Box>
           </Box>
           <motion.div

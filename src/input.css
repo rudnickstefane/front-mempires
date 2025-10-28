@@ -10,9 +10,10 @@
   --font-secondary: 'Open Sans', Arial, Helvetica, sans-serif;
   --font-nsr: 'Noto Serif', Arial, Helvetica, sans-serif;
 
+  --bg-theme: url('@sr/modules/assets/images/bg-morning.jpg');
+
   /* Cores de fundo */
-  --bg-primary: #E6E7E9;
-  --bg-image-dark: url('@sr/modules/assets/images/bg-header-light.png');
+  --bg-primary: #fff;
   --bg-secondary: #005AE6;
   --bg-tertiary: #ffffff;
   --bg-quaternary: #e6e7e954;
@@ -45,10 +46,67 @@
   --color-border: #e5e7eb;
 }
 
+[data-theme="rainy"] {
+  --bg-theme: url('@sr/modules/assets/images/bg-rainy.jpg');
+
+  --bg-primary: #101113;
+  --bg-secondary: #005AE6;
+  --bg-tertiary: #102341;
+  --bg-quaternary: #00000042;
+  --bg-quaternary-80: #101113;
+  --bg-midia: #420e0e;
+
+  --color-primary: #D02D2D;
+  --color-quartitarian: #42454d;
+  --color-tertiary: #fff;
+  --color-grayPrimary: #3B5A9A;
+  --text-primary: #fff;
+  --bg-disabled: #641b1b;
+  --color-disabled: #afb4bd;
+  --label: #b1b7be;
+  --bg-secondary-color: #ff0336;
+  --color-gray: #3d4048;
+  --text-gray: #9E9FA3;
+  --primary-color: #ff0336;
+  --secondary-color: #ff0336;
+
+  --color-border: #102341;
+  --color-midia: #586987;
+}
+
+[data-theme="sunset"] {
+  --bg-theme: url('@sr/modules/assets/images/bg-sunset.jpg');
+
+  --bg-primary: #101113;
+  --bg-secondary: #005AE6;
+  --bg-tertiary: #102341;
+  --bg-quaternary: #00000042;
+  --bg-quaternary-80: #101113;
+  --bg-midia: #420e0e;
+
+  --color-primary: #D02D2D;
+  --color-quartitarian: #42454d;
+  --color-tertiary: #fff;
+  --color-grayPrimary: #3B5A9A;
+  --text-primary: #fff;
+  --bg-disabled: #641b1b;
+  --color-disabled: #afb4bd;
+  --label: #b1b7be;
+  --bg-secondary-color: #ff0336;
+  --color-gray: #3d4048;
+  --text-gray: #9E9FA3;
+  --primary-color: #ff0336;
+  --secondary-color: #ff0336;
+
+  --color-border: #102341;
+  --color-midia: #586987;
+}
+
 /* Definir as variáveis para o tema escuro */
 [data-theme="dark"] {
+  --bg-theme: url('@sr/modules/assets/images/bg-night.jpg');
+
   --bg-primary: #101113;
-  --bg-image-dark: url('@sr/modules/assets/images/bg-header.png');
   --bg-secondary: #005AE6;
   --bg-tertiary: #102341;
   --bg-quaternary: #00000042;
@@ -84,7 +142,7 @@ body {
 }
 
 .bg-theme {
-  background: var(--bg-image-dark) no-repeat center center;
+  background: var(--bg-theme) no-repeat center top;
   background-size: cover;
   background-color: var(--bg-primary);
 }
@@ -97,8 +155,9 @@ body {
 .logo {
   width: 36rem;
   height: 24rem;
-  background: url('modules/assets/images/logo.png') no-repeat center center;
+  background: url('modules/assets/images/logi.png') no-repeat center center;
   background-size: cover;
+  filter: drop-shadow(0px 0px 18px rgba(0, 0, 0, 0.767));
 }
 
 .gradient-box {
@@ -158,7 +217,7 @@ body {
 
 .button-tertiary {
   color: var(--color-primary) !important;
-  background: #1976d20a !important;
+  background: #0000000a !important;
   transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
 }
 

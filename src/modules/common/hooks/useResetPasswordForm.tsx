@@ -9,7 +9,7 @@ import { useBackendForFrontend } from './useBackendForFrontend';
 export const useResetPasswordForm = ({enqueueSnackbar}: {
     enqueueSnackbar: (message: string, options?: { variant: VariantType }) => void;
 }) => {
-    localStorage.clear();
+    // localStorage.clear();
     const navigate = useNavigate();
     const calledRef = useRef(false);
     const { uuid, token } = useParams()

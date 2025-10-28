@@ -118,7 +118,7 @@ export const useInactivity = ({enqueueSnackbar}: {
     const startInactivityTimer = useCallback(() => {
         clearTimeoutRef();
         timeoutRef.current = setTimeout(() => {
-            localStorage.clear();
+            // localStorage.clear();
             setInactivityLogIn(true);
 
             setFormData({
