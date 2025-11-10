@@ -12,8 +12,9 @@ export const useThemeDarkMode = () => {
 
     const themeRules = [
       { test: hour >= 5 && hour < 12, value: 'light' as EffectiveTheme },
-      { test: hour >= 12 && hour < 17, value: Math.random() < 0.3 ? 'rainy' as EffectiveTheme : 'light' as EffectiveTheme },
-      { test: hour >= 17 && hour < 19, value: 'sunset' as EffectiveTheme },
+      { test: hour >= 12 && hour < 15, value: Math.random() < 0.3 ? 'rainy' as EffectiveTheme : 'afternoon' as EffectiveTheme },
+      { test: hour >= 15 && hour < 17, value: 'sunset' as EffectiveTheme },
+      { test: hour >= 17 && hour < 19, value: 'nightfall' as EffectiveTheme },
       { test: true, value: 'dark' as EffectiveTheme },
     ];
 

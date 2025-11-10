@@ -5,28 +5,86 @@
 
 /* Definir as variáveis para o tema claro */
 :root {
+  --btn-golden-text: #3b2b16;
+  --btn-golden-border: #e6c16c;
+  --btn-golden-gradient-top: #f7d98e;
+  --btn-golden-gradient-bottom: #d3a84a;
+  --btn-golden-gradient-hover-top: #ffecb3;
+  --btn-golden-gradient-hover-bottom: #d4a642;
+
   /* Fontes */
-  --font-primary: 'Poppins', Arial, Helvetica, sans-serif;
+  --font-primary: 'Jost', Arial, Helvetica, sans-serif;
   --font-secondary: 'Open Sans', Arial, Helvetica, sans-serif;
   --font-nsr: 'Noto Serif', Arial, Helvetica, sans-serif;
 
   --bg-theme: url('@sr/modules/assets/images/bg-morning.jpg');
+  --logo: url('@sr/modules/assets/images/logo.png');
+  --min-logo: url('@sr/modules/assets/images/min-logo.png');
+  --clean-logo: url('@sr/modules/assets/images/clean-logo.png');
+  --invert-filter: 65%;
 
   /* Cores de fundo */
   --bg-primary: #fff;
   --bg-secondary: #005AE6;
   --bg-tertiary: #ffffff;
-  --bg-quaternary: #e6e7e954;
-  --bg-quaternary-80: #E6E7E9cc;
+  --surface-overlay: #f2f2f2;
+  --border-outline: #EAECF0;
+  --surface-overlay-80: #E6E7E9cc;
+  --bg-disabled: #d9dde2;
+  --bg-midia: #efefef;
+  --bg-black-medium-transparent: #00000042;
+  --bg-primary-20: #00000033;
+  --sponsor-surface: #EEF2F6;
+
+  /* Cores */
+  --color-text-primary: #FFF;
+  --color-primary: #005AE6;
+  --color-primary-hover: #0d4599;
+  --color-secondary: #ededed;
+  --color-tertiary: #54595F;
+  --color-quintary: #4B5C7A;
+  --color-quartitarian: #f3f3f3;
+  --color-gray: #333333;
+  --color-disabled: #00000042;
+  --color-grayPrimary: #c4c4c4;
+  --color-midia: #646464;
+  --color-midia-hover: ;
+  --color-black: #000;
+
+  --input: #ff0;
+  --label: #0009;
+  --bg-secondary-color: #ff0336;
+  --color-gray: #0000001f;
+  --text-gray: #333333;
+  --primary-color: #ff0336;
+  --secondary-color: #ff0336;
+
+  --color-border: #e5e7eb;
+}
+
+[data-theme="afternoon"] {
+  /* Fontes */
+  --font-primary: 'Poppins', Arial, Helvetica, sans-serif;
+  --font-secondary: 'Open Sans', Arial, Helvetica, sans-serif;
+  --font-nsr: 'Noto Serif', Arial, Helvetica, sans-serif;
+
+  --bg-theme: url('@sr/modules/assets/images/bg-afternoon.jpg');
+
+  /* Cores de fundo */
+  --bg-primary: #fff;
+  --bg-secondary: #005AE6;
+  --bg-tertiary: #ffffff;
+  --surface-overlay: #e6e7e954;
+  --surface-overlay-80: #E6E7E9cc;
   --bg-disabled: #d9dde2;
   --bg-midia: #efefef;
   --bg-black-medium-transparent: #00000042;
 
   /* Cores */
-  --color-primary: #D02D2D;
+  --color-primary: #005AE6;
   --color-primary-hover: #0d4599;
   --color-secondary: #ededed;
-  --color-tertiary: #54595F;
+  --color-tertiary: #fff;
   --color-quintary: #4B5C7A;
   --color-quartitarian: #f3f3f3;
   --color-gray: #333333;
@@ -47,13 +105,13 @@
 }
 
 [data-theme="rainy"] {
-  --bg-theme: url('@sr/modules/assets/images/bg-rainy.jpg');
+  --bg-theme: url('@sr/modules/assets/images/bg-rainy.png');
 
   --bg-primary: #101113;
   --bg-secondary: #005AE6;
   --bg-tertiary: #102341;
-  --bg-quaternary: #00000042;
-  --bg-quaternary-80: #101113;
+  --surface-overlay: #00000042;
+  --surface-overlay-80: #101113;
   --bg-midia: #420e0e;
 
   --color-primary: #D02D2D;
@@ -80,8 +138,8 @@
   --bg-primary: #101113;
   --bg-secondary: #005AE6;
   --bg-tertiary: #102341;
-  --bg-quaternary: #00000042;
-  --bg-quaternary-80: #101113;
+  --surface-overlay: #00000042;
+  --surface-overlay-80: #101113;
   --bg-midia: #420e0e;
 
   --color-primary: #D02D2D;
@@ -103,14 +161,14 @@
 }
 
 /* Definir as variáveis para o tema escuro */
-[data-theme="dark"] {
-  --bg-theme: url('@sr/modules/assets/images/bg-night.jpg');
+[data-theme="nightfall"] {
+  --bg-theme: url('@sr/modules/assets/images/bg-nightfall.png');
 
   --bg-primary: #101113;
   --bg-secondary: #005AE6;
   --bg-tertiary: #102341;
-  --bg-quaternary: #00000042;
-  --bg-quaternary-80: #101113;
+  --surface-overlay: #00000042;
+  --surface-overlay-80: #101113;
   --bg-midia: #420e0e;
 
   --color-primary: #D02D2D;
@@ -131,6 +189,45 @@
   --color-midia: #586987;
 }
 
+[data-theme="dark"] {
+  --bg-theme: url('@sr/modules/assets/images/bg-night.jpg');
+  --logo: url('@sr/modules/assets/images/logo.png');
+  --min-logo: url('@sr/modules/assets/images/min-logo.png');
+  --clean-logo: url('@sr/modules/assets/images/clean-logo.png');
+
+  --invert-filter: 0%;
+
+  --bg-primary: #101113;
+  --bg-secondary: #005AE6;
+  --bg-tertiary: #102341;
+  --surface-overlay: #00000042;
+  --border-outline: #00000042;
+  --surface-overlay-80: #101113;
+  --bg-midia: #420e0e;
+  --sponsor-surface: #EEF2F6;
+
+  --bg-primary-20: #00000033;
+  
+  --color-text-primary: #FFF;
+
+  --color-primary: #D02D2D;
+  --color-quartitarian: #42454d;
+  --color-tertiary: #fff;
+  --color-grayPrimary: #3B5A9A;
+  --text-primary: #fff;
+  --bg-disabled: #DABB6C;
+  --color-disabled: #4e3b2a;
+  --label: #b1b7be;
+  --bg-secondary-color: #ff0336;
+  --color-gray: #3d4048;
+  --text-gray: #9E9FA3;
+  --primary-color: #ff0336;
+  --secondary-color: #ff0336;
+
+  --color-border: #102341;
+  --color-midia: #586987;
+}
+
 /* Estilos globais */
 body {
   margin: 0;
@@ -139,12 +236,20 @@ body {
   background-color: var(--bg-primary);
   color: #646464;
   font-family: var(--font-primary);
+  position: relative;
+  min-height: 100vh;
 }
 
-.bg-theme {
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 47.5rem;
   background: var(--bg-theme) no-repeat center top;
   background-size: cover;
-  background-color: var(--bg-primary);
+  z-index: -1;
 }
 
 .bg-header-box {
@@ -153,11 +258,57 @@ body {
 }
 
 .logo {
-  width: 36rem;
-  height: 24rem;
-  background: url('modules/assets/images/logi.png') no-repeat center center;
-  background-size: cover;
+  width: 28.5rem;
+  height: 17.5rem;
+  background: var(--logo) no-repeat center center;
+  background-size: contain;
   filter: drop-shadow(0px 0px 18px rgba(0, 0, 0, 0.767));
+}
+
+.min-logo {
+  width: 99px;
+  height: 60px;
+  background: var(--min-logo) no-repeat center center;
+  background-size: contain;
+}
+
+.invert-filter {
+  filter: invert(var(--invert-filter)) sepia(10%) saturate(200%) hue-rotate(200deg);
+}
+
+.clean-logo {
+  width: 130px;
+  height: 79px;
+  background: var(--clean-logo) no-repeat center center;
+  background-size: contain;
+  filter: invert(var(--invert-filter)) sepia(10%) saturate(200%) hue-rotate(200deg);
+}
+
+.status-offline {
+  background: #f44336;
+  box-shadow: 0 0 8px rgba(244, 67, 54, 0.6);
+}
+
+.text-offline {
+  color: #f44336;
+}
+
+.status-online {
+  background: #4CAF50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+.text-online {
+  color: #4CAF50;
+}
+
+.gradient-card-box {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--color-black));
+  position: absolute;
+  top: 0;
+  z-index: 1;
 }
 
 .gradient-box {
@@ -166,7 +317,7 @@ body {
   background: linear-gradient(to bottom, transparent, transparent, var(--bg-primary));
   position: absolute;
   top: 0;
-  z-index: 0;
+  z-index: -1;
 }
 
 .text-shadow {
@@ -176,6 +327,11 @@ body {
 /* Estilos de fundo */
 .bg-primary {
   background-color: var(--bg-primary) !important;
+  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+.bg-primary-20 {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%) !important;
   transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -190,28 +346,59 @@ body {
 }
 
 .bg-quaternary {
-  background-color: var(--bg-quaternary) !important;
+  background-color: var(--surface-overlay) !important;
   transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
 }
 
 .bg-quaternary-80 {
-  background-color: var(--bg-quaternary-80) !important;
+  background-color: var(--surface-overlay-80) !important;
   transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Botões  */
-.button-primary {
-  color: #fff !important;
-  background-color: var(--color-primary) !important;
+.btn-golden {
+  color: var(--btn-golden-text) !important;
+  background: linear-gradient(
+    to bottom,
+    var(--btn-golden-gradient-top),
+    var(--btn-golden-gradient-bottom)
+  );
+  border: 1px solid var(--btn-golden-border);
   transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
 }
 
-.button-primary:hover {
-  background-color: var(--color-primary-hover) !important;
+.btn-golden:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Botões do Menu */
+.btn-menu {
+  color: var(--color-text-primary) !important;
+  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+}
+
+.btn-menu:hover {
+  background-color: #00000015 !important;
+}
+
+.btn-menu-active {
+  color: var(--color-text-primary) !important;
+  background-color: #00000015 !important;
+}
+
+.btn-menu-scrolled-active {
+  color: var(--color-primary) !important;
+  background-color: #1976d20a !important;
+}
+
+.btn-theme {
+  color: var(--color-text-primary) !important;
+  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
 }
 
 .button-secondary {
-  background: var(--bg-quaternary) !important;
+  background: var(--surface-overlay) !important;
   transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -317,11 +504,18 @@ body {
 }
 
 /* Textos */
-.text-primary {
-color: var(--color-tertiary) !important;
+.color-text-primary {
+color: var(--color-text-primary) !important;
 transition-duration: 500ms;
 transition-property: all;
 transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.text-primary {
+  color: var(--color-tertiary) !important;
+  transition-duration: 500ms;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .text-primary:hover {
@@ -382,7 +576,6 @@ transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   color: var(--text-gray) !important;
   transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
 }
-
 
 .MuiButton-root.Mui-disabled {
   background-color: var(--bg-disabled) !important;
@@ -484,6 +677,10 @@ transition: border-color 0.4s ease, transform 0.3s, background-color 0.4s ease, 
   font-family: 'Roboto', sans-serif !important;
 }
 
+.font-jost {
+  font-family: var(--font-primary) !important;
+}
+
 .font-nunito {
   font-family: 'Nunito', sans-serif !important;
 }
@@ -509,10 +706,6 @@ transition: border-color 0.4s ease, transform 0.3s, background-color 0.4s ease, 
 }
 
 .MuiOutlinedInput-root {
-  font-family: 'Poppins', sans-serif !important;
-}
-
-.MuiTypography-root {
   font-family: 'Poppins', sans-serif !important;
 }
 

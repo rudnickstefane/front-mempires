@@ -7,6 +7,11 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { IoEnter } from 'react-icons/io5';
 import { MdOutlineWbSunny } from 'react-icons/md';
 import { TbDeviceDesktopCog, TbHours24, TbMoonStars } from 'react-icons/tb';
+// import status from '../../../modules/assets/images/online.png';
+import { useLocale } from '@sr/modules/common/hooks/useLocale';
+import { FormattedMessage, useIntl } from 'react-intl';
+import enUS from '../../../modules/assets/images/en_US.png';
+import ptBR from '../../../modules/assets/images/pt_BR.png';
 import Announcement from '../sliders/announcement';
 import { useMenuLogic } from './hooks';
 import { DropdownMenu, SubMenu } from './styles/styles.d';
@@ -38,6 +43,45 @@ export function Menu() {
     // { id: 3, imageUrl: "", link: "#" },
   ];
 
+  // 🔹 Estados específicos para o menu de idiomas
+  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
+  const [languageMenuAnimating, setLanguageMenuAnimating] = useState(false);
+  const languageMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hoveringLanguageMenuRef = useRef(false);
+
+  // 🔹 Funções para controlar o menu de idiomas
+  const handleLanguageMenuEnter = () => {
+    if (languageMenuTimeoutRef.current) clearTimeout(languageMenuTimeoutRef.current);
+    hoveringLanguageMenuRef.current = true;
+    setLanguageMenuAnimating(true);
+    setLanguageMenuOpen(true);
+  };
+
+  const handleLanguageMenuLeave = () => {
+    hoveringLanguageMenuRef.current = false;
+    languageMenuTimeoutRef.current = setTimeout(() => {
+      if (!hoveringLanguageMenuRef.current) {
+        setLanguageMenuOpen(false);
+        languageMenuTimeoutRef.current = setTimeout(() => setLanguageMenuAnimating(false), 300);
+      }
+    }, 300);
+  };
+
+  const handleLanguageDropdownEnter = () => {
+    if (languageMenuTimeoutRef.current) clearTimeout(languageMenuTimeoutRef.current);
+    hoveringLanguageMenuRef.current = true;
+  };
+
+  const handleLanguageDropdownLeave = () => {
+    hoveringLanguageMenuRef.current = false;
+    languageMenuTimeoutRef.current = setTimeout(() => {
+      if (!hoveringLanguageMenuRef.current) {
+        setLanguageMenuOpen(false);
+        languageMenuTimeoutRef.current = setTimeout(() => setLanguageMenuAnimating(false), 300);
+      }
+    }, 300);
+  };
+
   // 🔹 Estados específicos para o menu de temas
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [themeMenuAnimating, setThemeMenuAnimating] = useState(false);
@@ -59,7 +103,7 @@ export function Menu() {
         setThemeMenuOpen(false);
         themeMenuTimeoutRef.current = setTimeout(() => setThemeMenuAnimating(false), 300);
       }
-    }, 300); // 🔹 Aumentei para 300ms para dar tempo do usuário mover o mouse
+    }, 300);
   };
 
   const handleThemeDropdownEnter = () => {
@@ -77,14 +121,18 @@ export function Menu() {
     }, 300);
   };
 
+  const { formatMessage } = useIntl();
+  const { lang, changeLocale } = useLocale();
+
   return (
-    <Box className="relative z-10 h-24">
+    <Box className="relative z-20 h-24">
       <Box
-        className={`fixed w-full h-24 flex items-center justify-center px-5 transition-all duration-300 shadow-md ${
-          scrolled ? 'bg-primary' : 'bg-transparent'
+        className={`fixed w-full h-24 flex items-center px-5 transition-all duration-300 ${
+          scrolled ? 'bg-primary' : 'bg-primary-20'
         }`}
       >
-        <Box className="flex gap-4 items-center">
+        <Box className="flex items-center justify-between gap-4 mx-auto w-full max-w-screen-2xl">
+          <Box className={`min-logo ${scrolled ? 'invert-filter' : ''}`}></Box>
           <Box className="flex gap-4 items-center">
             {menus.map((menu, index) => (
               <motion.div
@@ -99,9 +147,11 @@ export function Menu() {
               >
                 <Button
                   component={menu.link ? 'a' : 'button'}
-                  href={menu.link || undefined}
-                  className={`!normal-case font-secondary !px-5 !py-[.735rem] !rounded-xl ${
-                    openMenu === menu.key ? 'button-tertiary' : 'text-primary'
+                  href={menu.link}
+                  className={`!px-5 !py-[.735rem] !rounded-xl !font-bold !text-[1rem] !tracking-[0.0625rem] font-jost ${
+                    scrolled 
+                      ? openMenu === menu.key ? 'btn-menu-scrolled-active' : 'text-primary' 
+                      : openMenu === menu.key ? 'btn-menu-active' : 'btn-menu'
                   }`}
                   disableElevation
                   endIcon={menu.sections && menu.sections?.length || menu.items && menu.items?.length > 0 ? <KeyboardArrowDownIcon /> : null}
@@ -148,9 +198,7 @@ export function Menu() {
                                         component={item.link ? 'a' : 'div'}
                                         href={item.link}
                                         {...(item.target && { target: '_blank', rel: 'noopener noreferrer' })}
-                                        className={`!py-4 flex flex-row !justify-between !rounded-xl ${
-                                          openSubMenu === subMenuKey ? 'button-secondary' : ''
-                                        }`}
+                                        className={`!py-4 flex flex-row !justify-between !rounded-xl hover:!bg-[var(--surface-overlay)] ${openSubMenu === subMenuKey ? '!bg-[var(--surface-overlay)]' : ''}`}
                                       >
                                         {item.name}
                                         {item.subItems?.length && openSubMenu === subMenuKey ? (
@@ -160,7 +208,7 @@ export function Menu() {
                                       {item.subItems?.length ? (
                                         <SubMenu
                                           isOpen={openSubMenu === subMenuKey}
-                                          className="p-[1.25rem] border border-[#515253] bg-primary min-w-[300px] shadow-md rounded-xl z-10 absolute"
+                                          className="p-[1.25rem] border border-[var(--border-outline)] bg-primary min-w-[300px] shadow-md rounded-xl z-10 absolute"
                                           positionAbove={shouldPositionAbove(subMenuKey)}
                                         >
                                           {item.subItems.map((subItem, idx) => (
@@ -169,7 +217,7 @@ export function Menu() {
                                               component="a"
                                               href={subItem.link!}
                                               {...(subItem.target && { target: '_blank', rel: 'noopener noreferrer' })}
-                                              className="!py-2 !rounded-xl"
+                                              className="!py-2 !rounded-xl hover:!bg-[var(--surface-overlay)]"
                                             >
                                               {subItem.name}
                                             </MenuItem>
@@ -184,7 +232,7 @@ export function Menu() {
                             </>
                           ))}
                           {menu.sponsor && (
-                            <Box className="w-1/4 min-w-[300px] bg-[#EEF2F6] rounded-xl flex items-center justify-center">
+                            <Box className="w-1/4 min-w-[300px] bg-[var(--sponsor-surface)] rounded-xl flex items-center justify-center">
                               <Announcement slides={slides} className='rounded-xl'/>
                             </Box>
                           )}
@@ -202,7 +250,7 @@ export function Menu() {
                               component="a"
                               href={item.link!}
                               {...(item.target && { target: '_blank', rel: 'noopener noreferrer' })}
-                              className="!py-4 flex flex-row !justify-between !rounded-xl"
+                              className="!py-4 flex flex-row !justify-between !rounded-xl hover:!bg-[var(--surface-overlay)]"
                             >
                               {item.name}
                             </MenuItem>
@@ -214,52 +262,139 @@ export function Menu() {
                 )}
               </motion.div>
             ))}
-            <Box className="border-x-[1px] divider-base px-2">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7, delay: 1 }}
-              >
-                <Button 
-                  className="!text-[#646464] !min-w-5 !mx-2 w-9 h-9 !rounded-full relative !normal-case"
-                  onMouseEnter={handleThemeMenuEnter}
-                  onMouseLeave={handleThemeMenuLeave}
-                >
-                  {themeMode === 'default' ? <TbHours24 className="!text-[1.5rem]" /> : 
-                  themeMode === 'system' ? <TbDeviceDesktopCog className="!text-[1.5rem]" /> :
-                  themeMode === 'light' ? <MdOutlineWbSunny className="!text-[1.5rem]" /> :
-                  <TbMoonStars className="!text-[1.5rem]" />}
-                  
-                  {themeMenuAnimating && (
-                    <Box 
-                      className="absolute top-[3.1rem] left-0 bg-primary text-sm rounded-lg shadow-md z-50 min-w-[260px] p-5"
-                      onMouseEnter={handleThemeDropdownEnter}
-                      onMouseLeave={handleThemeDropdownLeave}
-                      style={{ 
-                        display: themeMenuOpen ? 'block' : 'none',
-                        animation: themeMenuOpen ? 'fadeIn 0.2s ease-in-out' : 'fadeOut 0.2s ease-in-out'
-                      }}
-                    >
-                      <Typography className="!text-[1.3rem] !font-semibold flex flex-row">Escolher um tema</Typography>
-                      <Divider className="!my-3" />
-                      <Tooltip title="Muda automaticamente conforme o horário: manhã, tarde, anoitecer e noite" placement="left" arrow>
-                        <MenuItem onClick={() => changeTheme('default')} className="!py-4 !rounded-xl">Padrão</MenuItem>
-                      </Tooltip>
-                      <Tooltip title="Sincroniza com as configurações do seu sistema" placement="left" arrow>
-                        <MenuItem onClick={() => changeTheme('system')} className="!py-4 !rounded-xl">Sistema</MenuItem>
-                      </Tooltip>
-                      <Tooltip title="Interface clara, ideal para ambientes com boa iluminação" placement="left" arrow>
-                        <MenuItem onClick={() => changeTheme('light')} className="!py-4 !rounded-xl">Claro</MenuItem>
-                      </Tooltip>
-                      <Tooltip title="Interface escura, perfeita para uso à noite ou em luz ambiente" placement="left" arrow>
-                        <MenuItem onClick={() => changeTheme('dark')} className="!py-4 !rounded-xl">Escuro</MenuItem>
-                      </Tooltip>
-                    </Box>
-                  )}
-                </Button>
-              </motion.div>
-            </Box>
           </Box>
+          <Box className='flex gap-4 items-center'>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 1 }}
+            >
+              <Button 
+                className={`!font-bold !text-[1rem] !tracking-[0.0625rem] font-jost !rounded-xl relative !normal-case !px-5 !py-[.735rem] ${
+                  scrolled 
+                    ? languageMenuOpen ? 'btn-menu-scrolled-active' : 'text-primary'
+                    : languageMenuOpen ? 'btn-menu-active' : 'btn-menu'
+                }`}
+                onMouseEnter={handleLanguageMenuEnter}
+                onMouseLeave={handleLanguageMenuLeave}
+                endIcon={<KeyboardArrowDownIcon />}
+              >
+                <Box className="flex items-center gap-3">
+                  <img 
+                    src={lang === 'pt-BR' ? ptBR : enUS} 
+                    className='w-6 h-6 rounded-xl'
+                  />
+                  <FormattedMessage id="language.current" />
+                </Box>
+                
+                {languageMenuAnimating && (
+                  <Box 
+                    className="text-[#646464] absolute top-[3.71rem] left-0 bg-primary text-sm rounded-lg shadow-md z-50 min-w-[260px] p-5"
+                    onMouseEnter={handleLanguageDropdownEnter}
+                    onMouseLeave={handleLanguageDropdownLeave}
+                    style={{ 
+                      display: languageMenuOpen ? 'block' : 'none',
+                      animation: languageMenuOpen ? 'fadeIn 0.2s ease-in-out' : 'fadeOut 0.2s ease-in-out'
+                    }}
+                  >
+                    <Typography className="!text-[1.3rem] !font-semibold flex flex-row">
+                      <FormattedMessage id="language.choose" />
+                    </Typography>
+                    <Divider className="!my-3" />
+                    <MenuItem
+                      onClick={() => changeLocale('en-US')} 
+                      className="!py-4 flex flex-row !rounded-xl items-center gap-2 hover:!bg-[var(--surface-overlay)]"
+                    >
+                      <img src={enUS} alt="English" className="w-6 h-6 rounded-xl" />
+                      English
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => changeLocale('pt-BR')} 
+                      className="!py-4 flex flex-row !rounded-xl items-center gap-2 hover:!bg-[var(--surface-overlay)]"
+                    >
+                      <img src={ptBR} alt="Português" className="w-6 h-6 rounded-xl" />
+                      Português
+                    </MenuItem>
+                  </Box>
+                )}
+              </Button>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 1 }}
+            >
+              <Button 
+                className={`!rounded-xl relative !normal-case !px-5 !py-[.855rem] ${
+                  scrolled 
+                    ? themeMenuOpen ? 'btn-menu-scrolled-active' : 'text-primary'
+                    : themeMenuOpen ? 'btn-menu-active' : 'btn-menu'
+                }`}
+                onMouseEnter={handleThemeMenuEnter}
+                onMouseLeave={handleThemeMenuLeave}
+                endIcon={<KeyboardArrowDownIcon />}
+              >
+                {themeMode === 'default' ? <TbHours24 className="!text-[1.5rem]" /> : 
+                themeMode === 'system' ? <TbDeviceDesktopCog className="!text-[1.5rem]" /> :
+                themeMode === 'light' ? <MdOutlineWbSunny className="!text-[1.5rem]" /> :
+                <TbMoonStars className="!text-[1.5rem]" />}
+                
+                {themeMenuAnimating && (
+                  <Box 
+                    className="text-[#646464] absolute top-[3.6rem] left-0 bg-primary text-sm rounded-lg shadow-md z-50 min-w-[260px] p-5"
+                    onMouseEnter={handleThemeDropdownEnter}
+                    onMouseLeave={handleThemeDropdownLeave}
+                    style={{ 
+                      display: themeMenuOpen ? 'block' : 'none',
+                      animation: themeMenuOpen ? 'fadeIn 0.2s ease-in-out' : 'fadeOut 0.2s ease-in-out'
+                    }}
+                  >
+                    <Typography className="!text-[1.3rem] !font-semibold flex flex-row">
+                      <FormattedMessage id="theme.choose" />
+                    </Typography>
+                    <Divider className="!my-3" />
+                    <Tooltip title={formatMessage({id: 'theme.default.tooltip'})} placement="left" arrow>
+                      <MenuItem onClick={() => changeTheme('default')} className="!py-4 !rounded-xl hover:!bg-[var(--surface-overlay)]">
+                        <FormattedMessage id="theme.default" />
+                      </MenuItem>
+                    </Tooltip>
+                    <Tooltip title={formatMessage({id: 'theme.system.tooltip'})}  placement="left" arrow>
+                      <MenuItem onClick={() => changeTheme('system')} className="!py-4 !rounded-xl hover:!bg-[var(--surface-overlay)]">
+                        <FormattedMessage id="theme.system" />
+                      </MenuItem>
+                    </Tooltip>
+                    <Tooltip title={formatMessage({id: 'theme.light.tooltip'})}  placement="left" arrow>
+                      <MenuItem onClick={() => changeTheme('light')} className="!py-4 !rounded-xl hover:!bg-[var(--surface-overlay)]">
+                        <FormattedMessage id="theme.light" />
+                      </MenuItem>
+                    </Tooltip>
+                    <Tooltip title={formatMessage({id: 'theme.dark.tooltip'})}  placement="left" arrow>
+                      <MenuItem onClick={() => changeTheme('dark')} className="!py-4 !rounded-xl hover:!bg-[var(--surface-overlay)]">
+                        <FormattedMessage id="theme.dark" />
+                      </MenuItem>
+                    </Tooltip>
+                  </Box>
+                )}
+              </Button>
+            </motion.div>
+          </Box>
+          {/* <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 1 }}
+              className="flex flex-row"
+            >
+            <Box className='flex flex-row items-center gap-3'>
+              <img src={status} alt="Status do servidor" className='w-[36px] h-[36px]' />
+              <Box>
+                <Typography className="!text-[1.2rem] !font-semibold text-white">Status</Typography>
+                <Box className='flex flex-row items-center gap-1 text-online -mt-1'>
+                  <Box className="w-2 h-2 rounded-full status-online"></Box>
+                  <Typography className="!text-sm !font-semibold">Online</Typography>
+                </Box>
+              </Box>
+            </Box>
+          </motion.div> */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -269,16 +404,25 @@ export function Menu() {
               ease: [0, 0.71, 0.2, 1.01],
             }}
           >
-            <Box className='cursor-not-allowed'>
-              <Button
-                onClick={() => setOpenLoginModal(true)}
-                className="button-primary !px-7 !py-[.711rem] !rounded-xl !normal-case !ml-2 !text-[0.9375rem]"
-                endIcon={<IoEnter className="text-[#ffffff]" />}
-                disabled
-              >
-                Entrar
-              </Button>
-            </Box>
+            <Button
+              onClick={() => setOpenLoginModal(true)}
+              className={`btn-golden !px-7 !py-[.711rem] !rounded-xl !normal-case !ml-2 !text-[0.9375rem] ${
+                scrolled ? '!text-white' : ''
+              }`}
+              // endIcon={<IoEnter className={scrolled ? "text-white" : "text-[#ffffff]"} />}
+              // disabled
+            >
+              <Box
+                className='bg-[#F4EAD6] rounded-l-xl h-full absolute left-0 flex items-center justify-center'
+                style={{
+                  clipPath: 'polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%)', 
+                }}>
+                <IoEnter className="m-3" size={27}/>
+              </Box>
+              <Box className="ml-9">
+                <FormattedMessage id="btn.login" />
+              </Box>
+            </Button>
           </motion.div>
         </Box>
       </Box>

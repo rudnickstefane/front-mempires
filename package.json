@@ -59,6 +59,7 @@
     "react-dropzone": "^14.3.5",
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.16.0",
+    "react-intl": "^7.1.14",
     "react-leaflet": "^5.0.0",
     "react-leaflet-cluster": "^2.1.0",
     "react-leaflet-markercluster": "^5.0.0-rc.0",
@@ -85,8 +86,8 @@
   },
   "devDependencies": {
     "@svgr/rollup": "^8.1.0",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "@types/react-input-mask": "^3.0.5",
     "@types/react-router-dom": "^5.3.3",
     "@types/validator": "^13.12.2",
@@ -98,7 +99,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "json-server": "^1.0.0-beta.3",
-    "typescript": "^5.2.2",
+    "typescript": "^5.9.3",
     "vite": "^5.2.0",
     "vite-plugin-node-polyfills": "^0.22.0"
   }

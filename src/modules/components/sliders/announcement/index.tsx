@@ -134,7 +134,7 @@ const Announcement = ({ slides, className }: SliderProps) => {
           />
         </a>
       ) : (
-        <Box className="w-full h-full flex items-center justify-center bg-[#EEF2F6]">
+        <Box className="w-full h-full flex items-center justify-center bg-[var(--sponsor-surface)]">
           <Typography className="!text-[.85rem]">Espaço para anúncios</Typography>
         </Box>
       )}

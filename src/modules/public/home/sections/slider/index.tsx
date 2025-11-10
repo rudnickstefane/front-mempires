@@ -1,6 +1,8 @@
 import { Box, Button, Skeleton, Typography } from "@mui/material";
+import dailyCycle from "@sr/assets/images/daily-cycle-system.jpg";
+import websiteOnline from "@sr/assets/images/website-online.jpg";
 import { useAnimation } from "framer-motion";
-import { Camera, Heart, Share2, Star } from "lucide-react";
+import { Calendar, Share2 } from "lucide-react";
 import * as motion from "motion/react-client";
 import { useEffect, useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
@@ -18,145 +20,24 @@ const HomeSlideComponent = () => {
 
   const properties = [
     {
-      title: "Villa on Hollywood Boulevard",
-      location: "Hatteras Lane, Hollywood, FL 33019, USA",
-      type: "Villa",
-      price: "$740,000",
-      beds: 3,
-      baths: 4,
-      garages: 4,
-      area: "4530 sq ft",
-      added: "June 13, 2022",
-      forSale: true,
-      featured: true,
-      trendy: true,
-      imageCount: 8,
-      videoCount: 1,
-      image: "/img1.jpg"
-    },
-    {
-      title: "1",
-      location: "Sunset Drive, Miami, FL, USA",
-      type: "Shop",
-      price: "$2,600 / Monthly",
-      area: "950 Sq Ft",
-      added: "June 12, 2022",
+      title: "Sistema de Ciclo Diário",
+      description: 'O ambiente agora alterna entre dia e noite, afetando visibilidade, ambientação e estratégias de jogo.',
+      tags: 'Novo Recurso',
+      publishDate: "09 de novembro de 2025",
       forRent: true,
       imageCount: 2,
-      videoCount: 1,
-      image: "/img2.jpg"
+      image: dailyCycle
     },
     {
-      title: "2",
-      location: "CocoWalk, 3015 Grand Avenue, Miami, USA",
-      type: "Villa",
-      price: "$4,750 / Monthly",
-      beds: 4,
-      baths: 4,
-      garages: 4,
-      area: "9350 sq ft",
-      added: "June 11, 2022",
+      title: "Bem-vindo ao site!",
+      description: 'Nosso novo site acaba de entrar no ar! Explore as novidades, acompanhe atualizações e prepare-se para conquistar um novo mundo.',
+      tags: 'Site',
+      publishDate: "09 de novembro de 2025",
       forRent: true,
       featured: true,
       imageCount: 4,
       videoCount: 1,
-      image: "/img3.jpg"
-    },
-    {
-      title: "3",
-      location: "CocoWalk, 3015 Grand Avenue, Miami, USA",
-      type: "Villa",
-      price: "$4,750 / Monthly",
-      beds: 4,
-      baths: 4,
-      garages: 4,
-      area: "9350 sq ft",
-      added: "June 11, 2022",
-      forRent: true,
-      featured: true,
-      imageCount: 4,
-      videoCount: 1,
-      image: "/img3.jpg"
-    },
-    {
-      title: "4",
-      location: "CocoWalk, 3015 Grand Avenue, Miami, USA",
-      type: "Villa",
-      price: "$4,750 / Monthly",
-      beds: 4,
-      baths: 4,
-      garages: 4,
-      area: "9350 sq ft",
-      added: "June 11, 2022",
-      forRent: true,
-      featured: true,
-      imageCount: 4,
-      videoCount: 1,
-      image: "/img3.jpg"
-    },
-    {
-      title: "5",
-      location: "CocoWalk, 3015 Grand Avenue, Miami, USA",
-      type: "Villa",
-      price: "$4,750 / Monthly",
-      beds: 4,
-      baths: 4,
-      garages: 4,
-      area: "9350 sq ft",
-      added: "June 11, 2022",
-      forRent: true,
-      featured: true,
-      imageCount: 4,
-      videoCount: 1,
-      image: "/img3.jpg"
-    },
-    {
-      title: "6",
-      location: "CocoWalk, 3015 Grand Avenue, Miami, USA",
-      type: "Villa",
-      price: "$4,750 / Monthly",
-      beds: 4,
-      baths: 4,
-      garages: 4,
-      area: "9350 sq ft",
-      added: "June 11, 2022",
-      forRent: true,
-      featured: true,
-      imageCount: 4,
-      videoCount: 1,
-      image: "/img3.jpg"
-    },
-    {
-      title: "7",
-      location: "CocoWalk, 3015 Grand Avenue, Miami, USA",
-      type: "Villa",
-      price: "$4,750 / Monthly",
-      beds: 4,
-      baths: 4,
-      garages: 4,
-      area: "9350 sq ft",
-      added: "June 11, 2022",
-      forRent: true,
-      featured: true,
-      imageCount: 4,
-      videoCount: 1,
-      image: "/img3.jpg"
-    },
-    {
-      title: "8",
-      location: "CocoWalk, 3015 Grand Avenue, Miami, USA",
-      type: "Villa",
-      price: "$4,750 / Monthly",
-      beds: 4,
-      baths: 4,
-      garages: 4,
-      area: "9350 sq ft",
-      added: "June 11, 2022",
-      forRent: true,
-      featured: true,
-      imageCount: 4,
-      videoCount: 1,
-      image: "/img3.jpg"
+      image: websiteOnline
     }
   ];
 
@@ -235,7 +116,7 @@ const HomeSlideComponent = () => {
   }, [inView, controls]);
 
   return (
-    <Box className="w-full mt-12">
+    <Box className="w-full">
       <motion.div
         ref={ref}
         variants={containerVariants}
@@ -244,36 +125,11 @@ const HomeSlideComponent = () => {
       >
         <motion.div variants={childVariants}>
           <Typography
-            className="bg-[#E1E4F5] rounded-xl text-quintary p-2 px-5 max-w-fit !text-sm"
+            className="!font-bold text-primary !text-[4rem] uppercase font-jost"
           >
-            Anúncios Recentes
+            Últimas Novidades
           </Typography>
         </motion.div>
-        <Box className="flex flex-row py-5">
-          <motion.div variants={childVariants}>
-            <Button
-              onClick={() => setFilter("rent")}
-              variant="outlined"
-              className={`transition-all duration-300 inline-block !px-7 !py-[.711rem] !rounded-l-xl !rounded-r-none !normal-case !text-[0.9375rem] ${
-                filter === "rent" ? "button-primary" : "button-quaternary"
-              }`}
-            >
-              Alugar
-            </Button>
-          </motion.div>
-          <motion.div variants={childVariants}>
-            <Button
-              onClick={() => setFilter("sale")}
-              variant="outlined"
-              className={`transition-all duration-300 inline-block !px-7 !py-[.711rem] !rounded-r-xl !rounded-l-none !normal-case !text-[0.9375rem] ${
-                filter === "sale" ? "button-primary" : "button-quaternary"
-              }`}
-            >
-              Comprar
-            </Button>
-          </motion.div>
-        </Box>
-
         <Box
           className={`${
             isDragging ? "cursor-grabbing" : "cursor-auto"
@@ -360,77 +216,40 @@ const HomeSlideComponent = () => {
                     initial="hidden"
                     animate={inView ? "visible" : "hidden"}
                   >
-                    <Box className="rounded-2xl shadow-md overflow-hidden">
-                      <div className="relative">
+                    <Box className="rounded-2xl shadow-md overflow-hidden p-3 bg-white my-12">
+                      <Box className="relative">
+                        <Box className='gradient-card-box rounded-xl' />
                         <img
                           src={property.image}
                           alt={property.title}
-                          className="w-full h-64 object-cover"
+                          className="w-full h-64 object-cover rounded-xl"
                         />
-                        <div className="absolute top-2 left-2 flex gap-2">
-                          {property.forSale && (
-                            <span className="bg-white text-xs px-2 py-1 rounded">
-                              For Sale
-                            </span>
-                          )}
-                          {property.forRent && (
-                            <span className="bg-white text-xs px-2 py-1 rounded">
-                              For Rent
-                            </span>
-                          )}
-                          {property.featured && (
-                            <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">
-                              Featured
-                            </span>
-                          )}
-                          {property.trendy && (
-                            <span className="bg-yellow-500 text-white text-xs px-2 py-1 rounded">
-                              Trendy
-                            </span>
-                          )}
-                        </div>
                         <div className="absolute top-2 right-2 flex gap-2 items-center">
                           <div className="flex items-center bg-white text-xs px-2 py-1 rounded">
-                            <Camera className="w-4 h-4 mr-1" />
-                            {property.imageCount}
-                          </div>
-                          <div className="flex items-center bg-white text-xs px-2 py-1 rounded">
-                            <Star className="w-4 h-4 mr-1" />
-                            {property.videoCount}
+                            <Calendar className="w-4 h-4 mr-1" />
+                            {property.publishDate}
                           </div>
                         </div>
-                        <div className="absolute bottom-2 right-2 flex gap-2">
-                          <button className="bg-white p-1 rounded-full">
-                            <Heart className="w-4 h-4" />
-                          </button>
-                          <button className="bg-white p-1 rounded-full">
-                            <Share2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-                      <Box className="p-4">
-                        <h3 className="text-lg font-semibold">
-                          {property.title}
-                        </h3>
-                        <p className="text-xs text-gray-500 flex items-center">
-                          <span className="mr-1">📍</span>
-                          {property.location}
-                        </p>
-                        <p className="text-sm text-gray-700 mt-2">
-                          {property.type}
-                        </p>
-                        <p className="text-lg font-bold text-blue-600 mt-2">
-                          {property.price}
-                        </p>
-                        <div className="flex text-xs text-gray-500 gap-4 mt-2">
-                          {property.beds && <>🛏 {property.beds}</>}
-                          {property.baths && <>🛁 {property.baths}</>}
-                          {property.garages && <>🚗 {property.garages}</>}
-                          <span>{property.area}</span>
-                        </div>
-                        <p className="text-xs text-gray-400 mt-2">
-                          Added: {property.added}
-                        </p>
+                        <Box className="flex flex-col absolute bottom-0 p-4 gap-2 z-[1]">
+                          <Box>
+                            <Typography className="text-white !text-2xl !font-semibold !mb-2">
+                              {property.title}
+                            </Typography>
+                            <Typography className="!text-sm text-gray-400">
+                              {property.description}
+                            </Typography>
+                          </Box>
+                          <Box className="flex justify-between gap-2">
+                            {property.tags && (
+                              <Typography className="bg-white !font-bold !text-xs px-2 py-1 rounded uppercase">
+                                {property.tags}
+                              </Typography>
+                            )}
+                            <button className="bg-white p-1 rounded-full">
+                              <Share2 className="w-4 h-4" />
+                            </button>
+                          </Box>
+                        </Box>
                       </Box>
                     </Box>
                   </motion.div>

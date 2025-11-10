@@ -14,9 +14,9 @@ export function HomeHeader() {
   
   return (
     <>
-      <Box className='bg-theme h-[47.5rem]'>
+      <Box className='h-[47.5rem]'>
         <Menu />
-        <Box className='flex justify-center mt-6 z-[1] relative'>
+        <Box className='flex justify-center mt-6 relative'>
           <motion.div
             ref={ref}
             variants={containerVariants}
@@ -25,7 +25,7 @@ export function HomeHeader() {
           >
             <Box className='flex flex-col items-center justify-center w-full z-10 relative'>
               <motion.div variants={childVariants}>
-                <Box className='logo'></Box>
+                <Box className='logo mt-10 mb-16'></Box>
               </motion.div>
               <Box className='flex flex-row gap-16'>
                 <motion.div variants={childVariants}>

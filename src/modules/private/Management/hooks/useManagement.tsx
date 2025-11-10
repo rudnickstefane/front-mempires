@@ -5,8 +5,6 @@ import { FindPermissionsResponse } from '../../../common/types';
 import { QueryFindPermissions } from '../components/Graphql';
 
 export const useManagement = () => {
-    // const { themeClasses, toggleDarkMode } = useThemeDarkMode();
-
     const calledRef = useRef(false);
     const { request } = useBackendForFrontend();
     const { isAuthorized, role } = useAuthorization()

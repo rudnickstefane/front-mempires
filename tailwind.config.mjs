@@ -5,8 +5,13 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'surface-overlay': 'var(--surface-overlay)',
+        'border-outline': 'var(--border-outline)',
+        'sponsor-surface': 'var(--sponsor-surface)',
+      }
+    },
   },
   plugins: [],
 }
-

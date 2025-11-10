@@ -1,5 +1,6 @@
 import { useThemeDarkMode } from '@sr/modules/common/theme/ThemeContext';
 import { useEffect, useRef, useState } from 'react';
+import { useIntl } from 'react-intl';
 import { Menu } from '../types';
 
 export const useMenuLogic = () => {
@@ -12,114 +13,115 @@ export const useMenuLogic = () => {
   const hoveringMenuRef = useRef(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const menuItemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const { formatMessage } = useIntl();
 
   const menus: Menu[] = [
     {
       key: 'home',
-      label: 'Início',
+      label: formatMessage({ id: 'menu.home' }),
       link: '/',
     },
     {
       key: 'explore',
-      label: 'Explorar',
+      label: formatMessage({ id: 'menu.explore' }),
       isMegaMenu: true,
       sections: [
         {
-          title: 'Últimas',
-          subtitle: 'notícias',
+          title: formatMessage({ id: 'menu.explore.latest' }),
+          subtitle: formatMessage({ id: 'menu.explore.latest.subtitle' }),
           items: [
             {
-              name: 'Atualizações do jogo',
+              name: formatMessage({ id: 'menu.explore.game_updates' }),
               subItems: [
-                { name: 'Notas de atualizações', link: '/news/updates/patch-notes' },
-                { name: 'Novos recursos', link: '/news/updates/new-features' },
-                { name: 'Balanceamentos', link: '/news/updates/balance-changes' },
-                { name: 'Ver mais', link: '/news/updates' },
+                { name: formatMessage({ id: 'menu.explore.patch_notes' }), link: '/news/updates/patch-notes' },
+                { name: formatMessage({ id: 'menu.explore.new_features' }), link: '/news/updates/new-features' },
+                { name: formatMessage({ id: 'menu.explore.balance_changes' }), link: '/news/updates/balance-changes' },
+                { name: formatMessage({ id: 'menu.explore.see_more_updates' }), link: '/news/updates' },
               ],
             },
             {
-              name: 'Comunidade',
+              name: formatMessage({ id: 'menu.explore.community_news' }),
               subItems: [
-                { name: 'Eventos', link: '/news/community/events' },
-                { name: 'Torneios', link: '/news/community/tournaments' },
-                { name: 'Ranking', link: '/news/community/leaderboards' },
-                { name: 'Ver mais', link: '/news/community' },
+                { name: formatMessage({ id: 'menu.explore.events' }), link: '/news/community/events' },
+                { name: formatMessage({ id: 'menu.explore.tournaments' }), link: '/news/community/tournaments' },
+                { name: formatMessage({ id: 'menu.explore.leaderboards' }), link: '/news/community/leaderboards' },
+                { name: formatMessage({ id: 'menu.explore.see_more_community' }), link: '/news/community' },
               ],
             },
             {
-              name: 'Desenvolvimento',
+              name: formatMessage({ id: 'menu.explore.development' }),
               subItems: [
-                { name: 'Devlog', link: '/news/development/devlog' },
-                { name: 'Sneak peeks', link: '/news/development/sneak-peeks' },
-                { name: 'Ver mais', link: '/news/development' },
+                { name: formatMessage({ id: 'menu.explore.devlog' }), link: '/news/development/devlog' },
+                { name: formatMessage({ id: 'menu.explore.sneak_peeks' }), link: '/news/development/sneak-peeks' },
+                { name: formatMessage({ id: 'menu.explore.see_more_development' }), link: '/news/development' },
               ],
             },
             {
-              name: 'Gameplay',
+              name: formatMessage({ id: 'menu.explore.gameplay' }),
               subItems: [
-                { name: 'Modos de jogo', link: '/gameplay/game-modes' },
-                { name: 'Personagens', link: '/gameplay/characters' },
-                { name: 'Mapas', link: '/gameplay/maps' },
-                { name: 'Ver mais', link: '/gameplay' },
+                { name: formatMessage({ id: 'menu.explore.game_modes' }), link: '/gameplay/game-modes' },
+                { name: formatMessage({ id: 'menu.explore.characters' }), link: '/gameplay/characters' },
+                { name: formatMessage({ id: 'menu.explore.maps' }), link: '/gameplay/maps' },
+                { name: formatMessage({ id: 'menu.explore.see_more_gameplay' }), link: '/gameplay' },
               ],
             },
             {
-              name: 'História',
+              name: formatMessage({ id: 'menu.explore.history' }),
               subItems: [
-                { name: 'Personagens', link: '/history/characters' },
-                { name: 'Mundo', link: '/history/world' },
-                { name: 'Ver mais', link: '/history' },
+                { name: formatMessage({ id: 'menu.explore.story_characters' }), link: '/history/characters' },
+                { name: formatMessage({ id: 'menu.explore.story_world' }), link: '/history/world' },
+                { name: formatMessage({ id: 'menu.explore.see_more_history' }), link: '/history' },
               ],
             },
-            { name: 'Todas as notícias', subItems: [], link: '/explore' },
+            { name: formatMessage({ id: 'menu.explore.all_news' }), subItems: [], link: '/explore' },
           ],
         },
         {
-          title: 'Acesso rápido',
+          title: formatMessage({ id: 'menu.explore.quick_access' }),
           items: [
-            { name: 'Download', subItems: [], link: '/download' },
-            { name: 'Registro beta', subItems: [], link: '/beta' },
-            { name: 'Roadmap', subItems: [], link: '/roadmap' },
+            { name: formatMessage({ id: 'menu.quick.download' }), link: '/download' },
+            { name: formatMessage({ id: 'menu.quick.beta' }), link: '/beta' },
+            { name: formatMessage({ id: 'menu.quick.roadmap' }), link: '/roadmap' },
           ],
         },
       ],
       sponsor: {
-        content: 'Espaço para anúncios',
+        content: formatMessage({ id: 'sponsor.content' }),
       },
     },
     {
       key: 'community',
-      label: 'Comunidade',
-      title: 'Nossos',
-      subtitle: 'impérios',
+      label: formatMessage({ id: 'menu.community' }),
+      title: formatMessage({ id: 'menu.community.title' }),
+      subtitle: formatMessage({ id: 'menu.community.subtitle' }),
       items: [
-        { name: 'Discord', link: 'https://discord.gg/TYz9EWXBw', target: true },
-        { name: 'Fórum', link: '/community/forum' },
-        { name: 'Reddit', link: 'https://www.reddit.com/r/mobileempires/', target: true },
-        { name: 'YouTube', link: 'https://www.youtube.com/@mobileempires', target: true },
+        { name: formatMessage({ id: 'menu.community.discord' }), link: 'https://discord.gg/TYz9EWXBw', target: true },
+        { name: formatMessage({ id: 'menu.community.forum' }), link: '/community/forum' },
+        { name: formatMessage({ id: 'menu.community.reddit' }), link: 'https://www.reddit.com/r/mobileempires/', target: true },
+        { name: formatMessage({ id: 'menu.community.youtube' }), link: 'https://www.youtube.com/@mobileempires', target: true },
       ],
     },
     {
       key: 'faq',
-      label: 'FAQ',
-      title: 'Conheça',
-      subtitle: 'bem mais',
+      label: formatMessage({ id: 'menu.faq' }),
+      title: formatMessage({ id: 'menu.faq.title' }),
+      subtitle: formatMessage({ id: 'menu.faq.subtitle' }),
       items: [
-        { name: 'Perguntas frequentes', link: '/faq/questions' },
-        { name: 'Guia de iniciantes', link: '/faq/beginner-guide' },
-        { name: 'Dicas avançadas', link: '/faq/advanced-tips' },
+        { name: formatMessage({ id: 'menu.faq.questions' }), link: '/faq/questions' },
+        { name: formatMessage({ id: 'menu.faq.beginner_guide' }), link: '/faq/beginner-guide' },
+        { name: formatMessage({ id: 'menu.faq.advanced_tips' }), link: '/faq/advanced-tips' },
       ],
     },
     {
       key: 'help',
-      label: 'Ajuda',
-      title: 'Tire suas dúvidas',
+      label: formatMessage({ id: 'menu.help' }),
+      title: formatMessage({ id: 'menu.help.title' }),
       items: [
-        { name: 'Central de ajuda', link: '/help/help-center' },
-        { name: 'Fale conosco', link: '/help/contact-us' },
-        { name: 'Como funciona', link: '/help/how-works' },
-        { name: 'Termos de uso', link: '/help/terms-of-use' },
-        { name: 'Política de privacidade', link: '/help/privacy-policy' },
+        { name: formatMessage({ id: 'menu.help.help_center' }), link: '/help/help-center' },
+        { name: formatMessage({ id: 'menu.help.contact_us' }), link: '/help/contact-us' },
+        { name: formatMessage({ id: 'menu.help.how_works' }), link: '/help/how-works' },
+        { name: formatMessage({ id: 'menu.help.terms' }), link: '/help/terms-of-use' },
+        { name: formatMessage({ id: 'menu.help.privacy' }), link: '/help/privacy-policy' },
       ],
     },
   ];
