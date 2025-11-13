@@ -14,10 +14,10 @@ import Announcement from '@sr/modules/components/sliders/announcement';
 // Configuração do Client ID do Google (substitua pelo seu)
 const GOOGLE_CLIENT_ID = '341278886012-g324u6msgnao0aqqriu6vhlcpnorcats.apps.googleusercontent.com'; // Obtenha no Google Developer Console
 
-const slides = [
-    { id: 1, imageUrl: "https://static.ifood-static.com.br/image/upload/t_high/discoveries/1104SMHOUSE17884BISNAGA_QHpq.png?imwidth=1920", link: "#" },
-    { id: 2, imageUrl: "https://static.ifood-static.com.br/image/upload/t_high/discoveries/0605CUPOMR30TUDOPRAMIMCAPAPRINCIPAL1_hxLN.png?imwidth=1920", link: "#" },
-    { id: 3, imageUrl: "https://static.ifood-static.com.br/image/upload/t_high/discoveries/2606SMHOUSE19288FestiveldeInvernoCAPAPRINCIPAL_Q1CT.png?imwidth=1920", link: "#" },
+const slides: { id: number; imageUrl: string; link: string; }[] = [
+    // { id: 1, imageUrl: "", link: "#" },
+    // { id: 2, imageUrl: "", link: "#" },
+    // { id: 3, imageUrl: "", link: "#" },
   ];
 
 export default function SignIn({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -68,7 +68,7 @@ export default function SignIn({ open, onClose }: { open: boolean; onClose: () =
       >
         <Fade in={open}>
           <Box className="max-w-[810px] flex flex-row">
-            <Box className='w-[380px] h-[552.61px] flex items-center justify-center bg-[#EEF2F6] rounded-l-xl'>
+            <Box className='w-[380px] h-[552.61px] flex items-center justify-center bg-primary rounded-l-xl'>
               <Announcement slides={slides} className="rounded-l-xl"/>
             </Box>
             <Box className='bg-primary rounded-r-xl w-[455px] flex flex-col items-end p-2'>

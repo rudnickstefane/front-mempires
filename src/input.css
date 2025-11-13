@@ -201,10 +201,10 @@
   --bg-secondary: #005AE6;
   --bg-tertiary: #102341;
   --surface-overlay: #00000042;
-  --border-outline: #00000042;
+  --border-outline: rgba(255, 255, 255, 0.05);
   --surface-overlay-80: #101113;
   --bg-midia: #420e0e;
-  --sponsor-surface: #EEF2F6;
+  --sponsor-surface: rgba(255, 255, 255, 0.05);
 
   --bg-primary-20: #00000033;
   
