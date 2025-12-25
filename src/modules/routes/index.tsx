@@ -3,7 +3,10 @@ import { Route, Routes } from 'react-router-dom'
 import { AccessRestrict } from '../common/pages/AccessRestrict'
 import Page404 from '../common/pages/Error404'
 import InactivitySignIn from '../common/pages/InactivitySignIn'
+import { GymConfig } from '../private/InitialConfig'
+import Management from '../private/Management'
 import { useManagement } from '../private/Management/hooks'
+import SignUp from '../public/signup'
 import { PrivateRoutes } from './mapper/PrivateRoutes.mapper'
 import { PublicRoutes } from './mapper/PublicRoutes.mapper'
 
@@ -45,14 +48,14 @@ function AppRoutes() {
 
       <Route path='*' element={<Page404 />} />
       {/* <Route index element={<Home />} />
-      <Route path='/recovery' element={<Recovery />} />
-      <Route path='/confirm/mail/:uuid/:token' element={<ConfirmMail />} />
-      <Route path='/password/reset/:uuid/:token' element={<ResetPassword />} />
+      <Route path='/recovery' element={<Recovery />} /> */}
+      {/* <Route path='/confirm/mail/:uuid/:token' element={<ConfirmMail />} />
+      <Route path='/password/reset/:uuid/:token' element={<ResetPassword />} /> */}
       <Route path='/cadastro' element={<SignUp />} />
       <Route path='/academia/configuracoes' element={<GymConfig />} />
-      <Route path='/carreiras' element={<Carreiras />} />
-      <Route path='/planos/academia' element={<GymPlans />} />
-      <Route path='/gestao' element={<Management />} /> */}
+      {/* <Route path='/carreiras' element={<Carreiras />} />
+      <Route path='/planos/academia' element={<GymPlans />} /> */}
+      <Route path='/gestao' element={<Management />} />
     </Routes>
   )
 }

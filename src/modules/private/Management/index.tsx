@@ -16,7 +16,7 @@ export default function Management() {
         <AccessRestrict isAuthorized={isAuthorized}>
             <InactivitySignIn />
             {role === 'IFLEXFIT' && <CoreManagement permissions={permissions}/>}
-            {role === 'GYM' && <GymManagement permissions={permissions} />}
+            {<GymManagement permissions={permissions} />}
             {role === 'NUTRITIONIST' && <GymManagement />}
             {role === 'SUPPLIER' && <GymManagement />}
             {role === 'PERSONAL' && <GymManagement />}

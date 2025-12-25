@@ -7,7 +7,7 @@ export const PrivateRoutes = [
     meta: {
       roles: [
         "RENTWELL",
-        "COMPANY",
+        "GYM",
         "RENTER",
       ],
     }
