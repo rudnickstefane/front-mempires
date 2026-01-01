@@ -1,30 +1,72 @@
-import { gql } from 'graphql-request';
+import { gql } from "graphql-request";
 
 export const MutationCreateToken = gql`
-  mutation createToken($origin: String!, $login: String!, $password: String!) {
-    createToken(
-      origin: $origin,
-      login: $login,
-      password: $password
+  mutation createAccessToken(
+    $origin: OriginEnum!
+    $login: String!
+    $password: String!
+  ) {
+    createAccessToken(
+      data: { origin: $origin, login: $login, password: $password }
     ) {
       token
       user {
         id
+        profileCode
+        name
+        code
         uuid
         email
-        name
-        status
-        identity
-        profileCode
+        pendingEmail
         profiles {
-          role
-          status
-          assignment
-          code
-          fantasyName
-          ownershipType
-          companyCode
+          partner {
+            code
+            fantasyName
+            companyCode
+            status
+            isMaster
+            permissions
+          }
+          client {
+            code
+            fantasyName
+            companyCode
+            status
+            isMaster
+            permissions
+          }
+          affiliate {
+            code
+            fantasyName
+            companyCode
+            status
+            isMaster
+            permissions
+          }
+          establishment {
+            code
+            fantasyName
+            companyCode
+            status
+            isMaster
+            permissions
+          }
+          brands {
+            code
+            fantasyName
+            companyCode
+            status
+            isMaster
+            permissions
+          }
+          beneficiary {
+            card
+            type
+            status
+          }
         }
+        createdAt
+        updatedAt
       }
     }
   }

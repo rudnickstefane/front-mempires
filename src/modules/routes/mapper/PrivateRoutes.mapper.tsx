@@ -1,15 +1,11 @@
-import Management from "@sr/modules/private/Management";
+import Management from "@sr/modules/private/portal";
 
 export const PrivateRoutes = [
   {
-    path: "/gestao",
+    path: "/portal",
     element: <Management />,
     meta: {
-      roles: [
-        "RENTWELL",
-        "GYM",
-        "RENTER",
-      ],
-    }
+      roles: ["RENTWELL", "GYM", "RENTER"],
+    },
   },
 ];
