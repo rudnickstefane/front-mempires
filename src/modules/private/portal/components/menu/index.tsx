@@ -1,26 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, Collapse, Skeleton, Tooltip } from "@mui/material";
-import MenuBox from "@sr/modules/private/portal/components/Menus/MenuBox";
-import SubMenuBox from "@sr/modules/private/portal/components/Menus/SubMenuBox";
+import Menu from "@sr/modules/private/portal/components/menu/menu";
+import SubMenu from "@sr/modules/private/portal/components/menu/sub-menu";
 import React, { ElementType } from "react";
 import { CgMenuRightAlt } from "react-icons/cg";
+import { MenuProps } from "../../interfaces";
 
-interface PortalMenuProps {
-  isMenuCollapsed: boolean;
-  toggleMenu: () => void;
-  isMenuLoading: boolean;
-  responseMenus: any;
-  menuExcludedPaths: string[];
-  expandedMenus: number[];
-  toggleSubMenu: (menuCode: number) => void;
-  selectedResource: any;
-  setSelectedResource: (data: any) => void;
-  setExpandedMenus: (menus: number[]) => void;
-  openComponent: (path: any) => void;
-  setActiveComponent: (path: any) => void;
-}
-
-export const PortalMenu: React.FC<PortalMenuProps> = ({
+export const PortalMenu: React.FC<MenuProps> = ({
   isMenuCollapsed,
   toggleMenu,
   isMenuLoading,
@@ -39,22 +25,11 @@ export const PortalMenu: React.FC<PortalMenuProps> = ({
       {/* BOTÃO TOGGLE */}
       <Button
         endIcon={!isMenuCollapsed ? <CgMenuRightAlt /> : null}
-        className={`font-poppins !text-[1rem] !rounded-xl !px-5 !mx-5 ${
-          isMenuCollapsed ? "w-[5.2rem]" : "w-[13.5rem]"
+        className={`font-poppins !font-light transition-all !text-[1rem] !rounded-xl !px-5 !mx-5 !mb-1 h-[50px] hover:bg-[#f3f3f3] !text-[#08041b] !normal-case ${
+          isMenuCollapsed
+            ? "w-[5.2rem] justify-center"
+            : "w-[13.5rem] justify-between"
         }`}
-        style={{
-          textTransform: "none",
-          color: "#08041b",
-          justifyContent: isMenuCollapsed ? "center" : "space-between",
-          height: "50px",
-        }}
-        sx={{
-          fontWeight: "light",
-          transition: "transform 0.3s, background-color 0.3s, color 0.3s",
-          "&:hover": {
-            background: "#f3f3f3",
-          },
-        }}
         onClick={toggleMenu}
       >
         {isMenuCollapsed ? (
@@ -107,7 +82,7 @@ export const PortalMenu: React.FC<PortalMenuProps> = ({
                       arrow
                     >
                       <Box>
-                        <MenuBox
+                        <Menu
                           icon={menu.icon as ElementType}
                           name={isMenuCollapsed ? "" : menu.name}
                           isMenuCollapsed={isMenuCollapsed}
@@ -147,7 +122,7 @@ export const PortalMenu: React.FC<PortalMenuProps> = ({
                           arrow
                         >
                           <Box>
-                            <SubMenuBox
+                            <SubMenu
                               icon={sub.icon as ElementType}
                               name={sub.name}
                               description={menu.description}

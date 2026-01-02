@@ -1,9 +1,9 @@
 import { Box, Button } from "@mui/material";
 import { iconMap } from "@sr/common/constants/icon-map.const";
+import { ResourceBoxProps } from "@sr/modules/private/portal/pages/home/types/gym-resource-box.types";
 import { ArrowDown2, ArrowRight2 } from "iconsax-react";
-import { ResourceBoxProps } from "../../pages/Gym/types/gym-resource-box.types";
 
-const MenuBox = ({
+const Menu = ({
   icon,
   name,
   onClick,
@@ -20,7 +20,7 @@ const MenuBox = ({
 
   return (
     <Button
-      className="font-poppins !text-[1rem] !rounded-xl !px-5 !mx-5 !my-1 !transition-all"
+      className="font-poppins !text-[1rem] !rounded-xl !px-5 !my-1 !transition-all"
       style={{
         textTransform: "none",
         width: isMenuCollapsed ? "5.2rem" : "13.5rem",
@@ -69,4 +69,4 @@ const MenuBox = ({
   );
 };
 
-export default MenuBox;
+export default Menu;

@@ -27,13 +27,13 @@ import { TbFileInvoice, TbUserCircle } from "react-icons/tb";
 import notification from "../../../../../assets/svg/notification.svg";
 import logo from "../../../../../modules/assets/images/icon.png";
 import { ManagementProps } from "../../../../common/types/ManagementProps.type";
-import MenuBox from "../../components/Menus/MenuBox";
-import SubMenuBox from "../../components/Menus/SubMenuBox";
-import { useCoreManagement } from "../Gym/hooks";
+import MenuBox from "../../components/menu/menu";
+import SubMenuBox from "../../components/menu/sub-menu";
+import { useCoreManagement } from "../home/hooks";
 import {
   GymManagementType,
   RendersGymManagement,
-} from "../Gym/types/gym-management.types";
+} from "../home/types/gym-management.types";
 
 export default function CoreManagement({ permissions }: ManagementProps) {
   const {

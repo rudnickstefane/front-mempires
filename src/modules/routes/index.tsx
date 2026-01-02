@@ -4,7 +4,7 @@ import { AccessRestrict } from "../common/pages/AccessRestrict";
 import Page404 from "../common/pages/Error404";
 import InactivitySignIn from "../common/pages/InactivitySignIn";
 import { GymConfig } from "../private/InitialConfig";
-import Management from "../private/portal";
+import Portal from "../private/portal";
 import { useManagement } from "../private/portal/hooks";
 import SignIn from "../public/sign-in";
 import SignUp from "../public/signup";
@@ -53,7 +53,7 @@ function AppRoutes() {
       <Route path="/academia/configuracoes" element={<GymConfig />} />
       {/* <Route path='/carreiras' element={<Carreiras />} />
       <Route path='/planos/academia' element={<GymPlans />} /> */}
-      <Route path="/portal" element={<Management />} />
+      <Route path="/portal" element={<Portal />} />
     </Routes>
   );
 }

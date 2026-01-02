@@ -15,7 +15,7 @@ import styled from "styled-components";
 import { FindProfileDetailsResponse } from "../../common/types";
 import { FormatIdentity, FormatZipCode } from "../../common/utils";
 import { ImageCropModal } from "../portal/components/Modals";
-import { useProfileGymManagement } from "../portal/pages/Gym/hooks";
+import { useProfileGymManagement } from "../portal/pages/home/hooks";
 
 type GymProfileManagementProps = {
   data: FindProfileDetailsResponse | undefined;

@@ -10,7 +10,6 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { PortalMenu } from "@sr/components/menu";
 import { Logo } from "@sr/modules/common/ui/Logo";
 import { Logout, Notification } from "iconsax-react";
 import { BiSupport } from "react-icons/bi";
@@ -19,11 +18,14 @@ import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import { PiConfettiLight, PiUserCircleLight } from "react-icons/pi";
 import { RiExchange2Line } from "react-icons/ri";
 import { TbFileInvoice, TbUserCircle } from "react-icons/tb";
-import { ManagementProps } from "../../../../common/types/ManagementProps.type";
-import { useGymManagement } from "./hooks";
-import { RendersGymManagement } from "./types/gym-management.types";
+import { PortalMenu } from "./components/menu";
+import { useManagement } from "./hooks";
+import { useGymManagement } from "./pages/home/hooks";
+import { RendersGymManagement } from "./pages/home/types/gym-management.types";
 
-export default function GymManagement({ permissions }: ManagementProps) {
+export default function Portal() {
+  const { isAuthorized, role, permissions } = useManagement();
+
   const {
     isMenuLoading,
     isProfileLoading,
@@ -53,6 +55,8 @@ export default function GymManagement({ permissions }: ManagementProps) {
   } = useGymManagement({ permissions });
 
   return (
+    // <AccessRestrict isAuthorized={isAuthorized}>
+    // <InactivitySignIn />
     <>
       <style>
         {`
@@ -564,5 +568,6 @@ export default function GymManagement({ permissions }: ManagementProps) {
         </Box>
       </Box>
     </>
+    // </AccessRestrict>
   );
 }
