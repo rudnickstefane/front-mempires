@@ -7,15 +7,13 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { storage } from "@sr/common/storage";
 import { LuShieldAlert } from "react-icons/lu";
-import { MdDeleteOutline } from "react-icons/md";
 import { PiUserSquareLight } from "react-icons/pi";
-import { TbEdit, TbPhotoEdit } from "react-icons/tb";
-import styled from "styled-components";
+import { TbEdit } from "react-icons/tb";
 import { FindProfileDetailsResponse } from "../../common/types";
 import { FormatIdentity, FormatZipCode } from "../../common/utils";
-import { ImageCropModal } from "../portal/components/Modals";
-import { useProfileGymManagement } from "../portal/pages/home/hooks";
+import { useProfileGymManagement } from "../Portal/pages/home/hooks";
 
 type GymProfileManagementProps = {
   data: FindProfileDetailsResponse | undefined;
@@ -23,39 +21,13 @@ type GymProfileManagementProps = {
   isProfileLoading: boolean;
 };
 
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
 export default function GymProfileManagement({
   data,
   refresh,
   isProfileLoading,
 }: GymProfileManagementProps) {
-  const {
-    isLoading,
-    renderDrawerContent,
-    isDrawerOpen,
-    openDrawer,
-    closeDrawer,
-    handleImageUpload,
-    handleCrop,
-    image,
-    croppedImage,
-    isDialogOpen,
-    setIsDialogOpen,
-    cropperRef,
-    profileCode,
-    handleDeleteImage,
-  } = useProfileGymManagement({ data, refresh });
+  const { renderDrawerContent, isDrawerOpen, openDrawer, closeDrawer } =
+    useProfileGymManagement({ data, refresh });
 
   return (
     <>
@@ -71,163 +43,19 @@ export default function GymProfileManagement({
         {renderDrawerContent()}
       </Drawer>
 
-      {/* Modal de recorte */}
-      <ImageCropModal
-        isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-        onCrop={handleCrop}
-        image={image}
-        cropperRef={cropperRef}
-        isLoading={isLoading}
-      />
-
       <Box className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem]">
         <Box className="flex flex-row items-center">
           <Box
             component="label"
             className="relative md:w-[8.373rem] md:h-[7.407rem] w-[8.373rem] h-[7.4067rem] !mr-3 !rounded-3xl !mt-1 group !color-secondary shadow-md"
           >
-            {croppedImage ? (
-              <>
-                <img
-                  src={croppedImage}
-                  alt="Cropped"
-                  className="w-full h-full rounded-3xl absolute"
-                  style={{
-                    maxWidth: "300px",
-                  }}
-                />
-                <Box className="flex flex-row justify-between w-full h-full">
-                  <Tooltip placement="bottom" title={"Alterar Foto"} arrow>
-                    <Button
-                      component="label"
-                      className="!h-full !min-w-[56%]"
-                      sx={{
-                        color: "#79808a",
-                        fontWeight: "normal",
-                        padding: 0,
-                        transition:
-                          "transform 0.3s, background-color 0.3s, color 0.3s,",
-                        "&:hover": {
-                          color: "#ff0336",
-                        },
-                      }}
-                    >
-                      <VisuallyHiddenInput
-                        type="file"
-                        onChange={handleImageUpload}
-                        multiple
-                        accept="image/*"
-                      />
-                      <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-l-3xl w-full h-full">
-                        <Box className="p-2 bg-white bg-opacity-60 rounded-full">
-                          <TbPhotoEdit className="text-[2rem] color-primary" />
-                        </Box>
-                      </Box>
-                    </Button>
-                  </Tooltip>
-                  <Tooltip placement="right" title={"Excluir Foto"} arrow>
-                    <Button
-                      className="!h-full !min-w-[5%]"
-                      sx={{
-                        color: "#79808a",
-                        fontWeight: "normal",
-                        padding: 0,
-                        transition:
-                          "transform 0.3s, background-color 0.3s, color 0.3s,",
-                        "&:hover": {
-                          color: "#ff0336",
-                        },
-                      }}
-                      onClick={() => handleDeleteImage()}
-                    >
-                      <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-r-3xl w-full h-full px-1.5">
-                        <Box className="p-2 bg-white bg-opacity-60 rounded-full">
-                          <MdDeleteOutline className="text-[1.5rem] color-primary" />
-                        </Box>
-                      </Box>
-                    </Button>
-                  </Tooltip>
-                </Box>
-              </>
-            ) : data?.findProfileDetails.photo ? (
-              <>
-                <img
-                  src={data?.findProfileDetails.photo}
-                  alt="Foto do usuário"
-                  className="w-full h-full rounded-3xl absolute"
-                />
-                <Box className="flex flex-row justify-between w-full h-full">
-                  <Tooltip placement="bottom" title={"Alterar Foto"} arrow>
-                    <Button
-                      component="label"
-                      className="!h-full !min-w-[56%]"
-                      sx={{
-                        color: "#79808a",
-                        fontWeight: "normal",
-                        padding: 0,
-                        transition:
-                          "transform 0.3s, background-color 0.3s, color 0.3s,",
-                        "&:hover": {
-                          color: "#ff0336",
-                        },
-                      }}
-                    >
-                      <VisuallyHiddenInput
-                        type="file"
-                        onChange={handleImageUpload}
-                        multiple
-                        accept="image/*"
-                      />
-                      <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-l-3xl w-full h-full">
-                        <Box className="p-2 bg-white bg-opacity-60 rounded-full">
-                          <TbPhotoEdit className="text-[2rem] color-primary" />
-                        </Box>
-                      </Box>
-                    </Button>
-                  </Tooltip>
-                  <Tooltip placement="right" title={"Excluir Foto"} arrow>
-                    <Button
-                      className="!h-full !min-w-[5%]"
-                      sx={{
-                        color: "#79808a",
-                        fontWeight: "normal",
-                        padding: 0,
-                        transition:
-                          "transform 0.3s, background-color 0.3s, color 0.3s,",
-                        "&:hover": {
-                          color: "#ff0336",
-                        },
-                      }}
-                      onClick={() => handleDeleteImage()}
-                    >
-                      <Box className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-r-3xl w-full h-full px-1.5">
-                        <Box className="p-2 bg-white bg-opacity-60 rounded-full">
-                          <MdDeleteOutline className="text-[1.5rem] color-primary" />
-                        </Box>
-                      </Box>
-                    </Button>
-                  </Tooltip>
-                </Box>
-              </>
-            ) : (
-              <>
-                <Button component="label" className="!m-0 !p-0 w-full h-full">
-                  <PiUserSquareLight className="text-[7rem] text-[#646464]" />
-                  <VisuallyHiddenInput
-                    type="file"
-                    onChange={handleImageUpload}
-                    multiple
-                    accept="image/*"
-                  />
-                  <Box className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-3xl">
-                    <Box className="p-2 bg-white bg-opacity-60 rounded-full">
-                      <TbPhotoEdit className="text-[2rem] color-primary" />
-                    </Box>
-                  </Box>
-                </Button>
-              </>
-            )}
+            <Button
+              component="label"
+              className="!m-0 !p-0 w-full h-full !rounded-3xl"
+            >
+              <PiUserSquareLight className="text-[7rem] text-[#646464]" />
+              <Box className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-3xl"></Box>
+            </Button>
           </Box>
           <Box className="w-full md:mt-0 mt-5">
             {isProfileLoading ? (
@@ -261,24 +89,8 @@ export default function GymProfileManagement({
                   {data?.findProfileDetails.name}
                 </Typography>
                 <Typography className="flex flex-row items-center !text-[.9rem]">
-                  {data?.findProfileDetails.username
-                    ? `@${data.findProfileDetails.username} | ${data.findProfileDetails.contact[0].email}`
-                    : data?.findProfileDetails.contact[0].email}
+                  {data.findProfileDetails?.contact[0].email}
                 </Typography>
-                {data?.findProfileDetails?.userPlan && (
-                  <>
-                    <Typography className="!mt-4">
-                      {data?.findProfileDetails.userPlan.level === "FREE_PERIOD"
-                        ? "Você está no período gratuito de 15 dias"
-                        : data?.findProfileDetails?.userPlan?.name}
-                    </Typography>
-                    <Typography className="!text-[.9rem]">
-                      {data?.findProfileDetails.userPlan.level === "FREE_PERIOD"
-                        ? ""
-                        : `Assinante desde ${data?.findProfileDetails?.userPlan?.createdAt}`}
-                    </Typography>
-                  </>
-                )}
               </>
             )}
           </Box>
@@ -297,74 +109,11 @@ export default function GymProfileManagement({
               </Box>
               <Box>
                 <Typography className="flex flex-row items-center !text-[.85rem] !mt-4">
-                  Código: PFL-{profileCode}
+                  Código: PFL-{storage.get<string>("profileCode")}
                 </Typography>
               </Box>
             </Box>
             <Divider className="!my-5 w-full bg-[#e2e2e4]" />
-            {data?.findProfileDetails?.userPlan && (
-              <Box className="mt-5 border border-neutral-300 rounded-lg p-5">
-                <Box className="!text-neutral20 !font-roboto !text-base !font-semibold !flex !items-center !gap-4">
-                  Detalhes do Plano
-                </Box>
-                {data?.findProfileDetails?.userPlan &&
-                data?.findProfileDetails.userPlan.level != "FREE_PERIOD" ? (
-                  isProfileLoading ? (
-                    <>
-                      {Array.from({ length: 2 }).map((_, index) => (
-                        <Box key={index} className="flex flex-col">
-                          <Skeleton
-                            variant="text"
-                            animation="wave"
-                            className="w-[30%] !h-[2.1rem] !mt-2"
-                          />
-                        </Box>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      <Box className="grid grid-cols-[10rem,1fr]">
-                        <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">
-                          Assinatura
-                        </Typography>
-                        <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold">
-                          {data.findProfileDetails.userPlan.name || ""}
-                        </Typography>
-                      </Box>
-                      <Box className="grid grid-cols-[10rem,1fr]">
-                        <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">
-                          Assinante desde
-                        </Typography>
-                        <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold">
-                          {data.findProfileDetails.userPlan.createdAt || ""}
-                        </Typography>
-                      </Box>
-                      <Box className="grid grid-cols-[10rem,1fr]">
-                        <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">
-                          Valor
-                        </Typography>
-                        <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold">
-                          R$ {data.findProfileDetails.userPlan.amount || ""}
-                        </Typography>
-                      </Box>
-                      <Box className="grid grid-cols-[10rem,1fr]">
-                        <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">
-                          Próximo vencimento
-                        </Typography>
-                        <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold">
-                          {data.findProfileDetails.userPlan.nextDueDate || ""}
-                        </Typography>
-                      </Box>
-                    </>
-                  )
-                ) : (
-                  <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">
-                    Você está no período gratuito de 15 dias.
-                  </Typography>
-                )}
-              </Box>
-            )}
-
             <Box className="mt-5 border border-neutral-300 rounded-lg p-5">
               <Box className="!text-neutral20 !font-roboto !text-base !font-semibold !flex !items-center !gap-4">
                 Dados Pessoais
@@ -424,14 +173,6 @@ export default function GymProfileManagement({
                       {data?.findProfileDetails.identity
                         ? FormatIdentity(data?.findProfileDetails.identity)
                         : ""}
-                    </Typography>
-                  </Box>
-                  <Box className="grid grid-cols-[10rem,1fr]">
-                    <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4">
-                      Nome de Usuário
-                    </Typography>
-                    <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold">
-                      @{data?.findProfileDetails.username || ""}
                     </Typography>
                   </Box>
                 </>

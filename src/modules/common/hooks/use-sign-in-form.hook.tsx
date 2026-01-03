@@ -1,5 +1,6 @@
 import { initialSignInValues } from "@sr/common/constants";
 import { notify } from "@sr/common/iu/components/notifications";
+import { storage } from "@sr/common/storage/Storage";
 import { CreateAccessTokenResponse, SignInFormValues } from "@sr/common/types";
 import { signInFormValidationSchema } from "@sr/common/validation";
 import { useFormik } from "formik";
@@ -22,14 +23,10 @@ export const useSignInFormHook = () => {
         values
       );
 
-      localStorage.setItem(
-        "@benefycare:token",
-        response.createAccessToken.token
-      );
-      localStorage.setItem(
-        "@benefycare:status",
-        response.createAccessToken.user.status
-      );
+      storage.set({
+        token: response.createAccessToken.token,
+        profileCode: response.createAccessToken.user.profileCode,
+      });
 
       navigate("/portal");
       notify.success("Olá, seja muito bem-vindo!");

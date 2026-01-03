@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { storage } from "@sr/common/storage";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LuScreenShareOff } from "react-icons/lu";
@@ -69,7 +70,10 @@ export const useGymManagement = ({ permissions }: ManagementProps) => {
   const [responseNotifications, setResponseNotifications] =
     useState<FindNotificationsResponse>();
   const companyCode = Number(localStorage.getItem("@iflexfit:companyCode"));
-  const profileCode = Number(localStorage.getItem("@iflexfit:profileCode"));
+  const { profileCode } = storage.getMany<{ profileCode: string }>([
+    "profileCode",
+  ]);
+
   const calledRef = useRef(false);
   const navigate = useNavigate();
 
@@ -158,7 +162,7 @@ export const useGymManagement = ({ permissions }: ManagementProps) => {
     try {
       const response: FindProfileDetailsResponse = await request(
         QueryFindProfileDetails,
-        { profileCode: profileCode }
+        { profileCode }
       );
 
       setResponseProfileDetails(response);
@@ -192,7 +196,7 @@ export const useGymManagement = ({ permissions }: ManagementProps) => {
     try {
       const response: FindNotificationsResponse = await request(
         QueryFindNotifications,
-        { companyCode: companyCode, profileCode: profileCode }
+        { companyCode: companyCode, profileCode }
       );
 
       setResponseNotifications(response);

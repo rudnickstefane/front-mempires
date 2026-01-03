@@ -18,7 +18,7 @@ import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import { PiConfettiLight, PiUserCircleLight } from "react-icons/pi";
 import { RiExchange2Line } from "react-icons/ri";
 import { TbFileInvoice, TbUserCircle } from "react-icons/tb";
-import { PortalMenu } from "./components/menu";
+import { PortalMenu } from "./components/Sidebar/SidebarNav";
 import { useManagement } from "./hooks";
 import { useGymManagement } from "./pages/home/hooks";
 import { RendersGymManagement } from "./pages/home/types/gym-management.types";
@@ -369,7 +369,7 @@ export default function Portal() {
           <Box className="mx-5">
             <Divider className="!mx-5" />
             <Button
-              startIcon={<Logout type="Linear" />}
+              startIcon={<Logout variant="Linear" />}
               className="w-full !my-5 !normal-case font-ubuntu btn-primary !rounded-3xl"
               onClick={() => finishSession()}
               color="primary"
@@ -389,7 +389,7 @@ export default function Portal() {
                   style={{ color: "#08041b" }}
                   onClick={(event) => handleOpen(event, "notification")}
                 >
-                  <Notification type="linear" />
+                  <Notification variant="linear" />
                   {responseNotifications?.findNotifications?.some(
                     (n) => !n.read
                   ) && (

@@ -115,7 +115,7 @@ export default function SignIn() {
           </AnimatedContainer>
         </Box>
       </Box>
-      <Box className="w-full bg-secondary flex flex-col p-20">
+      <Box className="w-full bg-gradient-to-br from-[var(--color-primary)] to-[#2D0796] flex flex-col p-20">
         <Logo size="text-4xl" color="text-white" />
         <Box className="flex h-full -mt-14">
           <Box className="flex flex-col justify-center">

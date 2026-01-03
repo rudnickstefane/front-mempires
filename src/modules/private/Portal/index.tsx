@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { Sidebar } from "./components/sidebar";
-import { Topbar } from "./components/topbar";
+import { Sidebar } from "./components/Sidebar";
+import { Topbar } from "./components/Topbar";
 import { useManagement } from "./hooks";
 import { useGymManagement } from "./pages/home/hooks";
 

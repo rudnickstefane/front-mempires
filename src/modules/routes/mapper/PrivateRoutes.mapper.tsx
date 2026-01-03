@@ -1,4 +1,4 @@
-import Portal from "@sr/modules/private/portal";
+import Portal from "@sr/modules/private/Portal";
 
 export const PrivateRoutes = [
   {

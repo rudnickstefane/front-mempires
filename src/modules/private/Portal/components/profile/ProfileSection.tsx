@@ -10,7 +10,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
+import { ArrowDown2, ArrowRight2 } from "iconsax-react";
 import { PiUserCircleLight } from "react-icons/pi";
 import { TbFileInvoice, TbUserCircle } from "react-icons/tb";
 
@@ -42,33 +42,31 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
   };
 
   return (
-    <Box className="flex flex-row !rounded-3xl bg-[#f3f3f3] items-center w-full">
+    <Box className="flex flex-row items-center w-full">
       <Tooltip title="Meus Dados" placement="bottom" arrow>
         <Button
           onClick={handleProfileClick}
-          className={`!justify-start !normal-case !text-neutral-900 ${
+          className={`!justify-start !normal-case !text-neutral-900 !bg-[#f3f3f3] !rounded-l-3xl !min-h-[3.7rem] !rounded-r-none ${
             isCollapsed ? "!min-w-[3.5rem] !px-2" : "w-full !px-4"
           }`}
         >
           {isProfileLoading ? (
-            <Skeleton variant="circular" width={40} height={40} />
-          ) : profile?.photo ? (
-            <img
-              src={profile.photo}
-              alt="User"
-              className="w-10 h-10 rounded-full"
-            />
+            <Skeleton variant="circular" width={40} height={36} />
           ) : (
             <PiUserCircleLight className="text-[2.5rem]" />
           )}
 
           {!isCollapsed && (
             <Box className="flex flex-col text-left ml-3 overflow-hidden">
-              <Typography className="text-sm font-semibold truncate w-24">
-                {isProfileLoading ? <Skeleton /> : firstName}
+              <Typography className="!text-sm font-semibold truncate w-24">
+                {isProfileLoading ? (
+                  <Skeleton className="w-[4rem]" />
+                ) : (
+                  firstName
+                )}
               </Typography>
-              <Typography className="text-[0.75rem] font-light text-gray-500 truncate w-24">
-                {isProfileLoading ? <Skeleton /> : email}
+              <Typography className="!text-[0.75rem] font-secondary text-gray-500 truncate w-24">
+                {isProfileLoading ? <Skeleton className="w-[5.5rem]" /> : email}
               </Typography>
             </Box>
           )}
@@ -77,7 +75,7 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
 
       <Box>
         <Button
-          className={`flex flex-row !rounded-r-3xl items-center !min-h-[3.5rem] !text-[1.25rem] ${
+          className={`flex flex-row !rounded-r-3xl !bg-[#f3f3f3] !rounded-l-none items-center !min-h-[3.7rem] !text-[1.25rem] ${
             isCollapsed ? "!min-w-[2.1rem]" : "!min-w-[2.7rem]"
           }`}
           style={{ color: "#08041b" }}
@@ -91,9 +89,9 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
           }}
         >
           {anchorEls["menuProfile"] ? (
-            <MdKeyboardArrowDown />
+            <ArrowDown2 size={20} variant="Linear" />
           ) : (
-            <MdKeyboardArrowRight />
+            <ArrowRight2 size={20} variant="Linear" />
           )}
         </Button>
 

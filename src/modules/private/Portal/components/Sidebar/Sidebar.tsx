@@ -7,10 +7,10 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { Logo } from "@sr/modules/common/ui/Logo";
 import { Logout } from "iconsax-react";
 import { RiExchange2Line } from "react-icons/ri";
-import { PortalMenu } from "../menu";
-import { ProfileSection } from "../profile";
+import { SidebarNav } from "./SidebarNav";
 
 export const Sidebar = ({ isCollapsed, methods }: any) => {
   const {
@@ -29,8 +29,13 @@ export const Sidebar = ({ isCollapsed, methods }: any) => {
         isCollapsed ? "w-[7.7rem]" : "w-[16rem]"
       }`}
     >
-      <Box className="flex flex-col items-center p-5">
-        <ProfileSection isCollapsed={isCollapsed} methods={methods} />
+      <Box className="flex flex-col items-center p-5 pt-3">
+        <Logo
+          size="text-2xl"
+          color="text-gray-800"
+          isApp={true}
+          isCollapsed={isCollapsed}
+        />
 
         {/* Company Section */}
         <Tooltip title="Detalhes" placement="right" arrow>
@@ -104,20 +109,33 @@ export const Sidebar = ({ isCollapsed, methods }: any) => {
 
         <Divider className="w-full !my-5" />
 
-        <PortalMenu {...methods} isMenuCollapsed={isCollapsed} />
+        <SidebarNav {...methods} isMenuCollapsed={isCollapsed} />
       </Box>
 
-      <Box className="p-5">
+      <Box className="mx-5">
+        <Divider className="!mx-5" />
         <Button
-          variant="contained"
-          color="primary"
           fullWidth
-          startIcon={<Logout size={20} />}
+          startIcon={<Logout size={22} variant="Linear" />}
           onClick={finishSession}
-          className="!rounded-3xl !normal-case h-11"
+          className="w-full !my-5 !normal-case font-ubuntu !text-[#fa5252] !rounded-3xl !bg-[#fa52521f] hover:!bg-[#fa525238]"
         >
-          {!isCollapsed && "Sair"}
+          Sair
         </Button>
+        <Box className="!text-gray-500 flex flex-col items-center justify-center mb-5">
+          <Typography
+            className={`!text-sm !font-semibold truncate ${
+              isCollapsed ? "max-w-20" : ""
+            }`}
+          >
+            Copyright © {new Date().getFullYear()} BenefyCare.
+          </Typography>
+          <Typography
+            className={`!text-sm truncate ${isCollapsed ? "max-w-20" : ""}`}
+          >
+            Todos os direitos reservados.
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

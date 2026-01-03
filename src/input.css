@@ -40,6 +40,7 @@
   --color-text-primary: #fff;
   --color-primary: #4c0cfd;
   --color-primary-hover: #3a09c2;
+  --color-primary-medial: #4c0cfd2f;
   --color-secondary: #ededed;
   --color-tertiary: #54595f;
   --color-quintary: #4b5c7a;
@@ -207,6 +208,10 @@ body::before {
   position: absolute;
   top: 0;
   z-index: -1;
+}
+
+.MuiLinearProgress-bar {
+  background-color: var(--color-primary) !important;
 }
 
 .text-shadow {

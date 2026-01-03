@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, Tooltip } from "@mui/material";
-import { Logo } from "@sr/modules/common/ui/Logo";
 import { Notification } from "iconsax-react"; // Ajuste conforme seus ícones
 import { BiSupport } from "react-icons/bi";
 import { NotificationMenu } from "../notification";
+import { ProfileSection } from "../profile";
 
 export const Topbar = ({ methods }: any) => {
-  const { handleOpen, responseNotifications, setActiveComponent } = methods;
+  const { handleOpen, responseNotifications, setActiveComponent, isCollapsed } =
+    methods;
 
   return (
     <Box className="flex flex-row w-full min-h-[5rem] bg-white justify-end items-center px-6">
@@ -40,7 +41,7 @@ export const Topbar = ({ methods }: any) => {
         </Tooltip>
 
         <Box className="ml-4 border-l pl-6">
-          <Logo size="text-2xl" color="text-gray-400" />
+          <ProfileSection isCollapsed={isCollapsed} methods={methods} />
         </Box>
       </Box>
     </Box>

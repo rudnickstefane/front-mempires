@@ -1,14 +1,9 @@
 export type FindProfileDetailsResponse = {
   findProfileDetails: {
-    username: string;
-    status: string;
-    role: string;
+    name: string;
     lastAccess: string;
     identity: string;
-    paymentDay: string;
     photo: string;
-    name: string;
-    stateMarital: string;
     gender: string;
     address: string;
     number: string;
@@ -21,24 +16,11 @@ export type FindProfileDetailsResponse = {
     responsible: string;
     profession: string;
     company: string;
-    contact: Array<{
+    contact: {
       contactCode: string;
-      type: string;
       description: string;
       phone: string;
       email: string;
-      emailStatus?: string;
-    }>;
-    userPlan: {
-      name: string;
-      description: string;
-      level: string;
-      status: string;
-      amount: string;
-      startDate: string;
-      endDate: string;
-      nextDueDate: string;
-      createdAt: string;
     };
   };
 };
