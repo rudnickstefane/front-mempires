@@ -1,7 +1,7 @@
+import { useBackend } from "@sr/modules/common/hooks";
 import { VariantType } from "notistack";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useBackendForFrontend } from "../../../../../common/hooks/useBackendForFrontend";
 import { CreateAccessResponse } from "../../../../../common/types";
 import {
   FormatAndValidateCodeAndIdentity,
@@ -24,7 +24,7 @@ export const useSignUpPersonalForm = ({
     options?: { variant: VariantType }
   ) => void;
 }) => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const [isLoading, setIsLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [attemptCount, setAttemptCount] = useState(0);

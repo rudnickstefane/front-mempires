@@ -10,46 +10,46 @@ export type CreateAccessTokenResponse = {
       email: string;
       pendingEmail: boolean;
       profiles: {
-        partner: {
+        partner: Array<{
           code: string;
           fantasyName: string;
           companyCode: string;
           status: string;
           isMaster: boolean;
           permissions: string;
-        };
-        client: {
+        }>;
+        client: Array<{
           code: string;
           fantasyName: string;
           companyCode: string;
           status: string;
           isMaster: boolean;
           permissions: string;
-        };
-        affiliate: {
+        }>;
+        affiliate: Array<{
           code: string;
           fantasyName: string;
           companyCode: string;
           status: string;
           isMaster: boolean;
           permissions: string;
-        };
-        establishment: {
+        }>;
+        establishment: Array<{
           code: string;
           fantasyName: string;
           companyCode: string;
           status: string;
           isMaster: boolean;
           permissions: string;
-        };
-        brands: {
+        }>;
+        brands: Array<{
           code: string;
           fantasyName: string;
           companyCode: string;
           status: string;
           isMaster: boolean;
           permissions: string;
-        };
+        }>;
         beneficiary: {
           card: string;
           type: string;

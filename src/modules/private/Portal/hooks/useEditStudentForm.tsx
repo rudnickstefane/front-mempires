@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useBackend } from "@sr/modules/common/hooks";
 import axios from "axios";
 import { ChangeEvent, useRef, useState } from "react";
 import { MultiValue, SingleValue } from "react-select";
 import { APIS } from "../../../common/configs/apis.config";
-import { useBackendForFrontend } from "../../../common/hooks/useBackendForFrontend";
 import { DrawerProps, StudentData } from "../../../common/types";
 import { OptionSelect } from "../../../common/ui/types";
 import {
@@ -32,7 +32,7 @@ export const useEditStudentForm = ({
   data,
   refresh,
 }: DrawerProps & { data: StudentData }) => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const [isLoading, setIsLoading] = useState(false);
   const [isNoNumber, setIsNoNumber] = useState(false);
   const [activeStep, setActiveStep] = useState(0);

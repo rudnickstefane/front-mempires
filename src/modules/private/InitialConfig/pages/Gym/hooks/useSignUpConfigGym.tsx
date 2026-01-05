@@ -19,15 +19,14 @@ import {
   validateSegmentsForm,
   validateServicesForm,
 } from "../../../../../../utils/validate-gym-configs";
-import { useAuthorization } from "../../../../../common/hooks";
-import { useBackendForFrontend } from "../../../../../common/hooks/useBackendForFrontend";
+import { useAuthorization, useBackend } from "../../../../../common/hooks";
 import { InitialConfigureResponse } from "../../../../../common/types";
 import { GetErrorMessage } from "../../../../../common/utils";
 import { MutationInitialConfigure } from "../graphql";
 import { InitialConfigGymVariables } from "../utils";
 
 export const useSignUpConfigGym = () => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const navigate = useNavigate();
   const name = localStorage.getItem("@iflexfit:name");
   const companyCode = Number(localStorage.getItem("@iflexfit:companyCode"));

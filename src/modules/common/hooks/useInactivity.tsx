@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { MutationCreateToken } from "../graphql";
 import { CreateTokenResponse } from "../types";
 import { GetErrorMessage } from "../utils";
-import { useBackendForFrontend } from "./useBackendForFrontend";
+import { useBackend } from "./useBackend";
 const INACTIVITY_TIMEOUT = import.meta.env.VITE_APP_INACTIVITY_TIMEOUTL;
 
 export const useInactivity = ({
@@ -16,7 +16,7 @@ export const useInactivity = ({
   ) => void;
 }) => {
   const navigate = useNavigate();
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const [isLoading, setIsLoading] = useState(false);
   const [attemptCount, setAttemptCount] = useState(0);
   const [showPassword, setShowPassword] = useState(false);

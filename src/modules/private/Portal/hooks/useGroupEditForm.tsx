@@ -1,6 +1,6 @@
 import { SelectChangeEvent } from "@mui/material";
+import { useBackend } from "@sr/modules/common/hooks";
 import { ChangeEvent, useState } from "react";
-import { useBackendForFrontend } from "../../../common/hooks/useBackendForFrontend";
 import { DrawerProps } from "../../../common/types";
 import {
   FormatName,
@@ -20,7 +20,7 @@ export const useGroupEditForm = ({
   data,
   refresh,
 }: DrawerProps) => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const [isLoading, setIsLoading] = useState(false);
   const [isNoNumber, setIsNoNumber] = useState(false);
   const [activeStep, setActiveStep] = useState(0);

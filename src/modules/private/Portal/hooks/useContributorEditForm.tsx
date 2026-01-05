@@ -1,8 +1,8 @@
+import { useBackend } from "@sr/modules/common/hooks";
 import axios from "axios";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { MultiValue, SingleValue } from "react-select";
 import { APIS } from "../../../common/configs/apis.config";
-import { useBackendForFrontend } from "../../../common/hooks/useBackendForFrontend";
 import { DrawerProps, FindGroupsResponse } from "../../../common/types";
 import { OptionSelect } from "../../../common/ui/types";
 import {
@@ -30,7 +30,7 @@ export const useContributorEditForm = ({
   data,
   refresh,
 }: DrawerProps) => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const [isLoading, setIsLoading] = useState(false);
   const [isNoNumber, setIsNoNumber] = useState(false);
   const [isNoEmail, setIsNoEmail] = useState(false);

@@ -27,8 +27,7 @@ export const AccessRestrict: React.FC<AccessRestrictProps> = ({
       <Box className="w-full absolute flex flex-col justify-center items-center h-full">
         <Box className="flex flex-row w-[147px] justify-between items-center mb-4 !-ml-5">
           <Logo
-            size="text-2xl"
-            color="text-gray-800"
+            className="text-2xl text-gray-800"
             isApp={true}
             animated={false}
           />

@@ -1,16 +1,14 @@
 import { Box, Link } from "@mui/material";
 import * as motion from "motion/react-client";
 interface LogoProps {
-  size?: string;
-  color?: string;
+  className?: string;
   isApp?: boolean;
   isCollapsed?: boolean;
   animated?: boolean;
 }
 
 export function Logo({
-  size = "text-6xl",
-  color = "color-primary",
+  className = "text-6xl color-primary",
   isApp = false,
   isCollapsed = false,
   animated = true,
@@ -22,12 +20,16 @@ export function Logo({
     >
       <Box className="flex flex-row items-center">
         {isApp && (
-          <Box className="flex items-center justify-center font-galada text-white bg-[var(--color-primary)] text-3xl rounded-2xl w-12 !h-12 mr-2 pt-2">
+          <Box
+            className={`flex items-center justify-center font-galada text-white bg-[var(--color-primary)] text-3xl rounded-2xl w-12 !h-12 pt-2
+            ${!isCollapsed && "mr-2"}
+          `}
+          >
             B
           </Box>
         )}
         {!isCollapsed && (
-          <Box className={`font-galada mt-[0.4rem] ${size} ${color}`}>
+          <Box className={`font-galada mt-[0.4rem] ${className}`}>
             BenefyCare
           </Box>
         )}

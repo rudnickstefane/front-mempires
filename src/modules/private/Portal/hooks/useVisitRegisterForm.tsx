@@ -1,7 +1,7 @@
+import { useBackend } from "@sr/modules/common/hooks";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { MultiValue, SingleValue } from "react-select";
 import makeAnimated from "react-select/animated";
-import { useBackendForFrontend } from "../../../common/hooks/useBackendForFrontend";
 import { DrawerProps, FindCategoriesResponse } from "../../../common/types";
 import { OptionSelect } from "../../../common/ui/types";
 import {
@@ -25,7 +25,7 @@ export const useVisitRegisterForm = ({
   enqueueSnackbar,
   refresh,
 }: DrawerProps) => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const animatedComponents = makeAnimated();
   const [charactersRemaining, setCharactersRemaining] = useState(300);
   const [isNoEmail, setIsNoEmail] = useState(false);

@@ -149,7 +149,7 @@ export default function Protocols() {
                           <TableCell>{ticket.createdAt}</TableCell>
                           <TableCell className="max-w-[10rem]">
                             <Box
-                              className="cursor-pointer color-primary hover:!text-red-600 whitespace-nowrap overflow-hidden text-ellipsis"
+                              className="cursor-pointer color-primary hover:!text-red-600 truncate"
                               onClick={() =>
                                 handleMoreDetails(ticket.ticketCode, "PROTOCOL")
                               }
@@ -162,7 +162,7 @@ export default function Protocols() {
                             </Box>
                           </TableCell>
                           <TableCell className="max-w-[10rem]">
-                            <Box className="whitespace-nowrap overflow-hidden text-ellipsis">
+                            <Box className="truncate">
                               <QueueBadge payment={ticket.queue} />
                             </Box>
                           </TableCell>

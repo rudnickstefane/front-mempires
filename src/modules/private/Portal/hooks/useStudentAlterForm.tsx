@@ -1,7 +1,7 @@
 import { SelectChangeEvent } from "@mui/material";
+import { useBackend } from "@sr/modules/common/hooks";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MultiValue, SingleValue } from "react-select";
-import { useBackendForFrontend } from "../../../common/hooks/useBackendForFrontend";
 import {
   DrawerProps,
   FindReviewQuestionsResponse,
@@ -50,7 +50,7 @@ export const useStudentAlterForm = ({
   data,
   refresh,
 }: DrawerProps & { data: StudentData }) => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const [isLoading, setIsLoading] = useState(false);
   const [attemptCount, setAttemptCount] = useState(0);
   const [responseTransactions, setResponseTransactions] =

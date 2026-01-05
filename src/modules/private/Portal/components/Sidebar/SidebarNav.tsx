@@ -5,10 +5,10 @@ import { MenuProps } from "../../interfaces";
 import { NavItem } from "./NavItem";
 
 export const SidebarNav = ({
-  isMenuCollapsed,
+  responseMenus,
+  sidebarCollapsed,
   toggleMenu,
   isMenuLoading,
-  responseMenus,
   menuExcludedPaths,
   expandedMenus,
   toggleSubMenu,
@@ -24,24 +24,32 @@ export const SidebarNav = ({
     ) || [];
 
   return (
-    <Box className="w-full flex flex-col">
+    <Box
+      className={`w-full flex flex-col pl-5 ${
+        !sidebarCollapsed && "w-64"
+      } pr-1`}
+    >
       {/* Botão de Toggle do Menu */}
       <Button
         onClick={toggleMenu}
         className={`font-poppins !font-light transition-all !text-[1rem] !rounded-xl !px-5  !mb-1 h-[50px] hover:bg-[#f3f3f3] !text-[#08041b] !normal-case ${
-          isMenuCollapsed
+          sidebarCollapsed
             ? "w-[5.2rem] justify-center"
             : "w-[13.5rem] justify-between"
         }`}
-        endIcon={!isMenuCollapsed && <CgMenuRightAlt size={20} />}
+        endIcon={!sidebarCollapsed && <CgMenuRightAlt size={20} />}
       >
-        {isMenuCollapsed ? <CgMenuRightAlt size={22} /> : "Navegue abaixo"}
+        {sidebarCollapsed ? <CgMenuRightAlt size={22} /> : "Navegue abaixo"}
       </Button>
 
       {/* Lista de Navegação */}
-      <Box className="overflow-y-auto max-h-[calc(100vh-25rem)] pr-1">
+      <Box
+        className={`overflow-y-auto overflow-x-hidden max-h-[calc(100vh-24.5rem)]
+          ${sidebarCollapsed ? "w-[6.2em]" : ""}
+          `}
+      >
         {isMenuLoading ? (
-          <MenuSkeletons isCollapsed={isMenuCollapsed} />
+          <MenuSkeletons isCollapsed={sidebarCollapsed} />
         ) : (
           filteredMenus.map((menu: any) => {
             const hasSubMenu = menu.SubMenus?.length > 0;
@@ -57,7 +65,7 @@ export const SidebarNav = ({
                 <NavItem
                   name={menu.name}
                   icon={menu.icon}
-                  isCollapsed={isMenuCollapsed}
+                  isCollapsed={sidebarCollapsed}
                   isSelected={isSelected}
                   hasSubMenu={hasSubMenu}
                   isExpanded={isExpanded}
@@ -74,15 +82,25 @@ export const SidebarNav = ({
                 />
 
                 {hasSubMenu && (
-                  <Collapse in={isExpanded && !isMenuCollapsed} timeout="auto">
-                    <Box className="flex flex-col ml-4 mt-1 border-l border-gray-100 pl-2">
+                  <Collapse in={isExpanded} timeout="auto">
+                    <Box
+                      className={`flex flex-col transition-all duration-300 ease-in-out mt-1 ${
+                        sidebarCollapsed
+                          ? "w-[5.2rem] border-l-transparent border-b border-b-gray-300 pb-2 mb-1"
+                          : "ml-4 pl-2 border-l border-l-gray-300 border-b-transparent border-b-0 pb-0 mb-1"
+                      }`}
+                      style={{
+                        transitionProperty:
+                          "margin, padding, border-color, max-width",
+                      }}
+                    >
                       {menu.SubMenus.map((sub: any) => (
                         <NavItem
                           key={sub.subMenuCode}
                           variant="sub"
                           name={sub.name}
                           icon={sub.icon}
-                          isCollapsed={isMenuCollapsed}
+                          isCollapsed={sidebarCollapsed}
                           isSelected={selectedResource?.name === sub.name}
                           onClick={() => {
                             setActiveComponent(sub.path);
@@ -104,10 +122,13 @@ export const SidebarNav = ({
 
 const MenuSkeletons = ({ isCollapsed }: { isCollapsed: boolean }) => (
   <Box className="flex flex-col gap-6 mt-3">
-    {[1, 2, 3].map((i) => (
-      <Box key={i} className="flex items-center gap-3 px-4">
-        <Skeleton variant="circular" width={32} height={24} />
-        {!isCollapsed && <Skeleton variant="text" width="100%" height={30} />}
+    {[1, 2, 3, 4].map((i) => (
+      <Box
+        key={i}
+        className={`flex items-center gap-3 ${isCollapsed ? "px-7" : "px-4"}`}
+      >
+        <Skeleton variant="circular" width={32} height={32} />
+        {!isCollapsed && <Skeleton variant="text" width="70%" height={30} />}
       </Box>
     ))}
   </Box>

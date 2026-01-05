@@ -7,7 +7,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import SignIn from "@sr/modules/public/sign-in";
+import SignIn from "@sr/modules/public/SignIn";
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";

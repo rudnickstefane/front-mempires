@@ -1,7 +1,7 @@
 import { SelectChangeEvent } from "@mui/material";
+import { useBackend } from "@sr/modules/common/hooks";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import makeAnimated from "react-select/animated";
-import { useBackendForFrontend } from "../../../common/hooks/useBackendForFrontend";
 import { DrawerProps } from "../../../common/types";
 import {
   FormatText,
@@ -19,7 +19,7 @@ export const useCoreTicketCreateForm = ({
   data,
   refresh,
 }: DrawerProps) => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const animatedComponents = makeAnimated();
   const [charactersRemaining, setCharactersRemaining] = useState(300);
   const [isLoading, setIsLoading] = useState(false);

@@ -21,7 +21,6 @@
 // const [openEditModal, setOpenEditModal] = useState(false);
 // const [selectedReservation, setSelectedReservation] = useState(null);
 
-
 //     const getDaysInMonth = (year: number, month: number) => {
 //         return new Date(year, month + 1, 0).getDate();
 //     };
@@ -45,7 +44,7 @@
 //     const handleReservationClick = (reservation: SetStateAction<null>) => {
 //         setSelectedReservation(reservation);  // Define a reserva selecionada
 //         setOpenEditModal(true); // Abre o modal de edição para a reserva
-//     };    
+//     };
 
 //     const formattedDate = (day: number) => `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
@@ -59,12 +58,12 @@
 
 //     const renderReservationStyle = (date: number) => {
 //         const dayReservations = getReservationsForDate(date);
-    
+
 //         if (dayReservations.length === 0) return 'transparent'; // Disponível
-    
+
 //         // Verifica se há reservas (tipo "reserva")
 //         const reservaStyle = dayReservations.some((reserva) => reserva.type === 'reserva') ? '#ff0336' : '';
-    
+
 //         // Verifica se há agendamentos (tipo "agendamento")
 //         const agendamentoStyle = dayReservations.some((reserva) => reserva.type === 'agendamento') ? '#ff8c00' : '';
 
@@ -176,7 +175,7 @@
 //                                 >
 //                                     <Box
 //                                         key={reserva.id}
-//                                         className={`rounded-lg ${reserva.type === 'reserva' ? 'bg-[#ff0336]' : 'bg-[#ff8c00]'} text-white px-2 py-1 m-1 whitespace-nowrap overflow-hidden text-ellipsis w-full text-[.7rem] cursor-pointer`}
+//                                         className={`rounded-lg ${reserva.type === 'reserva' ? 'bg-[#ff0336]' : 'bg-[#ff8c00]'} text-white px-2 py-1 m-1 truncate w-full text-[.7rem] cursor-pointer`}
 //                                     >
 //                                         {reserva.client} - {reserva.description}
 //                                     </Box>
@@ -193,7 +192,7 @@
 //                                         arrow
 //                                     >
 //                                         <Box
-//                                             className={`rounded-lg ${dayReservations[0].type === 'reserva' ? 'bg-[#ff0336]' : 'bg-[#ff8c00]'} text-white px-2 py-1 m-1 whitespace-nowrap overflow-hidden text-ellipsis w-full text-[.7rem] cursor-pointer`}
+//                                             className={`rounded-lg ${dayReservations[0].type === 'reserva' ? 'bg-[#ff0336]' : 'bg-[#ff8c00]'} text-white px-2 py-1 m-1 truncate w-full text-[.7rem] cursor-pointer`}
 //                                         >
 //                                             {dayReservations[0].client} - {dayReservations[0].description}
 //                                         </Box>
@@ -219,7 +218,7 @@
 // </Tooltip>
 //                                 </>
 //                             )}
-                        
+
 //                             </Button>
 
 //                     </Box>
@@ -260,7 +259,6 @@
 //                     </Box>
 //                 </Modal>
 //             )}
-
 
 //         </Box>
 //     );

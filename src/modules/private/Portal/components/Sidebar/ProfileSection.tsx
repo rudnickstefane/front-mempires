@@ -42,12 +42,12 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
   };
 
   return (
-    <Box className="flex flex-row items-center w-full">
+    <Box className="flex flex-row items-center w-full mt-9 px-5">
       <Tooltip title="Meus Dados" placement="bottom" arrow>
         <Button
           onClick={handleProfileClick}
           className={`!justify-start !normal-case !text-neutral-900 !bg-[#f3f3f3] !rounded-l-3xl !min-h-[3.7rem] !rounded-r-none ${
-            isCollapsed ? "!min-w-[3.5rem] !px-2" : "w-full !px-4"
+            isCollapsed ? "!min-w-[3rem] !px-1" : "w-full !px-4"
           }`}
         >
           {isProfileLoading ? (
@@ -84,8 +84,6 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
           }}
           onClick={(event) => {
             handleOpen(event, "menuProfile");
-            setSelectedResource(null);
-            setExpandedMenus([]);
           }}
         >
           {anchorEls["menuProfile"] ? (

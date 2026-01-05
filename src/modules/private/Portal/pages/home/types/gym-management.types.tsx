@@ -1,5 +1,6 @@
 export type RendersGymManagement = {
   Home: "Home";
+  Partners: "Home";
   Admin: "Admin";
   Plans: "Plans";
   Students: "Students";

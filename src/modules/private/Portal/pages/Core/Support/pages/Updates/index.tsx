@@ -124,7 +124,7 @@ export default function Updates() {
                           </TableCell>
                           <TableCell className="max-w-[10rem]">
                             <Box
-                              className="cursor-pointer color-primary hover:!text-red-600 whitespace-nowrap overflow-hidden text-ellipsis"
+                              className="cursor-pointer color-primary hover:!text-red-600 truncate"
                               onClick={() =>
                                 handleMoreDetails(update.updateCode, "UPDATES")
                               }

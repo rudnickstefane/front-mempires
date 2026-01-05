@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 
-import { useBackendForFrontend } from '../../../../../common/hooks/useBackendForFrontend';
-import { MutationNewStudent } from '../graphql';
+import { useBackend } from "@sr/modules/common/hooks";
+import { MutationNewStudent } from "../graphql";
 
 export function useCreateNewLogin() {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
 
   return useMutation({
     mutationFn: async (variables: object) => {
-      const { CreateStudent } = await request<{ CreateStudent: any }>(MutationNewStudent, variables);
+      const { CreateStudent } = await request<{ CreateStudent: any }>(
+        MutationNewStudent,
+        variables
+      );
 
       return CreateStudent;
     },

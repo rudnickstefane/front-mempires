@@ -129,7 +129,7 @@ export default function Marketplace({ enqueueSnackbar }: GymManagementProps) {
                   <Box className="flex flex-col text-left p-5">
                     <ImageCarousel images={product.images} />
                     <Divider className="w-full !my-5" />
-                    <Typography className="uppercase !font-semibold text-black whitespace-nowrap overflow-hidden text-ellipsis w-[220px]">
+                    <Typography className="uppercase !font-semibold text-black truncate w-[220px]">
                       {product.fantasyName}
                     </Typography>
                     <Typography className="!text-[.9rem] overflow-hidden text-ellipsis w-[220px] line-clamp-2">

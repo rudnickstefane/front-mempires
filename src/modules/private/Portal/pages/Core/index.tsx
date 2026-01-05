@@ -43,7 +43,7 @@ export default function CoreManagement({ permissions }: ManagementProps) {
     responseMenus,
     responseProfileDetails,
     responseCompanyDetails,
-    isMenuCollapsed,
+    sidebarCollapsed,
     expandedMenus,
     setExpandedMenus,
     selectedResource,
@@ -78,7 +78,7 @@ export default function CoreManagement({ permissions }: ManagementProps) {
         <Box className="flex flex-col justify-between">
           <Box
             className={`flex flex-col items-center transition-all duration-300 ease-in-out ${
-              isMenuCollapsed ? "max-w-[7.7rem]" : "max-w-[16rem]"
+              sidebarCollapsed ? "max-w-[7.7rem]" : "max-w-[16rem]"
             }`}
           >
             <Box className="w-full p-5 pb-0 pt-0">
@@ -87,7 +87,7 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                 <Tooltip title={"Meus Dados"} placement="bottom" arrow>
                   <Button
                     className={`flex flex-row !rounded-l-3xl !justify-start w-full items-center !pr-0 ${
-                      isMenuCollapsed ? "!min-w-[3rem]" : "w-full"
+                      sidebarCollapsed ? "!min-w-[3rem]" : "w-full"
                     }`}
                     style={{ color: "#08041b" }}
                     sx={{
@@ -103,24 +103,24 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                       <>
                         <PiUserCircleLight
                           className={`text-[2.5rem] ${
-                            isMenuCollapsed ? "mr-0" : "mr-3"
+                            sidebarCollapsed ? "mr-0" : "mr-3"
                           }`}
                         />
                         <Box
                           className={`flex flex-col text-left overflow-hidden transition-all duration-300 ${
-                            isMenuCollapsed
+                            sidebarCollapsed
                               ? "opacity-0 max-w-0"
                               : "opacity-100 max-w-[7rem] min-w-[7rem]"
                           }`}
                         >
-                          <Typography className="whitespace-nowrap overflow-hidden text-ellipsis">
+                          <Typography className="truncate">
                             <Skeleton
                               variant="text"
                               animation="wave"
                               className="w-full"
                             />
                           </Typography>
-                          <Typography className="!font-light !text-[.9rem] whitespace-nowrap overflow-hidden text-ellipsis">
+                          <Typography className="!font-light !text-[.9rem] truncate">
                             <Skeleton
                               variant="text"
                               animation="wave"
@@ -142,26 +142,26 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                         ) : (
                           <PiUserCircleLight
                             className={`text-[2.5rem] ${
-                              isMenuCollapsed ? "mr-0" : "mr-3"
+                              sidebarCollapsed ? "mr-0" : "mr-3"
                             }`}
                           />
                         )}
 
                         <Box
                           className={`flex flex-col text-left overflow-hidden transition-all duration-300 ${
-                            isMenuCollapsed
+                            sidebarCollapsed
                               ? "opacity-0 max-w-0"
                               : "opacity-100 max-w-[7rem] min-w-[7rem]"
                           }`}
                         >
-                          <Typography className="whitespace-nowrap overflow-hidden text-ellipsis">
+                          <Typography className="truncate">
                             {
                               responseProfileDetails?.findProfileDetails.name.split(
                                 " "
                               )[0]
                             }
                           </Typography>
-                          <Typography className="!font-light !text-[.9rem] whitespace-nowrap overflow-hidden text-ellipsis">
+                          <Typography className="!font-light !text-[.9rem] truncate">
                             {
                               responseProfileDetails?.findProfileDetails
                                 .contact[0].email
@@ -176,7 +176,7 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                   <Tooltip title={"Menu"} placement="right" arrow>
                     <Button
                       className={`flex flex-row !rounded-r-3xl items-center !min-h-[3.5rem] !text-[1.25rem] ${
-                        isMenuCollapsed ? "!min-w-[2.1rem]" : "!min-w-[2.7rem]"
+                        sidebarCollapsed ? "!min-w-[2.1rem]" : "!min-w-[2.7rem]"
                       }`}
                       style={{ color: "#08041b" }}
                       sx={{
@@ -190,11 +190,11 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                     >
                       {anchorEls["menuProfile"] ? (
                         <MdKeyboardArrowDown
-                          className={`${isMenuCollapsed ? "!-ml-1" : ""}`}
+                          className={`${sidebarCollapsed ? "!-ml-1" : ""}`}
                         />
                       ) : (
                         <MdKeyboardArrowRight
-                          className={`${isMenuCollapsed ? "!-ml-1" : ""}`}
+                          className={`${sidebarCollapsed ? "!-ml-1" : ""}`}
                         />
                       )}
                     </Button>
@@ -283,7 +283,7 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                   className="flex flex-row !rounded-3xl !bg-transparent !justify-start !mt-5 w-full items-center"
                   endIcon={
                     <RiExchange2Line
-                      className={`${isMenuCollapsed ? "!ml-[1rem]" : ""} ${
+                      className={`${sidebarCollapsed ? "!ml-[1rem]" : ""} ${
                         isCompanyDisabled ? "hidden" : ""
                       }`}
                     />
@@ -306,19 +306,19 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                     <>
                       <Box
                         className={`flex flex-col text-left overflow-hidden transition-all duration-300 ${
-                          isMenuCollapsed
+                          sidebarCollapsed
                             ? "opacity-0 max-w-0"
                             : "opacity-100 max-w-[10rem] min-w-[10rem] !px-5"
                         }`}
                       >
-                        <Typography className="whitespace-nowrap overflow-hidden text-ellipsis">
+                        <Typography className="truncate">
                           <Skeleton
                             variant="text"
                             animation="wave"
                             className="w-full"
                           />
                         </Typography>
-                        <Typography className="!font-light !text-[.9rem] whitespace-nowrap overflow-hidden text-ellipsis">
+                        <Typography className="!font-light !text-[.9rem] truncate">
                           <Skeleton
                             variant="text"
                             animation="wave"
@@ -331,18 +331,18 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                     <>
                       <Box
                         className={`flex flex-col text-left overflow-hidden transition-all duration-300 ${
-                          isMenuCollapsed
+                          sidebarCollapsed
                             ? "opacity-0 max-w-0"
                             : "opacity-100 max-w-[10rem] min-w-[10rem] !px-5"
                         }`}
                       >
-                        <Typography className="whitespace-nowrap overflow-hidden text-ellipsis">
+                        <Typography className="truncate">
                           {
                             responseCompanyDetails?.findCompanyDetails
                               .fantasyName
                           }
                         </Typography>
-                        <Typography className="!font-light !text-[.9rem] whitespace-nowrap overflow-hidden text-ellipsis">
+                        <Typography className="!font-light !text-[.9rem] truncate">
                           Core Platform
                         </Typography>
                       </Box>
@@ -353,14 +353,14 @@ export default function CoreManagement({ permissions }: ManagementProps) {
               <Divider className="!my-5" />
             </Box>
             <Button
-              endIcon={!isMenuCollapsed ? <CgMenuRightAlt /> : null}
+              endIcon={!sidebarCollapsed ? <CgMenuRightAlt /> : null}
               className={`font-poppins !text-[1rem] !rounded-xl !px-5 !mx-5 ${
-                isMenuCollapsed ? "w-[5.2rem]" : "w-[13.5rem]"
+                sidebarCollapsed ? "w-[5.2rem]" : "w-[13.5rem]"
               }`}
               style={{
                 textTransform: "none",
                 color: "#08041b",
-                justifyContent: isMenuCollapsed ? "center" : "space-between",
+                justifyContent: sidebarCollapsed ? "center" : "space-between",
                 height: "50px",
               }}
               sx={{
@@ -373,7 +373,7 @@ export default function CoreManagement({ permissions }: ManagementProps) {
               }}
               onClick={toggleMenu}
             >
-              {isMenuCollapsed ? (
+              {sidebarCollapsed ? (
                 <CgMenuRightAlt className="w-[20px] h-[20px]" />
               ) : (
                 "Navegue abaixo"
@@ -389,12 +389,12 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                           variant="circular"
                           animation="wave"
                           className={
-                            isMenuCollapsed
+                            sidebarCollapsed
                               ? "w-[2rem] !h-[2rem] ml-[.9rem]"
                               : "w-[2.5rem] !h-[2rem]"
                           }
                         />
-                        {isMenuCollapsed ? (
+                        {sidebarCollapsed ? (
                           ""
                         ) : (
                           <Skeleton
@@ -418,7 +418,7 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                       return (
                         <Box key={menu.menuCode} className="flex flex-col">
                           <Tooltip
-                            title={isMenuCollapsed ? menu.name : ""}
+                            title={sidebarCollapsed ? menu.name : ""}
                             placement="right"
                             arrow
                             PopperProps={{
@@ -436,8 +436,8 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                               <MenuBox
                                 key={menu.menuCode}
                                 icon={menu.icon as unknown as IconType}
-                                name={isMenuCollapsed ? "" : menu.name}
-                                isMenuCollapsed={isMenuCollapsed}
+                                name={sidebarCollapsed ? "" : menu.name}
+                                sidebarCollapsed={sidebarCollapsed}
                                 description={menu.description}
                                 isSelected={
                                   selectedResource?.name === menu.name ||
@@ -476,7 +476,7 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                             {menu?.SubMenus?.map((sub) => (
                               <Tooltip
                                 key={sub.subMenuCode}
-                                title={isMenuCollapsed ? sub.name : ""}
+                                title={sidebarCollapsed ? sub.name : ""}
                                 placement="right"
                                 arrow
                                 PopperProps={{
@@ -496,7 +496,7 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                                     icon={sub.icon as unknown as IconType}
                                     name={sub.name}
                                     description={menu.description}
-                                    isMenuCollapsed={isMenuCollapsed}
+                                    sidebarCollapsed={sidebarCollapsed}
                                     isSelected={
                                       selectedResource?.name === sub.name
                                     }

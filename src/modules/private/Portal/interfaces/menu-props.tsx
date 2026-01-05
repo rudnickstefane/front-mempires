@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface MenuProps {
-  isMenuCollapsed: boolean;
+  sidebarCollapsed: boolean;
   toggleMenu: () => void;
   isMenuLoading: boolean;
   responseMenus: any;

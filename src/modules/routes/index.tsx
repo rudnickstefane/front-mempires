@@ -6,7 +6,7 @@ import InactivitySignIn from "../common/pages/InactivitySignIn";
 import { GymConfig } from "../private/InitialConfig";
 import Portal from "../private/Portal";
 import { useManagement } from "../private/Portal/hooks";
-import SignIn from "../public/sign-in";
+import SignIn from "../public/SignIn";
 import SignUp from "../public/signup";
 import { PrivateRoutes } from "./mapper/PrivateRoutes.mapper";
 import { PublicRoutes } from "./mapper/PublicRoutes.mapper";

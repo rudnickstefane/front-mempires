@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { LuScreenShareOff } from "react-icons/lu";
 import { TbSmartHome } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { useBackendForFrontend } from "../../../../../common/hooks/useBackendForFrontend";
 import {
   FindCompanyDetailsResponse,
   FindMenusResponse,
@@ -45,9 +44,9 @@ import { ResourceBoxProps } from "../types/gym-resource-box.types";
 
 export const useCoreManagement = ({ permissions }: ManagementProps) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const [isMenuLoading, setIsMenuLoading] = useState(false);
-  const [isMenuCollapsed, setIsMenuCollapsed] = useState(false);
+  const [sidebarCollapsed, setsidebarCollapsed] = useState(false);
   const [isProfileLoading, setIsProfileLoading] = useState(false);
   const [isCompanyLoading, setIsCompanyLoading] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState<number[]>([]);
@@ -258,7 +257,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
   };
 
   const toggleMenu = () => {
-    setIsMenuCollapsed((prev) => !prev);
+    setsidebarCollapsed((prev) => !prev);
   };
 
   const openComponent = (type: GymManagementType) => {
@@ -456,7 +455,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
     responseMenus,
     responseProfileDetails,
     responseCompanyDetails,
-    isMenuCollapsed,
+    sidebarCollapsed,
     expandedMenus,
     setExpandedMenus,
     activeComponent,

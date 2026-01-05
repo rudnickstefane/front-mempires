@@ -7,7 +7,7 @@ export type ResourceBoxProps = {
   name: string;
   subName?: string;
   description?: string;
-  isMenuCollapsed?: boolean;
+  sidebarCollapsed?: boolean;
   hasSubMenu?: boolean;
   isExpanded?: boolean;
   hasPermission?: boolean;

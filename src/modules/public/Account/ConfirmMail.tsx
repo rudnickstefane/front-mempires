@@ -1,68 +1,80 @@
-import { useSnackbar } from 'notistack';
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { MutationCheckCredentials, MutationConfirmMail } from '../../common/graphql';
-import { useBackendForFrontend } from '../../common/hooks/useBackendForFrontend';
-import { GetErrorMessage } from '../../common/utils';
+import { useBackend } from "@sr/modules/common/hooks";
+import { useSnackbar } from "notistack";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  MutationCheckCredentials,
+  MutationConfirmMail,
+} from "../../common/graphql";
+import { GetErrorMessage } from "../../common/utils";
 
 function ConfirmMail() {
-    
-    const navigate = useNavigate();
-    const calledRef = useRef(false);
-    const { uuid, token } = useParams();
-    const { enqueueSnackbar } = useSnackbar();
-    const { request } = useBackendForFrontend();
-    const [attemptCount, setAttemptCount] = useState(0);
+  const navigate = useNavigate();
+  const calledRef = useRef(false);
+  const { uuid, token } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
+  const { request } = useBackend();
+  const [attemptCount, setAttemptCount] = useState(0);
 
-    useEffect(() => {
-        if (!calledRef.current) {
-            calledRef.current = true;
+  useEffect(() => {
+    if (!calledRef.current) {
+      calledRef.current = true;
 
-            const confirmMail = async () => {
-                const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-                const tokenRegex = /^[a-f0-9]{64}$/i;
+      const confirmMail = async () => {
+        const uuidRegex =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        const tokenRegex = /^[a-f0-9]{64}$/i;
 
-                if (!uuid || !uuidRegex.test(uuid) || !token || !tokenRegex.test(token)) {
-                    navigate('/entrar');
-                }
-
-                try {
-                    const variablesCheckCredentials = {
-                        validation: 'MAIL_CONFIRM',
-                        uuid: uuid,
-                        token: token,
-                    };
-
-                    await request(MutationCheckCredentials, variablesCheckCredentials);
-                    
-                    const variables = {
-                        uuid: uuid,
-                        token: token,
-                    };
-
-                    await request(MutationConfirmMail, variables);
-                    navigate('/entrar');
-                    enqueueSnackbar('E-mail confirmado com sucesso!', { variant: 'success' });
-                } catch (error: unknown) {
-                    navigate('/entrar');
-                    setAttemptCount(prevCount => prevCount + 1);
-                    if (attemptCount >= 5) {
-                        return enqueueSnackbar('Erro ao validar e-mail. Entre em contato com nosso suporte.', { variant: 'error' });
-                    }
-
-                    const genericError = 'Ops! Algo deu errado ao validar seu e-mail. Tente novamente!'
-                    const errorMessage = GetErrorMessage(error, genericError);
-                    enqueueSnackbar(errorMessage, { variant: 'error' });
-                }
-            }
-
-            confirmMail();
+        if (
+          !uuid ||
+          !uuidRegex.test(uuid) ||
+          !token ||
+          !tokenRegex.test(token)
+        ) {
+          navigate("/entrar");
         }
-    }, [uuid, token, navigate, request, attemptCount, enqueueSnackbar]);
 
-    return (
-        <></>
-    );
+        try {
+          const variablesCheckCredentials = {
+            validation: "MAIL_CONFIRM",
+            uuid: uuid,
+            token: token,
+          };
+
+          await request(MutationCheckCredentials, variablesCheckCredentials);
+
+          const variables = {
+            uuid: uuid,
+            token: token,
+          };
+
+          await request(MutationConfirmMail, variables);
+          navigate("/entrar");
+          enqueueSnackbar("E-mail confirmado com sucesso!", {
+            variant: "success",
+          });
+        } catch (error: unknown) {
+          navigate("/entrar");
+          setAttemptCount((prevCount) => prevCount + 1);
+          if (attemptCount >= 5) {
+            return enqueueSnackbar(
+              "Erro ao validar e-mail. Entre em contato com nosso suporte.",
+              { variant: "error" }
+            );
+          }
+
+          const genericError =
+            "Ops! Algo deu errado ao validar seu e-mail. Tente novamente!";
+          const errorMessage = GetErrorMessage(error, genericError);
+          enqueueSnackbar(errorMessage, { variant: "error" });
+        }
+      };
+
+      confirmMail();
+    }
+  }, [uuid, token, navigate, request, attemptCount, enqueueSnackbar]);
+
+  return <></>;
 }
 
 export default ConfirmMail;

@@ -8,11 +8,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MutationCreateToken } from "../graphql";
 import { GetErrorMessage } from "../utils";
-import { useBackendForFrontend } from "./useBackendForFrontend";
+import { useBackend } from "./useBackend";
 
 export const useSignInFormHook = () => {
+  const { request } = useBackend();
   const navigate = useNavigate();
-  const { request } = useBackendForFrontend();
   const [attemptCount, setAttemptCount] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,6 +26,8 @@ export const useSignInFormHook = () => {
       storage.set({
         token: response.createAccessToken.token,
         profileCode: response.createAccessToken.user.profileCode,
+        companyCode:
+          response.createAccessToken.user.profiles.partner[0].companyCode,
       });
 
       navigate("/portal");

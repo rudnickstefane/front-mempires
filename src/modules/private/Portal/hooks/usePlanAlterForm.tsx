@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useBackend } from "@sr/modules/common/hooks";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { MultiValue, SingleValue } from "react-select";
-import { useBackendForFrontend } from "../../../common/hooks/useBackendForFrontend";
 import {
   DrawerProps,
   FindCategoriesResponse,
@@ -29,7 +29,7 @@ export const usePlanAlterForm = ({
   data,
   refresh,
 }: DrawerProps & { data: PlanAlterData }) => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const [isLoading, setIsLoading] = useState(false);
   const [charactersRemaining, setCharactersRemaining] = useState<
     Record<string, number>

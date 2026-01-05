@@ -123,7 +123,7 @@ export default function Invoices({ enqueueSnackbar }: GymManagementProps) {
                                 placement="left"
                                 arrow
                               >
-                                <Box className="whitespace-nowrap overflow-hidden text-ellipsis">
+                                <Box className="truncate">
                                   {transaction.description}
                                 </Box>
                               </Tooltip>

@@ -85,7 +85,7 @@ export default function GymProfileManagement({
               </>
             ) : (
               <>
-                <Typography className="md:!text-[2rem] !text-[1.5rem] whitespace-nowrap overflow-hidden text-ellipsis max-w-[55vw]">
+                <Typography className="md:!text-[2rem] !text-[1.5rem] truncate max-w-[55vw]">
                   {data?.findProfileDetails.name}
                 </Typography>
                 <Typography className="flex flex-row items-center !text-[.9rem]">

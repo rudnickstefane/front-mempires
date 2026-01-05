@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { initMercadoPago, Payment, StatusScreen } from '@mercadopago/sdk-react';
-import { Box } from '@mui/material';
-import { VariantType } from 'notistack';
-import { useState } from 'react';
-import { MutationCreatePayment } from '../../../../common/graphql';
-import { useBackendForFrontend } from '../../../../common/hooks/useBackendForFrontend';
-import { GetErrorMessage } from '../../../../common/utils';
+import { initMercadoPago, Payment, StatusScreen } from "@mercadopago/sdk-react";
+import { Box } from "@mui/material";
+import { useBackend } from "@sr/modules/common/hooks";
+import { VariantType } from "notistack";
+import { useState } from "react";
+import { MutationCreatePayment } from "../../../../common/graphql";
+import { GetErrorMessage } from "../../../../common/utils";
 
-initMercadoPago('TEST-3b653143-0413-4be4-9367-dae26eeb1a36');
+initMercadoPago("TEST-3b653143-0413-4be4-9367-dae26eeb1a36");
 
 interface PaymentResult {
   createPayment?: {
@@ -21,15 +21,27 @@ interface PaymentResult {
   status?: string;
 }
 
-export const PaymentPage = ({data, preference, enqueueSnackbar, onStatusChange}: {
+export const PaymentPage = ({
+  data,
+  preference,
+  enqueueSnackbar,
+  onStatusChange,
+}: {
   data?: any;
   preference?: any;
-  enqueueSnackbar: (message: string, options?: { variant: VariantType }) => void;
+  enqueueSnackbar: (
+    message: string,
+    options?: { variant: VariantType }
+  ) => void;
   onStatusChange?: (status: string) => void;
 }) => {
-  const { request } = useBackendForFrontend();
-  const [amount] = useState(Number(String(data.amount).replace(/\./g, '').replace(',', '.')));
-  const [paymentResult, setPaymentResult] = useState<PaymentResult | null>(null);
+  const { request } = useBackend();
+  const [amount] = useState(
+    Number(String(data.amount).replace(/\./g, "").replace(",", "."))
+  );
+  const [paymentResult, setPaymentResult] = useState<PaymentResult | null>(
+    null
+  );
   const [showStatusScreen, setShowStatusScreen] = useState(false);
 
   const handleStatusUpdate = (status: string) => {
@@ -85,41 +97,49 @@ export const PaymentPage = ({data, preference, enqueueSnackbar, onStatusChange}:
             paymentMethods: {
               // ticket: 'all',
               // bankTransfer: 'all',
-              creditCard: 'all',
+              creditCard: "all",
               // prepaidCard: 'all',
-              debitCard: 'all',
+              debitCard: "all",
               // mercadoPago: 'all',
               maxInstallments,
             },
             visual: {
               hideFormTitle: true,
               style: {
-                theme: 'default',
+                theme: "default",
                 customVariables: {
-                  baseColor: '#ff0336',
-                  baseColorSecondVariant: '#ff0000',
-                }
+                  baseColor: "#ff0336",
+                  baseColorSecondVariant: "#ff0000",
+                },
               },
             },
           }}
           onSubmit={async (formData) => {
             try {
-              const response: PaymentResult = await request(MutationCreatePayment, {
-                data: {
-                  ...formData,
-                  description: data.description,
-                  external_reference: `TRA-${data.transactionCode}`,
-                  transaction_amount: amount,
-                },
-              });
+              const response: PaymentResult = await request(
+                MutationCreatePayment,
+                {
+                  data: {
+                    ...formData,
+                    description: data.description,
+                    external_reference: `TRA-${data.transactionCode}`,
+                    transaction_amount: amount,
+                  },
+                }
+              );
               setPaymentResult(response);
-              handleStatusUpdate(response.createPayment?.status ?? '');
+              handleStatusUpdate(response.createPayment?.status ?? "");
               setShowStatusScreen(true);
-              enqueueSnackbar('Pagamento processado com sucesso!', { variant: 'success' });
+              enqueueSnackbar("Pagamento processado com sucesso!", {
+                variant: "success",
+              });
             } catch (error) {
-              const message = GetErrorMessage(error, 'Erro ao processar o pagamento');
-              enqueueSnackbar(message, { variant: 'error' });
-              setPaymentResult({ status: 'rejected' });
+              const message = GetErrorMessage(
+                error,
+                "Erro ao processar o pagamento"
+              );
+              enqueueSnackbar(message, { variant: "error" });
+              setPaymentResult({ status: "rejected" });
               setShowStatusScreen(true);
             }
           }}
@@ -127,13 +147,13 @@ export const PaymentPage = ({data, preference, enqueueSnackbar, onStatusChange}:
       ) : (
         <StatusScreen
           initialization={{
-            paymentId: paymentResult?.createPayment?.id ?? '',
+            paymentId: paymentResult?.createPayment?.id ?? "",
           }}
           customization={{
             visual: {
               showExternalReference: true,
               style: {
-                theme: 'default',
+                theme: "default",
               },
             },
           }}
@@ -141,4 +161,4 @@ export const PaymentPage = ({data, preference, enqueueSnackbar, onStatusChange}:
       )}
     </Box>
   );
-}
+};

@@ -1,6 +1,6 @@
 import { SelectChangeEvent } from "@mui/material";
+import { useBackend } from "@sr/modules/common/hooks";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
-import { useBackendForFrontend } from "../../../common/hooks/useBackendForFrontend";
 import {
   DrawerProps,
   FindReviewQuestionsResponse,
@@ -27,7 +27,7 @@ export const useReviewUpsertForm = ({
   data,
   refreshInternal,
 }: DrawerProps) => {
-  const { request } = useBackendForFrontend();
+  const { request } = useBackend();
   const [isLoading, setIsLoading] = useState(false);
   const [isNoConfigPlans, setIsConfigPlans] = useState(false);
   const [charactersRemaining, setCharactersRemaining] = useState<
