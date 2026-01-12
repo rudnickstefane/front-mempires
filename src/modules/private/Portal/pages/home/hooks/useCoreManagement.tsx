@@ -8,17 +8,17 @@ import {
   FindCompanyDetailsResponse,
   FindMenusResponse,
   FindNotificationsResponse,
-  FindProfileDetailsResponse,
+  FindUserDetailsResponse,
 } from "../../../../../common/types";
 import { ManagementProps } from "../../../../../common/types/ManagementProps.type";
+import CompanyDetailsManagement from "../../../../Company";
 import GymProfileManagement from "../../../../Profile";
 import {
   QueryFindMenus,
   QueryFindNotifications,
-  QueryFindProfileDetails,
+  QueryFindUserDetails,
 } from "../../../components/Graphql";
 import { QueryFindCompanyDetails } from "../../../components/Graphql/QueryFindCompanyDetails";
-import CompanyDetailsManagement from "../../Company";
 import CoreSupport from "../../Core/Support";
 import Invoices from "../../Invoices";
 import Marketplace from "../../Marketplace";
@@ -62,7 +62,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
       onClick: () => openComponent("Home"),
     });
   const [responseProfileDetails, setResponseProfileDetails] =
-    useState<FindProfileDetailsResponse>();
+    useState<FindUserDetailsResponse>();
   const [responseCompanyDetails, setResponseCompanyDetails] =
     useState<FindCompanyDetailsResponse>();
   const [responseNotifications, setResponseNotifications] =
@@ -154,11 +154,11 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
     }
   }, [companyCode, enqueueSnackbar, request]);
 
-  const findProfileDetails = useCallback(async () => {
+  const findUserDetails = useCallback(async () => {
     setIsProfileLoading(true);
     try {
-      const response: FindProfileDetailsResponse = await request(
-        QueryFindProfileDetails,
+      const response: FindUserDetailsResponse = await request(
+        QueryFindUserDetails,
         { profileCode: profileCode }
       );
 
@@ -209,7 +209,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
       calledRef.current = true;
 
       const fetchData = async () => {
-        await findProfileDetails();
+        await findUserDetails();
         await findCompanyDetails();
         await findGymMenus();
         await findNotifications();
@@ -218,7 +218,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
       fetchData();
     }
   }, [
-    findProfileDetails,
+    findUserDetails,
     findGymMenus,
     findCompanyDetails,
     findNotifications,
@@ -227,8 +227,8 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
 
   const refresh = async (source: unknown) => {
     switch (source) {
-      case "findProfileDetails":
-        await findProfileDetails();
+      case "findUserDetails":
+        await findUserDetails();
         break;
 
       case "findCompanyDetails":
@@ -318,7 +318,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
         return (
           <GymProfileManagement
             data={responseProfileDetails}
-            refresh={() => refresh("findProfileDetails")}
+            refresh={() => refresh("findUserDetails")}
             isProfileLoading={isProfileLoading}
           />
         );
@@ -352,7 +352,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
         return (
           <SignatureGymAdmin
             refresh={async () => {
-              await refresh("findProfileDetails");
+              await refresh("findUserDetails");
               await refresh("findCompanyDetails");
               await refresh("findGymMenus");
             }}

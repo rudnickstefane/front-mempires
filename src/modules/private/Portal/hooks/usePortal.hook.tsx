@@ -1,41 +1,27 @@
 import { notify } from "@sr/common/iu/components/notifications";
 import { storage } from "@sr/common/storage";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { TbSmartHome } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { useBackend } from "../../../common/hooks/useBackend";
 import {
   FindCompanyDetailsResponse,
   FindNotificationsResponse,
-  FindProfileDetailsResponse,
 } from "../../../common/types";
 import { ManagementProps } from "../../../common/types/ManagementProps.type";
-import {
-  QueryFindNotifications,
-  QueryFindProfileDetails,
-} from "../components/Graphql";
+import { QueryFindNotifications } from "../components/Graphql";
 import { QueryFindCompanyDetails } from "../components/Graphql/QueryFindCompanyDetails";
+import { useProfileHook } from "../components/Profile/hooks";
 import { useSidebarHook } from "../components/Sidebar/hooks";
+import { renderModule } from "../config/navigation.config";
 import { MutationNotificationUpsert } from "../pages/home/graphql";
 import { AdminGymDrawerType } from "../pages/home/types";
 import { GymManagementType } from "../pages/home/types/gym-management.types";
-import { ResourceBoxProps } from "../pages/home/types/gym-resource-box.types";
 
 export const usePortalHook = ({ permissions }: ManagementProps) => {
   const { request } = useBackend();
   const sidebar = useSidebarHook();
-  const [isProfileLoading, setIsProfileLoading] = useState(false);
+  const profile = useProfileHook();
   const [isCompanyLoading, setIsCompanyLoading] = useState(false);
-  const [activeComponent, setActiveComponent] =
-    useState<GymManagementType>("Home");
-  const [selectedResource, setSelectedResource] =
-    useState<ResourceBoxProps | null>({
-      name: "Início",
-      icon: TbSmartHome,
-      onClick: () => openComponent("Home"),
-    });
-  const [responseProfileDetails, setResponseProfileDetails] =
-    useState<FindProfileDetailsResponse>();
   const [responseCompanyDetails, setResponseCompanyDetails] =
     useState<FindCompanyDetailsResponse>();
   const [responseNotifications, setResponseNotifications] =
@@ -115,21 +101,6 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
     refresh("findNotifications");
   };
 
-  const findProfileDetails = useCallback(async () => {
-    setIsProfileLoading(true);
-    try {
-      const response: FindProfileDetailsResponse = await request(
-        QueryFindProfileDetails,
-        { profileCode }
-      );
-
-      setResponseProfileDetails(response);
-      setIsProfileLoading(false);
-    } catch {
-      notify.error("Ocorreu um erro ao buscar as informações do seu perfil.");
-    }
-  }, [profileCode, request]);
-
   const findCompanyDetails = useCallback(async () => {
     setIsCompanyLoading(true);
     try {
@@ -163,26 +134,16 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
       calledRef.current = true;
 
       const fetchData = async () => {
-        await findProfileDetails();
         await findCompanyDetails();
         await findNotifications();
       };
 
       fetchData();
     }
-  }, [
-    findProfileDetails,
-    findCompanyDetails,
-    findNotifications,
-    selectedResource,
-  ]);
+  }, [findCompanyDetails, findNotifications]);
 
   const refresh = async (source: unknown) => {
     switch (source) {
-      case "findProfileDetails":
-        await findProfileDetails();
-        break;
-
       case "findCompanyDetails":
         await findCompanyDetails();
         break;
@@ -200,10 +161,6 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
     // localStorage.clear();
     notify.success("Sua sessão foi encerrada com sucesso. Até logo!");
     navigate("/entrar");
-  };
-
-  const openComponent = (type: GymManagementType) => {
-    setActiveComponent(type);
   };
 
   useEffect(() => {
@@ -258,14 +215,17 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
     setAnchorEls((prev) => ({ ...prev, [viewCode]: null }));
   };
 
+  const [activeComponent, setActiveComponent] =
+    useState<GymManagementType>("Home");
+
+  const openComponent = (type: GymManagementType) => {
+    setActiveComponent(type);
+  };
+
   return {
     sidebar,
-    isProfileLoading,
     isCompanyLoading,
-    responseProfileDetails,
     responseCompanyDetails,
-    selectedResource,
-    setSelectedResource,
     refresh,
     finishSession,
     renderDrawerContent,
@@ -280,15 +240,26 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
     handleNotificationRead,
     menuExcludedPaths,
     isCompanyDisabled,
+    openComponent,
+    activeComponent,
+    setActiveComponent,
+    isProfileLoading: profile.isProfileLoading,
+    responseProfileDetails: profile.responseProfileDetails,
     toggleMenu: sidebar.toggleMenu,
-    renderModule: sidebar.renderModule,
-    openComponent: sidebar.openComponent,
     expandedMenus: sidebar.expandedMenus,
     toggleSubMenu: sidebar.toggleSubMenu,
     responseMenus: sidebar.responseMenus,
     sidebarCollapsed: sidebar.isCollapsed,
-    activeComponent: sidebar.activeComponent,
+    selectedResource: sidebar.selectedResource,
     setExpandedMenus: sidebar.setExpandedMenus,
-    setActiveComponent: sidebar.setActiveComponent,
+    setSelectedResource: sidebar.setSelectedResource,
+    renderModule: () =>
+      renderModule(activeComponent, {
+        data: {
+          profile: profile.responseProfileDetails?.findUserDetails,
+          loading: profile.isProfileLoading,
+        },
+        refresh: refresh,
+      }),
   };
 };

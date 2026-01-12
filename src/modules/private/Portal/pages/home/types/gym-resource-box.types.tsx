@@ -1,7 +1,7 @@
 import { ElementType } from "react";
 
 export type ResourceBoxProps = {
-  icon: ElementType;
+  icon?: ElementType;
   type?: string;
   menu?: string;
   name: string;

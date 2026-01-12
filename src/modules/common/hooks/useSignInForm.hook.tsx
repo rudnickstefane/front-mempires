@@ -52,7 +52,8 @@ export const useSignInFormHook = () => {
   return {
     formData,
     showPassword,
-    handleClickShowPassword: () => setShowPassword(!showPassword),
     isLoading: formData.isSubmitting,
+    setFieldValue: formData.setFieldValue,
+    handleClickShowPassword: () => setShowPassword(!showPassword),
   };
 };

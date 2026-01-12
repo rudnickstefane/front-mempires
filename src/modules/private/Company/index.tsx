@@ -7,16 +7,16 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { formatZipCode } from "@sr/utils";
 import { LuShieldAlert } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
 import { PiUserSquareLight } from "react-icons/pi";
 import { TbEdit, TbPhotoEdit } from "react-icons/tb";
 import styled from "styled-components";
-import { FindCompanyDetailsResponse } from "../../../../common/types";
-import { FormatZipCode } from "../../../../common/utils";
-import { FormatCode } from "../../../../common/utils/FormatCodeAndIdentity.util";
-import { ImageCropModal } from "../../components/Modals";
-import { useCompanyGymManagement } from "../home/hooks";
+import { FindCompanyDetailsResponse } from "../../common/types";
+import { FormatCode } from "../../common/utils/FormatCodeAndIdentity.util";
+import { ImageCropModal } from "../Portal/components/Modals";
+import { useCompanyGymManagement } from "../Portal/pages/home/hooks";
 
 type CompanyManagementProps = {
   data: FindCompanyDetailsResponse | undefined;
@@ -442,7 +442,7 @@ export default function CompanyDetailsManagement({
                     </Typography>
                     <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold">
                       {data?.findCompanyDetails.zipCode
-                        ? FormatZipCode(data.findCompanyDetails.zipCode)
+                        ? formatZipCode(data.findCompanyDetails.zipCode)
                         : ""}
                     </Typography>
                   </Box>

@@ -29,6 +29,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { formatZipCode } from "@sr/utils";
 import { Key } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { CiFolderOff, CiSearch } from "react-icons/ci";
@@ -64,7 +65,6 @@ import {
   customNoOptionsMessage,
   customStyles,
 } from "../../../../../../../../common/ui";
-import { FormatZipCode } from "../../../../../../../../common/utils";
 import { PaymentBadge } from "../../../../../../components/Badges/PaymentBadge";
 import { ImageCropModal } from "../../../../../../components/Modals";
 import { useStudentAlterForm } from "../../../../../../hooks";
@@ -562,7 +562,7 @@ export const GymStudentDetails = ({
                               CEP
                             </Typography>
                             <Typography className="!text-neutral-700 !font-roboto !text-sm !mt-4 !font-semibold">
-                              {data?.zipCode ? FormatZipCode(data.zipCode) : ""}
+                              {data?.zipCode ? formatZipCode(data.zipCode) : ""}
                             </Typography>
                           </Box>
                           <Box className="grid grid-cols-[10rem,1fr]">

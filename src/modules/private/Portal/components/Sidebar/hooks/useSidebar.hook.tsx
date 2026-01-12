@@ -3,20 +3,20 @@ import { useBackend } from "@sr/modules/common/hooks";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FindMenusResponse } from "../../../../../common/types";
-import { renderModule } from "../../../config/navigation.config";
-import { GymManagementType } from "../../../pages/home/types/gym-management.types";
+import { ResourceBoxProps } from "../../../pages/home/types/gym-resource-box.types";
 import { QueryFindMenus } from "../../Graphql";
 
 export const useSidebarHook = () => {
   const { request } = useBackend();
-  const [isMenuLoading, setIsMenuLoading] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMenuLoading, setIsMenuLoading] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState<number[]>([]);
-  const [responseMenus, setResponseMenus] = useState<FindMenusResponse | null>(
-    null
-  );
-  const [activeComponent, setActiveComponent] =
-    useState<GymManagementType>("Home");
+  const [responseMenus, setResponseMenus] =
+    useState<FindMenusResponse | null>();
+  const [selectedResource, setSelectedResource] =
+    useState<ResourceBoxProps | null>({
+      name: "Início",
+    });
 
   const calledRef = useRef(false);
   const navigate = useNavigate();
@@ -58,22 +58,16 @@ export const useSidebarHook = () => {
     setIsCollapsed((prev) => !prev);
   };
 
-  const openComponent = (type: GymManagementType) => {
-    setActiveComponent(type);
-  };
-
   return {
+    selectedResource,
+    setSelectedResource,
     isMenuLoading,
     responseMenus,
     isCollapsed,
     expandedMenus,
     setExpandedMenus,
-    activeComponent,
     toggleMenu,
     toggleSubMenu,
-    openComponent,
-    setActiveComponent,
     finishSession,
-    renderModule: () => renderModule(activeComponent),
   };
 };

@@ -1,4 +1,5 @@
 import { useBackend } from "@sr/modules/common/hooks";
+import { formatZipCode } from "@sr/utils";
 import axios from "axios";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { MultiValue, SingleValue } from "react-select";
@@ -13,7 +14,6 @@ import {
   FormatName,
   FormatPhone,
   FormatText,
-  FormatZipCode,
   GetErrorMessage,
   StudentUpsertVariables,
   ValidateFormRegisterStudent,
@@ -217,7 +217,7 @@ export const useStudentRegisterForm = ({
     }
 
     if (name === "zipCode" && value) {
-      updatedValue = FormatZipCode(value);
+      updatedValue = formatZipCode(value);
 
       setErrors((prevErrors) => ({
         ...prevErrors,

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useBackend } from "@sr/modules/common/hooks";
+import { formatIdentity, formatZipCode } from "@sr/utils";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import { ChangeEvent, useCallback, useState } from "react";
@@ -7,15 +8,13 @@ import { APIS } from "../../../common/configs/apis.config";
 import {
   DrawerProps,
   FindCheckUsernameAvailabilityResponse,
-  FindProfileDetailsResponse,
+  FindUserDetailsResponse,
 } from "../../../common/types";
 import {
   EditProfileVariables,
   FormatAndValidateCPF,
-  FormatIdentity,
   FormatName,
   FormatPhone,
-  FormatZipCode,
   GetErrorMessage,
   ValidateFormEditProfile,
 } from "../../../common/utils";
@@ -31,7 +30,7 @@ export const useEditProfileForm = ({
   enqueueSnackbar,
   data,
   refresh,
-}: DrawerProps & { data: FindProfileDetailsResponse }) => {
+}: DrawerProps & { data: FindUserDetailsResponse }) => {
   const { request } = useBackend();
   const [isLoading, setIsLoading] = useState(false);
   const [isNoNumber, setIsNoNumber] = useState(false);
@@ -40,9 +39,7 @@ export const useEditProfileForm = ({
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isUsernameAvailable, setIsUsernameAvailable] = useState(false);
   const profileCode = Number(localStorage.getItem("@iflexfit:profileCode"));
-  const [contacts, setContacts] = useState(
-    data?.findProfileDetails.contact ?? []
-  );
+  const [contacts, setContacts] = useState(data.profile?.contact ?? []);
   const [editingContact, setEditingContact] = useState<null | {
     contactCode: string;
     description: string;
@@ -53,26 +50,22 @@ export const useEditProfileForm = ({
   const [formData, setFormData] = useState<EditInfosProfileProps["formData"]>({
     origin: "PROFILE",
     profileCode: profileCode,
-    name: data?.findProfileDetails.name ?? "",
-    birthDate: data?.findProfileDetails.birthDate
-      ? data.findProfileDetails.birthDate.split("/").reverse().join("-")
+    name: data.profile?.name ?? "",
+    birthDate: data.profile?.birthDate
+      ? data.profile?.birthDate.split("/").reverse().join("-")
       : "",
-    identity: data?.findProfileDetails.identity
-      ? FormatIdentity(data.findProfileDetails.identity)
-      : "",
-    username: data?.findProfileDetails.username ?? "",
-    address: data?.findProfileDetails.address ?? "",
-    number: data?.findProfileDetails.number ?? "",
-    complement: data?.findProfileDetails.complement ?? "",
-    zipCode: data?.findProfileDetails.zipCode
-      ? FormatZipCode(data?.findProfileDetails.zipCode)
-      : "",
-    district: data?.findProfileDetails.district ?? "",
-    city: data?.findProfileDetails.city ?? "",
-    state: data?.findProfileDetails.state ?? "",
-    description: "",
-    phone: "",
-    email: "",
+    identity: data.profile?.code ? formatIdentity(data.profile?.code) : "oi",
+    username: data.profile?.username ?? "",
+    address: data.profile?.address ?? "",
+    number: data.profile?.number ?? "",
+    complement: data.profile?.complement ?? "",
+    zipCode: data.profile?.zipCode ? formatZipCode(data.profile?.zipCode) : "",
+    district: data.profile?.district ?? "",
+    city: data.profile?.city ?? "",
+    state: data.profile?.state ?? "",
+    description: data.profile?.contact?.description ?? "oi",
+    phone: data.profile?.contact?.phone ?? "",
+    email: data.profile?.contact?.email ?? "",
   } as EditInfosProfileProps["formData"]);
 
   const [errors, setErrors] = useState<EditInfosProfileProps["errors"]>({
@@ -256,7 +249,7 @@ export const useEditProfileForm = ({
     }
 
     if (name === "zipCode" && value) {
-      updatedValue = FormatZipCode(value);
+      updatedValue = formatZipCode(value);
 
       setErrors((prevErrors) => ({
         ...prevErrors,

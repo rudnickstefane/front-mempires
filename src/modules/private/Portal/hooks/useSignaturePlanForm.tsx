@@ -1,4 +1,5 @@
 import { useBackend } from "@sr/modules/common/hooks";
+import { formatZipCode } from "@sr/utils";
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { APIS } from "../../../common/configs/apis.config";
@@ -6,7 +7,6 @@ import { DrawerProps } from "../../../common/types";
 import {
   FormatAndValidateCNPJ,
   FormatName,
-  FormatZipCode,
   GetErrorMessage,
   ValidateFormPlanSignature,
 } from "../../../common/utils";
@@ -177,7 +177,7 @@ DrawerProps) => {
               setFormData((prevState) => ({
                 ...prevState,
                 businessName: razao_social || "",
-                zipCode: FormatZipCode(cep) || "",
+                zipCode: formatZipCode(cep) || "",
                 address: FormatName(logradouro) || "",
                 district: FormatName(bairro) || "",
                 city: FormatName(municipio) || "",

@@ -21,7 +21,6 @@ export type { FindNotificationsResponse } from "./FindNotificationsResponse.type
 export type { FindPermissionsResponse } from "./FindPermissionsResponse.type";
 export type { FindPlansResponse } from "./FindPlansResponse.type";
 export type { FindProductsResponse } from "./FindProductsResponse.type";
-export type { FindProfileDetailsResponse } from "./FindProfileDetailsResponse.type";
 export type { FindReviewQuestionsResponse } from "./FindReviewQuestionsResponse.type";
 export type { FindReviewsResponse } from "./FindReviewsResponse.type";
 export type { FindShortcutsResponse } from "./FindShortcutsResponse.type";
@@ -35,6 +34,10 @@ export type { FindStudentsResponse } from "./FindStudentsResponse.type";
 export type { FindTicketsResponse } from "./FindTicketsResponse.type";
 export type { FindTransactionsResponse } from "./FindTransactionsResponse.type";
 export type { FindUpdatesResponse } from "./FindUpdatesResponse.type";
+export type {
+  FindUserDetailsResponse,
+  ProfileDetails,
+} from "./FindUserDetailsResponse.type";
 export type { FindUserShortcutsResponse } from "./FindUserShortcutsResponse.type";
 export type { FindVisitsResponse } from "./FindVisitsResponse.type";
 export type { FormType } from "./FormType.type";

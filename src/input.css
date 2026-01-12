@@ -358,12 +358,6 @@ body::before {
   color: #ff0336 !important;
 }
 
-.Mui-checked,
-.MuiLink-root,
-.MuiSwitch-switchBase {
-  color: var(--color-primary) !important;
-}
-
 .MuiAutocomplete-listbox {
   overflow: hidden;
 }
@@ -615,6 +609,10 @@ body::before {
   font-family: "Poppins", sans-serif !important;
 }
 
+.font-open-sans {
+  font-family: "Open Sans", sans-serif !important;
+}
+
 .font-intro {
   font-family: "Intro", sans-serif !important;
 }
@@ -688,15 +686,6 @@ body::before {
 
 .page-clean {
   height: 6rem;
-}
-
-.Mui-checked + .MuiSwitch-track,
-.MuiSwitch-thumb {
-  background: #ff0336 !important;
-}
-
-.MuiSwitch-track {
-  background: #bdbdbd !important;
 }
 
 .MuiStepLabel-label.MuiStepLabel-alternativeLabel {

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useBackend } from "@sr/modules/common/hooks";
+import { formatIdentity, formatZipCode } from "@sr/utils";
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { APIS } from "../../../common/configs/apis.config";
@@ -7,10 +8,8 @@ import { DrawerProps, FindCompanyDetailsResponse } from "../../../common/types";
 import {
   EditCompanyVariables,
   FormatAndValidateCNPJ,
-  FormatIdentity,
   FormatName,
   FormatPhone,
-  FormatZipCode,
   GetErrorMessage,
   ValidateFormEditCompany,
 } from "../../../common/utils";
@@ -52,14 +51,14 @@ export const useEditCompanyForm = ({
       ? data.findCompanyDetails.birthDate.split("/").reverse().join("-")
       : "",
     code: data?.findCompanyDetails.code
-      ? FormatIdentity(data.findCompanyDetails.code)
+      ? formatIdentity(data.findCompanyDetails.code)
       : "",
     username: data?.findCompanyDetails.username ?? "",
     address: data?.findCompanyDetails.address ?? "",
     number: data?.findCompanyDetails.number ?? "",
     complement: data?.findCompanyDetails.complement ?? "",
     zipCode: data?.findCompanyDetails.zipCode
-      ? FormatZipCode(data?.findCompanyDetails.zipCode)
+      ? formatZipCode(data?.findCompanyDetails.zipCode)
       : "",
     district: data?.findCompanyDetails.district ?? "",
     city: data?.findCompanyDetails.city ?? "",
@@ -202,7 +201,7 @@ export const useEditCompanyForm = ({
     }
 
     if (name === "zipCode" && value) {
-      updatedValue = FormatZipCode(value);
+      updatedValue = formatZipCode(value);
 
       setErrors((prevErrors) => ({
         ...prevErrors,

@@ -10,8 +10,13 @@ import { PasswordCheck, SecurityUser } from "iconsax-react";
 import { signInTypewriter } from "./constants";
 
 export default function SignIn() {
-  const { formData, showPassword, handleClickShowPassword, isLoading } =
-    useSignInFormHook();
+  const {
+    formData,
+    showPassword,
+    setFieldValue,
+    handleClickShowPassword,
+    isLoading,
+  } = useSignInFormHook();
 
   return (
     <Box className="flex flex-row w-full h-screen">
@@ -42,6 +47,7 @@ export default function SignIn() {
                   margin="normal"
                   name="login"
                   startIcon={<SecurityUser variant="Linear" />}
+                  onClear={() => setFieldValue("login", "")}
                 />
               </AnimatedItem>
               <AnimatedItem>
@@ -56,6 +62,7 @@ export default function SignIn() {
                   startIcon={<PasswordCheck variant="Linear" />}
                   showPasswordToggle
                   onTogglePassword={handleClickShowPassword}
+                  onClear={() => setFieldValue("password", "")}
                 />
               </AnimatedItem>
               <AnimatedItem>

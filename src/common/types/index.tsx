@@ -1,2 +1,12 @@
+export type { AddressDataProps, AddressProps } from "./AddressProps.type";
+export type { CompanyProps } from "./CompanyProps.type";
+export type { ContactsDataProps, ContactsProps } from "./ContactsProps.type";
 export type { CreateAccessTokenResponse } from "./create-access-token-response.type";
+export type { DrawerContainerProps } from "./DrawerContainerProps.type";
+export type { DrawerHeaderProps } from "./DrawerHeaderProps.type";
+export type { DrawerStepsProps } from "./DrawerStepsProps.type";
+export type { PersonalProps } from "./PersonalProps.type";
+export type { ProfileProps } from "./ProfileProps.type";
+export type { ShowProps } from "./ShowProps.type";
 export type { SignInFormValues } from "./sign-in-form.type";
+export type { UserProps } from "./UserProps.type";

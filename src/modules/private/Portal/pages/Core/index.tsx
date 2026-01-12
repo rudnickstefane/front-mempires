@@ -131,21 +131,11 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                       </>
                     ) : (
                       <>
-                        {responseProfileDetails?.findProfileDetails.photo ? (
-                          <img
-                            src={
-                              responseProfileDetails?.findProfileDetails.photo
-                            }
-                            alt="Foto do usuário"
-                            className="w-10 h-10 rounded-full mr-3"
-                          />
-                        ) : (
-                          <PiUserCircleLight
-                            className={`text-[2.5rem] ${
-                              sidebarCollapsed ? "mr-0" : "mr-3"
-                            }`}
-                          />
-                        )}
+                        <PiUserCircleLight
+                          className={`text-[2.5rem] ${
+                            sidebarCollapsed ? "mr-0" : "mr-3"
+                          }`}
+                        />
 
                         <Box
                           className={`flex flex-col text-left overflow-hidden transition-all duration-300 ${
@@ -156,15 +146,15 @@ export default function CoreManagement({ permissions }: ManagementProps) {
                         >
                           <Typography className="truncate">
                             {
-                              responseProfileDetails?.findProfileDetails.name.split(
+                              responseProfileDetails?.findUserDetails.name.split(
                                 " "
                               )[0]
                             }
                           </Typography>
                           <Typography className="!font-light !text-[.9rem] truncate">
                             {
-                              responseProfileDetails?.findProfileDetails
-                                .contact[0].email
+                              responseProfileDetails?.findUserDetails.contact[0]
+                                .email
                             }
                           </Typography>
                         </Box>

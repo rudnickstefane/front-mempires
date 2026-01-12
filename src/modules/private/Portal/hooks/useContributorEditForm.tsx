@@ -1,4 +1,5 @@
 import { useBackend } from "@sr/modules/common/hooks";
+import { formatZipCode } from "@sr/utils";
 import axios from "axios";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { MultiValue, SingleValue } from "react-select";
@@ -13,7 +14,6 @@ import {
   FormatAndValidateRG,
   FormatName,
   FormatPhone,
-  FormatZipCode,
   GetErrorMessage,
   ValidateFormRegisterContributor,
   ValidatePassport,
@@ -147,7 +147,7 @@ export const useContributorEditForm = ({
     address: data?.address ?? "",
     number: data?.number ?? "",
     complement: data?.complement ?? "",
-    zipCode: data?.zipCode ? FormatZipCode(data?.zipCode) : "",
+    zipCode: data?.zipCode ? formatZipCode(data?.zipCode) : "",
     district: data?.district ?? "",
     city: data?.city ?? "",
     state: stateMap[data?.state] || "",
@@ -212,7 +212,7 @@ export const useContributorEditForm = ({
     }
 
     if (name === "zipCode" && value) {
-      updatedValue = FormatZipCode(value);
+      updatedValue = formatZipCode(value);
 
       setErrors((prevErrors) => ({
         ...prevErrors,

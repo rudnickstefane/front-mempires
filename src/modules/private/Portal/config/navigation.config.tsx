@@ -1,29 +1,42 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Typography } from "@mui/material";
+import { ReactNode } from "react";
 import { LuScreenShareOff } from "react-icons/lu";
+import Profile from "../../Profile";
 import ApplicationGymAdmin from "../pages/home/pages/Admin/ApplicationGymAdmin";
 import ClassesGymAdmin from "../pages/home/pages/Admin/ClassesGymAdmin";
 import FrequenciesGymAdmin from "../pages/home/pages/Admin/FrequenciesGymAdmin";
 import PlansGymAdmin from "../pages/home/pages/Admin/PlansGymAdmin";
+import SettingsGymAdmin from "../pages/home/pages/Admin/SettingsGymAdmin";
 import StudentsGymAdmin from "../pages/home/pages/Admin/StudentsGymAdmin";
 import HomeGymManagement from "../pages/home/pages/Home/HomeGymManagement";
 import { GymManagementType } from "../pages/home/types/gym-management.types";
 import Marketplace from "../pages/Marketplace";
 
-export const renderModule = (type: GymManagementType) => {
-  const modules: Record<GymManagementType, React.ReactNode> = {
+export const renderModule = (
+  type: GymManagementType,
+  props: { data: any; refresh: (source: string) => void }
+) => {
+  const modules: Record<GymManagementType, ReactNode> = {
     Home: <HomeGymManagement />,
     Application: <ApplicationGymAdmin />,
     Partners: <StudentsGymAdmin />,
     Marketplace: <Marketplace />,
-    Classes: <ClassesGymAdmin />,
+    Classes: <PlansGymAdmin />,
     Frequencies: <FrequenciesGymAdmin />,
-    Plans: <PlansGymAdmin />,
+    Plans: <ClassesGymAdmin />,
+    Profile: (
+      <Profile
+        data={props?.data}
+        refresh={() => props.refresh("findUserDetails")}
+      />
+    ),
     // Relationship: <RelationshipGymAdmin />,
     // Products: <ProductsGymAdmin />,
     // Suppliers: <SuppliersGymAdmin />,
     // Contributors: <ContributorsGymAdmin />,
     // GroupAccess: <ContributorsGymAdmin />,
-    // Settings: <SettingsGymAdmin />,
+    Settings: <SettingsGymAdmin />,
     // Finance: <GymFinanceManagement />,
     // Integration: <GymIntegrationHomeManagement />,
     // Dashboard: <GymDashboardManagement />,

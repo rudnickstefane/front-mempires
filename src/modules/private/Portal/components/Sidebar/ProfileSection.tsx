@@ -10,8 +10,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { avatarLabel } from "@sr/utils";
 import { ArrowDown2, ArrowRight2 } from "iconsax-react";
-import { PiUserCircleLight } from "react-icons/pi";
 import { TbFileInvoice, TbUserCircle } from "react-icons/tb";
 
 export const ProfileSection = ({ isCollapsed, methods }: any) => {
@@ -26,9 +26,9 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
     setExpandedMenus,
   } = methods;
 
-  const profile = responseProfileDetails?.findProfileDetails;
+  const profile = responseProfileDetails?.findUserDetails;
   const firstName = profile?.name?.split(" ")[0];
-  const email = profile?.contact?.[0]?.email;
+  const email = profile?.contact?.email;
 
   const handleProfileClick = () => {
     setSelectedResource(null);
@@ -46,19 +46,21 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
       <Tooltip title="Meus Dados" placement="bottom" arrow>
         <Button
           onClick={handleProfileClick}
-          className={`!justify-start !normal-case !text-neutral-900 !bg-[#f3f3f3] !rounded-l-3xl !min-h-[3.7rem] !rounded-r-none ${
+          className={`!justify-start !normal-case !text-neutral-900 !bg-neutral-100 !rounded-l-3xl !min-h-[3.7rem] !rounded-r-none ${
             isCollapsed ? "!min-w-[3rem] !px-1" : "w-full !px-4"
           }`}
         >
           {isProfileLoading ? (
             <Skeleton variant="circular" width={40} height={36} />
           ) : (
-            <PiUserCircleLight className="text-[2.5rem]" />
+            <Typography className="!text-lg !font-bold text-[#646464] font-ubuntu bg-neutral-200 !rounded-3xl p-2 w-[38px] h-9 flex justify-center items-center">
+              {avatarLabel(profile?.name)}
+            </Typography>
           )}
 
           {!isCollapsed && (
             <Box className="flex flex-col text-left ml-3 overflow-hidden">
-              <Typography className="!text-sm font-semibold truncate w-24">
+              <Typography className="!text-sm font-semibold truncate w-24 font-ubuntu">
                 {isProfileLoading ? (
                   <Skeleton className="w-[4rem]" />
                 ) : (
@@ -75,7 +77,7 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
 
       <Box>
         <Button
-          className={`flex flex-row !rounded-r-3xl !bg-[#f3f3f3] !rounded-l-none items-center !min-h-[3.7rem] !text-[1.25rem] ${
+          className={`flex flex-row !rounded-r-3xl !bg-neutral-100 !rounded-l-none items-center !min-h-[3.7rem] !text-[1.25rem] ${
             isCollapsed ? "!min-w-[2.1rem]" : "!min-w-[2.7rem]"
           }`}
           style={{ color: "#08041b" }}

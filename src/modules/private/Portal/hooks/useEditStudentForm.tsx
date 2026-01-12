@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useBackend } from "@sr/modules/common/hooks";
+import { formatIdentity, formatZipCode } from "@sr/utils";
 import axios from "axios";
 import { ChangeEvent, useRef, useState } from "react";
 import { MultiValue, SingleValue } from "react-select";
@@ -11,10 +12,8 @@ import {
   FormatAndValidateCNPJ,
   FormatAndValidateCPF,
   FormatAndValidateRG,
-  FormatIdentity,
   FormatName,
   FormatPhone,
-  FormatZipCode,
   GetErrorMessage,
   ValidateFormEditStudent,
 } from "../../../common/utils";
@@ -146,7 +145,7 @@ export const useEditStudentForm = ({
     birthDate: data?.birthDate
       ? data.birthDate.split("/").reverse().join("-")
       : "",
-    identity: data?.identity ? FormatIdentity(data.identity) : "",
+    identity: data?.identity ? formatIdentity(data.identity) : "",
     gender: data?.gender,
     stateMarital: data?.stateMarital,
     profession: data?.profession,
@@ -155,7 +154,7 @@ export const useEditStudentForm = ({
     address: data?.address ?? "",
     number: data?.number ?? "",
     complement: data?.complement ?? "",
-    zipCode: data?.zipCode ? FormatZipCode(data?.zipCode) : "",
+    zipCode: data?.zipCode ? formatZipCode(data?.zipCode) : "",
     district: data?.district ?? "",
     city: data?.city ?? "",
     state: stateMap[data?.state] || "",
@@ -313,7 +312,7 @@ export const useEditStudentForm = ({
     }
 
     if (name === "zipCode" && value) {
-      updatedValue = FormatZipCode(value);
+      updatedValue = formatZipCode(value);
 
       setErrors((prevErrors) => ({
         ...prevErrors,
