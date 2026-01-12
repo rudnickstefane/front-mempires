@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { DrawerFormUserProps } from "@sr/modules/private/Profile/types";
-import { formatText, formatZipCode } from "@sr/utils";
+import { formatText } from "@sr/utils";
 import { useFormikContext } from "formik";
 import { ChangeEvent } from "react";
 import { CustomizedSwitch } from "../components/Switch/CustomizedSwitch";
@@ -22,11 +22,6 @@ export function AddressForm() {
     setFieldValue("address.number", checked ? "S/N" : "");
   };
 
-  const handleZipCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setFieldValue("address.zipcode", formatZipCode(value));
-  };
-
   const handleFormattedTextChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFieldValue(name, formatText(value));
@@ -38,9 +33,17 @@ export function AddressForm() {
         required
         name="address.zipcode"
         label={label.address.zipCode}
-        onChange={handleZipCodeChange}
-        slotProps={{
-          htmlInput: { maxLength: 9 },
+        mask="00000-000"
+        showButton
+        labelButton="Consultar"
+        hook={async (value) => {
+          console.log("Iniciando consulta para:", value);
+
+          // Simula um atraso de 2 segundos de uma API
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+
+          console.log("Consulta finalizada!");
+          // Aqui você poderia usar o setFieldValue para preencher outros campos
         }}
       />
       <TextField

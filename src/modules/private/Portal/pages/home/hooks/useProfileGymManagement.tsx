@@ -78,7 +78,7 @@ export const useProfileGymManagement = ({ data, refresh }: ProfileProps) => {
   };
 
   const drawerSteps: DrawerStepsProps = {
-    title: ["Dados da empresa", "Endereço", "Contato"],
+    title: ["Dados pessoais", "Endereço", "Contato"],
     activeStep: activeDrawerStep,
   };
 

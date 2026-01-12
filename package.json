@@ -67,6 +67,7 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.5",
     "react-icons": "^5.2.1",
+    "react-imask": "^7.6.1",
     "react-intersection-observer": "^9.16.0",
     "react-intl": "^7.1.14",
     "react-leaflet": "^5.0.0",
