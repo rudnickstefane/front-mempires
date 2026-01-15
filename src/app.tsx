@@ -4,6 +4,7 @@ import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 
 import { SnackbarConfigurator } from "./common/iu/components/notifications";
+import { SnackbarContent } from "./common/ui/Alert";
 import { useLocale } from "./modules/common/hooks/useLocale";
 import { LocaleProvider } from "./modules/common/providers/LocaleProvider";
 import AppRoutes from "./modules/routes";
@@ -30,6 +31,12 @@ export default function App() {
     <SnackbarProvider
       maxSnack={3}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      Components={{
+        success: SnackbarContent,
+        error: SnackbarContent,
+        info: SnackbarContent,
+        warning: SnackbarContent,
+      }}
     >
       <SnackbarConfigurator />
       <LocaleProvider>

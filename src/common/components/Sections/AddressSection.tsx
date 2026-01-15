@@ -1,10 +1,11 @@
+import { Box } from "@mui/material";
 import { AddressProps } from "@sr/common/types";
 import { formatZipCode } from "@sr/utils";
 import { GridText } from "../Grids";
 
 export function AddressSection({ label, data }: AddressProps) {
   return (
-    <>
+    <Box className="grid grid-cols-[max-content,1fr] gap-x-5">
       <GridText
         label={label.zipCode}
         value={data.address?.zipCode && formatZipCode(data.address?.zipCode)}
@@ -15,6 +16,6 @@ export function AddressSection({ label, data }: AddressProps) {
       <GridText label={label.district} value={data.address?.district} />
       <GridText label={label.city} value={data.address?.city} />
       <GridText label={label.state} value={data.address?.state} />
-    </>
+    </Box>
   );
 }

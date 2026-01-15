@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CloseIcon from "@mui/icons-material/Close";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import {
   Button,
   CircularProgress,
@@ -9,12 +10,13 @@ import {
   MenuItem,
   TextField as MuiTextField,
   TextFieldProps as MuiTextFieldProps,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { maskField } from "@sr/common/components/Forms";
+import { MaskField } from "@sr/common/components/Forms";
 import { ptBR } from "date-fns/locale";
 import { useField, useFormikContext } from "formik";
 import { ArrowDown2, Calendar, Eye, EyeSlash } from "iconsax-react";
@@ -46,6 +48,7 @@ export type CustomTextFieldProps = Omit<MuiTextFieldProps, "onChange"> & {
   labelButton?: string;
   hook?: (value: string) => void | Promise<void>;
   onChange?: MuiTextFieldProps["onChange"];
+  tooltip?: ReactNode;
 };
 
 export function TextField({
@@ -67,12 +70,14 @@ export function TextField({
   labelButton = "Cadastrar",
   hook,
   disabled,
+  tooltip,
   ...props
 }: CustomTextFieldProps) {
   const [field, meta] = useField(props.name!);
   const { setFieldValue } = useFormikContext();
   const [isFocused, setIsFocused] = useState(false);
   const [internalLoading, setInternalLoading] = useState(false);
+  disabled = disabled ?? internalLoading;
 
   const hasError = !!(meta.touched && meta.error);
   const isRequiredError = meta.error === "required";
@@ -155,11 +160,15 @@ export function TextField({
     );
 
   return (
-    <FormControl fullWidth={props.fullWidth} margin={props.margin}>
+    <FormControl
+      fullWidth={props.fullWidth}
+      margin={props.margin}
+      className={`${tooltip ? "flex !flex-row items-center" : ""}`}
+    >
       <MuiTextField
         {...field}
         {...props}
-        disabled={disabled || internalLoading}
+        disabled={disabled}
         select={!!options}
         error={hasError}
         helperText={
@@ -174,7 +183,7 @@ export function TextField({
             shrink: Boolean(field.value || isFocused || props.placeholder),
           },
           input: {
-            inputComponent: mask ? (maskField as any) : undefined,
+            inputComponent: mask ? (MaskField as any) : undefined,
             inputProps: { mask, definitions, maxLength, lazy: true },
             startAdornment: startIcon ? (
               <InputAdornment position="start">{startIcon}</InputAdornment>
@@ -184,28 +193,25 @@ export function TextField({
                 {showButton && isFocused && !hasError && field.value && (
                   <Button
                     variant="text"
-                    disabled={internalLoading}
+                    disabled={disabled}
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={handleHookAction}
-                    className="font-ubuntu !text-base !font-semibold !normal-case !text-[var(--color-primary)]"
+                    className="!font-ubuntu !text-base !font-semibold !normal-case !text-primary"
                     sx={{
                       "&.Mui-disabled": {
                         backgroundColor: "transparent !important",
                       },
                     }}
                   >
-                    {internalLoading ? (
-                      <CircularProgress
-                        size={20}
-                        className="!text-[var(--color-primary)]"
-                      />
+                    {disabled ? (
+                      <CircularProgress size={20} className="!text-primary" />
                     ) : (
                       labelButton
                     )}
                   </Button>
                 )}
 
-                {field.value && (
+                {!options && field.value && !disabled && (
                   <IconButton
                     onClick={handleClear}
                     edge="end"
@@ -260,9 +266,17 @@ export function TextField({
         ))}
       </MuiTextField>
 
+      {tooltip && (
+        <Tooltip title={tooltip} placement="left" arrow>
+          <IconButton size="small" className="!ml-2">
+            <HelpOutlineIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+      )}
+
       {/* Contador de Caracteres da Sugestão */}
       {maxLength && viewCountCharacter && (
-        <Typography className="font-ubuntu !text-neutral700 !text-sm !mt-1">
+        <Typography className="!font-ubuntu !text-neutral700 !text-sm !mt-1">
           {`Restam ${Math.max(0, remaining || 0)} caracteres`}
         </Typography>
       )}

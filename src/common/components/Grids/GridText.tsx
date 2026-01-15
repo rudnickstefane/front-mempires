@@ -1,39 +1,34 @@
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import { Box, Typography } from "@mui/material";
 
 interface DataRowProps {
   label: string;
   value?: string | number;
-  tooltip?: ReactNode;
+  description?: string;
   isBox?: boolean;
 }
 
-export function GridText({ label, value, tooltip, isBox }: DataRowProps) {
+export function GridText({ label, value, description, isBox }: DataRowProps) {
   return (
-    <Box
-      className={`grid ${
-        isBox ? "grid-cols-[5.5rem,1fr]" : "grid-cols-[10rem,1fr]"
-      }`}
-    >
-      <Typography className="!text-neutral-700 font-ubuntu !text-sm !mt-4 flex flex-row items-center">
+    <>
+      <Typography
+        className={`text-neutral-700 !font-poppins !text-sm flex flex-row items-center gap-1.5 ${
+          isBox ? "!py-1.5" : "!mt-4"
+        }`}
+      >
         {label}
-        {tooltip && (
-          <Box className="w-0 h-0">
-            <Tooltip title={tooltip} placement="right" arrow>
-              <IconButton
-                size="small"
-                sx={{ marginTop: "-21px", marginLeft: "5px" }}
-              >
-                <HelpOutlineIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
+        {description && (
+          <Box className="text-[11px] text-neutral-500 bg-neutral-100 px-1.5 py-[0.1rem] rounded">
+            {description}
           </Box>
         )}
       </Typography>
-      <Typography className="!text-neutral-900 font-ubuntu !text-sm !mt-4 !font-semibold break-words overflow-hidden">
+      <Typography
+        className={`!text-neutral-900 !font-poppins !font-semibold !text-sm break-words overflow-hidden ${
+          isBox ? "!py-1.5" : "!mt-4"
+        }`}
+      >
         {value || "-"}
       </Typography>
-    </Box>
+    </>
   );
 }

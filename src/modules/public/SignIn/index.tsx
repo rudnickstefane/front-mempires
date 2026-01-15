@@ -86,7 +86,7 @@ export default function SignIn() {
                   variant="contained"
                   color="primary"
                   fullWidth
-                  className="!normal-case font-ubuntu !text-lg btn-primary !rounded-lg h-12 !transition-all"
+                  className="!normal-case !font-ubuntu !text-lg btn-primary !rounded-lg h-12 !transition-all"
                 >
                   {isLoading ? (
                     <CircularProgress size={24} color="inherit" />
@@ -122,13 +122,13 @@ export default function SignIn() {
           </AnimatedContainer>
         </Box>
       </Box>
-      <Box className="w-full bg-gradient-to-br from-[var(--color-primary)] to-[#2D0796] flex flex-col p-20">
+      <Box className="w-full bg-gradient-to-br from-primary to-[#2D0796] flex flex-col p-20">
         <Logo className="text-4xl text-white" />
         <Box className="flex h-full -mt-14">
           <Box className="flex flex-col justify-center">
             <AnimatedContainer className="w-full">
               <AnimatedItem>
-                <Typography className="text-white !font-light font-ubuntu !text-6xl">
+                <Typography className="text-white !font-light !font-ubuntu !text-6xl">
                   Evoluindo a gestão de benefícios...
                 </Typography>
               </AnimatedItem>

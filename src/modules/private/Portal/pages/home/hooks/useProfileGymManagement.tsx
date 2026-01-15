@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AddressForm } from "@sr/common/forms";
+import { AddressForm, UserDetailsForm } from "@sr/common/components/Forms";
 import { FormController } from "@sr/common/iu/components/forms";
 import {
   DrawerHeaderProps,
@@ -12,7 +12,6 @@ import { DrawerFormUserProps } from "@sr/modules/private/Profile/types";
 import { formUserValidationSchema } from "@sr/modules/private/Profile/validation";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { UserDetailsForm } from "../../../../../../common/forms/UserDetailsForm";
 
 export const useProfileGymManagement = ({ data, refresh }: ProfileProps) => {
   const [activeDrawerStep, setActiveDrawerStep] = useState(0);

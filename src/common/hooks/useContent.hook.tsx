@@ -4,14 +4,13 @@ export const useContentHook = () => {
   const t = useTranslateHook();
 
   return {
-    code: t("code"),
     personal: {
       title: t("personal.title"),
       name: t("name"),
       birthDate: t("birthDate"),
       code: t("personal.code"),
       identity: t("identity"),
-      identityTooltip: t("profile.tooltip.identity"),
+      gender: t("profile.gender"),
     },
     address: {
       title: t("address.title"),
@@ -32,6 +31,12 @@ export const useContentHook = () => {
     profile: {
       title: t("profile.title"),
       subtitle: t("profile.subtitle"),
+      code: t("profile.code"),
+    },
+    actions: {
+      title: t("actions.title"),
+      subtitle: t("actions.subtitle"),
+      code: t("actions.code"),
     },
   };
 };

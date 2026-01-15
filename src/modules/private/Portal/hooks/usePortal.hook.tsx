@@ -216,7 +216,7 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
   };
 
   const [activeComponent, setActiveComponent] =
-    useState<GymManagementType>("Home");
+    useState<GymManagementType>("Plans");
 
   const openComponent = (type: GymManagementType) => {
     setActiveComponent(type);

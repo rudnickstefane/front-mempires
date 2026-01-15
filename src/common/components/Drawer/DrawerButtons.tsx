@@ -17,7 +17,7 @@ export function DrawerButtons({
       <Button
         variant="outlined"
         onClick={activeStep === 0 ? onClose : handleBack}
-        className="w-[204px] h-[44px] !rounded-lg !text-neutral-900 border !border-neutral-500 px-5 !normal-case font-ubuntu !text-base"
+        className="w-[204px] h-[44px] !rounded-lg !text-neutral-900 border !border-neutral-500 px-5 !normal-case !font-poppins !text-base"
       >
         {activeStep === 0 ? "Cancelar" : "Voltar"}
       </Button>
@@ -25,7 +25,7 @@ export function DrawerButtons({
       {/* Botão Continuar/Concluir */}
       <Button
         onClick={handleNext}
-        className="w-[204px] h-[44px] !rounded-lg border px-5 !normal-case font-ubuntu !text-base !bg-[var(--color-primary)] !text-white"
+        className="w-[204px] h-[44px] !rounded-lg border px-5 !normal-case !font-poppins !text-base !bg-primary !text-white"
         endIcon={!isLastStep && <ArrowRight2 size={21} />}
       >
         {isLastStep ? "Concluir" : "Continuar"}

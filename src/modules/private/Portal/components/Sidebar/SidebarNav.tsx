@@ -32,7 +32,7 @@ export const SidebarNav = ({
       {/* Botão de Toggle do Menu */}
       <Button
         onClick={toggleMenu}
-        className={`font-poppins !font-light transition-all !text-[1rem] !rounded-xl !px-5  !mb-1 h-[50px] hover:bg-[#f3f3f3] !text-[#08041b] !normal-case ${
+        className={`!font-poppins !font-light transition-all !text-[1rem] !rounded-xl !px-5  !mb-1 h-[50px] hover:bg-[#f3f3f3] !text-[#08041b] !normal-case ${
           sidebarCollapsed
             ? "w-[5.2rem] justify-center"
             : "w-[13.5rem] justify-between"

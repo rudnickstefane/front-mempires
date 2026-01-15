@@ -53,14 +53,14 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
           {isProfileLoading ? (
             <Skeleton variant="circular" width={40} height={36} />
           ) : (
-            <Typography className="!text-lg !font-bold text-[#646464] font-ubuntu bg-neutral-200 !rounded-3xl p-2 w-[38px] h-9 flex justify-center items-center">
+            <Typography className="!text-lg !font-bold text-[#646464] !font-ubuntu bg-neutral-200 !rounded-3xl p-2 w-[38px] h-9 flex justify-center items-center">
               {avatarLabel(profile?.name)}
             </Typography>
           )}
 
           {!isCollapsed && (
             <Box className="flex flex-col text-left ml-3 overflow-hidden">
-              <Typography className="!text-sm font-semibold truncate w-24 font-ubuntu">
+              <Typography className="!text-sm font-semibold truncate w-24 !font-ubuntu">
                 {isProfileLoading ? (
                   <Skeleton className="w-[4rem]" />
                 ) : (

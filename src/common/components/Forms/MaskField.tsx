@@ -7,7 +7,7 @@ export interface MaskInputProps {
   definitions?: any;
 }
 
-export const maskField = forwardRef<HTMLElement, MaskInputProps>(
+export const MaskField = forwardRef<HTMLElement, MaskInputProps>(
   function TextMaskCustom(props) {
     const { mask, definitions, ...other } = props;
     return <IMaskInput {...other} mask={mask} definitions={definitions} />;

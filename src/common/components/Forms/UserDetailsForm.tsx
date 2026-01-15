@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
+import { Alert } from "@sr/common/ui/Alert";
 import { DrawerFormUserProps } from "@sr/modules/private/Profile/types";
 import { formatText } from "@sr/utils";
 import { useFormikContext } from "formik";
 import { ChangeEvent } from "react";
-import { Show } from "../components/Show";
+import { Show } from "../Show";
 
 interface UserDetailsFormProps {
   isBeneficiary?: boolean;
@@ -22,10 +23,35 @@ export function UserDetailsForm({
 
   return (
     <Box className="flex flex-col gap-6">
+      <Alert
+        title="Atenção"
+        message={
+          <>
+            Os dados de <strong>CPF</strong> e <strong>Nome Completo</strong>{" "}
+            são protegidos por segurança. Para garantir a integridade da sua
+            conta, alterações nesses campos só podem ser realizadas mediante
+            abertura de chamado junto ao nosso time de suporte.
+            <br />
+            <br />
+            Se precisar atualizar essas informações, nossa equipe está à
+            disposição para ajudar.
+          </>
+        }
+      />
       <TextField
         required
+        fullWidth
+        name="details.code"
+        label="CPF"
+        mask="000.000.000-00"
+        disabled
+      />
+      <TextField
+        required
+        fullWidth
         name="details.name"
         label="Nome completo"
+        disabled
         onChange={handleFormattedTextChange}
       />
       <TextField
@@ -34,12 +60,6 @@ export function UserDetailsForm({
         name="details.birthDate"
         label="Data de nascimento"
         onChangeDate={(newDate) => setFieldValue("details.birthDate", newDate)}
-      />
-      <TextField
-        required
-        name="details.code"
-        label="CPF"
-        mask="000.000.000-00"
       />
       <Show hidden={isBeneficiary}>
         <TextField required name="details.identity" label="Documento" />

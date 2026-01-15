@@ -44,13 +44,11 @@ export function ModuleViewport(props: Readonly<ContainerProps>) {
         {drawerContent?.content}
       </DrawerContainer>
 
-      <Box className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem]">
+      <Box className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem] bg-[#F6FAFD]">
         {header && <Box className="mb-5">{header}</Box>}
 
         <Box className="flex flex-row w-full">
-          <Box className="bg-white w-full rounded-3xl shadow-md p-5 border border-[#EAECF0]">
-            {children}
-          </Box>
+          <Box className="w-full">{children}</Box>
         </Box>
       </Box>
     </>

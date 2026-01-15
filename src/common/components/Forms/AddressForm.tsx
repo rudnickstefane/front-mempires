@@ -4,9 +4,9 @@ import { DrawerFormUserProps } from "@sr/modules/private/Profile/types";
 import { formatText } from "@sr/utils";
 import { useFormikContext } from "formik";
 import { ChangeEvent } from "react";
-import { CustomizedSwitch } from "../components/Switch/CustomizedSwitch";
-import { listUF } from "../constants";
-import { useContentHook } from "../hooks";
+import { listUF } from "../../constants";
+import { useContentHook } from "../../hooks";
+import { CustomizedSwitch } from "../Switch/CustomizedSwitch";
 
 export function AddressForm() {
   const label = useContentHook();

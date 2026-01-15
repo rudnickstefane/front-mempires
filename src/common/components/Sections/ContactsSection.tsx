@@ -11,7 +11,7 @@ export function ContactsSection({ label, data }: ContactsProps) {
     : [];
 
   return (
-    <Box className="flex flex-row flex-wrap justify-between gap-y-5 mt-4">
+    <Box className="flex flex-row flex-wrap gap-5 mt-4 w-full">
       {contacts.map((item, index) => (
         <GridBox key={item.id || index}>
           <GridText label={label.description} value={item.description} isBox />

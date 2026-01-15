@@ -139,7 +139,7 @@ export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
           labelPlacement={styledSwitch ? "start" : "end"}
           label={
             <Typography
-              className={`font-ubuntu !text-neutral20 !text-base ${
+              className={`!font-ubuntu !text-neutral20 !text-base ${
                 styledSwitch ? "!font-bold" : "!font-normal"
               }`}
             >

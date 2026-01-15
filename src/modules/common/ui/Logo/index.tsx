@@ -21,7 +21,7 @@ export function Logo({
       <Box className="flex flex-row items-center">
         {isApp && (
           <Box
-            className={`flex items-center justify-center font-galada text-white bg-[var(--color-primary)] text-3xl rounded-2xl w-12 !h-12 pt-2
+            className={`flex items-center justify-center font-galada text-white bg-primary-gradient text-3xl rounded-2xl w-12 !h-12 pt-2
             ${!isCollapsed && "mr-2"}
           `}
           >

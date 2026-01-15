@@ -30,13 +30,14 @@ export function SteppersWithForms(props: Readonly<SteppersWithFormsProps>) {
           borderRadius: "8px",
           padding: "1rem",
           fontSize: "0.975rem",
+          fontFamily: "Poppins",
         },
 
         /* ATIVO */
         "& .MuiStepLabel-label.Mui-active": {
           backgroundColor: "#F3F3F4",
           color: "#282929",
-          fontWeight: 700,
+          fontWeight: 500,
         },
 
         /* COMPLETED */
@@ -57,7 +58,7 @@ export function SteppersWithForms(props: Readonly<SteppersWithFormsProps>) {
         return (
           <Step key={`${value}-${index}`} disabled={isDisabled}>
             <StepLabel
-              className={`font-ubuntu ${!isDisabled ? "cursor-pointer" : ""}`}
+              className={`${!isDisabled ? "cursor-pointer" : ""}`}
               onClick={() => {
                 if (!isDisabled) onStepClick?.(index);
               }}

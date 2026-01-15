@@ -219,11 +219,6 @@ body::before {
 }
 
 /* Estilos de fundo */
-.bg-primary {
-  background-color: var(--bg-primary) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
-}
-
 .bg-primary-20 {
   background: linear-gradient(
     180deg,
@@ -377,17 +372,6 @@ body::before {
   transition-duration: 500ms;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.text-primary {
-  color: var(--color-tertiary) !important;
-  transition-duration: 500ms;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.text-primary:hover {
-  color: var(--color-primary) !important;
 }
 
 .text-secondary {
@@ -556,11 +540,92 @@ body::before {
   font-style: normal;
 }
 
+/* Poppins - Extra Light (200) */
 @font-face {
-  font-family: "Ubuntu Regular";
-  src: url("/src/assets/fonts/Ubuntu-Regular.ttf") format("truetype");
-  font-weight: normal;
+  font-family: "Poppins";
+  src: url("/src/assets/fonts/Poppins-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
   font-style: normal;
+}
+
+/* Poppins - Light (300) - SEU PADRÃO */
+@font-face {
+  font-family: "Poppins";
+  src: url("/src/assets/fonts/Poppins-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Poppins - Regular (400) */
+@font-face {
+  font-family: "Poppins";
+  src: url("/src/assets/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Poppins - Medium (500) */
+@font-face {
+  font-family: "Poppins";
+  src: url("/src/assets/fonts/Poppins-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Poppins - SemiBold (600) */
+@font-face {
+  font-family: "Poppins";
+  src: url("/src/assets/fonts/Poppins-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Poppins - Bold (700) */
+@font-face {
+  font-family: "Poppins";
+  src: url("/src/assets/fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Light */
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/src/assets/fonts/Ubuntu-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Regular */
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/src/assets/fonts/Ubuntu-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Medium */
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/src/assets/fonts/Ubuntu-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Bold */
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/src/assets/fonts/Ubuntu-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 .MuiPaginationItem-root.Mui-selected {
@@ -605,10 +670,6 @@ body::before {
   text-transform: none;
 }
 
-.font-poppins {
-  font-family: "Poppins", sans-serif !important;
-}
-
 .font-open-sans {
   font-family: "Open Sans", sans-serif !important;
 }
@@ -627,10 +688,6 @@ body::before {
 
 .font-roboto {
   font-family: "Roboto", sans-serif !important;
-}
-
-.font-ubuntu {
-  font-family: "Ubuntu", sans-serif !important;
 }
 
 .font-jost {

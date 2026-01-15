@@ -39,13 +39,13 @@ export const NavItem = ({
   const styles = {
     button:
       isSelected && !isSub
-        ? "!bg-[var(--color-primary)] !text-white"
+        ? "!bg-primary !text-white"
         : isSelected && isSub
         ? "!bg-gray-100 !text-gray-700"
         : "!text-gray-500",
     hover: isSub
       ? "!w-[11.95rem] hover:!bg-gray-100 hover:!text-gray-700"
-      : "hover:!bg-[var(--color-primary)] hover:!text-white",
+      : "hover:!bg-primary hover:!text-white",
     icon:
       isSelected && !isSub
         ? "text-white"
@@ -64,7 +64,7 @@ export const NavItem = ({
       <Button
         onClick={onClick}
         fullWidth
-        className={`font-poppins !normal-case !transition-all !h-12 !rounded-xl !my-0.5 !px-5 
+        className={`!font-poppins !normal-case !transition-all !h-12 !rounded-xl !my-0.5 !px-5 
           ${styles.button} ${styles.hover} ${
           isCollapsed
             ? "!w-[5.2rem] !justify-center"

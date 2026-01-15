@@ -1,70 +1,164 @@
 import { Box, Button, Skeleton, Typography } from "@mui/material";
+import { notify } from "@sr/common/iu/components/notifications";
+import { storage } from "@sr/common/storage";
 import { ProfileProps } from "@sr/common/types";
+import { Animated } from "@sr/common/ui/motion";
 import { avatarLabel } from "@sr/utils";
+import { Copy, Sms, TickSquare } from "iconsax-react";
+import { useState } from "react";
 
-export function ProfileHeader({ data }: Readonly<ProfileProps>) {
+export function ProfileHeader({ data, label }: Readonly<ProfileProps>) {
+  const [copied, setCopied] = useState(false);
+  const profileCode = `PFL-${storage.get<string>("profileCode")}`;
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(profileCode);
+      setCopied(true);
+
+      setTimeout(() => setCopied(false), 2000);
+
+      notify.success("Código copiado!");
+    } catch (err) {
+      const msg = "Ocorreu um erro ao copiar o código de perfil.";
+      notify.error(msg);
+    }
+  };
+
+  const calculateProgress = () => {
+    if (!data?.profile) return 0;
+    const fields = [
+      data.profile.name,
+      data.profile.code,
+      data.profile.identity,
+      data.profile.birthDate,
+      data.profile.gender,
+      data.profile.address?.zipCode,
+      data.profile.address?.address,
+      data.profile.address?.number,
+      data.profile.address?.district,
+      data.profile.address?.city,
+      data.profile.address?.state,
+      data.profile.contact?.email,
+      data.profile.contact?.phone,
+    ];
+    const filledFields = fields.filter((field) => !!field).length;
+    return Math.round((filledFields / fields.length) * 100);
+  };
+
+  const progress = calculateProgress();
+
   return (
-    <Box className="flex flex-row items-center">
-      <Box
-        component="label"
-        className="relative md:w-[8.373rem] md:h-[7.407rem] w-[8.373rem] h-[7.4067rem] !mr-3 !rounded-3xl !mt-1 group !color-secondary shadow-md"
-      >
-        <Button
-          component="label"
-          className="!m-0 !p-0 w-full h-full !rounded-3xl"
-        >
-          {data?.loading ? (
-            <Skeleton
-              variant="rectangular"
-              width="100%"
-              height="100%"
-              className="rounded-3xl"
-            />
-          ) : (
-            <Typography className="!text-[3rem] !font-bold text-[#646464] font-ubuntu">
-              {avatarLabel(data.profile?.name)}
-            </Typography>
-          )}
-          <Box className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#08041b4f] hover:bg-[#08041b6b] rounded-3xl"></Box>
-        </Button>
-      </Box>
-      <Box className="w-full md:mt-0 mt-5">
-        {data?.loading ? (
-          <>
-            <Skeleton
-              variant="text"
-              className="w-[40%] !h-[4rem]"
-              animation="wave"
-            />
-            <Box className="flex flex-row items-center -mt-3">
+    <Box className="flex flex-col">
+      <Box className="w-full flex justify-between items-center">
+        <Box className="w-full flex flex-row items-center">
+          <Box className="w-16 h-16 rounded-2xl flex items-center justify-center bg-primary-gradient">
+            {data?.loading ? (
               <Skeleton
-                variant="text"
-                className="!w-[20%] mr-1.5"
-                animation="wave"
+                variant="rectangular"
+                width="100%"
+                height="100%"
+                className="rounded-full"
               />
-            </Box>
-            <Skeleton
-              variant="text"
-              className="!w-[15%] !h-[1.7rem] mr-1.5 !mt-1"
-              animation="wave"
-            />
-            <Skeleton
-              variant="text"
-              className="!w-[35%] !h-[1.6rem] !-mt-[.1rem]"
-              animation="wave"
-            />
-          </>
-        ) : (
-          <>
-            <Typography className="md:!text-[2rem] !text-[1.5rem] truncate max-w-[55vw]">
-              {data.profile?.name}
-            </Typography>
-            <Typography className="flex flex-row items-center !text-[.9rem]">
-              {data.profile?.contact?.email}
-            </Typography>
-          </>
-        )}
+            ) : (
+              <Typography className="!text-[22px] !font-bold !text-white !font-poppins">
+                {avatarLabel(data.profile?.name)}
+              </Typography>
+            )}
+          </Box>
+          <Box className="md:mt-0 mt-5">
+            {data?.loading ? (
+              <>
+                <Skeleton
+                  variant="text"
+                  className="w-[40%] !h-[4rem]"
+                  animation="wave"
+                />
+                <Box className="flex flex-row items-center -mt-3">
+                  <Skeleton
+                    variant="text"
+                    className="!w-[20%] mr-1.5"
+                    animation="wave"
+                  />
+                </Box>
+                <Skeleton
+                  variant="text"
+                  className="!w-[15%] !h-[1.7rem] mr-1.5 !mt-1"
+                  animation="wave"
+                />
+                <Skeleton
+                  variant="text"
+                  className="!w-[35%] !h-[1.6rem] !-mt-[.1rem]"
+                  animation="wave"
+                />
+              </>
+            ) : (
+              <Box>
+                <Box className="ml-3">
+                  <Typography className="!text-lg !font-poppins !font-semibold !text-neutral-900 truncate max-w-[55vw]">
+                    {data.profile?.name}
+                  </Typography>
+                  <Typography className="!font-poppins flex flex-row items-center !text-sm !text-neutral-500">
+                    <Sms type="linear" size={19} className="mr-2" />
+                    {data.profile?.contact?.email}
+                  </Typography>
+                </Box>
+              </Box>
+            )}
+          </Box>
+        </Box>
+
+        <Box className="flex flex-col lg:flex-row text-right gap-y-1 lg:gap-x-4 w-full items-end lg:items-center justify-end">
+          <Typography className="!text-xs !text-neutral-500 !font-poppins">
+            {label?.code}
+          </Typography>
+          <Button
+            variant="outlined"
+            onClick={handleCopy}
+            className={`flex items-center gap-2 !px-3 !py-2 !rounded-lg font-medium text-foreground hover:bg-muted/80 transition-colors !text-sm !text-neutral-700 w-36 ${
+              copied
+                ? "!bg-success-50 !border-success-500"
+                : "!bg-neutral-100 !border-neutral-200"
+            }`}
+          >
+            {profileCode}
+            {copied ? (
+              <TickSquare
+                size={17}
+                variant="Bold"
+                className="text-success-500"
+              />
+            ) : (
+              <Copy type="linear" size={17} />
+            )}
+          </Button>
+        </Box>
       </Box>
+      {!data.loading && progress < 100 && (
+        <Box className="mt-6 w-full">
+          <Box className="flex justify-between items-center mb-2">
+            <Typography className="!font-poppins !font-semibold !text-sm !text-neutral-800">
+              Complete seu perfil
+            </Typography>
+            <Typography className="!font-poppins !font-semibold !text-sm !text-orange-500">
+              {progress}%
+            </Typography>
+          </Box>
+
+          <Box className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+            <Animated
+              type="progressBar"
+              progress={progress}
+              className="h-full bg-orange-500 rounded-full"
+            />
+          </Box>
+
+          <Typography className="!font-poppins !text-xs !text-neutral-500 !mt-2 !font-light leading-tight">
+            Complete seu perfil para ter acesso a todos os benefícios da
+            plataforma.
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 }

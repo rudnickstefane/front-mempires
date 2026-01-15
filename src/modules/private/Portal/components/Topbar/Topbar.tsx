@@ -31,7 +31,7 @@ export const Topbar = ({ methods }: any) => {
               {responseNotifications?.findNotifications?.some(
                 (n: any) => !n.read
               ) && (
-                <Box className="absolute top-1.5 right-1.5 text-[11px] w-[20.11px] h-[19.09px] bg-[var(--color-primary)] text-white rounded-[50%]">
+                <Box className="absolute top-1.5 right-1.5 text-[11px] w-[20.11px] h-[19.09px] bg-primary text-white rounded-[50%]">
                   5
                 </Box>
               )}

@@ -6,11 +6,11 @@ export const ptBR = {
   "menu.faq": "FAQ",
   "menu.help": "Ajuda",
 
-  code: "Código",
+  "profile.code": "Código de perfil",
 
   // Modulo do Perfil
-  "profile.title": "Meus Dados",
-  "profile.subtitle": "Informações Cadastrais",
+  "profile.title": "Meus dados",
+  "profile.subtitle": "Gerencie suas informações pessoais",
 
   // Dados pessoais
   "personal.title": "Dados pessoais",
@@ -18,8 +18,7 @@ export const ptBR = {
   birthDate: "Data de nascimento",
   "personal.code": "CPF",
   identity: "Documento",
-  "profile.tooltip.identity":
-    "Este campo refere-se a um outro documento de identificação (ex: RG, CNH ou RNE)",
+  "profile.gender": "Gênero",
 
   // Endereço
   "address.title": "Endereço",
@@ -36,6 +35,9 @@ export const ptBR = {
   description: "Descrição",
   phone: "Telefone",
   mail: "E-mail",
+
+  // Ações rápidas
+  "actions.title": "Ações rápidas",
 
   // Seções do menu Explorar
   "menu.explore.latest": "Últimas",

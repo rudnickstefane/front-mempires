@@ -5,6 +5,7 @@ export type PersonalDataProps = {
   birthDate: string;
   code: string;
   identity: string;
+  gender: string;
 };
 
 export type PersonalProps = {

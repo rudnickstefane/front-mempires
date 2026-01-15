@@ -1,17 +1,21 @@
-import { Box, Button, Skeleton } from "@mui/material";
+import { Box, Button, Card, CardContent, Skeleton } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
 import { Edit } from "iconsax-react";
 import { ReactNode, useMemo } from "react";
+import { Show } from "../Show";
 
 interface GridProps {
-  title: string;
+  title?: string;
+  icon?: ReactNode;
   loading: boolean;
   skeletonCount: number;
-  onEdit: () => void;
+  onEdit?: () => void;
   children: ReactNode;
 }
 
 export const Grid = ({
   title,
+  icon,
   loading,
   skeletonCount,
   onEdit,
@@ -24,32 +28,53 @@ export const Grid = ({
   }, [skeletonCount]);
 
   return (
-    <Box className="mt-5 border border-neutral-300 rounded-lg p-5">
-      <Box className="!text-neutral-900 font-ubuntu !text-base !font-semibold !flex !items-center !gap-4">
-        {title}
-        <Button
-          className="!min-w-5 !mr-5 hover:!text-[var(--color-primary)] !text-[#171717] !transition-all !p-0 !bg-white"
-          onClick={onEdit}
-        >
-          <Edit size={22} variant="Linear" />
-        </Button>
-      </Box>
-
-      {loading ? (
-        <Box className="flex flex-col gap-2 mt-2">
-          {skeletonWidths.map((width, index) => (
-            <Skeleton
-              key={index}
-              variant="text"
-              animation="wave"
-              style={{ width: `${width}%` }}
-              className="!h-7"
-            />
-          ))}
-        </Box>
-      ) : (
-        children
-      )}
+    <Box className="w-full">
+      <Card className="bg-white !rounded-2xl p-6 !border-0 !shadow-soft hover:!shadow-lg transition-all duration-300 w-full h-full">
+        <Show hidden={!title}>
+          <CardContent className="text-rhino-950 !font-poppins text-lg font-semibold flex justify-between items-center gap-4 !p-0">
+            <Box className="flex flex-row items-center gap-3">
+              {icon && (
+                <Box className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary">
+                  {icon}
+                </Box>
+              )}
+              {title}
+            </Box>
+            {onEdit && (
+              <Button
+                className="!min-w-8 !h-8 !text-[#171717] hover:!text-primary !transition-all !p-0 !bg-white hover:!bg-neutral-100 hover:scale-105 !rounded-lg"
+                onClick={onEdit}
+              >
+                <Edit size={22} variant="Linear" />
+              </Button>
+            )}
+          </CardContent>
+        </Show>
+        <AnimatePresence mode="wait">
+          {loading ? (
+            <Box className="flex flex-col gap-2 mt-2">
+              {skeletonWidths.map((width, index) => (
+                <Skeleton
+                  key={index}
+                  variant="text"
+                  animation="wave"
+                  style={{ width: `${width}%` }}
+                  className="!h-7"
+                />
+              ))}
+            </Box>
+          ) : (
+            <motion.div
+              key="content"
+              initial="hidden"
+              animate="visible"
+              className="w-full"
+            >
+              {children}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Card>
     </Box>
   );
 };
