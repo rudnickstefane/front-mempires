@@ -4,20 +4,20 @@ import { animations, AnimationType } from "./Variants";
 interface AnimatedProps extends HTMLMotionProps<"div"> {
   type?: AnimationType;
   delay?: number;
-  progress?: number; // Exclusivo para barra de progresso
+  progress?: number;
   once?: boolean;
 }
 
 export function Animated({
   children,
-  type = "item", // Padrão é o seu childVariants
+  type = "item",
   delay = 0,
   progress,
   className,
   once = true,
+  style,
   ...props
 }: AnimatedProps) {
-  // Caso especial: Barra de Progresso
   if (type === "progressBar") {
     return (
       <motion.div
@@ -35,13 +35,10 @@ export function Animated({
       variants={animations[type]}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: once, amount: 0.2 }}
-      transition={{
-        delay: delay,
-        // Se for o seu 'item' padrão, ele já tem transition interna,
-        // mas aqui permitimos sobrescrever o delay se necessário.
-      }}
+      viewport={{ once, amount: 0.1 }}
+      transition={{ delay }}
       className={className}
+      style={{ display: "contents", ...style }}
       {...props}
     >
       {children}

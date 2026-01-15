@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardContent, Skeleton } from "@mui/material";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Edit } from "iconsax-react";
 import { ReactNode, useMemo } from "react";
 import { Show } from "../Show";
@@ -50,30 +50,28 @@ export const Grid = ({
             )}
           </CardContent>
         </Show>
-        <AnimatePresence mode="wait">
-          {loading ? (
-            <Box className="flex flex-col gap-2 mt-2">
-              {skeletonWidths.map((width, index) => (
-                <Skeleton
-                  key={index}
-                  variant="text"
-                  animation="wave"
-                  style={{ width: `${width}%` }}
-                  className="!h-7"
-                />
-              ))}
-            </Box>
-          ) : (
-            <motion.div
-              key="content"
-              initial="hidden"
-              animate="visible"
-              className="w-full"
-            >
-              {children}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {loading ? (
+          <Box className="flex flex-col gap-2 mt-2">
+            {skeletonWidths.map((width, index) => (
+              <Skeleton
+                key={index}
+                variant="text"
+                animation="wave"
+                style={{ width: `${width}%` }}
+                className="!h-7"
+              />
+            ))}
+          </Box>
+        ) : (
+          <motion.div
+            key="content"
+            initial="hidden"
+            animate="visible"
+            className="w-full"
+          >
+            {children}
+          </motion.div>
+        )}
       </Card>
     </Box>
   );
