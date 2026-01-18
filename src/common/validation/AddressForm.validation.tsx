@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const addressValidationSchema = Yup.object().shape({
-  zipcode: Yup.string().required("required"),
+  zipCode: Yup.string().required("required"),
   address: Yup.string().required("required"),
   number: Yup.string().test("numberRequired", "required", function (value) {
     const withoutNumber = this.parent.withoutNumber;

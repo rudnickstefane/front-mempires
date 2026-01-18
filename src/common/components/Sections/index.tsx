@@ -1,4 +1,4 @@
-export { AddressSection } from "./AddressSection";
-export { ContactsSection } from "./ContactsSection";
-export { PersonalSection } from "./PersonalSection";
+export { Address } from "./Address";
+export { Contacts } from "./Contacts";
+export { Personal } from "./Personal";
 export { QuickActions } from "./QuickActions";

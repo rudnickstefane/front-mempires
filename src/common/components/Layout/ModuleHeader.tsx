@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
+import { Animated } from "@sr/common/ui/motion/Animated";
 import { PiUserPlus } from "react-icons/pi";
 
 export type ModuleHeaderProps = {
@@ -17,7 +18,10 @@ export function ModuleHeader({
   labelButton,
 }: Readonly<ModuleHeaderProps>) {
   return (
-    <Box className="w-full flex flex-row items-center justify-between mb-9 mt-2">
+    <Animated
+      variant="header"
+      className="w-full flex flex-row items-center justify-between mb-9 mt-2"
+    >
       <Box>
         <Typography className="flex flex-row items-center !text-[32px] !mb-0 !text-rhino-950  !font-poppins !font-semibold">
           {label.title}
@@ -51,6 +55,6 @@ export function ModuleHeader({
           </Button>
         )}
       </Box>
-    </Box>
+    </Animated>
   );
 }

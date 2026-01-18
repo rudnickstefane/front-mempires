@@ -8,7 +8,5 @@ export type DrawerContainerProps = {
   activeStep: number;
   children: ReactNode;
   onClose: () => void;
-  handleNext?: () => Promise<void>;
-  handleBack?: () => void;
   onStepClick?: (step: number) => void;
 };

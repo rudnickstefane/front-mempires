@@ -35,8 +35,6 @@ export const useContentHook = () => {
     },
     actions: {
       title: t("actions.title"),
-      subtitle: t("actions.subtitle"),
-      code: t("actions.code"),
     },
   };
 };

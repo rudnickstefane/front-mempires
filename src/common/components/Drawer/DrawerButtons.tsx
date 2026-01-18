@@ -8,6 +8,7 @@ export function DrawerButtons({
   onClose,
   handleBack,
   handleNext,
+  isValid,
 }: DrawerStepsProps) {
   const isLastStep = activeStep === title.length - 1;
 
@@ -24,9 +25,18 @@ export function DrawerButtons({
 
       {/* Botão Continuar/Concluir */}
       <Button
-        onClick={handleNext}
-        className="w-[204px] h-[44px] !rounded-lg border px-5 !normal-case !font-poppins !text-base !bg-primary !text-white"
+        type={isLastStep ? "submit" : "button"}
+        onClick={(e) => {
+          if (isLastStep) return;
+
+          e.preventDefault();
+          handleNext?.();
+        }}
+        className={`w-[204px] h-[44px] !rounded-lg border px-5 !normal-case !font-poppins !text-base !bg-primary !text-white ${
+          !isValid ? "!cursor-not-allowed !pointer-events-auto" : ""
+        }`}
         endIcon={!isLastStep && <ArrowRight2 size={21} />}
+        disabled={!isValid}
       >
         {isLastStep ? "Concluir" : "Continuar"}
       </Button>

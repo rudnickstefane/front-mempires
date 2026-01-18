@@ -27,7 +27,6 @@ export const initialUserDetailsValues = (
       state: data?.address?.state || "",
     },
     contact: {
-      // Se seu dado vier como array, pegue o primeiro, se for objeto, use direto
       type: data?.contact?.type || "",
       description: data?.contact?.description || "",
       email: data?.contact?.email || "",

@@ -10,8 +10,6 @@ interface DrawerContentType {
   steps: string[];
   activeStep: number;
   content: ReactNode;
-  handleNext?: () => Promise<void>;
-  handleBack?: () => void;
   onStepClick?: (step: number) => void;
 }
 
@@ -37,8 +35,6 @@ export function ModuleViewport(props: Readonly<ContainerProps>) {
         headerStep={drawerContent?.header?.headerStep || ""}
         steps={drawerContent?.steps || []}
         activeStep={drawerContent?.activeStep || 0}
-        handleBack={drawerContent?.handleBack}
-        handleNext={drawerContent?.handleNext}
         onStepClick={drawerContent?.onStepClick}
       >
         {drawerContent?.content}

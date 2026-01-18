@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardContent, Skeleton } from "@mui/material";
-import { motion } from "framer-motion";
+import { Animated } from "@sr/common/ui/motion";
 import { Edit } from "iconsax-react";
 import { ReactNode, useMemo } from "react";
 import { Show } from "../Show";
@@ -28,7 +28,7 @@ export const Grid = ({
   }, [skeletonCount]);
 
   return (
-    <Box className="w-full">
+    <Animated variant="itemUp" isChild className="w-full">
       <Card className="bg-white !rounded-2xl p-6 !border-0 !shadow-soft hover:!shadow-lg transition-all duration-300 w-full h-full">
         <Show hidden={!title}>
           <CardContent className="text-rhino-950 !font-poppins text-lg font-semibold flex justify-between items-center gap-4 !p-0">
@@ -63,16 +63,9 @@ export const Grid = ({
             ))}
           </Box>
         ) : (
-          <motion.div
-            key="content"
-            initial="hidden"
-            animate="visible"
-            className="w-full"
-          >
-            {children}
-          </motion.div>
+          <Box className="w-full">{children}</Box>
         )}
       </Card>
-    </Box>
+    </Animated>
   );
 };

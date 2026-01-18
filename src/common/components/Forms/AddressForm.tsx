@@ -31,7 +31,7 @@ export function AddressForm() {
     <Box className="flex flex-col gap-6">
       <TextField
         required
-        name="address.zipcode"
+        name="address.zipCode"
         label={label.address.zipCode}
         mask="00000-000"
         showButton

@@ -9,5 +9,5 @@ export const stepProfileFields: Record<number, string[]> = {
     "address.city",
     "address.state",
   ],
-  2: ["contact.email", "contact.phone"],
+  2: ["contact.description", "contact.email", "contact.phone"],
 };

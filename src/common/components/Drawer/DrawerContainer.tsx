@@ -1,15 +1,12 @@
 import { Box, Drawer } from "@mui/material";
 import { DrawerContainerProps } from "@sr/common/types";
 import { SteppersWithForms } from "../Stepper";
-import { DrawerButtons } from "./DrawerButtons";
 import { DrawerHeader } from "./DrawerHeader";
 
 export function DrawerContainer(props: Readonly<DrawerContainerProps>) {
   const {
     isOpen,
     onClose,
-    handleBack,
-    handleNext,
     title,
     headerStep,
     steps,
@@ -41,13 +38,6 @@ export function DrawerContainer(props: Readonly<DrawerContainerProps>) {
           />
           <Box className="flex flex-col w-full md:pr-0 pr-2 mt-2">
             {children}
-            <DrawerButtons
-              activeStep={activeStep}
-              title={steps}
-              onClose={onClose}
-              handleBack={handleBack}
-              handleNext={handleNext}
-            />
           </Box>
         </Box>
       </Box>

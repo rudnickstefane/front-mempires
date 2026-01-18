@@ -4,4 +4,5 @@ export interface DrawerStepsProps {
   handleNext?: () => Promise<void>;
   handleBack?: () => void;
   onClose?: () => void;
+  isValid?: boolean;
 }

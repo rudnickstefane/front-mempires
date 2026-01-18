@@ -39,7 +39,7 @@ export const SnackbarContent = forwardRef<HTMLDivElement, CustomContentProps>(
     return (
       <Box
         ref={ref}
-        className={`flex flex-row py-4 px-5 rounded-xl ${style.bg} shadow-lg min-w-[320px] max-w-[400px] transition-all notification show`}
+        className={`flex flex-row py-4 px-5 rounded-xl ${style.bg} shadow-lg min-w-[320px] max-w-[600px] transition-all notification show`}
         role="alert"
       >
         <Box

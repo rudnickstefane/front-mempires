@@ -5,6 +5,7 @@ export type { CreateAccessTokenResponse } from "./create-access-token-response.t
 export type { DrawerContainerProps } from "./DrawerContainerProps.type";
 export type { DrawerHeaderProps } from "./DrawerHeaderProps.type";
 export type { DrawerStepsProps } from "./DrawerStepsProps.type";
+export type { MultiStepFormProps } from "./MultiStepFormProps.type";
 export type { PersonalProps } from "./PersonalProps.type";
 export type { ProfileProps } from "./ProfileProps.type";
 export type { ShowProps } from "./ShowProps.type";

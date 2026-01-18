@@ -147,9 +147,13 @@ export function ProfileHeader({ data, label }: Readonly<ProfileProps>) {
 
           <Box className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
             <Animated
-              type="progressBar"
-              progress={progress}
-              className="h-full bg-orange-500 rounded-full"
+              variant="progress"
+              custom={progress}
+              className="h-full rounded-full bg-orange-500"
+              style={{
+                background:
+                  "linear-gradient(135deg, bg-orange-500 0%, bg-orange-900 100%)",
+              }}
             />
           </Box>
 
