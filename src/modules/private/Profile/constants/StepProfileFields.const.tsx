@@ -1,7 +1,7 @@
 export const stepProfileFields: Record<number, string[]> = {
   0: ["details.name", "details.birthDate", "details.code"],
   1: [
-    "address.zipcode",
+    "address.zipCode",
     "address.address",
     "address.number",
     "address.complement",

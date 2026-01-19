@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
 import { childVariants } from "./Variants";
 
 interface AnimatedItemProps {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
 }
 

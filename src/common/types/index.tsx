@@ -2,6 +2,7 @@ export type { AddressDataProps, AddressProps } from "./AddressProps.type";
 export type { CompanyProps } from "./CompanyProps.type";
 export type { ContactsDataProps, ContactsProps } from "./ContactsProps.type";
 export type { CreateAccessTokenResponse } from "./create-access-token-response.type";
+export type { CustomTextFieldProps } from "./CustomTextFieldProps.type";
 export type { DrawerContainerProps } from "./DrawerContainerProps.type";
 export type { DrawerHeaderProps } from "./DrawerHeaderProps.type";
 export type { DrawerStepsProps } from "./DrawerStepsProps.type";

@@ -1,6 +1,7 @@
 import { ProfileDetails } from "@sr/modules/common/types";
 
 export type ContactsDataProps = {
+  id: number;
   type?: string;
   description: string;
   email: string;

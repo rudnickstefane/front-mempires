@@ -3,22 +3,24 @@
 import { Box } from "@mui/material";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { DrawerFormUserProps } from "@sr/modules/private/Profile/types";
-import { formatText } from "@sr/utils";
-import { getIn, useFormikContext } from "formik";
+import { formatPhoneNumber, formatText } from "@sr/utils";
+import { useFormikContext } from "formik";
 import { ChangeEvent } from "react";
 
 export function ContactsForm() {
-  const { values, setFieldValue } = useFormikContext<DrawerFormUserProps>();
-
-  const phoneValue = getIn(values, "contact.phone") || "";
-  const rawNumbers = phoneValue.replace(/\D/g, "");
-  const phoneMask =
-    rawNumbers.length <= 10 ? "(00) 0000-0000" : "(00) 0 0000-0000";
+  const { setFieldValue } = useFormikContext<DrawerFormUserProps>();
 
   const handleFormattedTextChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFieldValue(name, formatText(value));
   };
+
+  const handlePhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    // Chama sua função exportada enquanto o usuário digita
+    setFieldValue(name, formatPhoneNumber(value));
+  };
+
   return (
     <Box className="flex flex-col gap-6">
       <Box className="flex flex-col gap-4">
@@ -36,7 +38,7 @@ export function ContactsForm() {
             fullWidth
             name="contact.phone"
             label="Telefone"
-            mask={phoneMask}
+            onChange={handlePhoneChange}
           />
 
           <TextField required name="contact.email" label="E-mail" />

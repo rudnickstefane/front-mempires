@@ -24,7 +24,7 @@ export const useSignUpGymForm = ({
 }: {
   enqueueSnackbar: (
     message: string,
-    options?: { variant: VariantType }
+    options?: { variant: VariantType },
   ) => void;
 }) => {
   // localStorage.clear();
@@ -130,7 +130,7 @@ export const useSignUpGymForm = ({
         if (attemptCount >= 5) {
           return enqueueSnackbar(
             "Erro ao criar conta. Entre em contato com nosso suporte.",
-            { variant: "error" }
+            { variant: "error" },
           );
         }
 
@@ -147,14 +147,14 @@ export const useSignUpGymForm = ({
   const createToken = async () => {
     try {
       const variablesCreateToken = {
-        origin: "MANAGEMENT",
+        origin: "PORTAL",
         login: formData.email,
         password: formData.password,
       };
 
       const responseCreateToken: CreateTokenResponse = await request(
         MutationCreateToken,
-        variablesCreateToken
+        variablesCreateToken,
       );
       const companyCode =
         responseCreateToken.createToken.user.profiles[0].companyCode;
@@ -163,27 +163,27 @@ export const useSignUpGymForm = ({
 
       localStorage.setItem(
         "@iflexfit:token",
-        responseCreateToken.createToken.token
+        responseCreateToken.createToken.token,
       );
       localStorage.setItem(
         "@iflexfit:role",
-        responseCreateToken.createToken.user.profiles[0].role
+        responseCreateToken.createToken.user.profiles[0].role,
       );
       localStorage.setItem(
         "@iflexfit:status",
-        responseCreateToken.createToken.user.profiles[0].status
+        responseCreateToken.createToken.user.profiles[0].status,
       );
       localStorage.setItem(
         "@iflexfit:email",
-        responseCreateToken.createToken.user.email
+        responseCreateToken.createToken.user.email,
       );
       localStorage.setItem(
         "@iflexfit:name",
-        responseCreateToken.createToken.user.name
+        responseCreateToken.createToken.user.name,
       );
       localStorage.setItem(
         "@iflexfit:profileCode",
-        responseCreateToken.createToken.user.profileCode
+        responseCreateToken.createToken.user.profileCode,
       );
       localStorage.setItem("@iflexfit:companyCode", companyCode ?? assignment);
 

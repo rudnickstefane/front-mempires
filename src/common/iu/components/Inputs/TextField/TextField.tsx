@@ -9,47 +9,15 @@ import {
   InputAdornment,
   MenuItem,
   TextField as MuiTextField,
-  TextFieldProps as MuiTextFieldProps,
   Tooltip,
   Typography,
 } from "@mui/material";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MaskField } from "@sr/common/components/Forms";
-import { ptBR } from "date-fns/locale";
+import { CustomTextFieldProps } from "@sr/common/types";
 import { useField, useFormikContext } from "formik";
-import { ArrowDown2, Calendar, Eye, EyeSlash } from "iconsax-react";
-import { ElementType, FocusEvent, ReactNode, useState } from "react";
-
-export interface SelectOption {
-  label?: string;
-  value: string | number;
-}
-
-export type CustomTextFieldProps = Omit<MuiTextFieldProps, "onChange"> & {
-  name: string;
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
-  selectIcon?: ElementType;
-  errorMessage?: string;
-  showPasswordToggle?: boolean;
-  onTogglePassword?: () => void;
-  requiredMessage?: string;
-  datePicker?: boolean;
-  onChangeDate?: (value: Date | null) => void;
-  onClear?: boolean;
-  options?: SelectOption[];
-  mask?: string | Array<string | RegExp>;
-  definitions?: Record<string, RegExp>;
-  maxLength?: number;
-  viewCountCharacter?: boolean;
-  showButton?: boolean;
-  labelButton?: string;
-  hook?: (value: string) => void | Promise<void>;
-  onChange?: MuiTextFieldProps["onChange"];
-  tooltip?: ReactNode;
-};
+import { ArrowDown2, Eye, EyeSlash } from "iconsax-react";
+import { FocusEvent, useState } from "react";
+import { DatePickerField } from "../DatePicker/DatePickerField";
 
 export function TextField({
   startIcon,
@@ -84,22 +52,18 @@ export function TextField({
   const remaining = maxLength ? maxLength - (field.value?.length || 0) : null;
 
   const handleFocus = (
-    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setIsFocused(true);
     if (props.onFocus) props.onFocus(e);
   };
 
   const handleBlur = (
-    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setIsFocused(false);
     field.onBlur(e);
     if (props.onBlur) props.onBlur(e);
-  };
-
-  const handleClear = () => {
-    setFieldValue(props.name, "");
   };
 
   const handleHookAction = async () => {
@@ -112,51 +76,37 @@ export function TextField({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (
+      e.key === "Enter" &&
+      showButton &&
+      field.value &&
+      !hasError &&
+      !disabled
+    ) {
+      e.preventDefault();
+      handleHookAction();
+    }
+  };
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    if (mask) {
+      e.preventDefault();
+      const pastedData = e.clipboardData.getData("text");
+      // Remove tudo que não é número (ajuste a Regex se a máscara permitir letras)
+      const cleanValue = pastedData.replace(/\D/g, "");
+      setFieldValue(props.name, cleanValue);
+    }
+  };
+
   if (datePicker)
     return (
-      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
-        <FormControl fullWidth={props.fullWidth} margin={props.margin}>
-          <DatePicker
-            label={props.label}
-            format="dd/MM/yyyy"
-            value={field.value ? new Date(field.value) : null}
-            onChange={onChangeDate}
-            slots={{
-              openPickerIcon: () => endIcon || <Calendar size={20} />,
-            }}
-            slotProps={{
-              inputAdornment: {
-                position: "end",
-                sx: {
-                  paddingRight: "8px",
-                },
-              },
-              textField: {
-                ...props,
-                name: field.name,
-                onBlur: field.onBlur,
-                error: hasError,
-                helperText: hasError
-                  ? isRequiredError
-                    ? requiredMessage
-                    : meta.error
-                  : "",
-                variant: "outlined",
-                placeholder: "DD/MM/AAAA",
-                fullWidth: true,
-              },
-              field: {
-                clearable: true,
-                shouldRespectLeadingZeros: true,
-              },
-            }}
-            localeText={{
-              fieldYearPlaceholder: () => "AAAA",
-              fieldClearLabel: "",
-            }}
-          />
-        </FormControl>
-      </LocalizationProvider>
+      <DatePickerField
+        field={field}
+        meta={meta}
+        onChangeDate={onChangeDate!}
+        {...props}
+      />
     );
 
   return (
@@ -168,6 +118,8 @@ export function TextField({
       <MuiTextField
         {...field}
         {...props}
+        onKeyDown={handleKeyDown}
+        onPaste={handlePaste}
         disabled={disabled}
         select={!!options}
         error={hasError}
@@ -194,9 +146,12 @@ export function TextField({
                   <Button
                     variant="text"
                     disabled={disabled}
-                    onMouseDown={(e) => e.preventDefault()}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
                     onClick={handleHookAction}
-                    className="!font-ubuntu !text-base !font-semibold !normal-case !text-primary"
+                    className="!font-ubuntu !text-base !font-semibold !normal-case !text-primary !rounded-md"
                     sx={{
                       "&.Mui-disabled": {
                         backgroundColor: "transparent !important",
@@ -213,7 +168,7 @@ export function TextField({
 
                 {!options && field.value && !disabled && (
                   <IconButton
-                    onClick={handleClear}
+                    onClick={() => setFieldValue(props.name, "")}
                     edge="end"
                     className="clear-button !-mr-1"
                     sx={{

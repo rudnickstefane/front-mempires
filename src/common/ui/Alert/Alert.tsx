@@ -1,13 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { CloseCircle, Danger, InfoCircle, TickCircle } from "iconsax-react";
-import { ReactNode } from "react";
 
 type AlertVariant = "warning" | "info" | "success" | "error";
 
 interface AlertProps {
   variant?: AlertVariant;
   title?: string;
-  message: ReactNode;
+  message: React.ReactNode;
 }
 
 const styles = {
@@ -27,8 +26,8 @@ const styles = {
     Icon: TickCircle,
   },
   error: {
-    bg: "bg-error-100",
-    text: "text-error-800",
+    bg: "bg-danger-100",
+    text: "text-danger-800",
     Icon: CloseCircle,
   },
 };

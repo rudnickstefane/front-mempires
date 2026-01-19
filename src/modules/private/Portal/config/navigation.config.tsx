@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Typography } from "@mui/material";
-import { ReactNode } from "react";
 import { LuScreenShareOff } from "react-icons/lu";
 import Profile from "../../Profile";
 import ApplicationGymAdmin from "../pages/home/pages/Admin/ApplicationGymAdmin";
@@ -15,9 +14,9 @@ import Marketplace from "../pages/Marketplace";
 
 export const renderModule = (
   type: GymManagementType,
-  props: { data: any; refresh: (source: string) => void }
+  props: { data: any; refresh: (source: string) => Promise<void> },
 ) => {
-  const modules: Record<GymManagementType, ReactNode> = {
+  const modules: Record<GymManagementType, React.ReactNode> = {
     Home: <HomeGymManagement />,
     Application: <ApplicationGymAdmin />,
     Partners: <StudentsGymAdmin />,

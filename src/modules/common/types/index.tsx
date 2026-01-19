@@ -10,6 +10,7 @@ export type { EditCompanyFormData } from "./EditCompanyFormData.type";
 export type { EditCompanyFormErrors } from "./EditCompanyFormErrors.type";
 export type { EditProfileFormData } from "./EditProfileFormData.type";
 export type { EditProfileFormErrors } from "./EditProfileFormErrors.type";
+export type { FindAddressResponse } from "./FindAddressResponse.type";
 export type { FindCategoriesResponse } from "./FindCategoriesResponse.type";
 export type { FindCheckUsernameAvailabilityResponse } from "./FindCheckUsernameAvailabilityResponse.type";
 export type { FindClassesResponse } from "./FindClassesResponse.type";

@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
 import { containerVariants } from "./Variants";
 
 interface AnimatedContainerProps {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
   threshold?: number;
   once?: boolean;

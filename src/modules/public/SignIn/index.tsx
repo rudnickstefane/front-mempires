@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, Link, Typography } from "@mui/material";
-import { FormController } from "@sr/common/iu/components/forms";
+import { FormController } from "@sr/common/iu/components/Forms";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { AnimatedContainer } from "@sr/common/ui/motion/AnimatedContainer";
 import { AnimatedItem } from "@sr/common/ui/motion/AnimatedItem";

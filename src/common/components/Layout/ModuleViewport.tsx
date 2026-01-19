@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { ReactNode } from "react";
 import { DrawerContainer } from "../Drawer";
 
 interface DrawerContentType {
@@ -9,17 +8,17 @@ interface DrawerContentType {
   };
   steps: string[];
   activeStep: number;
-  content: ReactNode;
+  content: React.ReactNode;
   onStepClick?: (step: number) => void;
 }
 
 interface ContainerProps {
-  header?: ReactNode;
-  children: ReactNode;
+  header?: React.ReactNode;
+  children: React.ReactNode;
   isDrawerOpen?: boolean;
   onCloseDrawer?: () => void;
   drawerContent?: DrawerContentType;
-  content?: ReactNode;
+  content?: React.ReactNode;
 }
 
 export function ModuleViewport(props: Readonly<ContainerProps>) {

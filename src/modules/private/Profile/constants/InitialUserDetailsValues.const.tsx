@@ -1,9 +1,10 @@
+import { getStateAbbreviation } from "@sr/common/utils";
 import { ProfileDetails } from "@sr/modules/common/types";
-import { formatIdentity, formatZipCode } from "@sr/utils";
+import { formatIdentity, formatPhoneNumber, formatZipCode } from "@sr/utils";
 import { DrawerFormUserProps } from "../types";
 
 export const initialUserDetailsValues = (
-  data?: ProfileDetails
+  data?: ProfileDetails,
 ): DrawerFormUserProps => {
   return {
     details: {
@@ -16,6 +17,7 @@ export const initialUserDetailsValues = (
       birthDate: data?.birthDate || "",
     },
     address: {
+      id: data?.address?.id || -1,
       zipCode: data?.address?.zipCode
         ? formatZipCode(data.address.zipCode)
         : "",
@@ -24,13 +26,16 @@ export const initialUserDetailsValues = (
       complement: data?.address?.complement || "",
       district: data?.address?.district || "",
       city: data?.address?.city || "",
-      state: data?.address?.state || "",
+      state: getStateAbbreviation(data?.address?.state || ""),
     },
     contact: {
+      id: data?.contact?.id || -1,
       type: data?.contact?.type || "",
       description: data?.contact?.description || "",
       email: data?.contact?.email || "",
-      phone: data?.contact?.phone || "",
+      phone: data?.contact?.phone
+        ? formatPhoneNumber(data?.contact?.phone)
+        : "",
       status: data?.contact?.status || "",
     },
   };

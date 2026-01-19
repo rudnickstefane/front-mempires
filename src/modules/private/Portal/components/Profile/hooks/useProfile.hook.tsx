@@ -19,7 +19,7 @@ export const useProfileHook = () => {
     try {
       const response = await request<FindUserDetailsResponse>(
         QueryFindUserDetails,
-        { profileCode }
+        { profileCode },
       );
 
       setResponseProfileDetails(response);
@@ -46,5 +46,6 @@ export const useProfileHook = () => {
     responseProfileDetails,
     expandedMenus,
     setExpandedMenus,
+    findUserDetails,
   };
 };

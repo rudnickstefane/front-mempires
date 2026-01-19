@@ -14,7 +14,7 @@ export const useMultiStepForm = ({
   const getFieldError = useCallback(
     (field: string, source: any) =>
       field.split(".").reduce((obj, key) => obj?.[key], source),
-    []
+    [],
   );
 
   const isStepValid = useCallback(
@@ -23,16 +23,12 @@ export const useMultiStepForm = ({
       return fields.every((field) => {
         const error = getFieldError(field, formData.errors);
         const value = getFieldError(field, formData.values);
-        const isRequiredError = !!error;
-        return (
-          !isRequiredError &&
-          value !== undefined &&
-          value !== null &&
-          value !== ""
-        );
+
+        const hasError = !!error;
+        return !hasError && value !== undefined;
       });
     },
-    [formData.errors, formData.values, stepFields, getFieldError]
+    [formData.errors, formData.values, stepFields, getFieldError],
   );
 
   useEffect(() => {
@@ -40,13 +36,13 @@ export const useMultiStepForm = ({
     if (!shouldRedirect) return;
 
     const firstStepWithError = stepsConfig.findIndex(
-      (s) => !!(formData.errors as any)[s.key]
+      (s) => !!(formData.errors as any)[s.key],
     );
 
     if (firstStepWithError !== -1 && firstStepWithError !== activeStep) {
       setActiveStep(firstStepWithError);
       notify.warning(
-        `Ops! Algumas informações em "${stepsConfig[firstStepWithError].title}" precisam de sua atenção.`
+        `Ops! Algumas informações em "${stepsConfig[firstStepWithError].title}" precisam de sua atenção.`,
       );
     }
   }, [
@@ -70,7 +66,7 @@ export const useMultiStepForm = ({
     const errors = await formData.validateForm();
     const fieldsInCurrentStep = stepFields[activeStep] || [];
     const hasError = fieldsInCurrentStep.some(
-      (f) => !!getFieldError(f, errors)
+      (f) => !!getFieldError(f, errors),
     );
 
     fieldsInCurrentStep.forEach((f) => formData.setFieldTouched(f, true));

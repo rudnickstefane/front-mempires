@@ -1,16 +1,16 @@
 import { Box, Button, Card, CardContent, Skeleton } from "@mui/material";
 import { Animated } from "@sr/common/ui/motion";
 import { Edit } from "iconsax-react";
-import { ReactNode, useMemo } from "react";
+import { useMemo } from "react";
 import { Show } from "../Show";
 
 interface GridProps {
   title?: string;
-  icon?: ReactNode;
+  icon?: React.ReactNode;
   loading: boolean;
   skeletonCount: number;
   onEdit?: () => void;
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export const Grid = ({
@@ -23,7 +23,7 @@ export const Grid = ({
 }: GridProps) => {
   const skeletonWidths = useMemo(() => {
     return Array.from({ length: skeletonCount }).map(
-      () => Math.floor(Math.random() * (10 - 35 + 1)) + 35
+      () => Math.floor(Math.random() * (10 - 35 + 1)) + 35,
     );
   }, [skeletonCount]);
 

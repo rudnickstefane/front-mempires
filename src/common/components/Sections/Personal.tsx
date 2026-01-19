@@ -1,6 +1,6 @@
 import { PersonalProps } from "@sr/common/types";
 import { Animated } from "@sr/common/ui/motion/Animated";
-import { formatDate, formatIdentity } from "@sr/utils";
+import { formatDate, formatGender, formatIdentity } from "@sr/utils";
 import { GridText } from "../Grids";
 
 export function Personal({ label, data }: PersonalProps) {
@@ -16,7 +16,7 @@ export function Personal({ label, data }: PersonalProps) {
       value: data?.identity,
       description: "(CNH, RG ou RNE)",
     },
-    { label: label.gender, value: data?.gender },
+    { label: label.gender, value: data?.gender && formatGender(data?.gender) },
   ];
 
   return (

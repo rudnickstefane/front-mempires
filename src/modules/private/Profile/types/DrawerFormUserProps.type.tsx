@@ -9,6 +9,7 @@ export type DrawerFormUserProps = {
     birthDate: string;
   };
   address: {
+    id: number;
     address: string;
     number: string;
     complement: string;
@@ -18,6 +19,7 @@ export type DrawerFormUserProps = {
     state: string;
   };
   contact: {
+    id: number;
     type: string;
     description: string;
     email: string;

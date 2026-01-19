@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 import { DrawerStepsProps } from "@sr/common/types";
 import { ArrowRight2 } from "iconsax-react";
 
@@ -9,8 +9,13 @@ export function DrawerButtons({
   handleBack,
   handleNext,
   isValid,
+  isLoading,
+  isDirty,
 }: DrawerStepsProps) {
   const isLastStep = activeStep === title.length - 1;
+  const isButtonDisabled = isLastStep
+    ? !isValid || !isDirty || isLoading
+    : !isValid || isLoading;
 
   return (
     <Box className="flex flex-row justify-between gap-4 mt-8">
@@ -35,10 +40,16 @@ export function DrawerButtons({
         className={`w-[204px] h-[44px] !rounded-lg border px-5 !normal-case !font-poppins !text-base !bg-primary !text-white ${
           !isValid ? "!cursor-not-allowed !pointer-events-auto" : ""
         }`}
-        endIcon={!isLastStep && <ArrowRight2 size={21} />}
-        disabled={!isValid}
+        endIcon={
+          isLoading ? (
+            <CircularProgress size={20} color="inherit" />
+          ) : (
+            !isLastStep && <ArrowRight2 size={21} />
+          )
+        }
+        disabled={isButtonDisabled}
       >
-        {isLastStep ? "Concluir" : "Continuar"}
+        {isLoading ? "" : isLastStep ? "Concluir" : "Continuar"}
       </Button>
     </Box>
   );

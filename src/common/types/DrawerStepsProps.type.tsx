@@ -5,4 +5,6 @@ export interface DrawerStepsProps {
   handleBack?: () => void;
   onClose?: () => void;
   isValid?: boolean;
+  isLoading?: boolean;
+  isDirty?: boolean;
 }

@@ -1,7 +1,7 @@
 import { SignInFormValues } from "../types";
 
 export const initialSignInValues: SignInFormValues = {
-  origin: "MANAGEMENT",
+  origin: "PORTAL",
   login: "",
   password: "",
 };

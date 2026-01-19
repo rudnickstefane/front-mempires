@@ -1,8 +1,7 @@
 import { Box } from "@mui/material";
-import { ReactNode } from "react";
 
 interface GridBoxProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export const GridBox = ({ children }: GridBoxProps) => {

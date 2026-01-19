@@ -12,6 +12,7 @@ export const QueryFindUserDetails = gql`
       gender
       birthDate
       address {
+        id
         zipCode
         address
         number

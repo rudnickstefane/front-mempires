@@ -39,7 +39,7 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
       ? permissions
           .find((perm: { module: string }) => perm.module === "MENU")
           ?.items.filter(
-            (item: { permission: string }) => item.permission === "NONE"
+            (item: { permission: string }) => item.permission === "NONE",
           )
           ?.map((item: { path: string }) => item.path) || []
       : [];
@@ -47,12 +47,12 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
   const companyPermissions =
     permissions && permissions.length > 0
       ? permissions.find(
-          (perm: { module: string }) => perm.module === "COMPANY"
+          (perm: { module: string }) => perm.module === "COMPANY",
         )?.items || []
       : [];
 
   const companyPermission = companyPermissions.find(
-    (item: { path: string }) => item.path === "Company"
+    (item: { path: string }) => item.path === "Company",
   )?.permission;
   const isCompanyDisabled = companyPermission === "NONE" ? true : false;
 
@@ -106,7 +106,7 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
     try {
       const response: FindCompanyDetailsResponse = await request(
         QueryFindCompanyDetails,
-        { companyCode }
+        { companyCode },
       );
 
       setResponseCompanyDetails(response);
@@ -120,7 +120,7 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
     try {
       const response: FindNotificationsResponse = await request(
         QueryFindNotifications,
-        { companyCode, profileCode }
+        { companyCode, profileCode },
       );
 
       setResponseNotifications(response);
@@ -142,8 +142,12 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
     }
   }, [findCompanyDetails, findNotifications]);
 
-  const refresh = async (source: unknown) => {
+  const refresh = async (source: string) => {
     switch (source) {
+      case "findUserDetails":
+        await profile.findUserDetails();
+        break;
+
       case "findCompanyDetails":
         await findCompanyDetails();
         break;
@@ -205,7 +209,7 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
   // Função para abrir o menu
   const handleOpen = (
     event: React.MouseEvent<HTMLElement>,
-    viewCode: string
+    viewCode: string,
   ) => {
     setAnchorEls((prev) => ({ ...prev, [viewCode]: event.currentTarget }));
   };

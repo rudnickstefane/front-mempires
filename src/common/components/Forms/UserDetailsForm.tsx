@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { listGender } from "@sr/common/constants";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { Alert } from "@sr/common/ui/Alert";
 import { DrawerFormUserProps } from "@sr/modules/private/Profile/types";
@@ -60,6 +61,13 @@ export function UserDetailsForm({
         name="details.birthDate"
         label="Data de nascimento"
         onChangeDate={(newDate) => setFieldValue("details.birthDate", newDate)}
+      />
+      <TextField name="details.identity" label="Documento" />
+      <TextField
+        name="details.gender"
+        label="Gênero"
+        fullWidth
+        options={listGender}
       />
       <Show hidden={isBeneficiary}>
         <TextField required name="details.identity" label="Documento" />
