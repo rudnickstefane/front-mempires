@@ -119,6 +119,7 @@ export const useProfileGymManagement = ({ data, refresh }: ProfileProps) => {
 
   const openDrawer = async (step = 0) => {
     const initialValues = initialUserDetailsValues(data?.profile);
+    console.log(initialValues);
     formData.resetForm({ values: initialValues });
 
     await formData.validateForm(initialValues);

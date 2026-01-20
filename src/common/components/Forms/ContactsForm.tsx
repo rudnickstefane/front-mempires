@@ -17,7 +17,6 @@ export function ContactsForm() {
 
   const handlePhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    // Chama sua função exportada enquanto o usuário digita
     setFieldValue(name, formatPhoneNumber(value));
   };
 

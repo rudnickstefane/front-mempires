@@ -1,6 +1,11 @@
 import { PersonalProps } from "@sr/common/types";
 import { Animated } from "@sr/common/ui/motion/Animated";
-import { formatDate, formatGender, formatIdentity } from "@sr/utils";
+import {
+  formatDate,
+  formatDocument,
+  formatGender,
+  formatIdentity,
+} from "@sr/utils";
 import { GridText } from "../Grids";
 
 export function Personal({ label, data }: PersonalProps) {
@@ -13,8 +18,8 @@ export function Personal({ label, data }: PersonalProps) {
     },
     {
       label: label.identity,
-      value: data?.identity,
-      description: "(CNH, RG ou RNE)",
+      value: data?.identity && formatDocument(data?.identity),
+      description: "(RG, CIN, CNH ou RNE)",
     },
     { label: label.gender, value: data?.gender && formatGender(data?.gender) },
   ];
@@ -22,7 +27,7 @@ export function Personal({ label, data }: PersonalProps) {
   return (
     <Animated
       variant="container"
-      className="grid grid-cols-[max-content,1fr] gap-x-10"
+      className="grid grid-cols-[max-content,1fr] gap-x-5"
     >
       {fields.map((field, index) => (
         <GridText

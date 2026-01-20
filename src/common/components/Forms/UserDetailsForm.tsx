@@ -3,23 +3,21 @@ import { listGender } from "@sr/common/constants";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { Alert } from "@sr/common/ui/Alert";
 import { DrawerFormUserProps } from "@sr/modules/private/Profile/types";
-import { formatText } from "@sr/utils";
+import { formatDocument, formatText } from "@sr/utils";
 import { useFormikContext } from "formik";
 import { ChangeEvent } from "react";
-import { Show } from "../Show";
 
-interface UserDetailsFormProps {
-  isBeneficiary?: boolean;
-}
-
-export function UserDetailsForm({
-  isBeneficiary = true,
-}: UserDetailsFormProps) {
+export function UserDetailsForm() {
   const { setFieldValue } = useFormikContext<DrawerFormUserProps>();
 
   const handleFormattedTextChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFieldValue(name, formatText(value));
+  };
+
+  const handleDocumentChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFieldValue(name, formatDocument(value));
   };
 
   return (
@@ -62,16 +60,17 @@ export function UserDetailsForm({
         label="Data de nascimento"
         onChangeDate={(newDate) => setFieldValue("details.birthDate", newDate)}
       />
-      <TextField name="details.identity" label="Documento" />
+      <TextField
+        name="details.identity"
+        label="Documento"
+        onChange={handleDocumentChange}
+      />
       <TextField
         name="details.gender"
         label="Gênero"
         fullWidth
         options={listGender}
       />
-      <Show hidden={isBeneficiary}>
-        <TextField required name="details.identity" label="Documento" />
-      </Show>
     </Box>
   );
 }

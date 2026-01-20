@@ -1,6 +1,11 @@
 import { getStateAbbreviation } from "@sr/common/utils";
 import { ProfileDetails } from "@sr/modules/common/types";
-import { formatIdentity, formatPhoneNumber, formatZipCode } from "@sr/utils";
+import {
+  formatDocument,
+  formatIdentity,
+  formatPhoneNumber,
+  formatZipCode,
+} from "@sr/utils";
 import { DrawerFormUserProps } from "../types";
 
 export const initialUserDetailsValues = (
@@ -9,7 +14,7 @@ export const initialUserDetailsValues = (
   return {
     details: {
       code: data?.code ? formatIdentity(data?.code) : "",
-      identity: data?.identity || "",
+      identity: data?.identity ? formatDocument(data?.identity) : "",
       registration: data?.registration || "",
       internalNumber: data?.internalNumber || "",
       name: data?.name || "",

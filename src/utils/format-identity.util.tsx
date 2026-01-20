@@ -1,4 +1,6 @@
 export const formatIdentity = (document: string) => {
+  if (!document || document.trim() === "") return "-";
+
   // Remove espaços extras e normaliza o texto
   const trimmedDocument = document.trim();
 
@@ -8,7 +10,7 @@ export const formatIdentity = (document: string) => {
     // Formata como CPF (XXX.XXX.XXX-XX)
     const formatted = `${numericDocument.slice(0, 3)}.${numericDocument.slice(
       3,
-      6
+      6,
     )}.${numericDocument.slice(6, 9)}-${numericDocument.slice(9, 11)}`;
 
     return formatted;
@@ -19,10 +21,10 @@ export const formatIdentity = (document: string) => {
     // Formata como CNPJ (XX.XXX.XXX/XXXX-XX)
     return `${numericDocument.slice(0, 2)}.${numericDocument.slice(
       2,
-      5
+      5,
     )}.${numericDocument.slice(5, 8)}/${numericDocument.slice(
       8,
-      12
+      12,
     )}-${numericDocument.slice(12, 14)}`;
   }
 
@@ -31,7 +33,7 @@ export const formatIdentity = (document: string) => {
     // Formata como RG (00.000.000-0)
     const formatted = `${numericDocument.slice(0, 2)}.${numericDocument.slice(
       2,
-      5
+      5,
     )}.${numericDocument.slice(5, 8)}-${numericDocument.slice(8)}`;
 
     return formatted;
