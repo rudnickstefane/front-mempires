@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button, Collapse, Skeleton } from "@mui/material";
+import { useNavigationStore } from "@sr/store";
 import { CgMenuRightAlt } from "react-icons/cg";
 import { MenuProps } from "../../interfaces";
 import { NavItem } from "./NavItem";
@@ -15,12 +16,12 @@ export const SidebarNav = ({
   selectedResource,
   setSelectedResource,
   setExpandedMenus,
-  openComponent,
-  setActiveComponent,
 }: MenuProps) => {
+  const reset = useNavigationStore((state) => state.reset);
+
   const filteredMenus =
     responseMenus?.findMenus?.filter(
-      (m: any) => !menuExcludedPaths.includes(m.path)
+      (m: any) => !menuExcludedPaths.includes(m.path),
     ) || [];
 
   return (
@@ -57,7 +58,7 @@ export const SidebarNav = ({
             const isSelected =
               selectedResource?.name === menu.name ||
               menu.SubMenus?.some(
-                (s: any) => s.name === selectedResource?.name
+                (s: any) => s.name === selectedResource?.name,
               );
 
             return (
@@ -74,7 +75,7 @@ export const SidebarNav = ({
                       toggleSubMenu(menu.menuCode);
                     } else {
                       setExpandedMenus([]);
-                      openComponent(menu.path);
+                      reset(menu.path);
                     }
 
                     setSelectedResource({ name: menu.name });
@@ -103,7 +104,7 @@ export const SidebarNav = ({
                           isCollapsed={sidebarCollapsed}
                           isSelected={selectedResource?.name === sub.name}
                           onClick={() => {
-                            setActiveComponent(sub.path);
+                            reset(sub.path);
                             setSelectedResource({ name: sub.name });
                           }}
                         />

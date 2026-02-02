@@ -10,13 +10,14 @@ import {
   MenuItem,
   TextField as MuiTextField,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import { MaskField } from "@sr/common/components/Forms";
 import { CustomTextFieldProps } from "@sr/common/types";
 import { useField, useFormikContext } from "formik";
 import { ArrowDown2, Eye, EyeSlash } from "iconsax-react";
 import { FocusEvent, useState } from "react";
+import { useIntl } from "react-intl";
+import { Typography } from "../../Typography";
 import { DatePickerField } from "../DatePicker/DatePickerField";
 
 export function TextField({
@@ -41,6 +42,7 @@ export function TextField({
   tooltip,
   ...props
 }: CustomTextFieldProps) {
+  const intl = useIntl();
   const [field, meta] = useField(props.name!);
   const { setFieldValue } = useFormikContext();
   const [isFocused, setIsFocused] = useState(false);
@@ -118,6 +120,7 @@ export function TextField({
       <MuiTextField
         {...field}
         {...props}
+        label={intl.formatMessage({ id: props.label as string })}
         onKeyDown={handleKeyDown}
         onPaste={handlePaste}
         disabled={disabled}
@@ -151,7 +154,7 @@ export function TextField({
                       e.stopPropagation();
                     }}
                     onClick={handleHookAction}
-                    className="!font-ubuntu !text-base !font-semibold !normal-case !text-primary !rounded-md"
+                    className="!font-manrope !text-base !font-semibold !normal-case !text-primary !rounded-md"
                     sx={{
                       "&.Mui-disabled": {
                         backgroundColor: "transparent !important",
@@ -231,7 +234,7 @@ export function TextField({
 
       {/* Contador de Caracteres da Sugestão */}
       {maxLength && viewCountCharacter && (
-        <Typography className="!font-ubuntu !text-neutral700 !text-sm !mt-1">
+        <Typography className="!font-manrope !text-neutral700 !text-sm !mt-1">
           {`Restam ${Math.max(0, remaining || 0)} caracteres`}
         </Typography>
       )}

@@ -36,17 +36,19 @@ export function Alert({ variant = "warning", title, message }: AlertProps) {
   const { bg, text, Icon } = styles[variant];
 
   return (
-    <Box className={`flex gap-3 rounded-2xl p-4 ${bg}`}>
+    <Box
+      className={`flex ${title ? "" : "items-center"} gap-3 rounded-2xl p-4 ${bg}`}
+    >
       <Icon className={`min-h-6 min-w-6 ${text}`} />
 
       <Box className={`flex flex-col gap-2 ${text}`}>
         {title && (
-          <Typography className="!font-poppins !text-base !font-semibold leading-6">
+          <Typography className="!font-manrope !text-base !font-semibold leading-6">
             {title}
           </Typography>
         )}
 
-        <Typography className="!font-poppins !text-sm !font-normal leading-4">
+        <Typography className="!font-manrope !text-sm leading-4 text-left">
           {message}
         </Typography>
       </Box>

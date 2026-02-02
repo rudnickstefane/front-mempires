@@ -36,7 +36,7 @@ export const Sidebar = ({ isCollapsed, methods }: any) => {
           fullWidth
           startIcon={<Logout size={22} variant="Linear" />}
           onClick={finishSession}
-          className="w-full !my-5 !normal-case !font-ubuntu !text-[#fa5252] !rounded-3xl !bg-[#fa52521f] hover:!bg-[#fa525238]"
+          className="w-full !my-5 !normal-case !font-manrope !text-[#fa5252] !rounded-3xl !bg-[#fa52521f] hover:!bg-[#fa525238]"
         >
           Sair
         </Button>

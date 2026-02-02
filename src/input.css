@@ -226,27 +226,42 @@ body::before {
     rgba(0, 0, 0, 0.3) 50%,
     rgba(0, 0, 0, 0) 100%
   ) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .bg-secondary {
   background-color: var(--bg-secondary) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .bg-tertiary {
   background-color: var(--bg-tertiary) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .bg-quaternary {
   background-color: var(--surface-overlay) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .bg-quaternary-80 {
   background-color: var(--surface-overlay-80) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 /* Botões  */
@@ -258,7 +273,10 @@ body::before {
     var(--btn-golden-gradient-bottom)
   );
   border: 1px solid var(--btn-golden-border);
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .btn-golden:disabled {
@@ -269,7 +287,10 @@ body::before {
 /* Botões do Menu */
 .btn-menu {
   color: var(--color-text-primary) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .btn-menu:hover {
@@ -288,24 +309,36 @@ body::before {
 
 .btn-theme {
   color: var(--color-text-primary) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .button-secondary {
   background: var(--surface-overlay) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .button-tertiary {
   color: var(--color-primary) !important;
   background: #0000000a !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .button-quaternary {
   background: transparent !important;
   color: var(--color-primary) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .button-quaternary:hover {
@@ -316,7 +349,10 @@ body::before {
 .button-quintary {
   color: #333 !important;
   background: #f3f4f6 !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .button-quintary:hover {
@@ -326,12 +362,18 @@ body::before {
 
 .button-close {
   color: var(--color-secondary) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .button-close:hover {
   color: var(--color-primary) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .border-card {
@@ -403,7 +445,10 @@ body::before {
 
 .color-primary {
   color: var(--color-primary) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .color-primary:hover {
@@ -420,23 +465,32 @@ body::before {
 
 .border-options {
   border-color: var(--color-primary) !important;
-  transition: border-color 0.4s ease, transform 0.3s, background-color 0.4s ease,
+  transition:
+    border-color 0.4s ease,
+    transform 0.3s,
+    background-color 0.4s ease,
     color 0.4s ease;
 }
 
 .border-gray {
   border-color: var(--color-gray) !important;
-  transition: border-color 0.4s ease, transform 0.3s, background-color 0.4s ease,
+  transition:
+    border-color 0.4s ease,
+    transform 0.3s,
+    background-color 0.4s ease,
     color 0.4s ease;
 }
 
 .text-gray {
   color: var(--text-gray) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 .MuiInputLabel-root {
-  font-family: "Poppins", sans-serif !important;
+  font-family: "Manrope", sans-serif !important;
 }
 
 /* Container raiz e texto padrão */
@@ -508,7 +562,10 @@ body::before {
 .MuiButton-root.Mui-disabled {
   background-color: var(--bg-disabled) !important;
   color: var(--color-disabled) !important;
-  transition: transform 0.3s, background-color 0.4s ease, color 0.4s ease;
+  transition:
+    transform 0.3s,
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 /* Fontes */
@@ -620,10 +677,65 @@ body::before {
   font-style: normal;
 }
 
+/* Manrope - ExtraLight (200) */
 @font-face {
   font-family: "Manrope";
-  src: url("./assets/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
-  font-weight: 100 900;
+  src: url("./assets/fonts/Manrope-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Manrope - Light (300) */
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Manrope - Regular (400) */
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Manrope - Medium (500) */
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Manrope - SemiBold (600) */
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Manrope - Bold (700) */
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Manrope - ExtraBold (800) */
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
@@ -653,7 +765,10 @@ body::before {
 
 .border-base {
   border-color: var(--color-grayPrimary) !important;
-  transition: border-color 0.4s ease, transform 0.3s, background-color 0.4s ease,
+  transition:
+    border-color 0.4s ease,
+    transform 0.3s,
+    background-color 0.4s ease,
     color 0.4s ease;
 }
 

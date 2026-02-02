@@ -1,5 +1,6 @@
-import { Box, Button, Skeleton, Typography } from "@mui/material";
+import { Box, Button, Skeleton } from "@mui/material";
 import { notify } from "@sr/common/iu/components/notifications";
+import { Typography } from "@sr/common/iu/components/Typography";
 import { storage } from "@sr/common/storage";
 import { ProfileProps } from "@sr/common/types";
 import { Animated } from "@sr/common/ui/motion";
@@ -7,7 +8,7 @@ import { avatarLabel } from "@sr/utils";
 import { Copy, Sms, TickSquare } from "iconsax-react";
 import { useState } from "react";
 
-export function ProfileHeader({ data, label }: Readonly<ProfileProps>) {
+export function UserSummary({ data }: Readonly<ProfileProps>) {
   const [copied, setCopied] = useState(false);
   const profileCode = `PFL-${storage.get<string>("profileCode")}`;
 
@@ -61,7 +62,7 @@ export function ProfileHeader({ data, label }: Readonly<ProfileProps>) {
                 className="rounded-full"
               />
             ) : (
-              <Typography className="!text-[22px] !font-bold !text-white !font-poppins">
+              <Typography className="!text-[22px] !font-bold !text-white !font-manrope">
                 {avatarLabel(data.profile?.name)}
               </Typography>
             )}
@@ -95,10 +96,10 @@ export function ProfileHeader({ data, label }: Readonly<ProfileProps>) {
             ) : (
               <Box>
                 <Box className="ml-3">
-                  <Typography className="!text-lg !font-poppins !font-semibold !text-neutral-900 truncate max-w-[55vw]">
+                  <Typography className="!text-lg !font-manrope !font-semibold truncate max-w-[55vw]">
                     {data.profile?.name}
                   </Typography>
-                  <Typography className="!font-poppins flex flex-row items-center !text-sm !text-neutral-500">
+                  <Typography className="!font-manrope flex flex-row items-center !text-sm !text-neutral-500">
                     <Sms type="linear" size={19} className="mr-2" />
                     {data.profile?.contact?.email}
                   </Typography>
@@ -109,13 +110,14 @@ export function ProfileHeader({ data, label }: Readonly<ProfileProps>) {
         </Box>
 
         <Box className="flex flex-col lg:flex-row text-right gap-y-1 lg:gap-x-4 w-full items-end lg:items-center justify-end">
-          <Typography className="!text-xs !text-neutral-500 !font-poppins">
-            {label?.code}
-          </Typography>
+          <Typography
+            translateId="profile.code"
+            className="text-xs !text-neutral-500 font-manrope"
+          />
           <Button
             variant="outlined"
             onClick={handleCopy}
-            className={`flex items-center gap-2 !px-3 !py-2 !rounded-lg font-medium text-foreground hover:bg-muted/80 transition-colors !text-sm !text-neutral-700 w-36 ${
+            className={`flex items-center gap-2 !px-3 !py-2 !rounded-lg font-medium !font-manrope hover:bg-muted/80 transition-colors !text-sm !text-neutral-700 w-36 ${
               copied
                 ? "!bg-success-50 !border-success-500"
                 : "!bg-neutral-100 !border-neutral-200"
@@ -137,10 +139,10 @@ export function ProfileHeader({ data, label }: Readonly<ProfileProps>) {
       {!data.loading && progress < 100 && (
         <Box className="mt-6 w-full">
           <Box className="flex justify-between items-center mb-2">
-            <Typography className="!font-poppins !font-semibold !text-sm !text-neutral-800">
+            <Typography className="!font-manrope !font-semibold !text-sm">
               Complete seu perfil
             </Typography>
-            <Typography className="!font-poppins !font-semibold !text-sm !text-orange-500">
+            <Typography className="!font-manrope !font-semibold !text-sm !text-orange-500">
               {progress}%
             </Typography>
           </Box>
@@ -157,7 +159,7 @@ export function ProfileHeader({ data, label }: Readonly<ProfileProps>) {
             />
           </Box>
 
-          <Typography className="!font-poppins !text-xs !text-neutral-500 !mt-2 !font-light leading-tight">
+          <Typography className="!font-manrope !text-xs !text-neutral-700 !mt-2 leading-tight">
             Complete seu perfil para ter acesso a todos os benefícios da
             plataforma.
           </Typography>

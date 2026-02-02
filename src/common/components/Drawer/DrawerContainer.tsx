@@ -24,18 +24,20 @@ export function DrawerContainer(props: Readonly<DrawerContainerProps>) {
       variant="temporary"
       slotProps={{
         paper: {
-          className: "w-[60%] p-8",
+          className: `${steps.length > 0 ? "w-[60%]" : "w-[48.2%]"} p-8`,
         },
       }}
     >
       <DrawerHeader title={title} headerStep={headerStep} onClick={onClose} />
       <Box className="w-full flex flex-col justify-start items-center gap-4 mt-8">
         <Box className="flex w-full">
-          <SteppersWithForms
-            titleSteps={steps}
-            activeStep={activeStep}
-            onStepClick={onStepClick}
-          />
+          {steps.length > 0 && (
+            <SteppersWithForms
+              titleSteps={steps}
+              activeStep={activeStep}
+              onStepClick={onStepClick}
+            />
+          )}
           <Box className="flex flex-col w-full md:pr-0 pr-2 mt-2">
             {children}
           </Box>

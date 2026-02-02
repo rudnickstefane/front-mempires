@@ -23,7 +23,7 @@ export function DrawerButtons({
       <Button
         variant="outlined"
         onClick={activeStep === 0 ? onClose : handleBack}
-        className="w-[204px] h-[44px] !rounded-lg !text-neutral-900 border !border-neutral-500 px-5 !normal-case !font-poppins !text-base"
+        className="w-[204px] !rounded-lg !text-neutral-900 border !border-neutral-500 !py-3 !normal-case font-manrope !text-base"
       >
         {activeStep === 0 ? "Cancelar" : "Voltar"}
       </Button>
@@ -37,7 +37,7 @@ export function DrawerButtons({
           e.preventDefault();
           handleNext?.();
         }}
-        className={`w-[204px] h-[44px] !rounded-lg border px-5 !normal-case !font-poppins !text-base !bg-primary !text-white ${
+        className={`w-[204px] !rounded-lg border !py-3 !normal-case font-manrope !text-base !bg-primary !text-white ${
           !isValid ? "!cursor-not-allowed !pointer-events-auto" : ""
         }`}
         endIcon={

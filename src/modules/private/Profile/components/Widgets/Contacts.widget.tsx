@@ -1,9 +1,9 @@
 import { ContactsProps } from "@sr/common/types";
 import { Animated } from "@sr/common/ui/motion";
 import { formatPhoneNumber } from "@sr/utils";
-import { GridText } from "../Grids";
+import { CardText } from "../../../../../common/components/Card";
 
-export function Contacts({ label, data }: ContactsProps) {
+export function Contacts({ data }: ContactsProps) {
   const contacts = data?.contact
     ? Array.isArray(data.contact)
       ? data.contact
@@ -17,18 +17,18 @@ export function Contacts({ label, data }: ContactsProps) {
     >
       {contacts.map((item, index) => {
         const fields = [
-          { label: label.description, value: item.description },
+          { label: "description", value: item.description },
           {
-            label: label.phone,
+            label: "phone",
             value: item.phone && formatPhoneNumber(item.phone),
           },
-          { label: label.email, value: item.email },
+          { label: "email", value: item.email },
         ];
 
         return (
           <>
             {fields.map((field, fIdx) => (
-              <GridText
+              <CardText
                 key={fIdx || index}
                 label={field.label}
                 value={field.value}

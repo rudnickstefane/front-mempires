@@ -89,6 +89,7 @@ export default {
           600: "#5179bf",
           700: "#4668af",
           800: "#3e558f",
+          820: "#667499",
           850: "#6c7c93",
           900: "#304166",
           950: "#242e47",
@@ -246,7 +247,7 @@ export default {
     },
   },
   corePlugins: {
-    preflight: true,
+    preflight: false,
   },
   plugins: [],
 };

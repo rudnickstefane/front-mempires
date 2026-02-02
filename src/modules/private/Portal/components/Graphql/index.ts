@@ -31,6 +31,5 @@ export { QueryFindStudentsMetrics } from "./QueryFindStudentsMetrics";
 export { QueryFindTickets } from "./QueryFindTickets";
 export { QueryFindTransactions } from "./QueryFindTransactions";
 export { QueryFindUpdates } from "./QueryFindUpdates";
-export { QueryFindUserDetails } from "./QueryFindUserDetails";
 export { QueryFindUserShortcuts } from "./QueryFindUserShortcuts";
 export { QueryFindVisits } from "./QueryFindVisits";

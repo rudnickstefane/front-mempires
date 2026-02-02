@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { listUF } from "@sr/common/constants";
-import { useAddressForm, useContentHook } from "@sr/common/hooks";
+import { useAddressForm } from "@sr/common/hooks";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { notify } from "@sr/common/iu/components/notifications";
 import { Alert } from "@sr/common/ui/Alert";
@@ -13,7 +13,6 @@ import { Show } from "../Show";
 import { CustomizedSwitch } from "../Switch";
 
 export function AddressForm() {
-  const label = useContentHook();
   const { handlerOnSubmit } = useAddressForm();
   const [showError, setShowError] = useState(false);
   const { values, setFieldValue, getFieldMeta, validateForm } =
@@ -113,11 +112,11 @@ export function AddressForm() {
         <Box className="flex items-start gap-2">
           <Location variant="Linear" />
           <Box>
-            <Typography className="!font-poppins !font-semibold !text-neutral-800">
+            <Typography className="!font-manrope !font-semibold !text-neutral-800">
               {address}, nº {number} {complement && `- ${complement}`}{" "}
               {district && `- ${district}`}
             </Typography>
-            <Typography className="!font-poppins !text-sm !text-neutral-600">
+            <Typography className="!font-manrope !text-sm !text-neutral-600">
               {city} - {state}, {zipCode}
             </Typography>
           </Box>
@@ -127,7 +126,7 @@ export function AddressForm() {
       <TextField
         required
         name="address.zipCode"
-        label={label.address.zipCode}
+        label="zipCode"
         mask="00000-000"
         showButton
         labelButton="Consultar"
@@ -146,9 +145,9 @@ export function AddressForm() {
           <Show hidden={!visibility.address}>
             <TextField
               required
-              name="address.address"
+              name="address"
               placeholder="Rua/Avenida"
-              label={label.address.address}
+              label="address.address"
               onChange={handleFormattedTextChange}
             />
           </Show>
@@ -157,13 +156,13 @@ export function AddressForm() {
             <TextField
               required
               name="address.number"
-              label={label.address.number}
+              label="number"
               fullWidth
               disabled={isNoNumber}
             />
             <Box className={`w-full ${hasError ? "-mt-[21px]" : "mt-[1.5px]"}`}>
               <CustomizedSwitch
-                label="Sem número"
+                label="noNumber"
                 checked={isNoNumber}
                 onChange={(e) =>
                   setFieldValue("address.number", e.target.checked ? "S/N" : "")
@@ -174,7 +173,7 @@ export function AddressForm() {
 
           <TextField
             name="address.complement"
-            label={label.address.complement}
+            label="complement"
             onChange={handleFormattedTextChange}
           />
 
@@ -182,7 +181,7 @@ export function AddressForm() {
             <TextField
               required
               name="address.district"
-              label={label.address.district}
+              label="district"
               onChange={handleFormattedTextChange}
             />
           </Show>
@@ -193,7 +192,7 @@ export function AddressForm() {
                 <TextField
                   required
                   name="address.city"
-                  label={label.address.city}
+                  label="city"
                   fullWidth
                   onChange={handleFormattedTextChange}
                 />
@@ -202,7 +201,7 @@ export function AddressForm() {
                 <TextField
                   required
                   name="address.state"
-                  label={label.address.state}
+                  label="state"
                   fullWidth
                   options={listUF.brasil}
                 />

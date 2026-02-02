@@ -9,6 +9,5 @@ export type PersonalDataProps = {
 };
 
 export type PersonalProps = {
-  label: PersonalDataProps;
   data: ProfileDetails;
 };

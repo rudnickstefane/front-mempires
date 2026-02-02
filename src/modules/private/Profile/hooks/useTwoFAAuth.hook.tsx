@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Box } from "@mui/material";
 import { DrawerButtons } from "@sr/common/components/Drawer/DrawerButtons";
 import {
   AddressForm,
@@ -17,14 +18,25 @@ import {
   initialUserDetailsValues,
   stepProfileFields,
 } from "@sr/modules/private/Profile/constants";
+import { AccountDetailsPage } from "@sr/modules/private/Profile/pages";
 import { formUserValidationSchema } from "@sr/modules/private/Profile/validation";
 import { useFormik } from "formik";
 import { useMemo, useState } from "react";
 
-export const useProfileGymManagement = ({ data, refresh }: ProfileProps) => {
+export const useTwoFAAuthHook = ({ data }: ProfileProps) => {
   const { request } = useBackend();
   const [attemptCount, setAttemptCount] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const [navigationStack, setNavigationStack] = useState(["main"]);
+  const activeModule = navigationStack[navigationStack.length - 1];
+
+  const goBack = () => {
+    setNavigationStack((prev) => {
+      if (prev.length <= 1) return prev;
+      return prev.slice(0, -1);
+    });
+  };
 
   const stepsConfig = useMemo(
     () => [
@@ -79,7 +91,6 @@ export const useProfileGymManagement = ({ data, refresh }: ProfileProps) => {
 
       setIsDrawerOpen(false);
       setAttemptCount(0);
-      refresh?.();
       notify.success("Alterações realizadas com sucesso!");
     } catch (error: unknown) {
       setAttemptCount((prev) => prev + 1);
@@ -154,7 +165,39 @@ export const useProfileGymManagement = ({ data, refresh }: ProfileProps) => {
     ),
   };
 
+  const moduleRegistry: Record<
+    string,
+    { label?: any; component: React.ReactNode }
+  > = {
+    main: {
+      label: { title: "profile.title", subtitle: "profile.subtitle" },
+      component: (
+        <AccountDetailsPage
+          data={data}
+          onNavigate={(id) => navigateTo(id)}
+          openDrawer={openDrawer}
+        />
+      ),
+    },
+    settings: {
+      label: { title: "settings.title", subtitle: "settings.subtitle" },
+      component: <Box>Componente de Configurações</Box>,
+    },
+  };
+
+  const currentModule = moduleRegistry[activeModule] || moduleRegistry.main;
+
+  const navigateTo = (moduleName: string) => {
+    setNavigationStack((prev) => [...prev, moduleName]);
+  };
+
   return {
+    activeModule,
+    activeHeaderLabel: currentModule.label,
+    activeComponent: currentModule.component,
+    goBack,
+    navigationStack,
+    navigateTo,
     drawerContentProps,
     isDrawerOpen,
     openDrawer,

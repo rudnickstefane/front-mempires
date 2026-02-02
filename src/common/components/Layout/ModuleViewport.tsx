@@ -1,29 +1,55 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box } from "@mui/material";
+import { useEffect, useRef } from "react";
 import { DrawerContainer } from "../Drawer";
+import { Modal, ModalHeader } from "../Modal";
+import { useModal } from "../Modal/hooks/useModal";
 
 interface DrawerContentType {
   header: {
     title: string;
-    headerStep: string;
+    headerStep?: string;
   };
-  steps: string[];
-  activeStep: number;
-  content: React.ReactNode;
+  steps?: string[];
+  activeStep?: number;
+  content?: React.ReactNode;
   onStepClick?: (step: number) => void;
 }
 
 interface ContainerProps {
   header?: React.ReactNode;
   children: React.ReactNode;
+  moduleKey?: string;
   isDrawerOpen?: boolean;
   onCloseDrawer?: () => void;
   drawerContent?: DrawerContentType;
-  content?: React.ReactNode;
+  modal?: {
+    title?: string;
+    description?: string;
+    icon?: React.ReactNode;
+    content: React.ReactNode;
+  };
+  containerRef?: React.RefObject<any>;
 }
 
 export function ModuleViewport(props: Readonly<ContainerProps>) {
-  const { isDrawerOpen, onCloseDrawer, drawerContent, children, header } =
-    props;
+  const {
+    isDrawerOpen,
+    onCloseDrawer,
+    drawerContent,
+    children,
+    header,
+    moduleKey,
+    modal,
+  } = props;
+
+  const { closeModal } = useModal();
+
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    viewportRef.current?.scrollTo({ top: 0, behavior: "auto" });
+  }, [moduleKey]);
 
   return (
     <>
@@ -39,7 +65,24 @@ export function ModuleViewport(props: Readonly<ContainerProps>) {
         {drawerContent?.content}
       </DrawerContainer>
 
-      <Box className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem] bg-[#F6FAFD]">
+      <Modal
+        header={
+          <ModalHeader
+            icon={modal?.icon}
+            title={modal?.title}
+            description={modal?.description}
+            onClick={closeModal}
+          />
+        }
+        fullWidth
+      >
+        {modal?.content}
+      </Modal>
+
+      <Box
+        ref={viewportRef}
+        className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem] bg-[#F6FAFD] h-screen"
+      >
         {header && <Box className="mb-5">{header}</Box>}
 
         <Box className="flex flex-row w-full">

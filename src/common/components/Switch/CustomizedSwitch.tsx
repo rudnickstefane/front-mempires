@@ -2,7 +2,7 @@
 import { Box, Switch, SwitchProps } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import Typography from "@mui/material/Typography";
+import { Typography } from "@sr/common/iu/components/Typography";
 
 export interface CustomSwitchProps extends Omit<SwitchProps, "value"> {
   label?: string;
@@ -96,18 +96,18 @@ export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
                 styledSwitch
                   ? styledSx
                   : {
-                      width: 50,
-                      height: 35,
-                      padding: 1,
+                      width: 44,
+                      height: 24,
+                      padding: 0,
 
                       "& .MuiSwitch-switchBase": {
                         padding: 0,
-                        left: 10,
-                        top: "10px",
+                        left: 2,
+                        top: "2px",
                         transitionDuration: "300ms",
 
                         "&.Mui-checked": {
-                          transform: "translateX(15px)",
+                          transform: "translateX(20px)",
                           color: "#fff",
 
                           "& + .MuiSwitch-track": {
@@ -119,8 +119,8 @@ export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
 
                       "& .MuiSwitch-thumb": {
                         boxSizing: "border-box",
-                        width: 15,
-                        height: 15,
+                        width: 20,
+                        height: 20,
                         backgroundColor: "#fff",
                         boxShadow: "0 2px 4px rgba(0,0,0,0.3)",
                       },
@@ -139,12 +139,11 @@ export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
           labelPlacement={styledSwitch ? "start" : "end"}
           label={
             <Typography
-              className={`!font-ubuntu !text-neutral20 !text-base ${
+              translateId={label}
+              className={`!ml-2 !font-manrope !text-neutral20 !text-base ${
                 styledSwitch ? "!font-bold" : "!font-normal"
               }`}
-            >
-              {label}
-            </Typography>
+            />
           }
         />
       </FormGroup>

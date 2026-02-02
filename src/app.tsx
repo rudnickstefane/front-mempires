@@ -19,29 +19,29 @@ const AppContent = () => {
       messages={Messages[lang]}
       defaultLocale="pt-BR"
     >
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        Components={{
+          success: SnackbarContent,
+          error: SnackbarContent,
+          info: SnackbarContent,
+          warning: SnackbarContent,
+        }}
+      >
+        <SnackbarConfigurator />
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </SnackbarProvider>
     </IntlProvider>
   );
 };
 
 export default function App() {
   return (
-    <SnackbarProvider
-      maxSnack={3}
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      Components={{
-        success: SnackbarContent,
-        error: SnackbarContent,
-        info: SnackbarContent,
-        warning: SnackbarContent,
-      }}
-    >
-      <SnackbarConfigurator />
-      <LocaleProvider>
-        <AppContent />
-      </LocaleProvider>
-    </SnackbarProvider>
+    <LocaleProvider>
+      <AppContent />
+    </LocaleProvider>
   );
 }

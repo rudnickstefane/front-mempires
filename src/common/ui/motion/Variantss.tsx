@@ -32,7 +32,7 @@ export const presets: Record<string, Variants> = {
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
+      transition: { duration: 1, ease: "easeOut" },
     },
   },
   progress: {

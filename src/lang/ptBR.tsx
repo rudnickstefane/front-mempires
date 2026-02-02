@@ -12,13 +12,36 @@ export const ptBR = {
   "profile.title": "Meus dados",
   "profile.subtitle": "Gerencie suas informações pessoais",
 
+  // Modulo de Segurança
+  "security.title": "Segurança da conta",
+  "security.subtitle": "Gerencie as configurações de segurança da sua conta",
+
+  "security.twoFaAuth": "Autenticação 2FA",
+  "twoFaAuth.description": "Adicione uma camada extra de segurança à sua conta",
+  "twoFaAuth.modal.title": "Autenticação de dois fatores",
+  "twoFaAuth.modal.description": "Configure uma camada extra de segurança",
+
+  "security.changeYourPassword": "Alterar sua senha",
+  "security.changePassword": "Alterar senha",
+  "security.changePassword.description":
+    "Mantenha sua conta segura atualizando sua senha regularmente",
+
+  "security.activeSessions": "Sessões ativas",
+  "security.activeSessions.description":
+    "Gerencie os dispositivos conectados à sua conta",
+  manageSessions: "Gerenciar sessões",
+
+  // Modulo de Configurações
+  "settings.title": "Configurações",
+  "settings.subtitle": "Personalize sua experiência no sistema",
+
   // Dados pessoais
   "personal.title": "Dados pessoais",
   name: "Nome completo",
   birthDate: "Data de nascimento",
   "personal.code": "CPF",
   identity: "Documento",
-  "profile.gender": "Gênero",
+  gender: "Gênero",
 
   // Endereço
   "address.title": "Endereço",
@@ -30,11 +53,13 @@ export const ptBR = {
   city: "Cidade",
   state: "Estado",
 
+  noNumber: "Sem número",
+
   // Contato
   contact: "Contato",
   description: "Descrição",
   phone: "Telefone",
-  mail: "E-mail",
+  email: "E-mail",
 
   // Ações rápidas
   "actions.title": "Ações rápidas",
@@ -237,4 +262,12 @@ export const ptBR = {
   "roadmap.cta.description":
     "Participe do desenvolvimento e seja um dos primeiros a experimentar o Mobile Empires",
   "roadmap.cta.button": "Registrar Interesse",
+
+  // Botões
+  setUpNow: "Configurar agora",
+
+  success: "Sucesso",
+  error: "Erro",
+  info: "Informação",
+  warning: "Atenção",
 };

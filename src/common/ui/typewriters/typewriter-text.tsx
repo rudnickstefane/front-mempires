@@ -35,14 +35,14 @@ export const TypewriterText = ({ messages }: TypewriterTextProps) => {
           setLoop((prev) => prev + 1);
         }
       },
-      isDeleting ? 40 : 100
+      isDeleting ? 40 : 100,
     );
 
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, loop, messages]);
 
   return (
-    <Typography className="flex flex-row !text-white !text-5xl !font-light !font-ubuntu !mt-5">
+    <Typography className="flex flex-row !text-white !text-5xl !font-light !font-manrope !mt-5">
       Para você
       <Box component="span" className="font-bold ml-3 flex flex-row">
         {displayText}

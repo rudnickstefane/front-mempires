@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { ContactsProps } from "@sr/common/types";
 import { Animated } from "@sr/common/ui/motion";
 import { formatPhoneNumber } from "@sr/utils";
-import { GridBox, GridText } from "../Grids";
+import { CardBox, CardText } from "../Card";
 
 export function Contacts({ label, data }: ContactsProps) {
   const contacts = data?.contact
@@ -25,9 +25,9 @@ export function Contacts({ label, data }: ContactsProps) {
 
         return (
           <Animated variant="itemScale" isChild>
-            <GridBox key={item.id || index}>
+            <CardBox key={item.id || index}>
               {fields.map((field, fIdx) => (
-                <GridText
+                <CardText
                   key={fIdx}
                   label={field.label}
                   value={field.value}
@@ -35,7 +35,7 @@ export function Contacts({ label, data }: ContactsProps) {
                   noAnimate
                 />
               ))}
-            </GridBox>
+            </CardBox>
           </Animated>
         );
       })}

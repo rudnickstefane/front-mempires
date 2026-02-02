@@ -6,22 +6,22 @@ import {
   formatGender,
   formatIdentity,
 } from "@sr/utils";
-import { GridText } from "../Grids";
+import { CardText } from "../../../../../common/components/Card";
 
-export function Personal({ label, data }: PersonalProps) {
+export function Personal({ data }: PersonalProps) {
   const fields = [
-    { label: label.code, value: data?.code && formatIdentity(data?.code) },
-    { label: label.name, value: data?.name },
+    { label: "personal.code", value: data?.code && formatIdentity(data?.code) },
+    { label: "name", value: data?.name },
     {
-      label: label.birthDate,
+      label: "birthDate",
       value: data?.birthDate && formatDate(data?.birthDate),
     },
     {
-      label: label.identity,
+      label: "identity",
       value: data?.identity && formatDocument(data?.identity),
       description: "(RG, CIN, CNH ou RNE)",
     },
-    { label: label.gender, value: data?.gender && formatGender(data?.gender) },
+    { label: "gender", value: data?.gender && formatGender(data?.gender) },
   ];
 
   return (
@@ -30,7 +30,7 @@ export function Personal({ label, data }: PersonalProps) {
       className="grid grid-cols-[max-content,1fr] gap-x-5"
     >
       {fields.map((field, index) => (
-        <GridText
+        <CardText
           key={field.label || index}
           label={field.label}
           value={field.value}

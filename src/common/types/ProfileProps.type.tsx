@@ -5,8 +5,4 @@ export type ProfileProps = {
     profile: ProfileDetails;
     loading: boolean;
   };
-  label?: {
-    code: string;
-  };
-  refresh?: () => Promise<void>;
 };

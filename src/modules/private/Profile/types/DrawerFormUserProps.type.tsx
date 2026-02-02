@@ -24,6 +24,6 @@ export type DrawerFormUserProps = {
     description: string;
     email: string;
     phone: string;
-    status: string;
+    validationEmail: string;
   };
 };

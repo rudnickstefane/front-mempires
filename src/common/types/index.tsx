@@ -6,6 +6,7 @@ export type { CustomTextFieldProps } from "./CustomTextFieldProps.type";
 export type { DrawerContainerProps } from "./DrawerContainerProps.type";
 export type { DrawerHeaderProps } from "./DrawerHeaderProps.type";
 export type { DrawerStepsProps } from "./DrawerStepsProps.type";
+export type { ModalHeaderProps } from "./ModalHeaderProps.type";
 export type { MultiStepFormProps } from "./MultiStepFormProps.type";
 export type { PersonalProps } from "./PersonalProps.type";
 export type { ProfileProps } from "./ProfileProps.type";

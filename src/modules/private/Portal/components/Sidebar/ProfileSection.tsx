@@ -10,35 +10,36 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { useNavigationStore } from "@sr/store";
 import { avatarLabel } from "@sr/utils";
 import { ArrowDown2, ArrowRight2 } from "iconsax-react";
 import { TbFileInvoice, TbUserCircle } from "react-icons/tb";
 
 export const ProfileSection = ({ isCollapsed, methods }: any) => {
+  const { reset } = useNavigationStore();
+
   const {
     isProfileLoading,
-    responseProfileDetails,
+    profileData,
     anchorEls,
     handleOpen,
     handleClose,
-    setActiveComponent,
     setSelectedResource,
     setExpandedMenus,
   } = methods;
 
-  const profile = responseProfileDetails?.findUserDetails;
-  const firstName = profile?.name?.split(" ")[0];
-  const email = profile?.contact?.email;
+  const firstName = profileData?.name?.split(" ")[0];
+  const email = profileData?.contact?.email;
 
   const handleProfileClick = () => {
     setSelectedResource(null);
     setExpandedMenus([]);
-    setActiveComponent("Profile");
+    reset("Profile");
   };
 
-  const handleMenuAction = (component: string) => {
+  const handleMenuAction = (component: any) => {
     handleClose("menuProfile");
-    setActiveComponent(component);
+    reset(component);
   };
 
   return (
@@ -53,14 +54,14 @@ export const ProfileSection = ({ isCollapsed, methods }: any) => {
           {isProfileLoading ? (
             <Skeleton variant="circular" width={40} height={36} />
           ) : (
-            <Typography className="!text-lg !font-bold text-[#646464] !font-ubuntu bg-neutral-200 !rounded-3xl p-2 w-[38px] h-9 flex justify-center items-center">
-              {avatarLabel(profile?.name)}
+            <Typography className="!text-lg !font-bold text-[#646464] !font-manrope bg-neutral-200 !rounded-3xl p-2 w-[38px] h-9 flex justify-center items-center">
+              {avatarLabel(profileData?.name)}
             </Typography>
           )}
 
           {!isCollapsed && (
             <Box className="flex flex-col text-left ml-3 overflow-hidden">
-              <Typography className="!text-sm font-semibold truncate w-24 !font-ubuntu">
+              <Typography className="!text-sm font-semibold truncate w-24 !font-manrope">
                 {isProfileLoading ? (
                   <Skeleton className="w-[4rem]" />
                 ) : (

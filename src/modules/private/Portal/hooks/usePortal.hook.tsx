@@ -8,11 +8,10 @@ import {
   FindNotificationsResponse,
 } from "../../../common/types";
 import { ManagementProps } from "../../../common/types/ManagementProps.type";
+import * as Hook from "../../Profile/hooks";
 import { QueryFindNotifications } from "../components/Graphql";
 import { QueryFindCompanyDetails } from "../components/Graphql/QueryFindCompanyDetails";
-import { useProfileHook } from "../components/Profile/hooks";
 import { useSidebarHook } from "../components/Sidebar/hooks";
-import { renderModule } from "../config/navigation.config";
 import { MutationNotificationUpsert } from "../pages/home/graphql";
 import { AdminGymDrawerType } from "../pages/home/types";
 import { GymManagementType } from "../pages/home/types/gym-management.types";
@@ -20,7 +19,7 @@ import { GymManagementType } from "../pages/home/types/gym-management.types";
 export const usePortalHook = ({ permissions }: ManagementProps) => {
   const { request } = useBackend();
   const sidebar = useSidebarHook();
-  const profile = useProfileHook();
+  const { data: profileData, isPending } = Hook.useFindUserDetails();
   const [isCompanyLoading, setIsCompanyLoading] = useState(false);
   const [responseCompanyDetails, setResponseCompanyDetails] =
     useState<FindCompanyDetailsResponse>();
@@ -145,7 +144,6 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
   const refresh = async (source: string) => {
     switch (source) {
       case "findUserDetails":
-        await profile.findUserDetails();
         break;
 
       case "findCompanyDetails":
@@ -247,8 +245,8 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
     openComponent,
     activeComponent,
     setActiveComponent,
-    isProfileLoading: profile.isProfileLoading,
-    responseProfileDetails: profile.responseProfileDetails,
+    isProfileLoading: isPending,
+    profileData,
     toggleMenu: sidebar.toggleMenu,
     expandedMenus: sidebar.expandedMenus,
     toggleSubMenu: sidebar.toggleSubMenu,
@@ -257,13 +255,5 @@ export const usePortalHook = ({ permissions }: ManagementProps) => {
     selectedResource: sidebar.selectedResource,
     setExpandedMenus: sidebar.setExpandedMenus,
     setSelectedResource: sidebar.setSelectedResource,
-    renderModule: () =>
-      renderModule(activeComponent, {
-        data: {
-          profile: profile.responseProfileDetails?.findUserDetails,
-          loading: profile.isProfileLoading,
-        },
-        refresh: refresh,
-      }),
   };
 };

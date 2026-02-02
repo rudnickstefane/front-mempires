@@ -41,7 +41,7 @@ export const initialUserDetailsValues = (
       phone: data?.contact?.phone
         ? formatPhoneNumber(data?.contact?.phone)
         : "",
-      status: data?.contact?.status || "",
+      validationEmail: data?.contact?.status || "",
     },
   };
 };

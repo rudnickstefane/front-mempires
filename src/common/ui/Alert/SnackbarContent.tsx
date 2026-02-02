@@ -1,33 +1,50 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import { Typography } from "@sr/common/iu/components/Typography";
 import { CloseCircle, Danger, InfoCircle, TickCircle } from "iconsax-react";
 import { CustomContentProps } from "notistack";
 import { forwardRef } from "react";
+import { useIntl } from "react-intl";
 
-export const SnackbarContent = forwardRef<HTMLDivElement, CustomContentProps>(
-  ({ message, variant }, ref) => {
+interface MySnackbarProps extends CustomContentProps {
+  title?: string;
+}
+
+export const SnackbarContent = forwardRef<HTMLDivElement, MySnackbarProps>(
+  ({ message, variant, title }, ref) => {
+    const intl = useIntl();
+
+    const translate = (id?: string) => {
+      if (!id) return id;
+      return intl.formatMessage({ id, defaultMessage: id });
+    };
+
     const variantStyles = {
       success: {
         bg: "bg-success-50",
         iconBg: "bg-success-500",
         textColor: "text-success-700",
+        defaultTitleId: "success",
         icon: <TickCircle size={18} variant="Linear" color="white" />,
       },
       error: {
         bg: "bg-danger-50",
         iconBg: "bg-danger-500",
         textColor: "text-danger-700",
+        defaultTitleId: "error",
         icon: <CloseCircle size={18} variant="Linear" color="white" />,
       },
       info: {
         bg: "bg-info-50",
         iconBg: "bg-info-500",
         textColor: "text-info-700",
+        defaultTitleId: "info",
         icon: <InfoCircle size={18} variant="Linear" color="white" />,
       },
       warning: {
         bg: "bg-warning-50",
         iconBg: "bg-warning-500",
         textColor: "text-warning-700",
+        defaultTitleId: "warning",
         icon: <Danger size={18} variant="Linear" color="white" />,
       },
     };
@@ -35,6 +52,10 @@ export const SnackbarContent = forwardRef<HTMLDivElement, CustomContentProps>(
     const style =
       variantStyles[variant as keyof typeof variantStyles] ||
       variantStyles.info;
+
+    const displayTitle = title
+      ? translate(title)
+      : intl.formatMessage({ id: style.defaultTitleId });
 
     return (
       <Box
@@ -49,24 +70,17 @@ export const SnackbarContent = forwardRef<HTMLDivElement, CustomContentProps>(
         </Box>
         <Box className="ml-3 flex flex-col justify-center">
           <Typography
-            variant="subtitle2"
-            className={`${style.textColor} !font-poppins !font-semibold !text-[15px] leading-tight`}
-          >
-            {variant === "success" && "Sucesso"}
-            {variant === "error" && "Erro"}
-            {variant === "info" && "Informação"}
-            {variant === "warning" && "Atenção"}
-          </Typography>
+            translateId={displayTitle}
+            className={`${style.textColor} font-manrope font-semibold text-base leading-tight`}
+          />
           <Typography
-            variant="body2"
-            className="text-neutral-700 !text-[13px] mt-0.5 !font-poppins"
-          >
-            {message}
-          </Typography>
+            translateId={typeof message === "string" ? message : ""}
+            className="text-neutral-700 text-sm mt-0.5 font-manrope"
+          />
         </Box>
       </Box>
     );
-  }
+  },
 );
 
 SnackbarContent.displayName = "SnackbarContent";

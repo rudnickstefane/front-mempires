@@ -1,31 +1,32 @@
-export type RendersGymManagement = {
-  Home: "Home";
-  Partners: "Home";
-  Admin: "Admin";
-  Plans: "Plans";
-  Students: "Students";
-  Classes: "Classes";
-  Finance: "Finance";
-  Integration: "Integration";
-  Dashboard: "Dashboard";
-  Programs: "Programs";
-  Profile: "Profile";
-  Application: "Application";
-  Frequencies: "Frequencies";
-  Relationship: "Relationship";
-  Products: "Products";
-  Marketplace: "Marketplace";
-  Suppliers: "Suppliers";
-  Contributors: "Contributors";
-  Settings: "Settings";
-  Company: "Company";
-  Support: "Support";
-  Personal: "Personal";
-  Nutritionist: "Nutritionist";
-  Notifications: "Notifications";
-  GroupAccess: "GroupAccess";
-  Signature: "Signature";
-  Invoices: "Invoices";
-};
+export type RendererModulesType =
+  | "Home"
+  | "Home"
+  | "Admin"
+  | "Security"
+  | "Plans"
+  | "Students"
+  | "Classes"
+  | "Finance"
+  | "Integration"
+  | "Dashboard"
+  | "Programs"
+  | "Profile"
+  | "Profile"
+  | "Application"
+  | "Frequencies"
+  | "Relationship"
+  | "Products"
+  | "Marketplace"
+  | "Suppliers"
+  | "Contributors"
+  | "Settings"
+  | "Company"
+  | "Support"
+  | "Personal"
+  | "Nutritionist"
+  | "Notifications"
+  | "GroupAccess"
+  | "Signature"
+  | "Invoices";
 
-export type GymManagementType = keyof RendersGymManagement;
+export type GymManagementType = RendererModulesType;

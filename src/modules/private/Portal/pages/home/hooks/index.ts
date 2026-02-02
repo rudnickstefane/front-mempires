@@ -1,3 +1,4 @@
+export * from "../../../../Profile/hooks/useProfile.hook";
 export * from "./useClassesGymAdmin";
 export * from "./useCompanyGymManagement";
 export * from "./useContributorsGymAdmin";
@@ -9,7 +10,6 @@ export * from "./useHomeGymManagement";
 export * from "./useInvoice";
 export * from "./useMarketplace";
 export * from "./usePlansGymAdmin";
-export * from "./useProfileGymManagement";
 export * from "./useStudentsGymAdmin";
 export * from "./useTicket";
 export * from "./useVisitsGymAdmin";

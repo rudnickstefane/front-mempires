@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { QueryFindUserDetails } from "@sr/modules/private/Profile/graphql";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LuScreenShareOff } from "react-icons/lu";
@@ -16,7 +17,6 @@ import GymProfileManagement from "../../../../Profile";
 import {
   QueryFindMenus,
   QueryFindNotifications,
-  QueryFindUserDetails,
 } from "../../../components/Graphql";
 import { QueryFindCompanyDetails } from "../../../components/Graphql/QueryFindCompanyDetails";
 import CoreSupport from "../../Core/Support";
@@ -51,7 +51,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
   const [isCompanyLoading, setIsCompanyLoading] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState<number[]>([]);
   const [responseMenus, setResponseMenus] = useState<FindMenusResponse | null>(
-    null
+    null,
   );
   const [activeComponent, setActiveComponent] =
     useState<GymManagementType>("Home");
@@ -77,7 +77,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
       ? permissions
           .find((perm: { module: string }) => perm.module === "MENU")
           ?.items.filter(
-            (item: { permission: string }) => item.permission === "NONE"
+            (item: { permission: string }) => item.permission === "NONE",
           )
           ?.map((item: { path: string }) => item.path) || []
       : [];
@@ -85,12 +85,12 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
   const companyPermissions =
     permissions && permissions.length > 0
       ? permissions.find(
-          (perm: { module: string }) => perm.module === "COMPANY"
+          (perm: { module: string }) => perm.module === "COMPANY",
         )?.items || []
       : [];
 
   const companyPermission = companyPermissions.find(
-    (item: { path: string }) => item.path === "Company"
+    (item: { path: string }) => item.path === "Company",
   )?.permission;
   const isCompanyDisabled = companyPermission === "NONE" ? true : false;
 
@@ -159,7 +159,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
     try {
       const response: FindUserDetailsResponse = await request(
         QueryFindUserDetails,
-        { profileCode: profileCode }
+        { profileCode: profileCode },
       );
 
       setResponseProfileDetails(response);
@@ -167,7 +167,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
     } catch {
       enqueueSnackbar(
         "Ocorreu um erro ao buscar as informações do seu perfil.",
-        { variant: "error" }
+        { variant: "error" },
       );
     }
   }, [enqueueSnackbar, profileCode, request]);
@@ -177,7 +177,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
     try {
       const response: FindCompanyDetailsResponse = await request(
         QueryFindCompanyDetails,
-        { companyCode: companyCode }
+        { companyCode: companyCode },
       );
 
       setResponseCompanyDetails(response);
@@ -193,7 +193,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
     try {
       const response: FindNotificationsResponse = await request(
         QueryFindNotifications,
-        { companyCode: companyCode, profileCode: profileCode }
+        { companyCode: companyCode, profileCode: profileCode },
       );
 
       setResponseNotifications(response);
@@ -437,7 +437,7 @@ export const useCoreManagement = ({ permissions }: ManagementProps) => {
   // Função para abrir o menu
   const handleOpen = (
     event: React.MouseEvent<HTMLElement>,
-    viewCode: string
+    viewCode: string,
   ) => {
     setAnchorEls((prev) => ({ ...prev, [viewCode]: event.currentTarget }));
   };

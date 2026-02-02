@@ -30,7 +30,7 @@ export function SteppersWithForms(props: Readonly<SteppersWithFormsProps>) {
           borderRadius: "8px",
           padding: "1rem",
           fontSize: "0.975rem",
-          fontFamily: "Poppins",
+          fontFamily: "Manrope",
         },
 
         /* ATIVO */

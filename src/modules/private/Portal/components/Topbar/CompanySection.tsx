@@ -49,19 +49,19 @@ export const CompanySection = ({ methods }: any) => {
                   />
                 ) : (
                   <Box className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-gradient">
-                    <Typography className="!text-sm !font-bold !text-white !font-poppins">
+                    <Typography className="!text-sm !font-bold !text-white !font-manrope">
                       {avatarLabel(fantasyName)}
                     </Typography>
                   </Box>
                 )}
                 <Box>
-                  <Typography className="!font-poppins !truncate uppercase !text-sm !font-semibold w-full max-w-[9.9rem]">
+                  <Typography className="!font-manrope !truncate uppercase !text-sm !font-semibold w-full max-w-[9.9rem]">
                     {fantasyName}
                   </Typography>
-                  <Typography className="!font-poppins !text-xs truncate uppercase text-rhino-800">
+                  <Typography className="!font-manrope !text-xs truncate uppercase text-rhino-800">
                     {responseCompanyDetails?.findCompanyDetails?.code
                       ? FormatCode(
-                          responseCompanyDetails?.findCompanyDetails?.code
+                          responseCompanyDetails?.findCompanyDetails?.code,
                         )
                       : ""}
                   </Typography>

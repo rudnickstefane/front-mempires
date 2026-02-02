@@ -22,26 +22,24 @@ export function ContactsForm() {
 
   return (
     <Box className="flex flex-col gap-6">
-      <Box className="flex flex-col gap-4">
+      <TextField
+        required
+        fullWidth
+        name="contact.description"
+        label="Descrição"
+        disabled
+        onChange={handleFormattedTextChange}
+      />
+      <Box className="grid grid-cols-2 gap-4">
         <TextField
           required
           fullWidth
-          name="contact.description"
-          label="Descrição"
-          disabled
-          onChange={handleFormattedTextChange}
+          name="contact.phone"
+          label="Telefone"
+          onChange={handlePhoneChange}
         />
-        <Box className="grid grid-cols-2 gap-4">
-          <TextField
-            required
-            fullWidth
-            name="contact.phone"
-            label="Telefone"
-            onChange={handlePhoneChange}
-          />
 
-          <TextField required name="contact.email" label="E-mail" />
-        </Box>
+        <TextField required name="contact.email" label="E-mail" />
       </Box>
     </Box>
   );

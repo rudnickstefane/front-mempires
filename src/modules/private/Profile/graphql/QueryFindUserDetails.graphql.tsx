@@ -27,7 +27,7 @@ export const QueryFindUserDetails = gql`
         description
         email
         phone
-        status
+        validationEmail
       }
     }
   }
