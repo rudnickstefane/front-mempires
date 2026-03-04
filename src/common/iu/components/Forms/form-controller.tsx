@@ -13,7 +13,7 @@ interface FormContainerProps<
 export function FormController<T extends object>({
   value,
   children,
-  className = "w-full h-full flex flex-col justify-start",
+  className = "flex flex-col justify-start",
   ...props
 }: FormContainerProps<T>) {
   return (

@@ -1,6 +1,7 @@
 export type RendererModulesType =
   | "Home"
   | "Home"
+  | "Partners"
   | "Admin"
   | "Security"
   | "Plans"

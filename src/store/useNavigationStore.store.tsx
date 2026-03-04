@@ -14,7 +14,7 @@ interface NavigationState {
 }
 
 export const useNavigationStore = create<NavigationState>((set, get) => ({
-  stack: ["Home"], // Começa na Home
+  stack: ["Home"],
   params: {},
 
   getActiveModule: () => get().stack[get().stack.length - 1],

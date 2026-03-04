@@ -1,10 +1,11 @@
 export const ptBR = {
   // Menu principal
   "menu.home": "Início",
-  "menu.explore": "Explorar",
-  "menu.community": "Comunidade",
+  "menu.solutions": "Funcionalidades",
+  "menu.ecosystem": "Ecossistema",
+  "menu.differentials": "Diferenciais",
   "menu.faq": "FAQ",
-  "menu.help": "Ajuda",
+  "menu.contact": "Contato",
 
   "profile.code": "Código de perfil",
 
@@ -16,20 +17,23 @@ export const ptBR = {
   "security.title": "Segurança da conta",
   "security.subtitle": "Gerencie as configurações de segurança da sua conta",
 
-  "security.twoFaAuth": "Autenticação 2FA",
+  "twoFaAuth.title": "Autenticação 2FA",
   "twoFaAuth.description": "Adicione uma camada extra de segurança à sua conta",
   "twoFaAuth.modal.title": "Autenticação de dois fatores",
   "twoFaAuth.modal.description": "Configure uma camada extra de segurança",
 
-  "security.changeYourPassword": "Alterar sua senha",
-  "security.changePassword": "Alterar senha",
-  "security.changePassword.description":
+  "changeYourPassword.title": "Alterar sua senha",
+  "changePassword.title": "Alterar senha",
+  "changePassword.description":
     "Mantenha sua conta segura atualizando sua senha regularmente",
+  "changePassword.modal.description": "Atualize sua senha periodicamente",
 
-  "security.activeSessions": "Sessões ativas",
-  "security.activeSessions.description":
+  "changeYourPurchasePassword.title": "Alterar sua senha de compra",
+
+  "activeSessions.title": "Sessões ativas",
+  "activeSessions.description":
     "Gerencie os dispositivos conectados à sua conta",
-  manageSessions: "Gerenciar sessões",
+  "manageSessions.title": "Gerenciar sessões",
 
   // Modulo de Configurações
   "settings.title": "Configurações",
@@ -56,13 +60,17 @@ export const ptBR = {
   noNumber: "Sem número",
 
   // Contato
-  contact: "Contato",
+  "contact.title": "Contato",
   description: "Descrição",
   phone: "Telefone",
   email: "E-mail",
 
   // Ações rápidas
   "actions.title": "Ações rápidas",
+
+  // Modulo do Parceiros comerciais
+  "partner.title": "Parceiros",
+  "partner.subtitle": "Gerencie os parceiros cadastrados no sistema",
 
   // Seções do menu Explorar
   "menu.explore.latest": "Últimas",
@@ -150,7 +158,16 @@ export const ptBR = {
   // Botões
   "btn.login": "Entrar",
   "btn.save": "Salvar",
+  "btn.start": "Começar",
+  "btn.next": "Próximo",
+  "btn.return": "Voltar",
+  "btn.completeSetup": "Concluir configuração",
+  "btn.verify": "Verificar",
+  "btn.finish": "Finalizar",
+  "btn.close": "Fechar",
   "btn.cancel": "Cancelar",
+
+  "btn.newPartner": "Novo Parceiro",
 
   // Status
   "status.online": "Online",

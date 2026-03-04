@@ -222,7 +222,7 @@
   "UserDetails": [
     {
       "id": 1,
-      "name": "Rudnick Stefane Nogueira Santana"
+      "name": "Teste"
     }
   ],
   "NotificationManagement": [
@@ -295,7 +295,7 @@
       "id": 2,
       "userId": 1,
       "paymentType": "Students",
-      "name": "Rudnick Stefane Nogueira Santana",
+      "name": "Teste",
       "describe": "Mensalidade Nov/24",
       "colorName": "f2b326",
       "colorBackIcon": "f9eeda"

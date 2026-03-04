@@ -11,17 +11,17 @@ export function SecurityPage() {
   const sectionGroups = [
     [
       {
-        title: "security.changeYourPassword",
-        description: "security.changePassword.description",
+        title: "changeYourPassword.title",
+        description: "changePassword.description",
         gradient: true,
         icon: <Key variant="Bulk" size={24} />,
         iconClass: "bg-white/20 text-white",
         skeletonCount: 3,
         onOpenContent: () => openSecurityModal("Password"),
-        labelButton: "security.changePassword",
+        labelButton: "changePassword.title",
       },
       {
-        title: "security.twoFaAuth",
+        title: "twoFaAuth.title",
         description: "twoFaAuth.description",
         icon: <ShieldSecurity variant="Bulk" size={24} />,
         skeletonCount: 3,
@@ -29,13 +29,13 @@ export function SecurityPage() {
         labelButton: "setUpNow",
       },
       {
-        title: "security.activeSessions",
-        description: "security.activeSessions.description",
+        title: "activeSessions.title",
+        description: "activeSessions.description",
         icon: <MonitorMobbile variant="Bulk" size={24} />,
         iconClass: "!bg-purple-100 text-purple-500",
         skeletonCount: 3,
         onOpenContent: () => openSecurityModal("Sessions"),
-        labelButton: "manageSessions",
+        labelButton: "manageSessions.title",
       },
     ],
   ];

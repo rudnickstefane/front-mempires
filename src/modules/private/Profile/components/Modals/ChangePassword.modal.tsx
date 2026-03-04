@@ -1,62 +1,72 @@
-import { Box, Typography } from "@mui/material";
-import { CardBox } from "@sr/common/components/Card";
-import { Key, Lock, TickCircle, Unlock } from "iconsax-react";
+import { Box, Button, CircularProgress } from "@mui/material";
+import { PasswordStrength } from "@sr/common/components/Forms";
+import { FormController } from "@sr/common/iu/components/Forms";
+import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
+import { Alert } from "@sr/common/ui/Alert";
+import * as Hook from "../../hooks";
 
 export function ChangePasswordModal() {
-  const steps = [
-    {
-      icon: <Lock className="h-4 w-4" />,
-      title: "Verificação de identidade",
-      description: "Primeiro, confirme sua senha atual",
-    },
-    {
-      icon: <Unlock className="h-4 w-4" />,
-      title: "Nova senha segura",
-      description: "Crie uma senha forte e única",
-    },
-    {
-      icon: <TickCircle className="h-4 w-4" />,
-      title: "Confirmação",
-      description: "Confirme e finalize a alteração",
-    },
-  ];
+  const {
+    formData,
+    newPasswordValue,
+    showPassword,
+    handleClickShowPassword,
+    isPending,
+    isButtonEnabled,
+  } = Hook.useChangePasswordHook();
 
   return (
-    <Box className="flex flex-col gap-5">
-      <Box className="space-y-6">
-        <Box className="text-center">
-          <Box className="h-20 w-20 mx-auto rounded-2xl bg-orange-100 flex items-center justify-center mb-4">
-            <Key className="h-10 w-10 text-orange-500" />
-          </Box>
-          <h3 className="text-xl font-semibold text-foreground mb-2">
-            Alterar sua senha
-          </h3>
-          <Typography className="text-muted-foreground">
-            Mantenha sua conta segura atualizando sua senha regularmente
-          </Typography>
-        </Box>
+    <FormController value={formData}>
+      <Box className="flex flex-col gap-6">
+        <Alert
+          variant="warning"
+          title="Importante"
+          message="Ao concluir a alteração, todas as suas sessões atuais serão encerradas e você será levado de volta à tela de login para validar sua nova senha."
+        />
 
-        <Box className="space-y-5">
-          {steps.map((step) => (
-            <CardBox key={step.title}>
-              <Box className="h-9 w-9 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 border border-orange/20">
-                <Typography className="!text-sm !font-bold  text-orange-500">
-                  {step.icon}
-                </Typography>
-              </Box>
+        <TextField
+          required
+          fullWidth
+          name="oldPassword"
+          type={showPassword ? "text" : "password"}
+          label="Senha atual"
+          showPasswordToggle
+          onTogglePassword={handleClickShowPassword}
+        />
 
-              <Box>
-                <Typography className="!font-manrope !font-semibold !text-neutral-800">
-                  {step.title}
-                </Typography>
-                <Typography className="!text-sm !text-neutral-500 !font-manrope">
-                  {step.description}
-                </Typography>
-              </Box>
-            </CardBox>
-          ))}
-        </Box>
+        <TextField
+          required
+          fullWidth
+          name="newPassword"
+          type={"password"}
+          label="Nova senha"
+        />
+
+        <TextField
+          required
+          fullWidth
+          name="confirmPassword"
+          type={"password"}
+          label="Confirmar nova senha"
+        />
+
+        <PasswordStrength password={newPasswordValue} />
+
+        <Button
+          fullWidth
+          onClick={() => formData.handleSubmit()}
+          disabled={!isButtonEnabled || isPending}
+          className="rounded-lg !py-3 normal-case font-manrope text-base bg-primary text-white"
+        >
+          {isPending ? (
+            <Box className="flex items-center h-6">
+              <CircularProgress size={20} color="inherit" />
+            </Box>
+          ) : (
+            "Alterar senha"
+          )}
+        </Button>
       </Box>
-    </Box>
+    </FormController>
   );
 }

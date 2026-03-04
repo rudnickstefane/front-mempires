@@ -1,4 +1,9 @@
-import { EnqueueSnackbar, SnackbarKey, VariantType } from "notistack";
+import {
+  closeSnackbar,
+  EnqueueSnackbar,
+  SnackbarKey,
+  VariantType,
+} from "notistack";
 
 let snackbarRef: EnqueueSnackbar;
 
@@ -16,4 +21,5 @@ export const notify = {
     snackbarRef(msg, { variant: "warning" }),
   custom: (msg: string, variant: VariantType): SnackbarKey =>
     snackbarRef(msg, { variant }),
+  closeAll: () => closeSnackbar(),
 };

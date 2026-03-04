@@ -11,8 +11,8 @@ import { GetErrorMessage } from "../utils";
 import { useBackend } from "./useBackend";
 
 export const useSignInFormHook = () => {
-  const { request } = useBackend();
   const navigate = useNavigate();
+  const { request } = useBackend();
   const [attemptCount, setAttemptCount] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -20,7 +20,7 @@ export const useSignInFormHook = () => {
     try {
       const response: CreateAccessTokenResponse = await request(
         MutationCreateToken,
-        values
+        values,
       );
 
       storage.set({

@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import { Typography } from "@sr/common/iu/components/Typography";
 import { CloseCircle, Danger, InfoCircle, TickCircle } from "iconsax-react";
 
 type AlertVariant = "warning" | "info" | "success" | "error";
@@ -43,12 +44,12 @@ export function Alert({ variant = "warning", title, message }: AlertProps) {
 
       <Box className={`flex flex-col gap-2 ${text}`}>
         {title && (
-          <Typography className="!font-manrope !text-base !font-semibold leading-6">
+          <Typography className="font-manrope text-base font-semibold leading-6">
             {title}
           </Typography>
         )}
 
-        <Typography className="!font-manrope !text-sm leading-4 text-left">
+        <Typography className="font-manrope !text-sm leading-4 text-left">
           {message}
         </Typography>
       </Box>

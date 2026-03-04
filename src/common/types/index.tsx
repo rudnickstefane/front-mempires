@@ -1,4 +1,5 @@
 export type { AddressDataProps, AddressProps } from "./AddressProps.type";
+export type { CheckboxControllerProps } from "./CheckboxControllerProps.type.tsx";
 export type { CompanyProps } from "./CompanyProps.type";
 export type { ContactsDataProps, ContactsProps } from "./ContactsProps.type";
 export type { CreateAccessTokenResponse } from "./create-access-token-response.type";
@@ -9,6 +10,7 @@ export type { DrawerStepsProps } from "./DrawerStepsProps.type";
 export type { ModalHeaderProps } from "./ModalHeaderProps.type";
 export type { MultiStepFormProps } from "./MultiStepFormProps.type";
 export type { PersonalProps } from "./PersonalProps.type";
+export type { PinFieldProps } from "./PinField.type.tsx";
 export type { ProfileProps } from "./ProfileProps.type";
 export type { ShowProps } from "./ShowProps.type";
 export type { SignInFormValues } from "./sign-in-form.type";

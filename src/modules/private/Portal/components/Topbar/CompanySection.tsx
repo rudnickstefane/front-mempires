@@ -2,6 +2,7 @@
 import { Box, Button, Skeleton, Typography } from "@mui/material";
 import { FormatCode } from "@sr/modules/common/utils/FormatCodeAndIdentity.util";
 import { avatarLabel } from "@sr/utils";
+import { RecoveryConvert } from "iconsax-react";
 
 export const CompanySection = ({ methods }: any) => {
   const {
@@ -76,6 +77,7 @@ export const CompanySection = ({ methods }: any) => {
         onClick={(event) => {
           handleOpen(event, "menuProfile");
         }}
+        startIcon={<RecoveryConvert variant="Bulk" size={20} />}
       >
         Trocar
       </Button>

@@ -34,7 +34,7 @@ export const Card = ({
   hasSensitiveData,
 }: GridProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const bgClass = gradient ? "!bg-primary-gradient" : "!bg-white";
+  const bgClass = gradient ? "bg-primary-gradient" : "bg-white";
 
   const skeletonWidths = useMemo(() => {
     return Array.from({ length: skeletonCount }).map(

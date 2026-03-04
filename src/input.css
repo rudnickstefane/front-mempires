@@ -17,7 +17,7 @@
   --font-secondary: "Open Sans", Arial, Helvetica, sans-serif;
   --font-nsr: "Noto Serif", Arial, Helvetica, sans-serif;
 
-  --bg-theme: url("");
+  --bg-theme: url("@sr/assets/images/bgHeader.png");
   --logo: url("@sr/modules/assets/images/logo.png");
   --min-logo: url("@sr/modules/assets/images/min-logo.png");
   --clean-logo: url("@sr/modules/assets/images/clean-logo.png");
@@ -112,18 +112,6 @@ body {
   font-family: var(--font-primary);
   position: relative;
   min-height: 100vh;
-}
-
-body::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 47.5rem;
-  background: var(--bg-theme) no-repeat center top;
-  background-size: cover;
-  z-index: -1;
 }
 
 .btn-primary {
@@ -866,4 +854,43 @@ body::before {
   text-align: left;
   padding: 8px !important;
   font-size: 0.9rem;
+}
+
+.bgHeader {
+  background-image: url("./assets/images/bgHeader.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.bgHeader2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 47.5rem;
+  background: var(--bg-theme) no-repeat right top;
+  background-size: contain;
+  z-index: -1;
+}
+
+.bgOverlay {
+  background-image: url(https://demo.stairthemes.com/sociable/wp-content/uploads/sites/14/2023/04/img_03.png);
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.imgHeaderAuth {
+  background-image: url("./assets/images/bgTeste.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.imgHeaderFinance {
+  background-image: url("./assets/images/financeHeader.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }

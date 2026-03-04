@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface TextSwitcherItem {
-    title: string;
-    text: string;
-    subtitle: string;
-    description: JSX.Element;
+  title: React.ReactNode;
+  description: React.ReactNode;
 }
 
-export function useTextSwitcher(items: TextSwitcherItem[], intervalTime: number = 2000) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [fade, setFade] = useState(true);
+export function useTextSwitcher(
+  items: TextSwitcherItem[],
+  intervalTime: number = 2000,
+) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [fade, setFade] = useState(true);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setFade(false);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false);
 
-            setTimeout(() => {
-                setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
-                setFade(true);
-            }, 500);
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
+        setFade(true);
+      }, 600);
+    }, intervalTime);
 
-        }, intervalTime);
+    return () => clearInterval(interval);
+  }, [items, intervalTime]);
 
-        return () => clearInterval(interval);
-    }, [items, intervalTime]);
-
-    return { title: items[currentIndex].title, text: items[currentIndex].text, subtitle: items[currentIndex].subtitle, description: items[currentIndex].description, fade };
+  return { ...items[currentIndex], fade };
 }

@@ -1,6 +1,7 @@
-import { Box, Button, CircularProgress, Link, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Link } from "@mui/material";
 import { FormController } from "@sr/common/iu/components/Forms";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
+import { Typography } from "@sr/common/iu/components/Typography";
 import { AnimatedContainer } from "@sr/common/ui/motion/AnimatedContainer";
 import { AnimatedItem } from "@sr/common/ui/motion/AnimatedItem";
 import { TypewriterText } from "@sr/common/ui/typewriters";
@@ -10,22 +11,17 @@ import { PasswordCheck, SecurityUser } from "iconsax-react";
 import { signInTypewriter } from "./constants";
 
 export default function SignIn() {
-  const {
-    formData,
-    showPassword,
-    setFieldValue,
-    handleClickShowPassword,
-    isLoading,
-  } = useSignInFormHook();
+  const { formData, showPassword, handleClickShowPassword, isLoading } =
+    useSignInFormHook();
 
   return (
     <Box className="flex flex-row w-full h-screen">
-      <Box className="flex flex-col md:justify-center items-center bg-primary md:w-2/4 w-full">
+      <Box className="flex flex-col md:justify-center items-center bg-white md:w-2/4 w-full">
         <Box className="flex flex-col justify-center items-center w-full px-14">
           <AnimatedContainer className="w-full">
             <Box className="flex items-center justify-center flex-col mb-10">
               <AnimatedItem>
-                <Typography className="!text-3xl !font-semibold text-gray-900 !mb-3">
+                <Typography className="text-3xl font-semibold text-gray-900 mb-3">
                   Bem-vindo ao BenefyCare
                 </Typography>
               </AnimatedItem>
@@ -47,7 +43,6 @@ export default function SignIn() {
                   margin="normal"
                   name="login"
                   startIcon={<SecurityUser variant="Linear" />}
-                  onClear={() => setFieldValue("login", "")}
                 />
               </AnimatedItem>
               <AnimatedItem>
@@ -62,14 +57,13 @@ export default function SignIn() {
                   startIcon={<PasswordCheck variant="Linear" />}
                   showPasswordToggle
                   onTogglePassword={handleClickShowPassword}
-                  onClear={() => setFieldValue("password", "")}
                 />
               </AnimatedItem>
               <AnimatedItem>
                 <Box className="flex flex-row items-center justify-end w-full my-4">
                   <Link
                     href="/recovery"
-                    className="color-primary !no-underline hover:!underline !transition-all !text-sm"
+                    className="text-primary !no-underline hover:!underline transition-all text-sm"
                   >
                     Preciso de ajuda com minha senha.
                   </Link>
@@ -86,7 +80,7 @@ export default function SignIn() {
                   variant="contained"
                   color="primary"
                   fullWidth
-                  className="!normal-case !font-manrope !text-lg btn-primary !rounded-lg h-12 !transition-all"
+                  className="normal-case font-manrope text-lg btn-primary rounded-lg h-12 transition-all"
                 >
                   {isLoading ? (
                     <CircularProgress size={24} color="inherit" />
@@ -97,13 +91,13 @@ export default function SignIn() {
               </AnimatedItem>
             </FormController>
             <AnimatedItem>
-              <Box className="flex flex-row items-center justify-center w-full my-4 !text-[.8rem]">
+              <Box className="flex flex-row items-center justify-center w-full my-4 text-[.8rem]">
                 Protegido pelo reCAPTCHA.
                 <Link
                   href="https://policies.google.com/privacy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="color-primary !no-underline hover:!underline !transition-all !mx-1"
+                  className="text-primary !no-underline hover:!underline !transition-all !mx-1"
                 >
                   Privacidade
                 </Link>
@@ -112,7 +106,7 @@ export default function SignIn() {
                   href="https://policies.google.com/terms"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="color-primary !no-underline hover:!underline !transition-all !ml-1"
+                  className="text-primary !no-underline hover:!underline !transition-all !ml-1"
                 >
                   Termos
                 </Link>
@@ -128,7 +122,7 @@ export default function SignIn() {
           <Box className="flex flex-col justify-center">
             <AnimatedContainer className="w-full">
               <AnimatedItem>
-                <Typography className="text-white !font-light !font-manrope !text-6xl">
+                <Typography className="text-white !font-light font-ubuntu !text-6xl">
                   Evoluindo a gestão de benefícios...
                 </Typography>
               </AnimatedItem>

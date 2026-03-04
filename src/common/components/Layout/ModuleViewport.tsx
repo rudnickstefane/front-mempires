@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { DrawerContainer } from "../Drawer";
 import { Modal, ModalHeader } from "../Modal";
-import { useModal } from "../Modal/hooks/useModal";
+import { useModal } from "../Modal/hooks";
 
 interface DrawerContentType {
   header: {

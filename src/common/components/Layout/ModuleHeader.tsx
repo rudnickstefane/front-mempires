@@ -1,10 +1,10 @@
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
+import { Button } from "@sr/common/iu/components/Button";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { Animated } from "@sr/common/ui/motion/Animated";
 import { modulesRegistry } from "@sr/modules/private/Portal/config/navigation.const";
 import { useNavigationStore } from "@sr/store";
-import { ArrowLeft } from "iconsax-react";
-import { PiUserPlus } from "react-icons/pi";
+import { Add, ArrowLeft } from "iconsax-react";
 
 export type ModuleHeaderProps = {
   showButton?: boolean;
@@ -51,26 +51,12 @@ export function ModuleHeader({
       <Box>
         {showButton && (
           <Button
-            startIcon={<PiUserPlus />}
-            variant="contained"
-            color="primary"
-            style={{
-              color: "white",
-              fontFamily: "Poppins",
-              width: "12.5rem",
-              height: "3rem",
-            }}
-            sx={{
-              background: "#ff0336",
-              transition: "transform 0.3s, background-color 0.3s",
-              "&:hover": {
-                background: "#FF0000",
-              },
-            }}
-            // onClick={() => openDrawer("StudentRegister")}
-          >
-            {labelButton}
-          </Button>
+            fullWidth
+            // onClick={handleStartSetup}
+            startIcon={<Add variant="Linear" size={21} />}
+            className="py-3 px-4 text-base bg-primary text-white hover:bg-primary-500/90"
+            translateId={labelButton}
+          />
         )}
       </Box>
     </Animated>

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box } from "@mui/material";
-import { useModal } from "@sr/common/components/Modal/hooks/useModal";
-import { ShieldSecurity } from "iconsax-react";
+import { useModal } from "@sr/common/components/Modal/hooks";
+import { Key, ShieldSecurity } from "iconsax-react";
 import { useState } from "react";
-import { TwoFAAuthModal } from "../components/Modals";
+import { ChangePasswordModal, TwoFAAuthModal } from "../components/Modals";
 
 export const useSecurityHook = () => {
   const { openModal } = useModal();
@@ -16,25 +16,22 @@ export const useSecurityHook = () => {
 
   const openSecurityModal = (type: "TwoFA" | "Password" | "Sessions") => {
     const modules = {
+      Password: {
+        icon: <Key variant="Linear" size={24} className="text-orange-500" />,
+        title: "changePassword.title",
+        description: "changePassword.modal.description",
+        component: <ChangePasswordModal />,
+      },
       TwoFA: {
         icon: (
-          <ShieldSecurity
-            variant="Linear"
-            size={24}
-            className="!text-primary"
-          />
+          <ShieldSecurity variant="Linear" size={24} className="text-primary" />
         ),
         title: "twoFaAuth.modal.title",
         description: "twoFaAuth.modal.description",
         component: <TwoFAAuthModal />,
       },
-      Password: {
-        title: "security.changePassword",
-        description: "Atualize sua senha periodicamente",
-        component: <Box className="p-5">Componente de Senha</Box>,
-      },
       Sessions: {
-        title: "security.activeSessions",
+        title: "activeSessions.title",
         description: "Gerencie dispositivos conectados",
         component: <Box className="p-5">Sessões Ativas</Box>,
       },

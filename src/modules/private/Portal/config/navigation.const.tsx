@@ -1,3 +1,4 @@
+import Partners from "../../Partners";
 import Profile from "../../Profile";
 import { SecurityPage } from "../../Profile/pages";
 import HomeGymManagement from "../pages/home/pages/Home/HomeGymManagement";
@@ -18,6 +19,11 @@ export const modulesRegistry: Partial<
     title: "profile.title",
     subtitle: "profile.subtitle",
     component: <Profile />,
+  },
+  Partners: {
+    title: "partner.title",
+    subtitle: "partner.subtitle",
+    component: <Partners />,
   },
   Security: {
     title: "security.title",

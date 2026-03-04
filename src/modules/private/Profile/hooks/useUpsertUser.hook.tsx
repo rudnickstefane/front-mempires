@@ -25,7 +25,7 @@ export const useUpsertUser = () => {
 
       const msg =
         attemptCount >= 5
-          ? `${error}`
+          ? "Erro ao alterar senha. Entre em contato com nosso suporte."
           : GetErrorMessage(
               error,
               "Ops! Algo deu errado ao atualizar seus dados. Tente novamente!",

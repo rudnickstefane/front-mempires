@@ -44,12 +44,12 @@ export const CardHeader = ({
         <Box className="flex flex-col">
           <Typography
             translateId={title}
-            className={`font-manrope ${labelButton ? "text-base" : "text-lg"} !font-semibold`}
+            className={`${labelButton ? "text-base" : "text-lg"} !font-semibold`}
           />
           {description && (
             <Typography
               translateId={description}
-              className={`font-manrope text-sm ${gradient ? "text-white/80" : "text-rhino-820"}`}
+              className={`text-sm ${gradient ? "text-white/80" : "text-rhino-820"}`}
             />
           )}
         </Box>
@@ -57,7 +57,7 @@ export const CardHeader = ({
         {labelButton && (
           <Typography
             translateId={labelButton}
-            className={`font-manrope text-sm flex flex-row gap-2 items-center ${gradient ? "text-white" : "text-primary"}`}
+            className={`text-sm flex flex-row gap-2 items-center ${gradient ? "text-white" : "text-primary"}`}
           >
             <ExportSquare type="linear" size={15} />
           </Typography>

@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import { Typography } from "@sr/common/iu/components/Typography";
 import { useEffect, useState } from "react";
 
 interface TypewriterTextProps {
@@ -42,7 +43,7 @@ export const TypewriterText = ({ messages }: TypewriterTextProps) => {
   }, [displayText, isDeleting, loop, messages]);
 
   return (
-    <Typography className="flex flex-row !text-white !text-5xl !font-light !font-manrope !mt-5">
+    <Typography className="flex flex-row !text-white text-5xl font-ubuntu mt-5">
       Para você
       <Box component="span" className="font-bold ml-3 flex flex-row">
         {displayText}

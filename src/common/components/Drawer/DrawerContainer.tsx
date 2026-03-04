@@ -26,6 +26,9 @@ export function DrawerContainer(props: Readonly<DrawerContainerProps>) {
         paper: {
           className: `${steps.length > 0 ? "w-[60%]" : "w-[48.2%]"} p-8`,
         },
+        backdrop: {
+          className: "backdrop-blur-sm bg-black/80",
+        },
       }}
     >
       <DrawerHeader title={title} headerStep={headerStep} onClick={onClose} />

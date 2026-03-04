@@ -2,7 +2,7 @@ import { storage } from "@sr/common/storage";
 import { GraphQLClient, RequestDocument, Variables } from "graphql-request";
 import { useMemo } from "react";
 
-const endpoint = import.meta.env.VITE_APP_BFF_FUNCIONAL_ACESSO_URL;
+const endpoint = import.meta.env.VITE_APP_BACKEND_URL;
 
 export function useBackend(accessToken?: string | null) {
   const token = storage.get<string>("token") || accessToken;

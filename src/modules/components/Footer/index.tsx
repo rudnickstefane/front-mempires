@@ -1,122 +1,97 @@
-import { Box, Typography } from '@mui/material';
-import { Logo } from '@sr/modules/common/ui/Logo';
-import { motion, useAnimation } from 'framer-motion'; // Import Framer Motion
-import { useEffect } from 'react';
-import { FaDiscord, FaFacebook, FaInstagram, FaLinkedinIn, FaReddit, FaYoutube } from 'react-icons/fa';
-import { SiX } from 'react-icons/si';
-import { useInView } from 'react-intersection-observer';
-import { Link } from 'react-router-dom';
+import { Box } from "@mui/material";
+import { Typography } from "@sr/common/iu/components/Typography";
+import { Logo } from "@sr/modules/common/ui/Logo";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { HashLink as Link } from "react-router-hash-link";
 
 function Footer() {
-  const { ref, inView } = useInView({
-    triggerOnce: false, // Allow animations to replay on scroll
-    threshold: 0.2,
-  });
-
-  const controls = useAnimation(); // Animation controls for parent container
-
-  // Animation variants for the parent container
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2, // Stagger child animations
-        when: 'beforeChildren',
-      },
-    },
-  };
-
-  // Animation variants for child elements
-  const childVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  // Animation for nested links (e.g., social media, navigation)
-  const linkVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: (index: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-        delay: index * 0.1, // Cascade effect for links
-      },
-    }),
-  };
-
-  // Animation for copyright section
-  const copyrightVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-        delay: 0.6, // Delay to animate after main sections
-      },
-    },
-  };
-
-  useEffect(() => {
-    if (inView) {
-      controls.start('visible');
-    } else {
-      controls.start('hidden');
-    }
-  }, [inView, controls]);
-
   return (
-    <motion.div
-      ref={ref}
-      variants={containerVariants}
-      initial="hidden"
-      animate={controls}
-      className="flex flex-col justify-center"
+    <Box
+      component="section"
+      id="contact"
+      className="pt-20 bg-primary-950 text-white"
     >
-      <Box className="flex flex-col md:flex-row justify-center items-center py-32 px-20 pb-0 w-full">
-        <motion.div variants={childVariants} className="mb-6 md:mb-0 mx-5 flex flex-col md:flex-col justify-center items-center">
-          <Logo />
-          <Box className="flex mt-7 space-x-4">
-            {[
-              { to: 'https://instagram.com/mobileempires', icon: <FaInstagram size={20} /> },
-              { to: 'https://www.youtube.com/@mobileempires', icon: <FaYoutube size={20} /> },
-              { to: 'https://x.com/mobilempires', icon: <SiX size={20} /> },
-              { to: 'https://linkedin.com/company/mobileempires', icon: <FaLinkedinIn size={17} /> },
-              { to: 'https://www.facebook.com/mobileempires/', icon: <FaFacebook size={20} /> },
-              { to: 'https://discord.gg/TYz9EWXBw', icon: <FaDiscord size={20} /> },
-              { to: 'https://www.reddit.com/r/mobileempires/', icon: <FaReddit size={20} /> },
-            ].map((link, index) => (
-              <motion.div key={index} custom={index} variants={linkVariants}>
+      <Box className="flex flex-col mx-auto max-w-screen-2xl px-6 gap-20">
+        <Box className="flex flex-col md:flex-row gap-10 justify-center items-start w-full">
+          {/* Coluna 1: Logo e Descrição */}
+          <Box className="flex flex-col w-full">
+            <Logo className="text-3xl transition-all duration-300 text-white" />
+            <Typography className="mt-5 text-sm leading-relaxed max-w-xs">
+              Transformando a gestão de convênios farmacêuticos com tecnologia.
+            </Typography>
+            <Box className="flex mt-7 space-x-4">
+              {[
+                {
+                  to: "https://linkedin.com/company/benefycare",
+                  icon: <FaLinkedinIn size={17} className="text-primary" />,
+                },
+                {
+                  to: "https://instagram.com/benefycare",
+                  icon: <FaInstagram size={20} className="text-primary" />,
+                },
+              ].map((link, index) => (
                 <Link
+                  key={index}
                   to={link.to}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-midia p-3 rounded-full transition-colors duration-300 !w-10 !h-10 flex justify-center items-center"
+                  className=" p-3 rounded-full transition-colors duration-300 !w-10 !h-10 flex justify-center items-center bg-white/10 hover:bg-white/20"
                 >
                   {link.icon}
                 </Link>
-              </motion.div>
-            ))}
+              ))}
+            </Box>
           </Box>
-        </motion.div>
+
+          <Box className="flex flex-col gap-5 w-full">
+            <Typography className="text-xl font-semibold">Soluções</Typography>
+            <Box className="flex flex-col gap-3">
+              {[
+                { to: "#funcionalidades", text: "Gestão de Convênios" },
+                { to: "#diferenciais", text: "Programa de Cashback" },
+                { to: "#diferenciais", text: "Segurança e Token" },
+              ].map((link, index) => (
+                <Box key={index}>
+                  <Link
+                    smooth
+                    to={link.to}
+                    className="text-gray-300 hover:text-white no-underline text-sm transition-all duration-300"
+                  >
+                    {link.text}
+                  </Link>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+
+          <Box className="flex flex-col gap-5 w-full">
+            <Typography className="text-xl font-semibold">
+              Vamos impulsionar seu negócio?
+            </Typography>
+            <Typography className="text-sm text-gray-300">
+              Agende uma demonstração, tire dúvidas comerciais ou contrate a
+              BenefyCare para sua rede agora mesmo.
+            </Typography>
+            <Link
+              to="mailto:contato@benefycare.com.br"
+              className="text-white font-medium no-underline border-b border-white/20 pb-1 w-fit hover:border-white transition-all"
+            >
+              contato@benefycare.com.br
+            </Link>
+          </Box>
+        </Box>
+
+        <Box className="flex flex-col md:flex-row text-center py-10 items-center justify-between border-solid border-0 border-t border-white/10">
+          <Typography className="text-sm text-gray-400">
+            © {new Date().getFullYear()} BenefyCare. Tecnologia para gestão de
+            benefícios e saúde.
+          </Typography>
+          <Typography className="text-sm text-gray-400 mt-2 md:mt-0">
+            -/-
+          </Typography>
+        </Box>
       </Box>
-      <motion.div variants={copyrightVariants} className="flex text-center color-secondary h-[92px] items-center justify-center">
-        <Typography className="!text-sm">
-          Copyright © {new Date().getFullYear()} Mobile Empires.
-        </Typography>
-      </motion.div>
-    </motion.div>
+    </Box>
   );
 }
 

@@ -35,10 +35,10 @@ export function ActiveSessionsModal() {
 
               <Box>
                 <Typography className="!font-manrope !font-semibold !text-neutral-800">
-                  {step.title}
+                  {step.title}ss
                 </Typography>
                 <Typography className="!text-sm !text-neutral-500 !font-manrope">
-                  {step.description}
+                  {step.description}ssssss
                 </Typography>
               </Box>
             </CardBox>
