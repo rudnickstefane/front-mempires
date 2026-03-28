@@ -1,5 +1,7 @@
-export interface CompanyProps {
+export type CompanyProps = {
+  id?: number;
+  code: string;
   businessName: string;
-  establishmentIdentity: string;
-  location: string;
-}
+  fantasyName: string;
+  stateRegistration?: string;
+};

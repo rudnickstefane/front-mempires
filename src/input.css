@@ -25,7 +25,7 @@
 
   /* Cores de fundo */
   --bg-primary: #fff;
-  --bg-secondary: #4c0cfd;
+  --bg-secondary: #3884fd;
   --bg-tertiary: #ffffff;
   --surface-overlay: #f2f2f2;
   --border-outline: #eaecf0;
@@ -38,9 +38,9 @@
 
   /* Cores */
   --color-text-primary: #fff;
-  --color-primary: #4c0cfd;
+  --color-primary: #3884fd;
   --color-primary-hover: #3a09c2;
-  --color-primary-medial: #4c0cfd2f;
+  --color-primary-medial: #3884fd2f;
   --color-secondary: #ededed;
   --color-tertiary: #54595f;
   --color-quintary: #4b5c7a;
@@ -72,7 +72,7 @@
   --invert-filter: 0%;
 
   --bg-primary: #101113;
-  --bg-secondary: #4c0cfd;
+  --bg-secondary: #3884fd;
   --bg-tertiary: #102341;
   --surface-overlay: #00000042;
   --border-outline: rgba(255, 255, 255, 0.05);
@@ -84,7 +84,7 @@
 
   --color-text-primary: #fff;
 
-  --color-primary: #d02d2d;
+  --color-primary: #3884fd;
   --color-quartitarian: #42454d;
   --color-tertiary: #fff;
   --color-grayPrimary: #3b5a9a;
@@ -728,22 +728,49 @@ body {
   font-display: swap;
 }
 
-.MuiPaginationItem-root.Mui-selected {
-  background-color: #ff0336 !important;
-  color: white !important;
-  border: 0px !important;
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-style: solid;
+    border-width: 0;
+  }
 }
 
-.MuiPaginationItem-circular:hover {
-  background-color: #ff0336 !important;
-  border: 1px solid #ff0336 !important;
-  color: white !important;
+.MuiPaginationItem-root.Mui-selected {
+  background-color: #00000014 !important;
+  color: black !important;
 }
 
 .MuiPaginationItem-root {
-  border-radius: 10px !important;
+  border-radius: 8px !important;
   border: 1px solid #c4c4c4 !important;
   margin: 0 0.2rem !important;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Seletor do ícone padrão */
+.MuiSelect-icon {
+  width: 20px !important;
+  height: 20px !important;
+  right: 17px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  transition: transform 0.2s ease-in-out !important;
+}
+
+.MuiSelect-root {
+  padding: 0 !important;
+}
+
+/* Seletor para quando o Select estiver aberto (aria-expanded="true") */
+/* O MUI coloca o atributo no elemento que precede o ícone */
+.MuiSelect-select[aria-expanded="true"] ~ .MuiSelect-icon {
+  transform: translateY(-50%) rotate(180deg) !important;
 }
 
 /* Bordas */
@@ -822,7 +849,7 @@ body {
 }
 
 .MuiOutlinedInput-root {
-  font-family: "Poppins", sans-serif !important;
+  font-family: "Manrope", sans-serif !important;
 }
 
 .cropper-point,

@@ -10,11 +10,13 @@ export type ModuleHeaderProps = {
   showButton?: boolean;
   labelButton?: string;
   onBack?: boolean;
+  onClick?: () => Promise<void>;
   refresh?: () => Promise<void>;
 };
 
 export function ModuleHeader({
   showButton,
+  onClick,
   labelButton,
   onBack,
 }: Readonly<ModuleHeaderProps>) {
@@ -52,7 +54,7 @@ export function ModuleHeader({
         {showButton && (
           <Button
             fullWidth
-            // onClick={handleStartSetup}
+            onClick={onClick}
             startIcon={<Add variant="Linear" size={21} />}
             className="py-3 px-4 text-base bg-primary text-white hover:bg-primary-500/90"
             translateId={labelButton}

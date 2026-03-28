@@ -1,11 +1,18 @@
-import { Box } from "@mui/material";
+import { NotFoundModule } from "@sr/common/components/404";
+import { ModuleViewport } from "@sr/common/components/Layout";
 import { RendererModulesType } from "../pages/home/types/gym-management.types";
 import { modulesRegistry } from "./navigation.const";
 
 export const ModuleRenderer = ({ type }: { type: RendererModulesType }) => {
   const activeModule = modulesRegistry[type];
 
-  return activeModule?.component || <Box>Módulo não encontrado</Box>;
+  return (
+    activeModule?.component || (
+      <ModuleViewport className="flex">
+        <NotFoundModule />
+      </ModuleViewport>
+    )
+  );
 };
 
 // /* eslint-disable @typescript-eslint/no-explicit-any */

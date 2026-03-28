@@ -10,7 +10,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./app";
-import { notify } from "./common/iu/components/notifications";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,11 +17,7 @@ const queryClient = new QueryClient({
       throwOnError: false,
     },
   },
-  queryCache: new QueryCache({
-    onError: (error) => {
-      notify.error("Erro na requisição!");
-    },
-  }),
+  queryCache: new QueryCache({}),
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

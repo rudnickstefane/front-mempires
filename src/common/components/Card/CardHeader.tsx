@@ -44,7 +44,7 @@ export const CardHeader = ({
         <Box className="flex flex-col">
           <Typography
             translateId={title}
-            className={`${labelButton ? "text-base" : "text-lg"} !font-semibold`}
+            className={`${labelButton ? "text-base" : "text-lg"} font-semibold`}
           />
           {description && (
             <Typography
@@ -67,7 +67,7 @@ export const CardHeader = ({
       <Box className="flex gap-1" onClick={(e) => e.stopPropagation()}>
         {hasSensitiveData && (
           <Button
-            className="!min-w-8 !h-8 !text-[#171717] hover:!text-primary !transition-all !p-0 !bg-white hover:!bg-neutral-100 hover:scale-105 !rounded-lg !mr-1"
+            className="min-w-8 h-8 text-neutral-900 hover:text-primary transition-all p-0 bg-white hover:bg-neutral-100 hover:scale-105 rounded-lg mr-1"
             onClick={onToggleVisible}
           >
             {isVisible ? <EyeSlash size={20} /> : <Eye size={20} />}
@@ -75,7 +75,7 @@ export const CardHeader = ({
         )}
         {onOpenContent && !labelButton && (
           <Button
-            className="!min-w-8 !h-8 !text-[#171717] hover:!text-primary !transition-all !p-0 !bg-white hover:!bg-neutral-100 hover:scale-105 !rounded-lg"
+            className="min-w-8 h-8 text-neutral-900 hover:text-primary transition-all p-0 bg-white hover:bg-neutral-100 hover:scale-105 rounded-lg"
             onClick={onOpenContent}
           >
             <Edit size={22} variant="Linear" />

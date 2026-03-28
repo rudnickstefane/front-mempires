@@ -20,7 +20,7 @@ export const modulesRegistry: Partial<
     subtitle: "profile.subtitle",
     component: <Profile />,
   },
-  Partners: {
+  partners: {
     title: "partner.title",
     subtitle: "partner.subtitle",
     component: <Partners />,

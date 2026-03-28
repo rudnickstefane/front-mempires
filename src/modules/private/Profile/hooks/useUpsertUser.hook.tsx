@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import * as Graphql from "../graphql";
 
+const MAX_ATTEMPTS = 5;
+
 export const useUpsertUser = () => {
   const { request } = useBackend();
   const queryClient = useQueryClient();
@@ -24,7 +26,7 @@ export const useUpsertUser = () => {
       setAttemptCount((prev) => prev + 1);
 
       const msg =
-        attemptCount >= 5
+        attemptCount >= MAX_ATTEMPTS
           ? "Erro ao alterar senha. Entre em contato com nosso suporte."
           : GetErrorMessage(
               error,

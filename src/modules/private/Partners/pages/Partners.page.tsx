@@ -1,78 +1,91 @@
-import { useState } from "react";
-
 import { Box } from "@mui/material";
-import { Card } from "@sr/common/components/Card";
-import { ReactTable } from "@sr/common/components/Table";
-import { Typography } from "@sr/common/iu/components/Typography";
-import { Key } from "iconsax-react";
-import { columnsPartners, PartnerDTO } from "../tables/columnsPartners";
+import { Card, StatCard } from "@sr/common/components/Card";
+import { ConfirmDialog } from "@sr/common/components/ConfirmDialog";
+import { Buildings, Buildings2, StatusUp } from "iconsax-react";
+import { RendererModulesType } from "../../Portal/pages/home/types/gym-management.types";
+import { TablePartner } from "../components/Table";
+import { usePartnerPageHook } from "../hooks";
+import { FindPartnersResponse } from "../types";
 
-// Mock de dados simulando retorno da API
-const MOCK_DATA: PartnerDTO[] = [
-  {
-    id: "1",
-    isActive: true,
-    businessName: "Drogarias Pacheco",
-    cnpj: "33.438.250/0001-67",
-    type: "Rede",
-    storesCount: 1600,
-    location: "Rio de Janeiro - RJ",
-  },
-  {
-    id: "2",
-    isActive: false,
-    businessName: "Drogaria Central",
-    cnpj: "67.890.123/0001-45",
-    type: "Independente",
-    storesCount: 3,
-    location: "Curitiba - PR",
-  },
-];
+export type PartnerProps = {
+  data: {
+    partners: FindPartnersResponse;
+    loading: boolean;
+  };
+  label?: {
+    code: string;
+  };
+  openDrawer: (index: number) => void;
+  onNavigate: (module: RendererModulesType) => void;
+  refresh?: () => Promise<void>;
+};
 
 export function PartnersPage() {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const {
+    isPending,
+    partnersData,
+    columns,
+    rows,
+    metrics,
+    pagination,
+    setPage,
+    setLimit,
+    confirmProps,
+  } = usePartnerPageHook();
 
-  // Exemplo de como você lidaria com o clique no "More" (Excluir/Editar)
-  const handleAction = (row: PartnerDTO) => {
-    console.log("Abrir modal para:", row.businessName);
-    // Aqui você abriria seu Modal de exclusão/edição
-  };
+  const isPositive = (metrics?.growthPercentage ?? 0) >= 0;
+
+  const statsConfig = [
+    {
+      title: "Total de parceiros",
+      value: metrics?.totalGeneral?.toLocaleString("pt-BR") || 0,
+      icon: <Buildings variant="Bulk" size={24} />,
+    },
+    {
+      title: "Novos parceiros",
+      value: metrics?.totalCurrentMonth?.toLocaleString("pt-BR") || 0,
+      icon: <Buildings2 variant="Bulk" size={24} />,
+      change: `${isPositive ? "+" : ""}${metrics?.growthPercentage}% vs. mês anterior`,
+      trend: isPositive ? ("up" as const) : ("down" as const),
+    },
+    {
+      title: "Ativos",
+      value: metrics?.totalActive || 0,
+      icon: <StatusUp variant="Bulk" size={24} />,
+      colorClass: "text-success",
+      bgClass: "bg-success/10",
+    },
+    {
+      title: "Inativos",
+      value: metrics?.totalInactive || 0,
+      icon: <StatusUp variant="Bulk" size={24} />,
+      colorClass: "text-slate-500",
+      bgClass: "bg-slate-100",
+      iconClass: "rotate-180 scale-x-[-1]",
+    },
+  ];
 
   return (
     <>
-      <Box className="flex flex-col lg:flex-row gap-5">
-        <Card loading={false} skeletonCount={3}>
-          <Box className="flex flex-row justify-between gap-3">
-            <Box>
-              <Typography
-                translateId="Total de Parceiros"
-                className="text-sm"
-              />
-              <Typography
-                translateId="Total de Parceiros"
-                className="text-sm"
-              />
-            </Box>
-            <Key variant="Linear" />
-          </Box>
-        </Card>
-        <Card loading={true} skeletonCount={3}>
-          oi
-        </Card>
+      <Box className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        {statsConfig.map((stat, index) => (
+          <Card key={index} loading={isPending} skeletonCount={3}>
+            <StatCard {...stat} />
+          </Card>
+        ))}
       </Box>
-      <ReactTable
-        data={MOCK_DATA} // Aqui viria o queryResult.data
-        columns={columnsPartners(handleAction)}
-        pagination={{
-          page,
-          limit,
-          total: 100, // Total vindo do backend
-        }}
+
+      <TablePartner
+        queryResult={partnersData}
+        data={rows}
+        columns={columns}
         setPage={setPage}
         setLimitPagination={setLimit}
-        isLoading={false}
+        pagination={pagination}
+        isDataWithEdges={true}
       />
+
+      <ConfirmDialog {...confirmProps} />
     </>
   );
 }

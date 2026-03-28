@@ -78,7 +78,7 @@ export default function HomeGymManagement({
 
   const { data: pendingGymPaymentsData, loading: pendingGymPaymentsLoading } =
     useGymData<PendingGymPayments[]>(
-      `http://localhost:5000/PendingGymPayments?userId=${data?.[0]?.id}`
+      `http://localhost:5000/PendingGymPayments?userId=${data?.[0]?.id}`,
     );
 
   // Pagamentos Pendentes
@@ -87,7 +87,7 @@ export default function HomeGymManagement({
     PendingGymPayments[]
   >(pendingGymPaymentsData || []);
   const [selectedPaymentTypes, setSelectedPaymentTypes] = useState<string[]>(
-    []
+    [],
   ); // Para armazenar os tipos selecionados
 
   // Função para alternar o filtro de pagamento
@@ -113,7 +113,7 @@ export default function HomeGymManagement({
   useEffect(() => {
     if (selectedPaymentTypes.length > 0) {
       const filtered = pendingGymPaymentsData?.filter((payment) =>
-        selectedPaymentTypes.includes(payment.paymentType)
+        selectedPaymentTypes.includes(payment.paymentType),
       );
       setFilteredPayments(filtered || []);
     } else {
@@ -219,7 +219,7 @@ export default function HomeGymManagement({
           </Typography>
           <Box className="flex flex-row items-center my-3 justify-between">
             <Box className="flex flex-row items-end">
-              {isLoadingStudentMetrics ? (
+              {!isLoadingStudentMetrics ? (
                 <>
                   <Skeleton
                     variant="circular"
@@ -238,22 +238,14 @@ export default function HomeGymManagement({
                     variant="h4"
                     className="!font-bold text-[#152c5b]"
                   >
-                    {responseStudentMetrics.newStudents.value}
+                    12
                   </Typography>
                   <Typography
                     className={`!font-bold !ml-2 ${
-                      responseStudentMetrics.newStudents.percentageChange < 0
-                        ? "text-red-500"
-                        : "text-[#23c38e]"
+                      2 < 0 ? "text-red-500" : "text-[#23c38e]"
                     }`}
                   >
-                    {responseStudentMetrics.newStudents.percentageChange >= 0
-                      ? `+ ${responseStudentMetrics.newStudents.percentageChange.toFixed(
-                          2
-                        )}%`
-                      : `- ${Math.abs(
-                          responseStudentMetrics.newStudents.percentageChange
-                        ).toFixed(2)}%`}
+                    {2 >= 0 ? `+ 12%` : `- 13%`}
                   </Typography>
                 </>
               ) : (
@@ -262,10 +254,10 @@ export default function HomeGymManagement({
                     variant="h4"
                     className="!font-bold text-[#152c5b]"
                   >
-                    0
+                    12
                   </Typography>
                   <Typography className="text-[#23c38e] !font-bold !ml-2">
-                    + 0.00%
+                    + 2.00%
                   </Typography>
                 </>
               )}
@@ -340,10 +332,10 @@ export default function HomeGymManagement({
                   >
                     {responseStudentMetrics.newVisitors.percentageChange >= 0
                       ? `+ ${responseStudentMetrics.newVisitors.percentageChange.toFixed(
-                          2
+                          2,
                         )}%`
                       : `- ${Math.abs(
-                          responseStudentMetrics.newVisitors.percentageChange
+                          responseStudentMetrics.newVisitors.percentageChange,
                         ).toFixed(2)}%`}
                   </Typography>
                 </>
@@ -500,7 +492,7 @@ export default function HomeGymManagement({
                             </Button>
                           </Tooltip>
                         </Box>
-                      )
+                      ),
                     )}
 
                     {responseShortcuts.findUserShortcuts.length === 1 && (

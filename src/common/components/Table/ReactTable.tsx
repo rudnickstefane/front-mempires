@@ -13,13 +13,14 @@ import {
   TableRow,
 } from "@mui/material";
 import { Typography } from "@sr/common/iu/components/Typography";
+import { storage } from "@sr/common/storage";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { SearchStatus } from "iconsax-react"; // Ícone para "Não encontrado"
+import { ArrowDown2, SearchStatus } from "iconsax-react";
 
 interface ReactTableProps<T> {
   data: T[];
@@ -50,16 +51,17 @@ export function ReactTable<T>({
   });
 
   return (
-    <Box className="bg-white rounded-2xl border-0 shadow-soft hover:shadow-lg overflow-hidden transition-all duration-300">
-      <TableContainer className="min-h-[300px] relative">
-        <Table>
-          <TableHead className="bg-gray-100">
+    <Box className="w-full overflow-hidden">
+      <TableContainer className="relative border-t border-gray-200">
+        <Table sx={{ borderCollapse: "collapse" }}>
+          <TableHead className="bg-gray-100/50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableCell
                     key={header.id}
-                    className="text-primary-950/80 font-semibold"
+                    align={header.column.id === "actions" ? "center" : "left"}
+                    className="border-b-2 border-gray-200 px-6 py-4"
                   >
                     {flexRender(
                       header.column.columnDef.header,
@@ -70,8 +72,8 @@ export function ReactTable<T>({
               </TableRow>
             ))}
           </TableHead>
+
           <TableBody>
-            {/* ESTADO: CARREGANDO */}
             {isLoading ? (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-60">
@@ -84,26 +86,54 @@ export function ReactTable<T>({
                 </TableCell>
               </TableRow>
             ) : data.length > 0 ? (
-              /* ESTADO: COM DADOS */
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  className="hover:bg-gray-50 transition-colors"
+                  className="transition-all duration-200 hover:bg-gray-50 group relative"
+                  sx={{
+                    "&:hover": {
+                      boxShadow: "inset 3px 0px 0px 0px #2F3033",
+                    },
+                    "& td": { borderBottom: "1px solid #E5E7EB" },
+                  }}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-primary-950">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    const isStatusColumn = cell.column.id === "isActive";
+                    const isActionColumn = cell.column.id === "actions";
+
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        align={
+                          isStatusColumn || isActionColumn ? "center" : "left"
+                        }
+                        className={`text-gray-700 px-6 py-4 border-none whitespace-nowrap ${
+                          isStatusColumn ? "w-[1%]" : "w-auto"
+                        }`}
+                      >
+                        <Box
+                          className={
+                            isStatusColumn
+                              ? "flex justify-center items-center w-full"
+                              : ""
+                          }
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Box>
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))
             ) : (
-              /* ESTADO: VAZIO (Nenhum registro) */
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-60">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-60 border-none"
+                >
                   <Box className="flex flex-col items-center justify-center text-center p-10">
                     <Box className="bg-gray-100 p-4 rounded-full mb-4">
                       <SearchStatus
@@ -122,8 +152,7 @@ export function ReactTable<T>({
                       variant="body2"
                       className="text-gray-500 max-w-[300px]"
                     >
-                      Não encontramos dados para essa consulta. Tente ajustar
-                      seus filtros ou pesquisar novamente.
+                      Tente ajustar seus filtros.
                     </Typography>
                   </Box>
                 </TableCell>
@@ -133,28 +162,40 @@ export function ReactTable<T>({
         </Table>
       </TableContainer>
 
-      {/* RODAPÉ: Só exibe se não estiver carregando e se houver dados (opcional) */}
+      {/* RODAPÉ */}
       {!isLoading && data.length > 0 && (
-        <Box className="flex justify-between items-center px-6 py-3 border-t border-[#EAECF0]">
+        <Box className="flex justify-between items-center px-6 py-4 bg-white">
           <Box className="flex items-center gap-2">
             <Select
               value={pagination.limit}
-              onChange={(e) => setLimitPagination(Number(e.target.value))}
-              size="small"
-              className="w-[5.5rem] h-[32px] text-sm"
+              onChange={(e) => {
+                const newLimit = Number(e.target.value);
+                storage.set("tableLimit", newLimit);
+                setLimitPagination(newLimit);
+                setPage(1);
+              }}
+              sx={{
+                "& .MuiSelect-icon": {
+                  right: "8px !important",
+                },
+              }}
+              className="h-9 text-sm w-16"
+              IconComponent={ArrowDown2}
             >
-              {[5, 10, 25, 50].map((val) => (
+              {[5, 10, 15, 20, 25, 50].map((val) => (
                 <MenuItem key={val} value={val}>
                   {val}
                 </MenuItem>
               ))}
             </Select>
-            <Typography variant="body2" className="text-gray-600">
+            <Typography className="text-gray-600 text-sm">
               itens por página
             </Typography>
             <Box className="border-l border-gray-300 mx-2 h-4"></Box>
-            <Typography variant="body2" className="text-gray-600 font-medium">
-              Total de {pagination.total} registros
+            <Typography className="text-gray-600 text-sm">
+              {(pagination.page - 1) * pagination.limit + 1} -{" "}
+              {Math.min(pagination.page * pagination.limit, pagination.total)}{" "}
+              de {pagination.total} registro(s)
             </Typography>
           </Box>
 

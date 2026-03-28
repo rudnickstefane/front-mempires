@@ -1,0 +1,20 @@
+export const stepPartnerFields: Record<number, string[]> = {
+  0: [
+    "company.code",
+    "details.abbreviation",
+    "details.effectiveStart",
+    "details.effectiveEnd",
+    "fee",
+    "rewardsRate",
+    "segment",
+    "entity",
+    "address.zipCode",
+    "address.address",
+    "address.number",
+    "address.complement",
+    "address.district",
+    "address.city",
+    "address.state",
+  ],
+  1: ["contacts"],
+};

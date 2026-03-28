@@ -30,7 +30,11 @@ export const useProfileHook = () => {
         component: <UserDetailsForm />,
       },
       { key: "address", title: "Endereço", component: <AddressForm /> },
-      { key: "contact", title: "Contato", component: <ContactsForm /> },
+      {
+        key: "contact",
+        title: "Contato",
+        component: <ContactsForm isSimple />,
+      },
     ],
     [],
   );

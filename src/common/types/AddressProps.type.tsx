@@ -1,15 +1,17 @@
 import { ProfileDetails } from "@sr/modules/common/types";
+import { StatesOfBrazilEnum } from "../enums";
 
-export type AddressDataProps = {
+export type AddressProps = {
+  id?: number;
+  zipCode: string;
   address: string;
   number: string;
   complement: string;
-  zipCode: string;
   district: string;
   city: string;
-  state: string;
+  state: StatesOfBrazilEnum;
 };
 
-export type AddressProps = {
+export type AddressDataProps = {
   data: ProfileDetails;
 };

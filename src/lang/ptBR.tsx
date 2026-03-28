@@ -61,6 +61,7 @@ export const ptBR = {
 
   // Contato
   "contact.title": "Contato",
+  "contact.type": "Tipo de contato",
   description: "Descrição",
   phone: "Telefone",
   email: "E-mail",
@@ -71,6 +72,11 @@ export const ptBR = {
   // Modulo do Parceiros comerciais
   "partner.title": "Parceiros",
   "partner.subtitle": "Gerencie os parceiros cadastrados no sistema",
+
+  // Empresa pessoais
+  "company.code": "CNPJ",
+
+  abbreviation: "Abreviação",
 
   // Seções do menu Explorar
   "menu.explore.latest": "Últimas",

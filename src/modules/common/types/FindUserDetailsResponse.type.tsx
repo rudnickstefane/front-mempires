@@ -1,4 +1,4 @@
-import { AddressDataProps, ContactsDataProps } from "@sr/common/types";
+import { AddressProps, ContactsProps } from "@sr/common/types";
 
 export type FindUserDetailsResponse = {
   lastAccess: string;
@@ -9,6 +9,6 @@ export type FindUserDetailsResponse = {
   name: string;
   gender: string;
   birthDate: string;
-  address: AddressDataProps;
-  contact: ContactsDataProps;
+  address: AddressProps;
+  contact: ContactsProps;
 };

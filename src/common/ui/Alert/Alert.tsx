@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 import { Typography } from "@sr/common/iu/components/Typography";
+import { AlertVariant } from "@sr/common/types";
 import { CloseCircle, Danger, InfoCircle, TickCircle } from "iconsax-react";
-
-type AlertVariant = "warning" | "info" | "success" | "error";
 
 interface AlertProps {
   variant?: AlertVariant;
   title?: string;
   message: React.ReactNode;
+  className?: string;
 }
 
 const styles = {
@@ -33,12 +33,17 @@ const styles = {
   },
 };
 
-export function Alert({ variant = "warning", title, message }: AlertProps) {
+export function Alert({
+  variant = "warning",
+  title,
+  message,
+  className,
+}: AlertProps) {
   const { bg, text, Icon } = styles[variant];
 
   return (
     <Box
-      className={`flex ${title ? "" : "items-center"} gap-3 rounded-2xl p-4 ${bg}`}
+      className={`flex ${title ? "" : "items-center"} gap-3 rounded-2xl p-4 ${bg} ${className}`}
     >
       <Icon className={`min-h-6 min-w-6 ${text}`} />
 

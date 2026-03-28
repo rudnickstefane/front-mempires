@@ -1,8 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { listUF } from "@sr/common/constants";
 import { useAddressForm } from "@sr/common/hooks";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { notify } from "@sr/common/iu/components/notifications";
+import { Typography } from "@sr/common/iu/components/Typography";
 import { Alert } from "@sr/common/ui/Alert";
 import { DrawerFormUserProps } from "@sr/modules/private/Profile/types";
 import { formatText } from "@sr/utils";
@@ -84,6 +85,8 @@ export function AddressForm() {
   const handleZipCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
+    setIsFetched(false);
+
     setFieldValue("address", {
       ...values.address,
       id: -1,
@@ -108,15 +111,15 @@ export function AddressForm() {
 
   return (
     <Box className="flex flex-col gap-6">
-      <Box className="p-4 rounded-lg bg-neutral-200">
-        <Box className="flex items-start gap-2">
-          <Location variant="Linear" />
+      <Box className="p-4 rounded-lg bg-neutral-100">
+        <Box className="flex items-center gap-2">
+          <Location variant="Linear" size={24} />
           <Box>
-            <Typography className="!font-manrope !font-semibold !text-neutral-800">
+            <Typography className="font-semibold text-xl text-neutral-900">
               {address}, nº {number} {complement && `- ${complement}`}{" "}
               {district && `- ${district}`}
             </Typography>
-            <Typography className="!font-manrope !text-sm !text-neutral-600">
+            <Typography className="text-base text-neutral-500">
               {city} - {state}, {zipCode}
             </Typography>
           </Box>
@@ -145,9 +148,9 @@ export function AddressForm() {
           <Show hidden={!visibility.address}>
             <TextField
               required
-              name="address"
+              name="address.address"
               placeholder="Rua/Avenida"
-              label="address.address"
+              label="address"
               onChange={handleFormattedTextChange}
             />
           </Show>
@@ -186,7 +189,7 @@ export function AddressForm() {
             />
           </Show>
 
-          <Show hidden={!visibility.city || !visibility.state}>
+          <Show hidden={visibility.city && !visibility.state}>
             <Box className="w-full flex flex-row gap-x-4">
               <Show hidden={!visibility.city}>
                 <TextField
@@ -197,7 +200,7 @@ export function AddressForm() {
                   onChange={handleFormattedTextChange}
                 />
               </Show>
-              <Show hidden={!visibility.state}>
+              <Show hidden={visibility.state}>
                 <TextField
                   required
                   name="address.state"

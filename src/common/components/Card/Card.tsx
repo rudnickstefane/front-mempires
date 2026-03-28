@@ -11,6 +11,7 @@ interface GridProps {
   description?: string;
   icon?: React.ReactNode;
   className?: string;
+  padding?: string;
   loading?: boolean;
   skeletonCount: number;
   onOpenContent?: () => void;
@@ -26,6 +27,7 @@ export const Card = ({
   description,
   icon,
   className,
+  padding = "p-6",
   loading,
   skeletonCount,
   onOpenContent,
@@ -52,7 +54,7 @@ export const Card = ({
   return (
     <Animated variant="itemUp" isChild className="w-full">
       <MuiCard
-        className={`${bgClass} !rounded-2xl p-6 !border-0 !shadow-soft hover:!shadow-lg transition-all duration-300 w-full h-full ${variant === "button" ? "cursor-pointer !transition-all !duration-300 hover:-translate-y-1" : ""} `}
+        className={`${bgClass} ${padding} !rounded-2xl border-0 shadow-soft hover:!shadow-lg transition-all duration-300 w-full h-full ${variant === "button" ? "cursor-pointer !transition-all !duration-300 hover:-translate-y-1" : ""} `}
         onClick={variant === "button" ? onOpenContent : undefined}
       >
         <CardHeader

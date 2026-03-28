@@ -19,10 +19,5 @@ export const useFindUserDetails = () => {
       return response.findUserDetails;
     },
     enabled: !!profileCode,
-    // Configurações de performance:
-    // refetchOnWindowFocus: false, // Não busca ao voltar para a aba
-    // refetchOnMount: false,       // Não busca ao remontar o componente
-    // staleTime: 1000 * 60 * 5,    // Considera o dado "fresco" por 5 minutos
-    // refetchIntervalInBackground: true, // Continua atualizando mesmo se a aba estiver em segundo plano
   });
 };

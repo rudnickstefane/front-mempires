@@ -18,6 +18,7 @@ interface DrawerContentType {
 
 interface ContainerProps {
   header?: React.ReactNode;
+  className?: string;
   children: React.ReactNode;
   moduleKey?: string;
   isDrawerOpen?: boolean;
@@ -81,7 +82,7 @@ export function ModuleViewport(props: Readonly<ContainerProps>) {
 
       <Box
         ref={viewportRef}
-        className="overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem] bg-[#F6FAFD] h-screen"
+        className={`overflow-x-auto max-h-[calc(100vh-60px)] p-5 pb-[4rem] bg-[#F6FAFD] h-screen ${props.className}`}
       >
         {header && <Box className="mb-5">{header}</Box>}
 

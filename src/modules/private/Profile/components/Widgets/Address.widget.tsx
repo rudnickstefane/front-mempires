@@ -1,9 +1,9 @@
-import { AddressProps } from "@sr/common/types";
+import { AddressDataProps } from "@sr/common/types";
 import { Animated } from "@sr/common/ui/motion";
 import { formatZipCode } from "@sr/utils";
 import { CardText } from "../../../../../common/components/Card";
 
-export function Address({ data }: AddressProps) {
+export function Address({ data }: AddressDataProps) {
   const fields = [
     {
       label: "zipCode",

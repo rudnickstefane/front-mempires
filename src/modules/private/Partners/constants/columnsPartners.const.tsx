@@ -1,0 +1,113 @@
+import { CustomizedSwitch } from "@sr/common/components/Switch";
+import { entityBadges, segmentBadges } from "@sr/common/constants";
+import { Typography } from "@sr/common/iu/components/Typography";
+import { FormatCode } from "@sr/modules/common/utils/FormatCodeAndIdentity.util";
+import { createColumnHelper } from "@tanstack/react-table";
+import { PartnerActions } from "./actionsTablePartners.const";
+
+// Interface do Objeto de Parceiro
+export interface PartnerDTO {
+  id: string;
+  partnerCode: string;
+  isActive: boolean;
+  fantasyName: string;
+  cnpj: string;
+  storeCount: number;
+  segment: "Rede" | "Independente";
+  entity: "Rede" | "Independente";
+  location: string;
+}
+
+const columnHelper = createColumnHelper<PartnerDTO>();
+
+export const columnsPartners = (
+  onToggleStatus: (code: string, name: string, isActive: boolean) => void,
+  onEdit: (partner: PartnerDTO) => void,
+  onDelete: (code: string, name: string) => void,
+) => [
+  columnHelper.accessor("isActive", {
+    header: () => <Typography className="text-sm font-bold">Ativo</Typography>,
+    cell: (info) => {
+      const isActive = info.getValue();
+      const { partnerCode, fantasyName } = info.row.original;
+
+      return (
+        <CustomizedSwitch
+          isTable
+          checked={isActive}
+          onChange={() => {
+            onToggleStatus(partnerCode, fantasyName, isActive);
+          }}
+        />
+      );
+    },
+  }),
+  columnHelper.accessor("fantasyName", {
+    header: () => (
+      <Typography className="text-sm font-bold">Nome fantasia</Typography>
+    ),
+    cell: (info) => (
+      <Typography className="text-sm">{info.getValue()}</Typography>
+    ),
+  }),
+  columnHelper.accessor("cnpj", {
+    header: () => <Typography className="text-sm font-bold">CNPJ</Typography>,
+    cell: (info) => (
+      <Typography className="text-sm">
+        {info.getValue() ? FormatCode(info.getValue()) : "-"}
+      </Typography>
+    ),
+  }),
+  columnHelper.accessor("storeCount", {
+    header: () => <Typography className="text-sm font-bold">Lojas</Typography>,
+    cell: (info) => (
+      <Typography className="text-sm">{info.getValue()}</Typography>
+    ),
+  }),
+  columnHelper.accessor("segment", {
+    header: () => (
+      <Typography className="text-sm font-bold">Segmento</Typography>
+    ),
+    cell: (info) => {
+      const val = info.getValue();
+      const config = segmentBadges[val] || {
+        label: val,
+      };
+
+      return (
+        <Typography
+          className="px-3 py-1 rounded-full bg-gray-100 text-xs inline-block text-center"
+          translateId={config.label}
+        />
+      );
+    },
+  }),
+  columnHelper.accessor("entity", {
+    header: () => (
+      <Typography className="text-sm font-bold">Organização</Typography>
+    ),
+    cell: (info) => {
+      const val = info.getValue();
+      const config = entityBadges[val] || {
+        label: val,
+      };
+
+      return (
+        <Typography
+          className="px-3 py-1 rounded-full bg-gray-100 text-xs inline-block text-center"
+          translateId={config.label}
+        />
+      );
+    },
+  }),
+  columnHelper.display({
+    id: "actions",
+    cell: (info) => (
+      <PartnerActions
+        partner={info.row.original}
+        onEdit={() => onEdit(info.row.original)}
+        onDelete={onDelete}
+      />
+    ),
+  }),
+];

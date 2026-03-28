@@ -15,6 +15,7 @@ interface DatePickerFieldProps extends CustomTextFieldProps {
 export const DatePickerField = ({
   field,
   meta,
+  onChangeDate,
   ...props
 }: DatePickerFieldProps) => {
   const hasError = !!(meta.touched && meta.error);
@@ -34,7 +35,7 @@ export const DatePickerField = ({
           label={props.label}
           format="dd/MM/yyyy"
           value={isValid(dateValue) ? dateValue : null}
-          onChange={props.onChangeDate}
+          onChange={onChangeDate}
           slots={{
             openPickerIcon: () => props.endIcon || <Calendar size={20} />,
           }}

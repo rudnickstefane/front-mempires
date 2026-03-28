@@ -30,6 +30,7 @@ export const useSignInFormHook = () => {
           response.createAccessToken.user.profiles.partner[0].companyCode,
       });
 
+      setAttemptCount(0);
       navigate("/portal");
       notify.success("Olá, seja muito bem-vindo!");
     } catch (error: unknown) {

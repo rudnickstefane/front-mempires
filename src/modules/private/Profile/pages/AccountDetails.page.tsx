@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 import { Card } from "@sr/common/components/Card";
-import { ProfileDetails } from "@sr/modules/common/types";
+import { FindUserDetailsResponse } from "@sr/modules/common/types";
 import { Call, Location, Profile as Profiles } from "iconsax-react";
 import { RendererModulesType } from "../../Portal/pages/home/types/gym-management.types";
 import * as Widget from "../components/Widgets";
 
 export type ProfilePropss = {
   data: {
-    profile: ProfileDetails;
+    profile: FindUserDetailsResponse;
     loading: boolean;
   };
   label?: {
