@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
-import { DrawerContainer } from "../Drawer";
 import { Modal, ModalHeader } from "../Modal";
 import { useModal } from "../Modal/hooks";
 
@@ -34,15 +33,7 @@ interface ContainerProps {
 }
 
 export function ModuleViewport(props: Readonly<ContainerProps>) {
-  const {
-    isDrawerOpen,
-    onCloseDrawer,
-    drawerContent,
-    children,
-    header,
-    moduleKey,
-    modal,
-  } = props;
+  const { children, header, moduleKey, modal } = props;
 
   const { closeModal } = useModal();
 
@@ -54,18 +45,6 @@ export function ModuleViewport(props: Readonly<ContainerProps>) {
 
   return (
     <>
-      <DrawerContainer
-        isOpen={!!isDrawerOpen}
-        onClose={onCloseDrawer || (() => {})}
-        title={drawerContent?.header?.title || ""}
-        headerStep={drawerContent?.header?.headerStep || ""}
-        steps={drawerContent?.steps || []}
-        activeStep={drawerContent?.activeStep || 0}
-        onStepClick={drawerContent?.onStepClick}
-      >
-        {drawerContent?.content}
-      </DrawerContainer>
-
       <Modal
         header={
           <ModalHeader

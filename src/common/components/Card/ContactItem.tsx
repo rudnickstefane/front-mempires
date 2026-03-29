@@ -3,6 +3,7 @@ import { listContactType } from "@sr/common/constants";
 import { Button } from "@sr/common/iu/components/Button";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { ContactItemProps } from "@sr/common/types";
+import { formatPhoneNumber } from "@sr/utils";
 import { CallCalling, DirectboxNotif, Edit, Trash } from "iconsax-react";
 import { Show } from "../Show";
 
@@ -15,6 +16,8 @@ export const ContactItem = ({
   const typeLabel =
     listContactType.types.find((t) => t.value === contact.type)?.label ||
     contact.type;
+
+  const phone = contact.phone && formatPhoneNumber(contact.phone);
 
   return (
     <Box
@@ -36,7 +39,7 @@ export const ContactItem = ({
                 <CallCalling size={20} variant="Linear" />
                 <Typography
                   className="text-sm text-gray-600"
-                  translateId={contact.phone}
+                  translateId={phone}
                 />
               </Box>
             </Show>

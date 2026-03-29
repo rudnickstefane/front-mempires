@@ -6,6 +6,7 @@ import { Button } from "@sr/common/iu/components/Button";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { Alert } from "@sr/common/ui/Alert";
+import { FormatCode } from "@sr/modules/common/utils/FormatCodeAndIdentity.util";
 import { formatText, formatZipCode } from "@sr/utils";
 import { Edit, Location } from "iconsax-react";
 import { ChangeEvent } from "react";
@@ -71,7 +72,7 @@ export function CompanyForm() {
                 translateId={businessName}
               />
               <Typography className="font-semibold text-base text-neutral-500">
-                {code}
+                {code && FormatCode(code)}
               </Typography>
             </Box>
             <Typography className="text-sm text-neutral-500 flex items-center gap-2">

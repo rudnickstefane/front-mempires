@@ -6,22 +6,10 @@ import { AccountDetailsPage } from "./pages";
 
 export default function Profile() {
   const { push } = useNavigationStore();
-  const {
-    openDrawer,
-    drawerContentProps,
-    profileData,
-    isPending,
-    isDrawerOpen,
-    closeDrawer,
-  } = useProfileHook();
+  const { openDrawer, profileData, isPending } = useProfileHook();
 
   return (
-    <ModuleViewport
-      header={<ModuleHeader />}
-      isDrawerOpen={isDrawerOpen}
-      onCloseDrawer={closeDrawer}
-      drawerContent={drawerContentProps}
-    >
+    <ModuleViewport header={<ModuleHeader />}>
       <Animated variant="container" className="grid grid-cols-1 gap-5">
         <AccountDetailsPage
           data={{ profile: profileData!, loading: isPending }}

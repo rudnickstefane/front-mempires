@@ -4,8 +4,7 @@ import { usePartnerHook } from "./hooks";
 import { PartnersPage } from "./pages";
 
 export default function Partners() {
-  const { isDrawerOpen, drawerContentProps, openDrawer, closeDrawer } =
-    usePartnerHook();
+  const { openDrawer, closeDrawer } = usePartnerHook();
 
   return (
     <ModuleViewport
@@ -13,12 +12,10 @@ export default function Partners() {
         <ModuleHeader
           showButton
           labelButton={"Novo Parceiro"}
-          onClick={() => openDrawer()}
+          onClick={async () => openDrawer()}
         />
       }
-      isDrawerOpen={isDrawerOpen}
       onCloseDrawer={closeDrawer}
-      drawerContent={drawerContentProps}
     >
       <Animated variant="container" className="grid grid-cols-1 gap-5">
         <PartnersPage />

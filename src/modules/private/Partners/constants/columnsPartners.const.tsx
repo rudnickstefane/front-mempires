@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CustomizedSwitch } from "@sr/common/components/Switch";
 import { entityBadges, segmentBadges } from "@sr/common/constants";
 import { Typography } from "@sr/common/iu/components/Typography";
@@ -22,7 +23,7 @@ const columnHelper = createColumnHelper<PartnerDTO>();
 
 export const columnsPartners = (
   onToggleStatus: (code: string, name: string, isActive: boolean) => void,
-  onEdit: (partner: PartnerDTO) => void,
+  onEdit: (partner: any) => void,
   onDelete: (code: string, name: string) => void,
 ) => [
   columnHelper.accessor("isActive", {
@@ -106,7 +107,9 @@ export const columnsPartners = (
       <PartnerActions
         partner={info.row.original}
         onEdit={() => onEdit(info.row.original)}
-        onDelete={onDelete}
+        onDelete={() =>
+          onDelete(info.row.original.partnerCode, info.row.original.fantasyName)
+        }
       />
     ),
   }),

@@ -1,35 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DrawerButtons } from "@sr/common/components/Drawer/DrawerButtons";
-import { CompanyForm, ContactsForm } from "@sr/common/components/Forms";
-import { Show } from "@sr/common/components/Show";
 import { dialogConfirmConfig } from "@sr/common/configs";
-import { useMultiStepForm, usePaginationHook } from "@sr/common/hooks";
-import { FormController } from "@sr/common/iu/components/Forms";
+import { useDrawerStore, usePaginationHook } from "@sr/common/hooks";
 import { notify } from "@sr/common/iu/components/notifications";
 import { DialogConfirmType } from "@sr/common/types";
 import { ConfirmDialogProps } from "@sr/common/types/ConfirmDialogProps.type";
-import { useFormik } from "formik";
 import { useCallback, useMemo, useState } from "react";
 import * as Hook from ".";
-import { initialPartnerValues, stepPartnerFields } from "../constants";
 import { columnsPartners } from "../constants/columnsPartners.const";
-import { DrawerFormPartnerProps } from "../types";
-import { formPartnerValidationSchema } from "../validation";
+import { PartnerDrawerContent } from "../drawers";
 
 export const usePartnerPageHook = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { page, limit, setPage, setLimit } = usePaginationHook(10);
   const skip = (page - 1) * limit;
 
+  const open = useDrawerStore((s) => s.openDrawer);
   const { mutateAsync: upsertPartner } = Hook.useUpsertPartner();
 
   const metricsQuery = Hook.useFindPartnerMetrics();
-  const { data: partnersData, isPending } = Hook.useFindPartners({
+  const {
+    data: partnersData,
+    isPending,
+    refetch,
+  } = Hook.useFindPartners({
     take: limit,
     skip: skip,
   });
-
-  const metricsData = metricsQuery.data;
 
   const rows = useMemo(() => {
     return (
@@ -43,6 +38,21 @@ export const usePartnerPageHook = () => {
       })) || []
     );
   }, [partnersData]);
+
+  const openPartnerDrawer = useCallback(
+    (data?: any) => {
+      open({
+        title: "Alterar Parceiro",
+        steps: ["Dados do parceiro", "Contato"],
+        component: PartnerDrawerContent,
+        componentProps: {
+          initialData: data,
+          onSuccess: () => refetch(),
+        },
+      });
+    },
+    [open, refetch],
+  );
 
   const [confirmData, setConfirmData] = useState<{
     isOpen: boolean;
@@ -90,8 +100,12 @@ export const usePartnerPageHook = () => {
   );
 
   const columns = useMemo(() => {
-    return columnsPartners(openConfirmToggle, openConfirmDelete);
-  }, [openConfirmToggle, openConfirmDelete]);
+    return columnsPartners(
+      openConfirmToggle,
+      openPartnerDrawer,
+      openConfirmDelete,
+    );
+  }, [openConfirmToggle, openPartnerDrawer, openConfirmDelete]);
 
   const handleConfirmAction = async () => {
     const { partnerCode, type } = confirmData;
@@ -118,109 +132,6 @@ export const usePartnerPageHook = () => {
     }
   };
 
-  const stepsConfig = useMemo(
-    () => [
-      {
-        key: "company",
-        title: "Dados do parceiro",
-        component: <CompanyForm />,
-      },
-      { key: "contacts", title: "Contato", component: <ContactsForm /> },
-    ],
-    [],
-  );
-
-  const handlerOnSubmit = async (values: DrawerFormPartnerProps) => {
-    const payload = {
-      data: {
-        origin: "PORTAL",
-        operation: "CREATE",
-        fee: parseFloat(String(values.fee)),
-        rewardsRate: parseFloat(String(values.rewardsRate)),
-        segment: values.segment,
-        entity: values.entity,
-        company: { ...values.company },
-        address: { ...values.address },
-        details: { ...values.details, status: "ACTIVE" },
-        contacts: Object.values(values.contacts || {}).map((c: any) => ({
-          description: String(c.description),
-          phone: String(c.phone),
-          email: String(c.email),
-          type: c.type,
-        })),
-      },
-    };
-
-    await upsertPartner(payload, {
-      onSuccess: () => {
-        setIsDrawerOpen(false);
-      },
-    });
-  };
-
-  const formData = useFormik<DrawerFormPartnerProps>({
-    initialValues: initialPartnerValues(partnersData),
-    validationSchema: formPartnerValidationSchema,
-    enableReinitialize: true,
-    validateOnMount: true,
-    onSubmit: handlerOnSubmit,
-  });
-
-  const {
-    activeStep,
-    setActiveStep,
-    handleNext,
-    handleBack,
-    isStepValid,
-    onStepClick,
-  } = useMultiStepForm({
-    totalSteps: stepsConfig.length,
-    formData,
-    stepFields: stepPartnerFields,
-    stepsConfig,
-  });
-
-  const openDrawer = async (step = 0) => {
-    const initialValues = initialPartnerValues(partnersData);
-    formData.resetForm({ values: initialValues });
-
-    await formData.validateForm(initialValues);
-
-    setIsDrawerOpen(true);
-    setActiveStep(step);
-  };
-
-  const isCompanyLoaded =
-    !!formData.values.company.businessName && !!formData.values.address.address;
-
-  const drawerContentProps = {
-    header: {
-      title: "Novo Parceiro",
-      headerStep: `Etapa ${activeStep + 1} de ${stepsConfig.length}`,
-    },
-    steps: stepsConfig.map((s) => s.title),
-    activeStep: activeStep,
-    isValid: isStepValid(activeStep),
-    onStepClick: onStepClick,
-    content: (
-      <FormController value={formData}>
-        {stepsConfig[activeStep].component}
-        <Show hidden={activeStep === 0 && !isCompanyLoaded}>
-          <DrawerButtons
-            activeStep={activeStep}
-            title={stepsConfig.map((s) => s.title)}
-            onClose={() => setIsDrawerOpen(false)}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            isValid={isStepValid(activeStep)}
-            isLoading={formData.isSubmitting}
-            isDirty={formData.dirty}
-          />
-        </Show>
-      </FormController>
-    ),
-  };
-
   const config = dialogConfirmConfig[confirmData.type];
 
   const confirmProps: ConfirmDialogProps = {
@@ -238,11 +149,11 @@ export const usePartnerPageHook = () => {
   };
 
   return {
-    partnersData,
     isPending,
+    partnersData,
     columns,
     rows,
-    metrics: metricsData,
+    metrics: metricsQuery.data,
     pagination: {
       page,
       limit,
@@ -251,10 +162,5 @@ export const usePartnerPageHook = () => {
     setPage,
     setLimit,
     confirmProps,
-    openConfirmToggle,
-    isDrawerOpen,
-    drawerContentProps,
-    openDrawer,
-    closeDrawer: () => setIsDrawerOpen(false),
   };
 };
