@@ -2,6 +2,7 @@
 import { DrawerButtons } from "@sr/common/components/Drawer/DrawerButtons";
 import { CompanyForm, ContactsForm } from "@sr/common/components/Forms";
 import { Show } from "@sr/common/components/Show";
+import { isAbortError } from "@sr/common/constants";
 import { useDrawerStore, useMultiStepForm } from "@sr/common/hooks";
 import { FormController } from "@sr/common/iu/components/Forms";
 import { notify } from "@sr/common/iu/components/notifications";
@@ -53,18 +54,16 @@ export function PartnerDrawerContent({
       },
     };
 
-    console.log({ payload: payload, values: values });
-
     try {
-      await upsertPartner(payload as any, {
-        onSuccess: () => {
-          closeDrawer();
-          notify.success(
-            `Parceiro ${values.partnerCode ? "alterado" : "cadastrado"} com sucesso.`,
-          );
-        },
-      });
-    } catch (error) {
+      await upsertPartner({ payload });
+      closeDrawer();
+
+      notify.success(
+        `Parceiro ${isCreate ? "cadastrado" : "alterado"} com sucesso.`,
+      );
+    } catch (error: any) {
+      if (isAbortError(error)) return;
+
       const msg = GetErrorMessage(
         error,
         `Ops! Algo deu errado ao processar solicitação. Tente novamente!`,

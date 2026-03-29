@@ -1,3 +1,4 @@
+export { isAbortError } from "./AbortError.util";
 export { entityBadges } from "./EntityBadge.const";
 export { listContactType } from "./ListContactType.const";
 export { listEntity } from "./ListEntity.const";

@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { Card, StatCard } from "@sr/common/components/Card";
-import { ConfirmDialog } from "@sr/common/components/ConfirmDialog";
 import { Buildings, Buildings2, StatusUp } from "iconsax-react";
 import { RendererModulesType } from "../../Portal/pages/home/types/gym-management.types";
 import { TablePartner } from "../components/Table";
@@ -30,7 +29,6 @@ export function PartnersPage() {
     pagination,
     setPage,
     setLimit,
-    confirmProps,
   } = usePartnerPageHook();
 
   const isPositive = (metrics?.growthPercentage ?? 0) >= 0;
@@ -84,8 +82,6 @@ export function PartnersPage() {
         pagination={pagination}
         isDataWithEdges={true}
       />
-
-      <ConfirmDialog {...confirmProps} />
     </>
   );
 }

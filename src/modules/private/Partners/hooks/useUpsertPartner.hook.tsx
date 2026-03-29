@@ -13,8 +13,14 @@ export const useUpsertPartner = () => {
   const [attemptCount, setAttemptCount] = useState(0);
 
   return useMutation({
-    mutationFn: async (payload: any) => {
-      return await request(Graphql.MutationUpsertPartner, payload);
+    mutationFn: async ({
+      payload,
+      signal,
+    }: {
+      payload: any;
+      signal?: AbortSignal;
+    }) => {
+      return await request(Graphql.MutationUpsertPartner, payload, signal);
     },
     onSuccess: () => {
       setAttemptCount(0);

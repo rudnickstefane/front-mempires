@@ -19,7 +19,9 @@ export function useBackend(accessToken?: string | null) {
       request: <T,>(
         query: RequestDocument,
         variables?: Variables,
-      ): Promise<T> => client.request<T>(query, variables),
+        signal?: AbortSignal,
+      ): Promise<T> =>
+        client.request<T>({ document: query, variables, signal }),
     };
   }, [token]);
 }

@@ -3,6 +3,7 @@ import { SnackbarProvider } from "notistack";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 
+import { Dialog } from "./common/components/ConfirmDialog";
 import { Drawer } from "./common/components/Drawer/Drawer";
 import { SnackbarConfigurator } from "./common/iu/components/notifications";
 import { SnackbarContent } from "./common/ui/Alert";
@@ -33,6 +34,7 @@ const AppContent = () => {
         <SnackbarConfigurator />
         <BrowserRouter>
           <Drawer />
+          <Dialog />
           <AppRoutes />
         </BrowserRouter>
       </SnackbarProvider>

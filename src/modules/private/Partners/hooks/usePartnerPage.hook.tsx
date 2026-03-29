@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { dialogConfirmConfig } from "@sr/common/configs";
-import { useDrawerStore, usePaginationHook } from "@sr/common/hooks";
+import { isAbortError } from "@sr/common/constants";
+import {
+  useConfirmDialog,
+  useDrawerStore,
+  usePaginationHook,
+} from "@sr/common/hooks";
 import { notify } from "@sr/common/iu/components/notifications";
-import { DialogConfirmType } from "@sr/common/types";
-import { ConfirmDialogProps } from "@sr/common/types/ConfirmDialogProps.type";
 import { GetErrorMessage } from "@sr/modules/common/utils";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import * as Hook from ".";
 import { columnsPartners } from "../constants/columnsPartners.const";
 import { PartnerDrawerContent } from "../drawers";
 
 export const usePartnerPageHook = () => {
-  const [isConfirmLoading, setIsConfirmLoading] = useState(false);
+  const confirm = useConfirmDialog();
+
   const { page, limit, setPage, setLimit } = usePaginationHook(10);
   const skip = (page - 1) * limit;
 
@@ -37,7 +41,7 @@ export const usePartnerPageHook = () => {
     );
   }, [partnersData]);
 
-  const openPartnerDrawer = useCallback(
+  const onEdit = useCallback(
     (data?: any) => {
       open({
         title: "Alterar Parceiro",
@@ -51,107 +55,98 @@ export const usePartnerPageHook = () => {
     [open],
   );
 
-  const [confirmData, setConfirmData] = useState<{
-    isOpen: boolean;
-    type: DialogConfirmType;
-    title: string;
-    subtitle?: string;
-    buttonText: string;
-    partnerCode?: string;
-  }>({
-    isOpen: false,
-    type: "ACTIVE",
-    title: "",
-    buttonText: "",
-  });
+  const handleDelete = useCallback(
+    async (partnerCode: string, name: string) => {
+      await confirm({
+        title: `Deseja excluir o parceiro ${name}?`,
+        subtitle:
+          "Esta ação é irreversível. Todos os dados vinculados a este parceiro serão removidos permanentemente.",
+        buttonText: "Excluir",
+        ...dialogConfirmConfig.DELETE,
 
-  const openConfirmDelete = useCallback((partnerCode: string, name: string) => {
-    setConfirmData({
-      isOpen: true,
-      partnerCode,
-      type: "DELETE",
-      title: `Deseja excluir o parceiro ${name}?`,
-      subtitle:
-        "Esta ação é irreversível. Todos os dados vinculados a este parceiro serão removidos permanentemente.",
-      buttonText: "Excluir",
-    });
-  }, []);
+        onConfirm: async (signal) => {
+          try {
+            await upsertPartner({
+              payload: {
+                data: {
+                  origin: "PORTAL",
+                  operation: "DELETE",
+                  partnerCode,
+                },
+              },
+              signal,
+            });
 
-  const openConfirmToggle = useCallback(
-    (partnerCode: string, name: string, isActive: boolean) => {
+            notify.success("Parceiro excluído com sucesso.");
+          } catch (error: any) {
+            if (isAbortError(error)) return;
+
+            const msg = GetErrorMessage(
+              error,
+              "Algo deu errado ao excluir parceiro. Tente novamente!",
+            );
+
+            notify.error(msg);
+          }
+        },
+      });
+    },
+    [confirm, upsertPartner],
+  );
+
+  const handleToggle = useCallback(
+    async (partnerCode: string, name: string, isActive: boolean) => {
       const nextStatus = isActive ? "INACTIVE" : "ACTIVE";
 
-      setConfirmData({
-        isOpen: true,
-        partnerCode,
-        type: nextStatus,
-        title: `Deseja ${nextStatus === "ACTIVE" ? "ativar" : "desativar"} o parceiro ${name}?`,
+      await confirm({
+        title: `Deseja ${
+          nextStatus === "ACTIVE" ? "ativar" : "desativar"
+        } o parceiro ${name}?`,
         subtitle:
           nextStatus === "INACTIVE"
             ? "Esta ação impedirá o acesso do parceiro ao portal e suspenderá todas as funcionalidades e integrações ativas."
             : undefined,
         buttonText: nextStatus === "ACTIVE" ? "Ativar" : "Desativar",
+        ...dialogConfirmConfig[nextStatus],
+
+        onConfirm: async (signal) => {
+          try {
+            await upsertPartner({
+              payload: {
+                data: {
+                  origin: "PORTAL",
+                  operation: "UPDATE",
+                  partnerCode,
+                  details: { status: nextStatus },
+                },
+              },
+              signal,
+            });
+
+            notify.success(
+              `Parceiro ${
+                nextStatus === "ACTIVE" ? "ativado" : "desativado"
+              } com sucesso.`,
+            );
+          } catch (error: any) {
+            if (isAbortError(error)) return;
+
+            const msg = GetErrorMessage(
+              error,
+              "Algo deu errado ao excluir parceiro. Tente novamente!",
+            );
+
+            notify.error(msg);
+          }
+        },
       });
     },
-    [],
+    [confirm, upsertPartner],
   );
 
   const columns = useMemo(() => {
-    return columnsPartners(
-      openConfirmToggle,
-      openPartnerDrawer,
-      openConfirmDelete,
-    );
-  }, [openConfirmToggle, openPartnerDrawer, openConfirmDelete]);
-
-  const handleConfirmAction = async () => {
-    const { partnerCode, type } = confirmData;
-    if (!partnerCode || !type) return;
-
-    try {
-      setIsConfirmLoading(true);
-
-      await upsertPartner({
-        data: {
-          origin: "PORTAL",
-          operation: type === "DELETE" ? "DELETE" : "UPDATE",
-          partnerCode: partnerCode,
-          details: { status: type },
-        },
-      });
-
-      notify.success(
-        `Parceiro ${type === "DELETE" ? "excluído" : type === "ACTIVE" ? "ativado" : "desativado"} com sucesso.`,
-      );
-      setConfirmData((prev) => ({ ...prev, isOpen: false }));
-    } catch (error) {
-      const msg = GetErrorMessage(
-        error,
-        `Ops! Algo deu errado ao processar solicitação. Tente novamente!`,
-      );
-
-      notify.error(msg);
-    } finally {
-      setIsConfirmLoading(false);
-    }
-  };
-
-  const config = dialogConfirmConfig[confirmData.type];
-
-  const confirmProps: ConfirmDialogProps = {
-    isOpen: confirmData.isOpen,
-    title: confirmData.title,
-    subtitle: confirmData.subtitle,
-    buttonText: confirmData.buttonText,
-    buttonColor: config.buttonColor,
-    icon: config.icon,
-    iconBgColor: config.iconBgColor,
-    iconColor: config.iconColor,
-    alertVariant: config.alertVariant,
-    isLoading: isConfirmLoading,
-    closeModal: () => setConfirmData((prev) => ({ ...prev, isOpen: false })),
-    confirmDialog: handleConfirmAction,
-  };
+    return columnsPartners(handleToggle, onEdit, handleDelete);
+  }, [handleToggle, onEdit, handleDelete]);
 
   return {
     isPending,
@@ -166,6 +161,5 @@ export const usePartnerPageHook = () => {
     },
     setPage,
     setLimit,
-    confirmProps,
   };
 };
