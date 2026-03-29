@@ -36,7 +36,7 @@ export const useAddressForm = () => {
 
       attemptCount.current = 0;
 
-      notify.success(`Endereço para o CEP ${zipCode} carregado com sucesso!`);
+      notify.success(`Endereço para o CEP ${zipCode} carregado com sucesso.`);
       return data;
     } catch (error: unknown) {
       attemptCount.current += 1;

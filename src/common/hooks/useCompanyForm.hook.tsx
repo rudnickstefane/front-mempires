@@ -56,7 +56,7 @@ export const useCompanyForm = () => {
         setFieldValue(`address.${key}`, value),
       );
 
-      notify.success(`Consulta realizada com sucesso!`);
+      notify.success(`Consulta realizada com sucesso.`);
       attemptCount.current = 0;
       validateForm();
     } catch (error: any) {

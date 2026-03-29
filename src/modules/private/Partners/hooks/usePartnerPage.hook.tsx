@@ -4,12 +4,14 @@ import { useDrawerStore, usePaginationHook } from "@sr/common/hooks";
 import { notify } from "@sr/common/iu/components/notifications";
 import { DialogConfirmType } from "@sr/common/types";
 import { ConfirmDialogProps } from "@sr/common/types/ConfirmDialogProps.type";
+import { GetErrorMessage } from "@sr/modules/common/utils";
 import { useCallback, useMemo, useState } from "react";
 import * as Hook from ".";
 import { columnsPartners } from "../constants/columnsPartners.const";
 import { PartnerDrawerContent } from "../drawers";
 
 export const usePartnerPageHook = () => {
+  const [isConfirmLoading, setIsConfirmLoading] = useState(false);
   const { page, limit, setPage, setLimit } = usePaginationHook(10);
   const skip = (page - 1) * limit;
 
@@ -17,11 +19,7 @@ export const usePartnerPageHook = () => {
   const { mutateAsync: upsertPartner } = Hook.useUpsertPartner();
 
   const metricsQuery = Hook.useFindPartnerMetrics();
-  const {
-    data: partnersData,
-    isPending,
-    refetch,
-  } = Hook.useFindPartners({
+  const { data: partnersData, isPending } = Hook.useFindPartners({
     take: limit,
     skip: skip,
   });
@@ -47,11 +45,10 @@ export const usePartnerPageHook = () => {
         component: PartnerDrawerContent,
         componentProps: {
           initialData: data,
-          onSuccess: () => refetch(),
         },
       });
     },
-    [open, refetch],
+    [open],
   );
 
   const [confirmData, setConfirmData] = useState<{
@@ -112,23 +109,30 @@ export const usePartnerPageHook = () => {
     if (!partnerCode || !type) return;
 
     try {
-      if (type === "DELETE") {
-        // Chame seu hook de delete aqui (ex: deletePartner({ partnerCode }))
-        console.log("Deletando parceiro:", partnerCode);
-        notify.success("Parceiro excluído com sucesso.");
-      } else {
-        await upsertPartner({
-          data: {
-            origin: "PORTAL",
-            operation: "UPDATE",
-            partnerCode: partnerCode,
-            details: { status: type },
-          },
-        });
-      }
+      setIsConfirmLoading(true);
+
+      await upsertPartner({
+        data: {
+          origin: "PORTAL",
+          operation: type === "DELETE" ? "DELETE" : "UPDATE",
+          partnerCode: partnerCode,
+          details: { status: type },
+        },
+      });
+
+      notify.success(
+        `Parceiro ${type === "DELETE" ? "excluído" : type === "ACTIVE" ? "ativado" : "desativado"} com sucesso.`,
+      );
       setConfirmData((prev) => ({ ...prev, isOpen: false }));
     } catch (error) {
-      notify.error("Erro ao processar solicitação.");
+      const msg = GetErrorMessage(
+        error,
+        `Ops! Algo deu errado ao processar solicitação. Tente novamente!`,
+      );
+
+      notify.error(msg);
+    } finally {
+      setIsConfirmLoading(false);
     }
   };
 
@@ -144,6 +148,7 @@ export const usePartnerPageHook = () => {
     iconBgColor: config.iconBgColor,
     iconColor: config.iconColor,
     alertVariant: config.alertVariant,
+    isLoading: isConfirmLoading,
     closeModal: () => setConfirmData((prev) => ({ ...prev, isOpen: false })),
     confirmDialog: handleConfirmAction,
   };

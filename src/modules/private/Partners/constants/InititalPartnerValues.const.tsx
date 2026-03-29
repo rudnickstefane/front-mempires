@@ -16,14 +16,14 @@ export const initialPartnerValues = (
         ? Number(data.rewardsRate).toFixed(2)
         : "",
     company: {
-      id: data?.company?.id || -1,
+      id: data?.company?.id ? Number(data.company.id) : -1,
       code: data?.company?.code || "",
       businessName: data?.company?.businessName || "",
       fantasyName: data?.company?.fantasyName || "",
       stateRegistration: data?.company?.stateRegistration || "",
     },
     address: {
-      id: data?.address?.id || -1,
+      id: data?.address?.id ? Number(data.address.id) : -1,
       zipCode: data?.address?.zipCode
         ? formatZipCode(data.address.zipCode)
         : "",

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { notify } from "@sr/common/iu/components/notifications";
 import { useBackend } from "@sr/modules/common/hooks";
 import { GetErrorMessage } from "@sr/modules/common/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -17,33 +16,23 @@ export const useUpsertPartner = () => {
     mutationFn: async (payload: any) => {
       return await request(Graphql.MutationUpsertPartner, payload);
     },
-    onSuccess: (_data, variables) => {
+    onSuccess: () => {
       setAttemptCount(0);
-      const isCreate = variables.data.operation === "CREATE";
 
       queryClient.invalidateQueries({ queryKey: ["findPartners"] });
       queryClient.invalidateQueries({ queryKey: ["findPartnerMetrics"] });
-
-      notify.success(
-        isCreate
-          ? "Parceiro cadastrado com sucesso!"
-          : `Parceiro ${variables.data.details.status === "ACTIVE" ? "ativado" : "desativado"} com sucesso!`,
-      );
     },
-    onError: (error: unknown, variables) => {
+    onError: (error: unknown) => {
       setAttemptCount((prev) => prev + 1);
-      const isCreate = variables.data.operation === "CREATE";
-      const actionText = isCreate ? "cadastrar parceiro" : "alterar status";
-
       const msg =
         attemptCount >= MAX_ATTEMPTS
-          ? `Erro ao ${actionText}. Entre em contato com nosso suporte.`
+          ? `Erro ao processar solicitação. Entre em contato com nosso suporte.`
           : GetErrorMessage(
               error,
-              `Ops! Algo deu errado ao ${actionText}. Tente novamente!`,
+              `Ops! Algo deu errado ao processar solicitação. Tente novamente!`,
             );
 
-      notify.error(msg);
+      throw new Error(msg);
     },
   });
 };

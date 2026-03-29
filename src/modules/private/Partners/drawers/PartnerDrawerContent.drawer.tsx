@@ -4,6 +4,8 @@ import { CompanyForm, ContactsForm } from "@sr/common/components/Forms";
 import { Show } from "@sr/common/components/Show";
 import { useDrawerStore, useMultiStepForm } from "@sr/common/hooks";
 import { FormController } from "@sr/common/iu/components/Forms";
+import { notify } from "@sr/common/iu/components/notifications";
+import { GetErrorMessage } from "@sr/modules/common/utils";
 import { useFormik } from "formik";
 import { useMemo } from "react";
 import { initialPartnerValues, stepPartnerFields } from "../constants";
@@ -28,32 +30,48 @@ export function PartnerDrawerContent({
   );
 
   const handlerOnSubmit = async (values: DrawerFormPartnerProps) => {
+    const isCreate = !values.partnerCode;
+
     const payload = {
       data: {
-        // ...values,
-        // origin: "PORTAL",
-        // operation: values.partnerCode ? "UPDATE" : "CREATE",
-        // fee: parseFloat(String(values.fee)),
-        // rewardsRate: parseFloat(String(values.rewardsRate)),
         origin: "PORTAL",
-        operation: "CREATE",
-        fee: parseFloat(String(values.fee)),
-        rewardsRate: parseFloat(String(values.rewardsRate)),
+        operation: isCreate ? "CREATE" : "UPDATE",
+        partnerCode: values.partnerCode ?? "",
         segment: values.segment,
         entity: values.entity,
+        fee: parseFloat(String(values.fee)),
+        rewardsRate: parseFloat(String(values.rewardsRate)),
         company: { ...values.company },
         address: { ...values.address },
-        details: { ...values.details, status: "ACTIVE" },
+        details: {
+          ...values.details,
+          status: isCreate ? "ACTIVE" : values.details.status,
+        },
         contacts: Object.values(values.contacts || {}).map((contact: any) => ({
           ...contact,
-          phone: String(contact.phone),
         })),
       },
     };
 
-    await upsertPartner(payload as any, {
-      onSuccess: () => closeDrawer(),
-    });
+    console.log({ payload: payload, values: values });
+
+    try {
+      await upsertPartner(payload as any, {
+        onSuccess: () => {
+          closeDrawer();
+          notify.success(
+            `Parceiro ${values.partnerCode ? "alterado" : "cadastrado"} com sucesso.`,
+          );
+        },
+      });
+    } catch (error) {
+      const msg = GetErrorMessage(
+        error,
+        `Ops! Algo deu errado ao processar solicitação. Tente novamente!`,
+      );
+
+      notify.error(msg);
+    }
   };
 
   const formData = useFormik<DrawerFormPartnerProps>({
@@ -63,6 +81,15 @@ export function PartnerDrawerContent({
     validateOnMount: true,
     onSubmit: handlerOnSubmit,
   });
+
+  const isEditingContactPending = useMemo(() => {
+    return (
+      activeStep === 1 &&
+      (!!formData.values._tempType ||
+        !!formData.values._tempDescription ||
+        !!formData.values._tempEmail)
+    );
+  }, [activeStep, formData.values]);
 
   const multiStep = useMultiStepForm({
     totalSteps: stepsConfig.length,
@@ -91,7 +118,9 @@ export function PartnerDrawerContent({
             multiStep.handleNext();
             setActiveStep(activeStep + 1);
           }}
-          isValid={multiStep.isStepValid(activeStep)}
+          isValid={
+            multiStep.isStepValid(activeStep) && !isEditingContactPending
+          }
           isLoading={formData.isSubmitting}
           isDirty={formData.dirty}
         />

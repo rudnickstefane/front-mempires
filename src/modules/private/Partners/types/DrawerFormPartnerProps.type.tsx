@@ -5,4 +5,7 @@ export type DrawerFormPartnerProps = PartnerProps & {
   origin?: OriginEnum;
   operation?: OperationEnum;
   storeCount?: number;
+  _tempType?: string;
+  _tempDescription?: string;
+  _tempEmail?: string;
 };

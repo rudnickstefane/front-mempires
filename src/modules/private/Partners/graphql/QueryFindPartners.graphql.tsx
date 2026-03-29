@@ -27,6 +27,7 @@ export const QueryFindPartners = gql`
           }
           # Dados de Endereço
           address {
+            id
             zipCode
             address
             number
