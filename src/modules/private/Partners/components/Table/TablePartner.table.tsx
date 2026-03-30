@@ -6,9 +6,9 @@ import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { ReactTableProps } from "@sr/common/types";
 import { useSignInFormHook } from "@sr/modules/common/hooks";
 import { SearchStatus } from "iconsax-react";
-import { PartnerDTO } from "../../constants/columnsPartners.const";
+import { PartnerProps } from "../../types";
 
-export function TablePartner(props: ReactTableProps<PartnerDTO>) {
+export function TablePartner(props: ReactTableProps<PartnerProps>) {
   const { formData } = useSignInFormHook();
 
   return (

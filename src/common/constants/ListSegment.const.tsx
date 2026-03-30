@@ -7,11 +7,11 @@ export const listSegment = {
       value: SegmentEnum.PHARMA,
     },
     {
-      label: "Alimentos (Hiper, Super & Mercados)",
+      label: "Alimentos (ex: Hiper, Super & Mercados etc.)",
       value: SegmentEnum.FOOD,
     },
     {
-      label: "Saúde & Bem-estar (Clínicas & Academias)",
+      label: "Saúde & Bem-estar (ex: Hospitais, Ambulatórios & Clínicas etc.)",
       value: SegmentEnum.HEALTH,
     },
   ],

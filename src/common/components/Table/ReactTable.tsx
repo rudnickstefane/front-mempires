@@ -14,26 +14,13 @@ import {
 } from "@mui/material";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { storage } from "@sr/common/storage";
+import { ReactTableProps } from "@sr/common/types";
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { ArrowDown2, SearchStatus } from "iconsax-react";
-
-interface ReactTableProps<T> {
-  data: T[];
-  columns: ColumnDef<T, any>[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-  };
-  setPage: (page: number) => void;
-  setLimitPagination: (limit: number) => void;
-  isLoading?: boolean;
-}
 
 export function ReactTable<T>({
   data,

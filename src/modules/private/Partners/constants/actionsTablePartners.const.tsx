@@ -19,25 +19,14 @@ import {
   UserSquare,
 } from "iconsax-react";
 import { useState } from "react";
-
-// Interface do Objeto de Parceiro
-export interface PartnerDTO {
-  id: string;
-  isActive: boolean;
-  fantasyName: string;
-  cnpj: string;
-  storeCount: number;
-  segment: "Rede" | "Independente";
-  entity: "Rede" | "Independente";
-  location: string;
-}
+import { PartnerProps } from "../types";
 
 export const PartnerActions = ({
   partner,
   onEdit,
   onDelete,
 }: {
-  partner: PartnerDTO;
+  partner: PartnerProps;
   onEdit: () => void;
   onDelete: (code: string, name: string) => void;
 }) => {
@@ -55,7 +44,7 @@ export const PartnerActions = ({
 
   const handleNavigate = (module: any, params = {}) => {
     handleClose();
-    push(module, { partnerId: partner.id, ...params });
+    push(module, { partnerId: partner.company.id, ...params });
   };
 
   const menuItems = [
@@ -96,14 +85,14 @@ export const PartnerActions = ({
         handleClose();
         onEdit();
       },
-      color: "text-blue-600",
+      color: "text-primary",
     },
     {
       label: "Excluir",
       icon: <Trash size={20} variant="Linear" />,
       action: () => {
         handleClose();
-        onDelete(partner.id, partner.fantasyName);
+        onDelete(partner.partnerCode || "", partner.company.fantasyName);
       },
       color: "text-red-600",
     },
