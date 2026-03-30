@@ -29,7 +29,7 @@ export function PartnersPage() {
     pagination,
     setPage,
     setLimit,
-    setFilters,
+    handleFilterChange,
   } = usePartnerPageHook();
 
   const isPositive = (metrics?.growthPercentage ?? 0) >= 0;
@@ -94,13 +94,7 @@ export function PartnersPage() {
             label: "Somente ativos",
           },
         ]}
-        onFilterChange={(f) => {
-          setPage(1);
-          setFilters({
-            search: f.search ?? "",
-            isActive: f.isActive ?? false,
-          });
-        }}
+        onFilterChange={handleFilterChange}
       />
     </>
   );

@@ -6,7 +6,7 @@ import { useReactTableFilter } from "@sr/common/hooks";
 import { ReactTableFilterConfig, ReactTableProps } from "@sr/common/types";
 import { useMemo } from "react";
 
-type PartnerFilters = {
+export type PartnerFilters = {
   search?: string;
   isActive?: boolean;
 };

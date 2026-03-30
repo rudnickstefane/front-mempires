@@ -159,6 +159,30 @@ export const usePartnerPageHook = () => {
     return columnsPartners(handleToggle, onEdit, handleDelete);
   }, [handleToggle, onEdit, handleDelete]);
 
+  const handleFilterChange = useCallback(
+    (newFilters: { search?: string; isActive?: boolean }) => {
+      const nextFilters = {
+        search: newFilters.search ?? "",
+        isActive: newFilters.isActive ?? false,
+      };
+
+      setFilters((prev) => {
+        // Se os filtros forem idênticos aos anteriores, não faz nada (evita o loop na paginação)
+        if (
+          prev.search === nextFilters.search &&
+          prev.isActive === nextFilters.isActive
+        ) {
+          return prev;
+        }
+
+        // Se mudou algo no filtro, aí sim resetamos para a página 1
+        setPage(1);
+        return nextFilters;
+      });
+    },
+    [setPage],
+  );
+
   return {
     isPending,
     partnersQuery,
@@ -172,6 +196,6 @@ export const usePartnerPageHook = () => {
     },
     setPage,
     setLimit,
-    setFilters,
+    handleFilterChange,
   };
 };
