@@ -25,6 +25,7 @@ export type { PageInfoProps } from "./PageInfoProps.type.tsx";
 export type { PersonalProps } from "./PersonalProps.type";
 export type { PinFieldProps } from "./PinField.type.tsx";
 export type { ProfileProps } from "./ProfileProps.type";
+export type { ReactTableFilterConfig } from "./ReactTableFilterConfig.type.tsx";
 export type { ReactTableProps } from "./ReactTableProps.type";
 export type { ShowProps } from "./ShowProps.type";
 export type { SignInFormValues } from "./sign-in-form.type";

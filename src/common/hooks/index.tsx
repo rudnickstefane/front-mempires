@@ -6,3 +6,4 @@ export { useDrawerStore } from "./useDrawerStore.hook";
 export { useFindCompany } from "./useFindCompany.hook";
 export { useMultiStepForm } from "./useMultiStepForm.hook";
 export { usePaginationHook } from "./usePagination.hook";
+export { useReactTableFilter } from "./useReactTableFilter.hook";

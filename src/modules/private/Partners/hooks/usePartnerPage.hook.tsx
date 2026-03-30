@@ -8,13 +8,18 @@ import {
 } from "@sr/common/hooks";
 import { notify } from "@sr/common/iu/components/notifications";
 import { GetErrorMessage } from "@sr/modules/common/utils";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import * as Hook from ".";
 import { columnsPartners } from "../constants/columnsPartners.const";
 import { PartnerDrawerContent } from "../drawers";
 
 export const usePartnerPageHook = () => {
   const confirm = useConfirmDialog();
+
+  const [filters, setFilters] = useState({
+    search: "",
+    isActive: false,
+  });
 
   const { page, limit, setPage, setLimit } = usePaginationHook(10);
   const skip = (page - 1) * limit;
@@ -23,10 +28,16 @@ export const usePartnerPageHook = () => {
   const { mutateAsync: upsertPartner } = Hook.useUpsertPartner();
 
   const metricsQuery = Hook.useFindPartnerMetrics();
-  const { data: partnersData, isPending } = Hook.useFindPartners({
+  const partnersQuery = Hook.useFindPartners({
     take: limit,
     skip: skip,
+    filter: {
+      search: filters.search || undefined,
+      isActive: filters.isActive || undefined,
+    },
   });
+
+  const { data: partnersData, isPending } = partnersQuery;
 
   const rows = useMemo(() => {
     return (
@@ -150,7 +161,7 @@ export const usePartnerPageHook = () => {
 
   return {
     isPending,
-    partnersData,
+    partnersQuery,
     columns,
     rows,
     metrics: metricsQuery.data,
@@ -161,5 +172,6 @@ export const usePartnerPageHook = () => {
     },
     setPage,
     setLimit,
+    setFilters,
   };
 };

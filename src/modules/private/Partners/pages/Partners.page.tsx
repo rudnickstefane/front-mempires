@@ -22,13 +22,14 @@ export type PartnerProps = {
 export function PartnersPage() {
   const {
     isPending,
-    partnersData,
+    partnersQuery,
     columns,
     rows,
     metrics,
     pagination,
     setPage,
     setLimit,
+    setFilters,
   } = usePartnerPageHook();
 
   const isPositive = (metrics?.growthPercentage ?? 0) >= 0;
@@ -74,13 +75,32 @@ export function PartnersPage() {
       </Box>
 
       <TablePartner
-        queryResult={partnersData}
+        queryResult={partnersQuery}
         data={rows}
         columns={columns}
         setPage={setPage}
         setLimitPagination={setLimit}
         pagination={pagination}
         isDataWithEdges={true}
+        filters={[
+          {
+            type: "search",
+            name: "search",
+            placeholder: "Buscar por nome ou CNPJ",
+          },
+          {
+            type: "checkbox",
+            name: "isActive",
+            label: "Somente ativos",
+          },
+        ]}
+        onFilterChange={(f) => {
+          setPage(1);
+          setFilters({
+            search: f.search ?? "",
+            isActive: f.isActive ?? false,
+          });
+        }}
       />
     </>
   );
