@@ -2,13 +2,16 @@
 import { UseQueryResult } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 
+export type SortState = {
+  field?: string;
+  direction?: "asc" | "desc";
+};
+
 export type ReactTableProps<T, TQuery = any> = {
   // O objeto completo retornado pelo useQuery (contém isLoading, isFetching, etc)
   queryResult: UseQueryResult<TQuery>;
-
   // O array de dados já mapeado/formatado para a exibição
   data: T[];
-
   // Definição das colunas usando o columnHelper
   columns: ColumnDef<T, any>[];
 
@@ -36,4 +39,8 @@ export type ReactTableProps<T, TQuery = any> = {
    * Pode ser uma função que recebe a linha atual para ações específicas (Excluir/Editar)
    */
   menuItemPopup?: (row: T) => React.ReactNode;
+
+  // Ordenação da tabela
+  sort?: SortState;
+  onSortChange?: (sort: SortState) => void;
 };

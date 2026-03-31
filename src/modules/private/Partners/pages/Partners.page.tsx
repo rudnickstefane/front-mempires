@@ -1,23 +1,8 @@
 import { Box } from "@mui/material";
 import { Card, StatCard } from "@sr/common/components/Card";
 import { Buildings, Buildings2, StatusUp } from "iconsax-react";
-import { RendererModulesType } from "../../Portal/pages/home/types/gym-management.types";
 import { TablePartner } from "../components/Table";
 import { usePartnerPageHook } from "../hooks";
-import { FindPartnersResponse } from "../types";
-
-export type PartnerProps = {
-  data: {
-    partners: FindPartnersResponse;
-    loading: boolean;
-  };
-  label?: {
-    code: string;
-  };
-  openDrawer: (index: number) => void;
-  onNavigate: (module: RendererModulesType) => void;
-  refresh?: () => Promise<void>;
-};
 
 export function PartnersPage() {
   const {
@@ -30,6 +15,8 @@ export function PartnersPage() {
     setPage,
     setLimit,
     handleFilterChange,
+    sort,
+    setSort,
   } = usePartnerPageHook();
 
   const isPositive = (metrics?.growthPercentage ?? 0) >= 0;
@@ -81,17 +68,17 @@ export function PartnersPage() {
         setPage={setPage}
         setLimitPagination={setLimit}
         pagination={pagination}
+        sort={sort}
+        onSortChange={(s) => {
+          setPage(1);
+          setSort(s);
+        }}
         isDataWithEdges={true}
         filters={[
           {
             type: "search",
             name: "search",
             placeholder: "Buscar por nome ou CNPJ",
-          },
-          {
-            type: "checkbox",
-            name: "isActive",
-            label: "Somente ativos",
           },
         ]}
         onFilterChange={handleFilterChange}

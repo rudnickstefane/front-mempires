@@ -2,9 +2,7 @@
 import {
   Box,
   CircularProgress,
-  MenuItem,
   Pagination,
-  Select,
   Table,
   TableBody,
   TableCell,
@@ -12,6 +10,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Select } from "@sr/common/iu/components/Select";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { storage } from "@sr/common/storage";
 import { ReactTableProps } from "@sr/common/types";
@@ -20,7 +19,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowDown2, SearchStatus } from "iconsax-react";
+import { ArrowDown2, ArrowUp2, SearchStatus } from "iconsax-react";
 
 export function ReactTable<T>({
   data,
@@ -29,13 +28,74 @@ export function ReactTable<T>({
   setPage,
   setLimitPagination,
   isLoading,
+  sort,
+  onSortChange,
 }: ReactTableProps<T>) {
+  const limitOptions = [
+    { label: 5, value: 5 },
+    { label: 10, value: 10 },
+    { label: 15, value: 15 },
+    { label: 20, value: 20 },
+    { label: 25, value: 25 },
+    { label: 50, value: 50 },
+  ];
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
+
+  const nextDirectionMap = {
+    asc: "desc",
+    desc: undefined,
+  } as const;
+
+  const handleSort = (columnId: string) => {
+    const isSameColumn = sort?.field === columnId;
+
+    const direction = isSameColumn
+      ? nextDirectionMap[sort?.direction as "asc" | "desc"]
+      : "asc";
+
+    onSortChange?.(direction ? { field: columnId, direction } : {});
+  };
+
+  const renderSortIcon = (columnId: string) => {
+    const isActive = sort?.field === columnId;
+
+    const isAsc = isActive && sort?.direction === "asc";
+    const isDesc = isActive && sort?.direction === "desc";
+
+    return (
+      <Box className="flex flex-col items-center ml-1">
+        <ArrowUp2
+          size={15}
+          variant="Bold"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleSort(columnId);
+          }}
+          className={`cursor-pointer transition-colors ${
+            isAsc ? "text-gray-600" : "text-gray-300"
+          }`}
+        />
+
+        <ArrowDown2
+          size={15}
+          variant="Bold"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleSort(columnId);
+          }}
+          className={`cursor-pointer -mt-2 transition-colors ${
+            isDesc ? "text-gray-600" : "text-gray-300"
+          }`}
+        />
+      </Box>
+    );
+  };
 
   return (
     <Box className="w-full overflow-hidden">
@@ -44,18 +104,36 @@ export function ReactTable<T>({
           <TableHead className="bg-gray-100/50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableCell
-                    key={header.id}
-                    align={header.column.id === "actions" ? "center" : "left"}
-                    className="border-b-2 border-gray-200 px-6 py-4"
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </TableCell>
-                ))}
+                {headerGroup.headers.map((header, index) => {
+                  const columnId = header.column.id;
+
+                  const isSortable =
+                    columnId !== "actions" && columnId !== "details_status";
+
+                  const isFirst = index === 0;
+                  const isLast = index === headerGroup.headers.length - 1;
+
+                  return (
+                    <TableCell
+                      key={header.id}
+                      className="border-b-2 border-gray-200 px-6 py-4 relative"
+                    >
+                      <Box className="flex items-center gap-2">
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+
+                        {isSortable && renderSortIcon(columnId)}
+                      </Box>
+
+                      {/* 🔥 linha custom */}
+                      {!isFirst && !isLast && (
+                        <Box className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-px bg-gray-200" />
+                      )}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))}
           </TableHead>
@@ -85,7 +163,7 @@ export function ReactTable<T>({
                   }}
                 >
                   {row.getVisibleCells().map((cell) => {
-                    const isStatusColumn = cell.column.id === "isActive";
+                    const isStatusColumn = cell.column.id === "details_status";
                     const isActionColumn = cell.column.id === "actions";
 
                     return (
@@ -155,26 +233,15 @@ export function ReactTable<T>({
           <Box className="flex items-center gap-2">
             <Select
               value={pagination.limit}
-              onChange={(e) => {
-                const newLimit = Number(e.target.value);
+              options={limitOptions}
+              className="h-9 text-sm w-16"
+              onChange={(newLimit) => {
                 storage.set("tableLimit", newLimit);
                 setLimitPagination(newLimit);
                 setPage(1);
               }}
-              sx={{
-                "& .MuiSelect-icon": {
-                  right: "8px !important",
-                },
-              }}
-              className="h-9 text-sm w-16"
-              IconComponent={ArrowDown2}
-            >
-              {[5, 10, 15, 20, 25, 50].map((val) => (
-                <MenuItem key={val} value={val}>
-                  {val}
-                </MenuItem>
-              ))}
-            </Select>
+              iconRight="8px"
+            />
             <Typography className="text-gray-600 text-sm">
               itens por página
             </Typography>

@@ -18,8 +18,12 @@ export const usePartnerPageHook = () => {
 
   const [filters, setFilters] = useState({
     search: "",
-    isActive: false,
   });
+
+  const [sort, setSort] = useState<{
+    field?: string;
+    direction?: "asc" | "desc";
+  }>({});
 
   const { page, limit, setPage, setLimit } = usePaginationHook(10);
   const skip = (page - 1) * limit;
@@ -33,8 +37,13 @@ export const usePartnerPageHook = () => {
     skip: skip,
     filter: {
       search: filters.search || undefined,
-      isActive: filters.isActive || undefined,
     },
+    orderBy: sort.field
+      ? {
+          field: sort.field,
+          direction: sort.direction,
+        }
+      : undefined,
   });
 
   const { data: partnersData, isPending } = partnersQuery;
@@ -167,15 +176,9 @@ export const usePartnerPageHook = () => {
       };
 
       setFilters((prev) => {
-        // Se os filtros forem idênticos aos anteriores, não faz nada (evita o loop na paginação)
-        if (
-          prev.search === nextFilters.search &&
-          prev.isActive === nextFilters.isActive
-        ) {
+        if (prev.search === nextFilters.search) {
           return prev;
         }
-
-        // Se mudou algo no filtro, aí sim resetamos para a página 1
         setPage(1);
         return nextFilters;
       });
@@ -197,5 +200,7 @@ export const usePartnerPageHook = () => {
     setPage,
     setLimit,
     handleFilterChange,
+    sort,
+    setSort,
   };
 };

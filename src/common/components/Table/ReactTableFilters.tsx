@@ -15,11 +15,11 @@ export function ReactTableFilters({
 }) {
   return (
     <FormController value={formData}>
-      <Box className="flex gap-4 p-6 flex-wrap">
+      <Box className="flex gap-4 flex-wrap">
         {filters.map((filter) => {
           if (filter.type === "search") {
             return (
-              <Box key={filter.name} className="flex-1 min-w-[250px]">
+              <Box key={filter.name} className="flex-1 max-w-xl">
                 <TextField
                   name={filter.name}
                   placeholder={filter.placeholder}

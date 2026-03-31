@@ -1,8 +1,13 @@
 import { gql } from "graphql-request";
 
 export const QueryFindPartners = gql`
-  query FindPartners($take: Int, $skip: Int, $filter: PartnerFilterInput) {
-    findPartners(take: $take, skip: $skip, filter: $filter) {
+  query FindPartners(
+    $take: Int
+    $skip: Int
+    $filter: PartnerFilterInput
+    $orderBy: OrderByInput
+  ) {
+    findPartners(take: $take, skip: $skip, filter: $filter, orderBy: $orderBy) {
       totalCount
       pageInfo {
         hasNextPage

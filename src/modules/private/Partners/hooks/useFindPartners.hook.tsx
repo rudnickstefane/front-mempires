@@ -10,6 +10,10 @@ interface FindPartnersVariables {
     search?: string;
     isActive?: boolean;
   };
+  orderBy?: {
+    field?: string;
+    direction?: string;
+  };
 }
 
 export const useFindPartners = (variables: FindPartnersVariables) => {
