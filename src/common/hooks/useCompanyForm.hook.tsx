@@ -15,15 +15,7 @@ export const useCompanyForm = () => {
   const [showError, setShowError] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
 
-  const [searchParams, setSearchParams] = useState({
-    code: "",
-    memberType: "",
-  });
-
-  const { isFetching, refetch } = useFindCompany({
-    code: searchParams.code,
-    memberType: searchParams.memberType,
-  });
+  const { mutateAsync } = useFindCompany();
 
   const handlerOnSubmit = async (
     code: string,
@@ -38,15 +30,13 @@ export const useCompanyForm = () => {
     setIsDuplicate(false);
 
     try {
-      setSearchParams({ code, memberType });
+      const result = await mutateAsync({ code, memberType });
 
-      const result = await refetch();
-
-      if (result.isError || !result.data) {
-        throw result.error || new Error("O CNPJ não foi encontrado.");
+      if (!result) {
+        throw new Error("O CNPJ não foi encontrado.");
       }
 
-      const formattedData = mapCompanyToForm(result.data);
+      const formattedData = mapCompanyToForm(result);
       const { address, ...company } = formattedData;
 
       Object.entries(company).forEach(([key, value]) =>
@@ -124,7 +114,6 @@ export const useCompanyForm = () => {
     handlerOnSubmit,
     handleCompanyChange,
     handleReset,
-    isFetching,
     showError,
     isDuplicate,
     values,

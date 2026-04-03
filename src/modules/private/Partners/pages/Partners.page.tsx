@@ -70,7 +70,6 @@ export function PartnersPage() {
         pagination={pagination}
         sort={sort}
         onSortChange={(s) => {
-          setPage(1);
           setSort(s);
         }}
         isDataWithEdges={true}
