@@ -70,13 +70,26 @@ export const ptBR = {
   "actions.title": "Ações rápidas",
 
   // Modulo do Parceiros comerciais
+  "partner.code": "Código do parceiro",
   "partner.title": "Parceiros",
   "partner.subtitle": "Gerencie os parceiros cadastrados no sistema",
+  "partner.details": "Dados do parceiro",
+  "partner.fee": "Taxa administrativa",
+  "partner.rewardsRate": "Taxa de rewards",
 
-  // Empresa pessoais
+  // Empresa
+  "company.details": "Informações da empresa",
   "company.code": "CNPJ",
+  "company.businessName": "Razão social",
+  "company.fantasyName": "Nome fantasia",
+  "company.stateRegistration": "Inscrição estadual",
+
+  segment: "Segmento",
+  entity: "Organização",
 
   abbreviation: "Abreviação",
+  effectiveStart: "Início da vigência",
+  effectiveEnd: "Fim da vigência",
 
   // Seções do menu Explorar
   "menu.explore.latest": "Últimas",

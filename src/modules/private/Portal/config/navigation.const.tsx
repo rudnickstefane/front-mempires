@@ -1,4 +1,5 @@
 import Partners from "../../Partners";
+import { PartnerDetailsPage } from "../../Partners/pages";
 import Profile from "../../Profile";
 import { SecurityPage } from "../../Profile/pages";
 import HomeGymManagement from "../pages/home/pages/Home/HomeGymManagement";
@@ -7,7 +8,7 @@ import { RendererModulesType } from "../pages/home/types/gym-management.types";
 export const modulesRegistry: Partial<
   Record<
     RendererModulesType,
-    { title: string; subtitle?: string; component: React.ReactNode }
+    { title?: string; subtitle?: string; component: React.ReactNode }
   >
 > = {
   Home: {
@@ -29,5 +30,9 @@ export const modulesRegistry: Partial<
     title: "security.title",
     subtitle: "security.subtitle",
     component: <SecurityPage />,
+  },
+  PartnerDetails: {
+    subtitle: "security.subtitle",
+    component: <PartnerDetailsPage />,
   },
 };

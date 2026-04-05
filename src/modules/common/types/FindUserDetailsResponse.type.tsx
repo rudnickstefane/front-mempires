@@ -1,14 +1,3 @@
-import { AddressProps, ContactsProps } from "@sr/common/types";
+import { ProfileProps } from "@sr/common/types";
 
-export type FindUserDetailsResponse = {
-  lastAccess: string;
-  code: string;
-  identity: string;
-  registration: string;
-  internalNumber: string;
-  name: string;
-  gender: string;
-  birthDate: string;
-  address: AddressProps;
-  contact: ContactsProps;
-};
+export type FindUserDetailsResponse = ProfileProps;

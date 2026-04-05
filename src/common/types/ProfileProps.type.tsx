@@ -1,8 +1,15 @@
-import { ProfileDetails } from "@sr/modules/common/types";
+import { AddressProps } from "./AddressProps.type";
+import { ContactsProps } from "./ContactsProps.type";
 
 export type ProfileProps = {
-  data: {
-    profile: ProfileDetails;
-    loading: boolean;
-  };
+  lastAccess: string;
+  code: string;
+  identity: string;
+  registration: string;
+  internalNumber: string;
+  name: string;
+  gender: string;
+  birthDate: string;
+  address: AddressProps;
+  contact: ContactsProps;
 };

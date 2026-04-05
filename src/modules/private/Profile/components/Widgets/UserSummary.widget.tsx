@@ -2,13 +2,13 @@ import { Box, Button, Skeleton } from "@mui/material";
 import { notify } from "@sr/common/iu/components/notifications";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { storage } from "@sr/common/storage";
-import { ProfileProps } from "@sr/common/types";
 import { Animated } from "@sr/common/ui/motion";
 import { avatarLabel } from "@sr/utils";
 import { Copy, Sms, TickSquare } from "iconsax-react";
 import { useState } from "react";
+import { ProfileWidgetProps } from "../../types";
 
-export function UserSummary({ data }: Readonly<ProfileProps>) {
+export function UserSummaryWidget({ data }: Readonly<ProfileWidgetProps>) {
   const [copied, setCopied] = useState(false);
   const profileCode = `PFL-${storage.get<string>("profileCode")}`;
 
@@ -19,7 +19,7 @@ export function UserSummary({ data }: Readonly<ProfileProps>) {
 
       setTimeout(() => setCopied(false), 2000);
 
-      notify.success("Código copiado!");
+      notify.success("Código copiado.");
     } catch (err) {
       const msg = "Ocorreu um erro ao copiar o código de perfil.";
       notify.error(msg);
@@ -53,13 +53,15 @@ export function UserSummary({ data }: Readonly<ProfileProps>) {
     <Box className="flex flex-col">
       <Box className="w-full flex justify-between items-center">
         <Box className="w-full flex flex-row items-center">
-          <Box className="w-16 h-16 rounded-2xl flex items-center justify-center bg-primary-gradient">
+          <Box
+            className={`w-16 h-16 rounded-2xl flex items-center justify-center ${data?.loading ? "" : "bg-primary-gradient"}`}
+          >
             {data?.loading ? (
               <Skeleton
                 variant="rectangular"
                 width="100%"
                 height="100%"
-                className="rounded-full"
+                className="rounded-2xl"
               />
             ) : (
               <Typography className="!text-[22px] !font-bold !text-white !font-manrope">
@@ -117,7 +119,7 @@ export function UserSummary({ data }: Readonly<ProfileProps>) {
           <Button
             variant="outlined"
             onClick={handleCopy}
-            className={`flex items-center gap-2 !px-3 !py-2 !rounded-lg font-medium !font-manrope hover:bg-muted/80 transition-colors !text-sm !text-neutral-700 w-36 ${
+            className={`flex items-center gap-2 !px-3 !py-2 !rounded-lg font-medium !font-manrope hover:bg-muted/80 transition-colors !text-sm !text-neutral-700 w-40 ${
               copied
                 ? "!bg-success-50 !border-success-500"
                 : "!bg-neutral-100 !border-neutral-200"

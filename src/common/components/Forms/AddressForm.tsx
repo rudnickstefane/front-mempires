@@ -11,7 +11,7 @@ import { useFormikContext } from "formik";
 import { Location } from "iconsax-react";
 import { ChangeEvent, useMemo, useState } from "react";
 import { Show } from "../Show";
-import { CustomizedSwitch } from "../Switch";
+import { Switch } from "../Switch";
 
 export function AddressForm() {
   const { handlerOnSubmit } = useAddressForm();
@@ -164,7 +164,7 @@ export function AddressForm() {
               disabled={isNoNumber}
             />
             <Box className={`w-full ${hasError ? "-mt-[21px]" : "mt-[1.5px]"}`}>
-              <CustomizedSwitch
+              <Switch
                 label="noNumber"
                 checked={isNoNumber}
                 onChange={(e) =>

@@ -202,5 +202,6 @@ export const usePartnerPageHook = () => {
     handleFilterChange,
     sort,
     setSort,
+    handleToggle,
   };
 };

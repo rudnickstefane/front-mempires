@@ -1,4 +1,3 @@
-import { PersonalProps } from "@sr/common/types";
 import { Animated } from "@sr/common/ui/motion/Animated";
 import {
   formatDate,
@@ -7,21 +6,28 @@ import {
   formatIdentity,
 } from "@sr/utils";
 import { CardText } from "../../../../../common/components/Card";
+import { ProfileWidgetProps } from "../../types";
 
-export function Personal({ data }: PersonalProps) {
+export function PersonalWidget({ data }: ProfileWidgetProps) {
   const fields = [
-    { label: "personal.code", value: data?.code && formatIdentity(data?.code) },
-    { label: "name", value: data?.name },
+    {
+      label: "personal.code",
+      value: data?.profile?.code && formatIdentity(data?.profile?.code),
+    },
+    { label: "name", value: data?.profile?.name },
     {
       label: "birthDate",
-      value: data?.birthDate && formatDate(data?.birthDate),
+      value: data?.profile?.birthDate && formatDate(data?.profile?.birthDate),
     },
     {
       label: "identity",
-      value: data?.identity && formatDocument(data?.identity),
+      value: data?.profile?.identity && formatDocument(data?.profile?.identity),
       description: "(RG, CIN, CNH ou RNE)",
     },
-    { label: "gender", value: data?.gender && formatGender(data?.gender) },
+    {
+      label: "gender",
+      value: data?.profile?.gender && formatGender(data?.profile?.gender),
+    },
   ];
 
   return (

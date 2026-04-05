@@ -26,6 +26,7 @@ export const useUpsertPartner = () => {
       setAttemptCount(0);
 
       queryClient.invalidateQueries({ queryKey: ["findPartners"] });
+      queryClient.invalidateQueries({ queryKey: ["findPartner"] });
       queryClient.invalidateQueries({ queryKey: ["findPartnerMetrics"] });
     },
     onError: (error: unknown) => {

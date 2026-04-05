@@ -92,7 +92,7 @@ export function CompanyForm() {
         <TextField
           required
           name="segment"
-          label="Segmento"
+          label="segment"
           fullWidth
           options={listSegment.segments}
         />
@@ -100,7 +100,7 @@ export function CompanyForm() {
         <TextField
           required
           name="entity"
-          label="Organização"
+          label="entity"
           fullWidth
           options={listEntity.entities}
         />

@@ -5,7 +5,7 @@ import { RendererModulesType } from "@sr/modules/private/Portal/pages/home/types
 import { useNavigationStore } from "@sr/store";
 import { Setting2, ShieldSecurity } from "iconsax-react";
 
-export function QuickActionsWidget() {
+export function QuickActions() {
   const push = useNavigationStore((state) => state.push);
 
   const actions: Array<{

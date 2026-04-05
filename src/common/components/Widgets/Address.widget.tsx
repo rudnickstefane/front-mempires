@@ -1,26 +1,26 @@
-import { AddressDataProps } from "@sr/common/types";
+import { AddressProps } from "@sr/common/types";
 import { Animated } from "@sr/common/ui/motion";
 import { formatZipCode } from "@sr/utils";
-import { CardText } from "../../../../../common/components/Card";
+import { CardText } from "../Card";
 
-export function Address({ data }: AddressDataProps) {
+export function AddressWidget({ ...props }: AddressProps) {
   const fields = [
     {
       label: "zipCode",
-      value: data.address?.zipCode && formatZipCode(data.address?.zipCode),
+      value: props?.zipCode && formatZipCode(props?.zipCode),
     },
     {
       label: "address",
-      value: data.address?.address,
+      value: props?.address,
     },
     {
       label: "number",
-      value: data.address?.number,
+      value: props?.number,
     },
-    { label: "complement", value: data.address?.complement },
-    { label: "district", value: data.address?.district },
-    { label: "city", value: data.address?.city },
-    { label: "state", value: data.address?.state },
+    { label: "complement", value: props?.complement },
+    { label: "district", value: props?.district },
+    { label: "city", value: props?.city },
+    { label: "state", value: props?.state },
   ];
 
   return (

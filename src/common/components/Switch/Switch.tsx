@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Switch, SwitchProps } from "@mui/material";
+import { Box, Switch as MuiSwitch, SwitchProps } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import { Typography } from "@sr/common/iu/components/Typography";
 
 export interface CustomSwitchProps extends Omit<SwitchProps, "value"> {
   label?: string;
-  styledSwitch?: boolean;
-  isTable?: boolean; // Nova prop
+  withLabels?: boolean;
+  isTable?: boolean;
 }
 
-export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
+export function Switch(props: Readonly<CustomSwitchProps>) {
   const {
     checked,
     disabled = false,
     label = "Ativo",
-    styledSwitch,
-    isTable, // Pegando a prop aqui
+    withLabels,
+    isTable,
     onChange,
     ...rest
   } = props;
@@ -58,6 +58,7 @@ export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
   const styledSx = {
     width: 90,
     height: 45,
+    top: 1,
     padding: 1,
     "& .MuiSwitch-switchBase": {
       padding: 0,
@@ -90,7 +91,7 @@ export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
         content: '"Sim"',
         position: "absolute",
         left: 14,
-        top: "50%",
+        top: "55%",
         transform: "translateY(-50%)",
         fontSize: 14,
         fontWeight: 600,
@@ -102,7 +103,7 @@ export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
         content: '"Não"',
         position: "absolute",
         right: 14,
-        top: "50%",
+        top: "55%",
         transform: "translateY(-50%)",
         fontSize: 14,
         fontWeight: 600,
@@ -146,14 +147,14 @@ export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
     },
   };
 
-  const finalSx = isTable ? tableSx : styledSwitch ? styledSx : defaultSx;
+  const finalSx = isTable ? tableSx : withLabels ? styledSx : defaultSx;
 
   return (
-    <Box className={styledSwitch ? "bg-gray-200 rounded-2xl pl-4 pr-1" : ""}>
+    <Box className={withLabels ? "bg-gray-200/80 rounded-lg pl-2 pr-1" : ""}>
       <FormGroup className={`${isTable ? "w-fit" : ""}`}>
         <FormControlLabel
           control={
-            <Switch
+            <MuiSwitch
               checked={checked}
               onChange={onChange}
               disabled={disabled}
@@ -161,13 +162,13 @@ export function CustomizedSwitch(props: Readonly<CustomSwitchProps>) {
               {...rest}
             />
           }
-          labelPlacement={styledSwitch ? "start" : "end"}
+          labelPlacement={withLabels ? "start" : "end"}
           label={
             !isTable && (
               <Typography
                 translateId={label}
-                className={`ml-2 font-manrope text-neutral20 text-base ${
-                  styledSwitch ? "font-bold" : "font-normal"
+                className={`ml-2 mt-[2px] font-manrope text-neutral20 text-base ${
+                  withLabels ? "font-bold" : "font-normal"
                 }`}
               />
             )

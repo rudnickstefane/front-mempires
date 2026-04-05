@@ -2,7 +2,7 @@ export type DetailsProps = {
   companyCode?: string;
   abbreviation: string;
   status: string;
-  effectiveStart: Date | string;
-  effectiveEnd?: Date | string;
+  effectiveStart: string;
+  effectiveEnd?: string;
   ecommerce: boolean;
 };

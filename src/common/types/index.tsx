@@ -9,6 +9,7 @@ export type {
   ContactsFormProps,
   ContactsProps,
 } from "./ContactsProps.type";
+export type { ContactsWidgetProps } from "./ContactsWidgetProps.type.tsx";
 export type { CreateAccessTokenResponse } from "./create-access-token-response.type";
 export type { CustomTextFieldProps } from "./CustomTextFieldProps.type";
 export type { DetailsProps } from "./DetailsProps.type.tsx";

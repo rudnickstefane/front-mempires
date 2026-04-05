@@ -1,4 +1,3 @@
-import { ProfileDetails } from "@sr/modules/common/types";
 import { StatesOfBrazilEnum } from "../enums";
 
 export type AddressProps = {
@@ -13,5 +12,5 @@ export type AddressProps = {
 };
 
 export type AddressDataProps = {
-  data: ProfileDetails;
+  data: AddressProps;
 };

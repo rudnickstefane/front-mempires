@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CustomizedSwitch } from "@sr/common/components/Switch";
+import { Switch } from "@sr/common/components/Switch";
 import { entityBadges, segmentBadges } from "@sr/common/constants";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { FormatCode } from "@sr/modules/common/utils/FormatCodeAndIdentity.util";
@@ -22,7 +22,7 @@ export const columnsPartners = (
       const { partnerCode, company } = info.row.original;
 
       return (
-        <CustomizedSwitch
+        <Switch
           isTable
           checked={isActive}
           onChange={() => {

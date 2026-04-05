@@ -1,13 +1,7 @@
-import { ProfileDetails } from "@sr/modules/common/types";
-
-export type PersonalDataProps = {
+export type PersonalProps = {
   name: string;
   birthDate: string;
   code: string;
   identity: string;
   gender: string;
-};
-
-export type PersonalProps = {
-  data: ProfileDetails;
 };

@@ -1,43 +1,35 @@
 import { Box } from "@mui/material";
 import { Card } from "@sr/common/components/Card";
-import { FindUserDetailsResponse } from "@sr/modules/common/types";
+import { AddressWidget, ContactsWidget } from "@sr/common/components/Widgets";
 import { Call, Location, Profile as Profiles } from "iconsax-react";
-import { RendererModulesType } from "../../Portal/pages/home/types/gym-management.types";
-import * as Widget from "../components/Widgets";
-
-export type ProfilePropss = {
-  data: {
-    profile: FindUserDetailsResponse;
-    loading: boolean;
-  };
-  label?: {
-    code: string;
-  };
-  openDrawer: (index: number) => void;
-  onNavigate: (module: RendererModulesType) => void;
-  refresh?: () => Promise<void>;
-};
+import {
+  PersonalWidget,
+  QuickActionsWidget,
+  UserSummaryWidget,
+} from "../components/Widgets";
+import { ProfileWidgetProps } from "../types";
 
 export function AccountDetailsPage({
-  data,
   openDrawer,
-  onNavigate,
-}: ProfilePropss) {
+  ...props
+}: ProfileWidgetProps) {
   const sectionGroups = [
     [
       {
         title: "personal.title",
         icon: <Profiles variant="Bulk" size={24} />,
         skeletonCount: 5,
-        onOpenContent: () => openDrawer(0),
-        Component: <Widget.Personal data={data.profile} />,
+        onOpenContent: () => openDrawer?.(0),
+        Component: <PersonalWidget data={props?.data} />,
       },
       {
         title: "address.title",
         icon: <Location variant="Bulk" size={24} />,
         skeletonCount: 7,
-        onOpenContent: () => openDrawer(1),
-        Component: <Widget.Address data={data.profile} />,
+        onOpenContent: () => openDrawer?.(1),
+        Component: props?.data?.profile.address ? (
+          <AddressWidget {...props?.data?.profile.address} />
+        ) : null,
       },
     ],
     [
@@ -45,13 +37,15 @@ export function AccountDetailsPage({
         title: "contact.title",
         icon: <Call variant="Bulk" size={22} />,
         skeletonCount: 3,
-        onOpenContent: () => openDrawer(2),
-        Component: <Widget.Contacts data={data.profile} />,
+        onOpenContent: () => openDrawer?.(2),
+        Component: props?.data?.profile.contact ? (
+          <ContactsWidget data={props?.data?.profile.contact} />
+        ) : null,
       },
       {
         title: "actions.title",
         skeletonCount: 3,
-        Component: <Widget.QuickActions onNavigate={onNavigate} />,
+        Component: <QuickActionsWidget />,
       },
     ],
   ];
@@ -59,11 +53,11 @@ export function AccountDetailsPage({
   return (
     <>
       <Card
-        loading={data?.loading}
+        loading={props?.data?.loading}
         skeletonCount={5}
-        onOpenContent={() => openDrawer(0)}
+        onOpenContent={() => openDrawer?.(0)}
       >
-        <Widget.UserSummary data={data} />
+        <UserSummaryWidget data={props?.data} />
       </Card>
       {sectionGroups.map((group, groupIdx) => (
         <Box key={groupIdx} className="flex flex-col lg:flex-row gap-5">
@@ -72,7 +66,7 @@ export function AccountDetailsPage({
               key={section.title || idx}
               title={section.title}
               icon={section.icon}
-              loading={data?.loading}
+              loading={props?.data?.loading}
               skeletonCount={section.skeletonCount}
               onOpenContent={section.onOpenContent}
             >

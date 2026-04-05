@@ -44,14 +44,14 @@ export const PartnerActions = ({
 
   const handleNavigate = (module: any, params = {}) => {
     handleClose();
-    push(module, { partnerId: partner.company.id, ...params });
+    push(module, { partnerCode: partner.partnerCode, ...params });
   };
 
   const menuItems = [
     {
       label: "Mais detalhes",
       icon: <DocumentText1 size={20} variant="Linear" />,
-      action: () => handleNavigate("PartnersDetails"),
+      action: () => handleNavigate("PartnerDetails"),
     },
     {
       label: "Configurações",
