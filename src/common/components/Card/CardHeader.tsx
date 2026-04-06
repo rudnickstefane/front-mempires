@@ -14,6 +14,7 @@ interface CardHeaderProps {
   hasSensitiveData?: boolean;
   isVisible?: boolean;
   onToggleVisible?: () => void;
+  noEdit?: boolean;
   onOpenContent?: () => void;
 }
 
@@ -27,6 +28,7 @@ export const CardHeader = ({
   hasSensitiveData,
   isVisible,
   onToggleVisible,
+  noEdit,
   onOpenContent,
 }: CardHeaderProps) => (
   <Show hidden={!title}>
@@ -73,7 +75,7 @@ export const CardHeader = ({
             {isVisible ? <EyeSlash size={20} /> : <Eye size={20} />}
           </Button>
         )}
-        {onOpenContent && !labelButton && (
+        {onOpenContent && !noEdit && !labelButton && (
           <Button
             className="min-w-8 h-8 text-neutral-900 hover:text-primary transition-all p-0 bg-white hover:bg-neutral-100 hover:scale-105 rounded-lg"
             onClick={onOpenContent}

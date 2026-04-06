@@ -14,6 +14,7 @@ interface GridProps {
   padding?: string;
   loading?: boolean;
   skeletonCount: number;
+  noEdit?: boolean;
   onOpenContent?: () => void;
   labelButton?: string;
   children?: React.ReactNode;
@@ -30,6 +31,7 @@ export const Card = ({
   padding = "p-6",
   loading,
   skeletonCount,
+  noEdit,
   onOpenContent,
   labelButton,
   children,
@@ -63,6 +65,7 @@ export const Card = ({
           labelButton={labelButton}
           icon={icon}
           iconClass={className}
+          noEdit={noEdit}
           onOpenContent={onOpenContent}
           hasSensitiveData={hasSensitiveData}
           isVisible={isVisible}

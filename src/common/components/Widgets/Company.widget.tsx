@@ -1,5 +1,6 @@
 import { Animated } from "@sr/common/ui/motion/Animated";
 import { FormatCode } from "@sr/modules/common/utils/FormatCodeAndIdentity.util";
+import { formatText } from "@sr/utils";
 import { PartnerProps } from "../../../modules/private/Partners/types";
 import { CardText } from "../Card";
 
@@ -7,11 +8,11 @@ export function CompanyWidget({ company }: PartnerProps) {
   const fields = [
     {
       label: "company.businessName",
-      value: company.businessName,
+      value: formatText(company.businessName),
     },
     {
       label: "company.fantasyName",
-      value: company.fantasyName,
+      value: formatText(company.fantasyName),
     },
     {
       label: "company.code",

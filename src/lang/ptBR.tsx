@@ -73,6 +73,7 @@ export const ptBR = {
   "partner.code": "Código do parceiro",
   "partner.title": "Parceiros",
   "partner.subtitle": "Gerencie os parceiros cadastrados no sistema",
+  "partner.details.title": "Detalhes do parceiro",
   "partner.details": "Dados do parceiro",
   "partner.fee": "Taxa administrativa",
   "partner.rewardsRate": "Taxa de rewards",

@@ -32,7 +32,7 @@ export const modulesRegistry: Partial<
     component: <SecurityPage />,
   },
   PartnerDetails: {
-    subtitle: "security.subtitle",
+    title: "partner.details.title",
     component: <PartnerDetailsPage />,
   },
 };

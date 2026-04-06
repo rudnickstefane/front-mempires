@@ -3,6 +3,7 @@ import { Switch } from "@sr/common/components/Switch";
 import { entityBadges, segmentBadges } from "@sr/common/constants";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { FormatCode } from "@sr/modules/common/utils/FormatCodeAndIdentity.util";
+import { formatText } from "@sr/utils";
 import { createColumnHelper } from "@tanstack/react-table";
 import { PartnerProps } from "../types";
 import { PartnerActions } from "./actionsTablePartners.const";
@@ -37,7 +38,7 @@ export const columnsPartners = (
       <Typography className="text-sm font-bold">Nome fantasia</Typography>
     ),
     cell: (info) => (
-      <Typography className="text-sm">{info.getValue()}</Typography>
+      <Typography className="text-sm">{formatText(info.getValue())}</Typography>
     ),
   }),
   columnHelper.accessor("company.code", {

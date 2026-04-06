@@ -29,17 +29,24 @@ export function ContactsWidget({ cardBox, data }: ContactsWidgetProps) {
         return (
           <>
             <Show hidden={!cardBox}>
-              <CardBox key={item.id || index}>
-                {fields.map((field, fIdx) => (
-                  <CardText
-                    key={`${index}-${fIdx}`}
-                    label={field.label}
-                    value={field.value}
-                    isBox
-                    noAnimate
-                  />
-                ))}
-              </CardBox>
+              <Animated
+                key={index}
+                variant="itemScale"
+                isChild
+                className="flex items-center border-0 rounded-xl bg-neutral-100 text-left group transition-all duration-300"
+              >
+                <CardBox key={item.id || index}>
+                  {fields.map((field, fIdx) => (
+                    <CardText
+                      key={`${index}-${fIdx}`}
+                      label={field.label}
+                      value={field.value}
+                      isBox
+                      noAnimate
+                    />
+                  ))}
+                </CardBox>
+              </Animated>
             </Show>
 
             <Show hidden={cardBox} isSimple>

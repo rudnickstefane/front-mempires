@@ -5,7 +5,7 @@ import { Typography } from "@sr/common/iu/components/Typography";
 import { Animated } from "@sr/common/ui/motion/Animated";
 import { modulesRegistry } from "@sr/modules/private/Portal/config/navigation.const";
 import { useNavigationStore } from "@sr/store";
-import { Add, ArrowLeft, Copy, TickSquare } from "iconsax-react";
+import { Add, ArrowLeft, ArrowRight2, Copy, TickSquare } from "iconsax-react";
 import { useState } from "react";
 import { Switch } from "../Switch";
 
@@ -23,10 +23,16 @@ export type ModuleHeaderProps = {
 };
 
 export function ModuleHeader({ ...props }: Readonly<ModuleHeaderProps>) {
-  const activeModule = useNavigationStore((state) => state.getActiveModule());
+  const { stack, pop } = useNavigationStore();
+  const activeModule = stack[stack.length - 1];
   const config = modulesRegistry[activeModule];
 
-  const pop = useNavigationStore((state) => state.pop);
+  const handleBackTo = (index: number) => {
+    const diff = stack.length - 1 - index;
+    for (let i = 0; i < diff; i++) {
+      pop();
+    }
+  };
 
   const [copied, setCopied] = useState(false);
 
@@ -63,10 +69,38 @@ export function ModuleHeader({ ...props }: Readonly<ModuleHeaderProps>) {
             translateId={props.title ? props.title : config?.title}
             className="flex flex-row items-center text-[32px] mb-0 text-rhino-950 font-manrope font-semibold"
           />
-          <Typography
-            translateId={config?.subtitle}
-            className="text-rhino-850 flex flex-row items-center text-sm font-manrope"
-          />
+          <Box className="flex flex-row items-center gap-1">
+            {props.onBack && !config?.subtitle ? (
+              stack.map((moduleName, index) => {
+                const isLast = index === stack.length - 1;
+                const moduleConfig = modulesRegistry[moduleName];
+
+                return (
+                  <Box
+                    key={`${moduleName}-${index}`}
+                    className="flex flex-row items-center gap-2"
+                  >
+                    <Typography
+                      translateId={moduleConfig?.title}
+                      onClick={!isLast ? () => handleBackTo(index) : undefined}
+                      className={`text-sm ${
+                        !isLast
+                          ? "text-rhino-900 cursor-pointer"
+                          : "text-rhino-850"
+                      }`}
+                    />
+                    {!isLast && <ArrowRight2 size={14} variant="Linear" />}
+                  </Box>
+                );
+              })
+            ) : (
+              // Fallback para o subtítulo padrão do config
+              <Typography
+                translateId={config?.subtitle}
+                className="text-rhino-850 text-sm"
+              />
+            )}
+          </Box>
         </Box>
       </Box>
       <Box className="flex flex-row gap-4">
