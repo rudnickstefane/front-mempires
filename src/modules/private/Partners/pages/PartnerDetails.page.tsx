@@ -113,7 +113,7 @@ export function PartnerDetailsPage() {
     },
     {
       title: "Produtos",
-      value: 1,
+      value: 0,
       icon: <Box1 variant="Bulk" size={24} />,
       colorClass: "text-slate-500",
       bgClass: "bg-slate-100",
