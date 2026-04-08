@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Skeleton } from "@mui/material";
 import { Button } from "@sr/common/iu/components/Button";
 import { notify } from "@sr/common/iu/components/notifications";
 import { Typography } from "@sr/common/iu/components/Typography";
@@ -11,6 +11,7 @@ import { Switch } from "../Switch";
 
 export type ModuleHeaderProps = {
   title?: string;
+  loading?: boolean;
   copyTitle?: string;
   codeCopy?: string;
   showStatus?: boolean;
@@ -65,10 +66,19 @@ export function ModuleHeader({ ...props }: Readonly<ModuleHeaderProps>) {
           </IconButton>
         )}
         <Box>
-          <Typography
-            translateId={props.title ? props.title : config?.title}
-            className="flex flex-row items-center text-[32px] mb-0 text-rhino-950 font-manrope font-semibold"
-          />
+          {props.loading ? (
+            <Skeleton
+              variant="text"
+              animation="wave"
+              style={{ width: `100%` }}
+              className="h-12"
+            />
+          ) : (
+            <Typography
+              translateId={props.title ? props.title : config?.title}
+              className="flex flex-row items-center text-[32px] mb-0 text-rhino-950 font-manrope font-semibold"
+            />
+          )}
           <Box className="flex flex-row items-center gap-1">
             {props.onBack && !config?.subtitle ? (
               stack.map((moduleName, index) => {
