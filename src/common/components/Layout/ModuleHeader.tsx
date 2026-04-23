@@ -104,9 +104,8 @@ export function ModuleHeader({ ...props }: Readonly<ModuleHeaderProps>) {
                 );
               })
             ) : (
-              // Fallback para o subtítulo padrão do config
               <Typography
-                translateId={config?.subtitle}
+                translateId={config?.subtitle || config?.description}
                 className="text-rhino-850 text-sm"
               />
             )}

@@ -4,7 +4,7 @@ export const mapCompanyToForm = (
   data: FindCompanyResponse,
 ): FindCompanyResponse => {
   return {
-    id: data?.id ?? -1,
+    id: Number(data?.id) ?? -1,
     companyCode: data?.companyCode ?? "",
     code: data?.code ?? "",
     businessName: data?.businessName ?? "",

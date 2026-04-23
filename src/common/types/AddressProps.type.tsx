@@ -1,5 +1,3 @@
-import { StatesOfBrazilEnum } from "../enums";
-
 export type AddressProps = {
   id?: number;
   zipCode: string;
@@ -8,7 +6,7 @@ export type AddressProps = {
   complement: string;
   district: string;
   city: string;
-  state: StatesOfBrazilEnum;
+  state: string;
 };
 
 export type AddressDataProps = {

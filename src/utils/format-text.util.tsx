@@ -17,7 +17,6 @@ export const formatText = (text: string): string => {
 
   return text
     .split(" ")
-    .filter((word) => word.trim().length > 0)
     .map((word) => {
       const cleanWord = word.trim();
       const lowerWord = cleanWord.toLowerCase();

@@ -1,5 +1,5 @@
 export type ShowProps = {
-  isSimple?: boolean;
+  variant?: "basic" | "effect";
   hidden?: boolean;
   children?: React.ReactNode;
 };

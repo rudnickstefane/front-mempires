@@ -70,7 +70,7 @@ export const usePartnerDetailsPageHook = () => {
         icon: <Shop variant="Bulk" size={24} />,
         iconClass: "!bg-blue-50 text-blue-600",
         skeletonCount: 3,
-        module: "PartnerStores",
+        module: "BrandAndEstablishment",
       },
       {
         title: "Contatos",

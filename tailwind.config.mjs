@@ -5,6 +5,7 @@ import {
   maxHeight,
   minHeight,
   minWidth,
+  rounded,
   screens,
   width,
 } from "tailwindcss/defaultTheme";
@@ -252,6 +253,11 @@ export default {
       maxHeight: {
         ...maxHeight,
         100: "25rem",
+      },
+      borderRadius: {
+        ...rounded,
+        "4xl": "2rem",
+        "5xl": "3.5rem",
       },
       animation: {
         fade: "fadeOut .5s ease-in-out",

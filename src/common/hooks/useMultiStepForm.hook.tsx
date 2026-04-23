@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { notify } from "../iu/components/notifications";
 import { MultiStepFormProps } from "../types";
 
@@ -8,9 +8,9 @@ export const useMultiStepForm = ({
   formData,
   stepFields,
   stepsConfig,
+  activeStep,
+  setActiveStep,
 }: MultiStepFormProps) => {
-  const [activeStep, setActiveStep] = useState(0);
-
   const getFieldError = useCallback(
     (field: string, source: any) =>
       field.split(".").reduce((obj, key) => obj?.[key], source),
@@ -52,13 +52,11 @@ export const useMultiStepForm = ({
     stepsConfig,
     activeStep,
     setActiveStep,
+    stepFields,
+    getFieldError,
   ]);
 
   const onStepClick = (step: number) => {
-    if (activeStep === 0) {
-      return;
-    }
-
     setActiveStep(step);
   };
 
@@ -71,11 +69,10 @@ export const useMultiStepForm = ({
 
     fieldsInCurrentStep.forEach((f) => formData.setFieldTouched(f, true));
 
-    if (!hasError && activeStep < totalSteps - 1)
-      setActiveStep((prev) => prev + 1);
+    if (!hasError && activeStep < totalSteps - 1) setActiveStep(activeStep + 1);
   };
 
-  const handleBack = () => setActiveStep((prev) => prev - 1);
+  const handleBack = () => setActiveStep(activeStep - 1);
 
   return {
     activeStep,

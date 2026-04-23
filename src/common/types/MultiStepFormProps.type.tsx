@@ -4,4 +4,6 @@ export type MultiStepFormProps = {
   formData: any;
   stepFields: Record<number, string[]>;
   stepsConfig: { key: string; title: string }[];
+  activeStep: number;
+  setActiveStep: (step: number) => void;
 };

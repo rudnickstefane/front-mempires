@@ -24,7 +24,11 @@ export function PartnerDrawerContent({
 
   const stepsConfig = useMemo(
     () => [
-      { key: "company", title: "Dados do parceiro", Component: CompanyForm },
+      {
+        key: "company",
+        title: "Dados do parceiro",
+        Component: () => <CompanyForm type="partner" />,
+      },
       { key: "contacts", title: "Contato", Component: ContactsForm },
     ],
     [],
@@ -95,6 +99,8 @@ export function PartnerDrawerContent({
     formData,
     stepFields: stepPartnerFields,
     stepsConfig,
+    activeStep,
+    setActiveStep,
   });
 
   const CurrentStep = stepsConfig[activeStep].Component;
@@ -102,7 +108,16 @@ export function PartnerDrawerContent({
     !!formData.values.company.businessName && !!formData.values.address.address;
 
   return (
-    <FormController value={formData}>
+    <FormController
+      value={formData}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && activeStep < stepsConfig.length - 1) {
+          e.preventDefault();
+
+          multiStep.handleNext();
+        }
+      }}
+    >
       <CurrentStep />
       <Show hidden={activeStep === 0 && !isCompanyLoaded}>
         <DrawerButtons
@@ -111,11 +126,9 @@ export function PartnerDrawerContent({
           onClose={closeDrawer}
           handleBack={() => {
             multiStep.handleBack();
-            setActiveStep(activeStep - 1);
           }}
           handleNext={async () => {
-            multiStep.handleNext();
-            setActiveStep(activeStep + 1);
+            await multiStep.handleNext();
           }}
           isValid={
             multiStep.isStepValid(activeStep) && !isEditingContactPending

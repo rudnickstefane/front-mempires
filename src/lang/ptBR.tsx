@@ -69,11 +69,15 @@ export const ptBR = {
   // Ações rápidas
   "actions.title": "Ações rápidas",
 
-  // Modulo do Parceiros comerciais
-  "partner.code": "Código do parceiro",
+  // Modulo do Parceiros comerciais (Titulos)
   "partner.title": "Parceiros",
   "partner.subtitle": "Gerencie os parceiros cadastrados no sistema",
   "partner.details.title": "Detalhes do parceiro",
+  "brandAndEstablishment.title": "Bandeiras e lojas",
+  "brandAndEstablishment.description": "Lista de Bandeiras e lojas",
+
+  // Modulo do Parceiros comerciais
+  "partner.code": "Código do parceiro",
   "partner.details": "Dados do parceiro",
   "partner.fee": "Taxa administrativa",
   "partner.rewardsRate": "Taxa de rewards",
@@ -84,6 +88,7 @@ export const ptBR = {
   "company.businessName": "Razão social",
   "company.fantasyName": "Nome fantasia",
   "company.stateRegistration": "Inscrição estadual",
+  "company.name": "Nome",
 
   segment: "Segmento",
   entity: "Organização",

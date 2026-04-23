@@ -5,6 +5,7 @@ import * as Graphql from "../graphql";
 
 interface FindCompanyVariables {
   code: string;
+  companyCode?: string;
   memberType?: string;
 }
 

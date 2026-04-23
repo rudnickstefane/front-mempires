@@ -1,8 +1,12 @@
 import { gql } from "graphql-request";
 
 export const QueryFindCompany = gql`
-  query FindCompany($code: String!, $memberType: String) {
-    findCompany(code: $code, memberType: $memberType) {
+  query FindCompany($code: String!, $companyCode: String, $memberType: String) {
+    findCompany(
+      code: $code
+      companyCode: $companyCode
+      memberType: $memberType
+    ) {
       id
       code
       businessName

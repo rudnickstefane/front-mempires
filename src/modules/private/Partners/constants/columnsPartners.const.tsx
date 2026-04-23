@@ -12,7 +12,7 @@ const columnHelper = createColumnHelper<PartnerProps>();
 
 export const columnsPartners = (
   onToggleStatus: (code: string, name: string, isActive: boolean) => void,
-  onEdit: (partner: any) => void,
+  openDrawer: (partner: any) => void,
   onDelete: (code: string, name: string) => void,
 ) => [
   columnHelper.accessor("details.status", {
@@ -94,7 +94,7 @@ export const columnsPartners = (
     cell: (info) => (
       <PartnerActions
         partner={info.row.original}
-        onEdit={() => onEdit(info.row.original)}
+        onEdit={() => openDrawer(info.row.original)}
         onDelete={() =>
           onDelete(
             info.row.original.partnerCode || "",

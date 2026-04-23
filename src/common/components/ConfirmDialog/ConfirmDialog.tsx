@@ -33,7 +33,7 @@ export function ConfirmDialog({
     >
       <DialogContent className="flex flex-col items-center gap-8 p-0">
         <Box
-          className={`p-4 rounded-3xl flex items-center ${iconColor} ${iconBgColor}`}
+          className={`p-4 rounded-4xl flex items-center ${iconColor} ${iconBgColor}`}
         >
           {icon}
         </Box>

@@ -13,6 +13,7 @@ export type CustomTextFieldProps = Omit<TextFieldProps, "onChange"> & {
   errorMessage?: string;
   showPasswordToggle?: boolean;
   onTogglePassword?: () => void;
+  information?: string;
   requiredMessage?: string;
   datePicker?: boolean;
   onChangeDate?: (value: Date | null) => void;

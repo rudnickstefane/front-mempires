@@ -61,7 +61,7 @@ export const PartnerActions = ({
     {
       label: "Bandeiras e Lojas",
       icon: <Buildings2 size={20} variant="Linear" />,
-      action: () => handleNavigate("Company"),
+      action: () => handleNavigate("BrandAndEstablishment"),
     },
     {
       label: "Contatos",
@@ -111,14 +111,15 @@ export const PartnerActions = ({
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         slotProps={{
           paper: {
-            className:
-              "shadow-lg rounded-xl border border-gray-100 min-w-[220px] py-2",
+            className: "shadow-lg rounded-xl border border-gray-100 py-1",
           },
         }}
       >
         {menuItems.map((item, index) => (
           <MenuItem key={index} onClick={item.action} className="py-2">
-            <ListItemIcon className={item.color || "text-neutral-900"}>
+            <ListItemIcon
+              className={`${item.color || "text-neutral-900"} !min-w-7`}
+            >
               {item.icon}
             </ListItemIcon>
             <ListItemText

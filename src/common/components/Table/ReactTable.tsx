@@ -14,12 +14,13 @@ import { Select } from "@sr/common/iu/components/Select";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { storage } from "@sr/common/storage";
 import { ReactTableProps } from "@sr/common/types";
+import { NoRecordsFound } from "@sr/modules/common/ui";
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowDown2, ArrowUp2, SearchStatus } from "iconsax-react";
+import { ArrowDown2, ArrowUp2 } from "iconsax-react";
 
 export function ReactTable<T>({
   data,
@@ -199,27 +200,7 @@ export function ReactTable<T>({
                   colSpan={columns.length}
                   className="h-60 border-none"
                 >
-                  <Box className="flex flex-col items-center justify-center text-center p-10">
-                    <Box className="bg-gray-100 p-4 rounded-full mb-4">
-                      <SearchStatus
-                        size={48}
-                        variant="Linear"
-                        className="text-gray-400"
-                      />
-                    </Box>
-                    <Typography
-                      variant="h6"
-                      className="text-gray-700 font-bold"
-                    >
-                      Nenhum registro encontrado
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      className="text-gray-500 max-w-[300px]"
-                    >
-                      Tente ajustar seus filtros.
-                    </Typography>
-                  </Box>
+                  <NoRecordsFound />
                 </TableCell>
               </TableRow>
             )}

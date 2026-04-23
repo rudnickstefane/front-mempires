@@ -12,6 +12,7 @@ import { useCallback, useMemo, useState } from "react";
 import * as Hook from ".";
 import { columnsPartners } from "../constants/columnsPartners.const";
 import { PartnerDrawerContent } from "../drawers";
+import { DrawerFormPartnerProps } from "../types";
 
 export const usePartnerPageHook = () => {
   const confirm = useConfirmDialog();
@@ -61,8 +62,8 @@ export const usePartnerPageHook = () => {
     );
   }, [partnersData]);
 
-  const onEdit = useCallback(
-    (data?: any) => {
+  const openDrawer = useCallback(
+    (data?: DrawerFormPartnerProps) => {
       open({
         title: "Alterar Parceiro",
         steps: ["Dados do parceiro", "Contato"],
@@ -73,45 +74,6 @@ export const usePartnerPageHook = () => {
       });
     },
     [open],
-  );
-
-  const handleDelete = useCallback(
-    async (partnerCode: string, name: string) => {
-      await confirm({
-        title: `Deseja excluir o parceiro ${name}?`,
-        subtitle:
-          "Esta ação é irreversível. Todos os dados vinculados a este parceiro serão removidos permanentemente.",
-        buttonText: "Excluir",
-        ...dialogConfirmConfig.DELETE,
-
-        onConfirm: async (signal) => {
-          try {
-            await upsertPartner({
-              payload: {
-                data: {
-                  origin: "PORTAL",
-                  operation: "DELETE",
-                  partnerCode,
-                },
-              },
-              signal,
-            });
-
-            notify.success("Parceiro excluído com sucesso.");
-          } catch (error: any) {
-            if (isAbortError(error)) return;
-
-            const msg = GetErrorMessage(
-              error,
-              "Algo deu errado ao excluir parceiro. Tente novamente!",
-            );
-
-            notify.error(msg);
-          }
-        },
-      });
-    },
-    [confirm, upsertPartner],
   );
 
   const handleToggle = useCallback(
@@ -153,6 +115,45 @@ export const usePartnerPageHook = () => {
 
             const msg = GetErrorMessage(
               error,
+              "Algo deu errado ao ativar/desativar parceiro. Tente novamente!",
+            );
+
+            notify.error(msg);
+          }
+        },
+      });
+    },
+    [confirm, upsertPartner],
+  );
+
+  const handleDelete = useCallback(
+    async (partnerCode: string, name: string) => {
+      await confirm({
+        title: `Deseja excluir o parceiro ${name}?`,
+        subtitle:
+          "Esta ação é irreversível. Todos os dados vinculados a este parceiro serão removidos permanentemente.",
+        buttonText: "Excluir",
+        ...dialogConfirmConfig.DELETE,
+
+        onConfirm: async (signal) => {
+          try {
+            await upsertPartner({
+              payload: {
+                data: {
+                  origin: "PORTAL",
+                  operation: "DELETE",
+                  partnerCode,
+                },
+              },
+              signal,
+            });
+
+            notify.success("Parceiro excluído com sucesso.");
+          } catch (error: any) {
+            if (isAbortError(error)) return;
+
+            const msg = GetErrorMessage(
+              error,
               "Algo deu errado ao excluir parceiro. Tente novamente!",
             );
 
@@ -165,8 +166,8 @@ export const usePartnerPageHook = () => {
   );
 
   const columns = useMemo(() => {
-    return columnsPartners(handleToggle, onEdit, handleDelete);
-  }, [handleToggle, onEdit, handleDelete]);
+    return columnsPartners(handleToggle, openDrawer, handleDelete);
+  }, [handleToggle, openDrawer, handleDelete]);
 
   const handleFilterChange = useCallback(
     (newFilters: { search?: string; isActive?: boolean }) => {

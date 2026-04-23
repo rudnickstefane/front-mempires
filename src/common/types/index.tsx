@@ -30,4 +30,8 @@ export type { ReactTableFilterConfig } from "./ReactTableFilterConfig.type.tsx";
 export type { ReactTableProps } from "./ReactTableProps.type";
 export type { ShowProps } from "./ShowProps.type";
 export type { SignInFormValues } from "./sign-in-form.type";
+export type {
+  TabOption,
+  UnderlineTabsProps,
+} from "./UnderlineTabsProps.type.tsx";
 export type { UserProps } from "./UserProps.type";

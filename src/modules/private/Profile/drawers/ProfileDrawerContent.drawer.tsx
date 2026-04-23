@@ -67,12 +67,23 @@ export function ProfileDrawerContent({ profileData }: { profileData: any }) {
     formData,
     stepFields: stepProfileFields,
     stepsConfig,
+    activeStep,
+    setActiveStep,
   });
 
   const CurrentStep = stepsConfig[activeStep].component;
 
   return (
-    <FormController value={formData}>
+    <FormController
+      value={formData}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && activeStep < stepsConfig.length - 1) {
+          e.preventDefault();
+
+          multiStep.handleNext();
+        }
+      }}
+    >
       <CurrentStep />
 
       <DrawerButtons

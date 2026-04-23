@@ -49,7 +49,7 @@ export function ContactsWidget({ cardBox, data }: ContactsWidgetProps) {
               </Animated>
             </Show>
 
-            <Show hidden={cardBox} isSimple>
+            <Show hidden={cardBox} variant="basic">
               {fields.map((field, fIdx) => (
                 <CardText
                   key={`${index}-${fIdx}`}

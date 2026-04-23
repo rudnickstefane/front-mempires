@@ -1,6 +1,4 @@
 import { Box } from "@mui/material";
-import { listEntity } from "@sr/common/constants";
-import { listSegment } from "@sr/common/constants/ListSegment.const";
 import { useCompanyForm } from "@sr/common/hooks";
 import { Button } from "@sr/common/iu/components/Button";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
@@ -11,8 +9,20 @@ import { formatText, formatZipCode } from "@sr/utils";
 import { Edit, Location } from "iconsax-react";
 import { ChangeEvent } from "react";
 import { Show } from "../Show";
+import { CompanySpecificFields } from "./CompanySpecificForm";
 
-export function CompanyForm() {
+type CompanyFormType =
+  | "partner"
+  | "brand"
+  | "establishment"
+  | "client"
+  | "affiliate";
+
+interface CompanyFormProps {
+  type: CompanyFormType;
+}
+
+export function CompanyForm({ type }: CompanyFormProps) {
   const {
     handlerOnSubmit,
     handleCompanyChange,
@@ -40,7 +50,7 @@ export function CompanyForm() {
             mask="00.000.000/0000-00"
             showButton
             labelButton="Consultar"
-            hook={handlerOnSubmit}
+            hook={(code: string) => handlerOnSubmit(code, type.toUpperCase())}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               handleCompanyChange(e.target.value)
             }
@@ -50,8 +60,8 @@ export function CompanyForm() {
               variant={isDuplicate ? "warning" : "error"}
               title={
                 isDuplicate
-                  ? "O CNPJ já está cadastrado"
-                  : "O CNPJ não foi encontrado"
+                  ? "O CNPJ informado já está cadastrado."
+                  : "O CNPJ informado não foi encontrado."
               }
               message={
                 isDuplicate
@@ -89,67 +99,7 @@ export function CompanyForm() {
           </Button>
         </Box>
 
-        <TextField
-          required
-          name="segment"
-          label="segment"
-          fullWidth
-          options={listSegment.segments}
-        />
-
-        <TextField
-          required
-          name="entity"
-          label="entity"
-          fullWidth
-          options={listEntity.entities}
-        />
-
-        <TextField
-          required
-          fullWidth
-          name="details.abbreviation"
-          label="abbreviation"
-          maxLength={20}
-        />
-
-        <TextField
-          required
-          datePicker
-          name="details.effectiveStart"
-          label="Início da vigência"
-          onChangeDate={(newDate) =>
-            setFieldValue("details.effectiveStart", newDate)
-          }
-        />
-
-        <TextField
-          required
-          datePicker
-          name="details.effectiveEnd"
-          label="Fim da vigência"
-          onChangeDate={(newDate) =>
-            setFieldValue("details.effectiveEnd", newDate)
-          }
-        />
-
-        <TextField
-          required
-          name="fee"
-          placeholder="0.00"
-          label="Taxa administrativa (%)"
-          mask="0.00"
-          fullWidth
-        />
-
-        <TextField
-          required
-          name="rewardsRate"
-          placeholder="0.00"
-          label="Taxa de rewards (%)"
-          mask="0.00"
-          fullWidth
-        />
+        <CompanySpecificFields type={type} setFieldValue={setFieldValue} />
       </Show>
     </Box>
   );

@@ -1,3 +1,4 @@
+export { BrandClientPolicyEnum } from "./BrandClientPolicyEnum";
 export { ContactTypeEnum } from "./ContactTypeEnum";
 export { EntityEnum } from "./EntityEnum";
 export { OperationEnum } from "./OperationEnum";

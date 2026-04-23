@@ -19,9 +19,9 @@ export const dialogConfirmConfig: Record<DialogConfirmType, DialogConfigValue> =
     },
     DELETE: {
       icon: <Trash variant="Bulk" size={48} />,
-      iconBgColor: "bg-red-100",
-      iconColor: "text-red-700",
+      iconBgColor: "bg-danger-100",
+      iconColor: "text-danger-700",
       alertVariant: "warning",
-      buttonColor: "bg-red-600",
+      buttonColor: "bg-danger-600",
     },
   };

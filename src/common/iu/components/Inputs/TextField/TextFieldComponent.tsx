@@ -26,6 +26,7 @@ export function TextFieldComponent({
   endIcon,
   showPasswordToggle,
   onTogglePassword,
+  information,
   requiredMessage = "Este campo tem o preenchimento obrigatório.",
   selectIcon,
   datePicker,
@@ -241,6 +242,12 @@ export function TextFieldComponent({
             <HelpOutlineIcon fontSize="small" />
           </IconButton>
         </Tooltip>
+      )}
+
+      {information && (
+        <Typography className="!font-manrope !text-neutral700 !text-sm !mt-1">
+          {information}
+        </Typography>
       )}
 
       {/* Contador de Caracteres da Sugestão */}
