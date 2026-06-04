@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box } from "@mui/material";
 import { Show } from "@sr/common/components/Show";
@@ -6,22 +7,21 @@ import { useReactTableFilter } from "@sr/common/hooks";
 import { Select } from "@sr/common/iu/components/Select";
 import { ReactTableFilterConfig, ReactTableProps } from "@sr/common/types";
 import { useMemo } from "react";
-
-export type PartnerFilters = {
-  search?: string;
-};
+import { BrandFilters } from "../../types";
 
 export function TableBrand<T, TQuery = any>({
   filters,
   onFilterChange,
+  currentFilters,
   ...props
 }: ReactTableProps<T, TQuery> & {
   filters?: ReactTableFilterConfig[];
-  onFilterChange?: (filters: PartnerFilters) => void;
+  onFilterChange?: (filters: BrandFilters) => void;
+  currentFilters?: BrandFilters;
 }) {
   const initialValues = useMemo(
     () => ({
-      search: "",
+      search: currentFilters?.search || "",
     }),
     [],
   );
@@ -38,8 +38,8 @@ export function TableBrand<T, TQuery = any>({
     { label: "Nome (Z a A)", value: "name:desc" },
     { label: "CNPJ (Menor para maior)", value: "company_code:asc" },
     { label: "CNPJ (Maior para menor)", value: "company_code:desc" },
-    { label: "Qtd. de Lojas (Crescente)", value: "storeCount:asc" },
-    { label: "Qtd. de Lojas (Decrescente)", value: "storeCount:desc" },
+    { label: "Qtd. de Lojas (Crescente)", value: "establishmentsCount:asc" },
+    { label: "Qtd. de Lojas (Decrescente)", value: "establishmentsCount:desc" },
   ];
 
   return (
@@ -65,7 +65,7 @@ export function TableBrand<T, TQuery = any>({
         />
       </Box>
 
-      <ReactTable {...props} />
+      <ReactTable {...props} sortOptions={sortOptions} />
     </>
   );
 }

@@ -10,6 +10,7 @@ interface DrawerState {
   headerStep?: string;
 
   steps: string[];
+  setSteps: (steps: string[]) => void;
   activeStep: number;
 
   component: DrawerComponent | null;
@@ -31,6 +32,7 @@ export const useDrawerStore = create<DrawerState>((set) => ({
   isOpen: false,
   component: null,
   steps: [],
+  setSteps: (steps) => set({ steps }),
   activeStep: 0,
 
   openDrawer: ({ title, steps, component, componentProps, activeStep = 0 }) =>

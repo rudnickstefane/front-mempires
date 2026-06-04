@@ -3,7 +3,6 @@ import { DrawerButtons } from "@sr/common/components/Drawer/DrawerButtons";
 import { CompanyForm, ContactsForm } from "@sr/common/components/Forms";
 import { Show } from "@sr/common/components/Show";
 import { isAbortError } from "@sr/common/constants";
-import { BrandClientPolicyEnum } from "@sr/common/enums";
 import { useDrawerStore, useMultiStepForm } from "@sr/common/hooks";
 import { FormController } from "@sr/common/iu/components/Forms";
 import { notify } from "@sr/common/iu/components/notifications";
@@ -11,45 +10,45 @@ import { GetErrorMessage } from "@sr/modules/common/utils";
 import { useNavigationStore } from "@sr/store";
 import { useFormik } from "formik";
 import { useMemo } from "react";
-import { initialBrandValues, stepBrandFields } from "../constants";
+import {
+  initialEstablishmentValues,
+  stepEstablishmentFields,
+} from "../constants";
 import * as Hook from "../hooks";
-import { DrawerFormBrandProps } from "../types";
-import { formBrandValidationSchema } from "../validation";
+import { DrawerFormEstablishmentProps } from "../types";
+import { formEstablishmentValidationSchema } from "../validation";
 
 export function EstablishmentDrawerContent({
   initialData,
 }: {
-  initialData?: DrawerFormBrandProps;
+  initialData?: DrawerFormEstablishmentProps;
 }) {
   const { params } = useNavigationStore();
   const { activeStep, setActiveStep, closeDrawer } = useDrawerStore();
-  const { mutateAsync: upsertBrand } = Hook.useUpsertEstablishment();
+  const { mutateAsync: upsertEstablishment } = Hook.useUpsertEstablishment();
 
   const stepsConfig = useMemo(
     () => [
       {
         key: "company",
         title: "Dados da loja",
-        Component: () => <CompanyForm type="brand" />,
+        Component: () => <CompanyForm type="establishment" />,
       },
       { key: "contacts", title: "Contato", Component: ContactsForm },
     ],
     [],
   );
 
-  const handlerOnSubmit = async (values: DrawerFormBrandProps) => {
-    const isCreate = !values.brandCode;
+  const handlerOnSubmit = async (values: DrawerFormEstablishmentProps) => {
+    const isCreate = !values.establishmentCode;
 
     const payload = {
       data: {
         origin: "PORTAL",
         operation: isCreate ? "CREATE" : "UPDATE",
-        brandCode: values.brandCode ?? "",
+        brandCode: values?.brandCode,
         partnerCode: params?.partnerCode ?? "",
-        name: values.name,
-        brandClientPolicy: values?.brandClientPolicy
-          ? BrandClientPolicyEnum[values.brandClientPolicy]
-          : BrandClientPolicyEnum.ALL,
+        establishmentCode: values.establishmentCode ?? "",
         company: { ...values.company },
         address: { ...values.address },
         details: {
@@ -63,11 +62,11 @@ export function EstablishmentDrawerContent({
     };
 
     try {
-      await upsertBrand({ payload });
+      await upsertEstablishment({ payload });
       closeDrawer();
 
       notify.success(
-        `Bandeira ${isCreate ? "cadastrada" : "alterada"} com sucesso.`,
+        `Loja ${isCreate ? "cadastrada" : "alterada"} com sucesso.`,
       );
     } catch (error: any) {
       if (isAbortError(error)) return;
@@ -81,9 +80,9 @@ export function EstablishmentDrawerContent({
     }
   };
 
-  const formData = useFormik<DrawerFormBrandProps>({
-    initialValues: initialBrandValues(initialData),
-    validationSchema: formBrandValidationSchema,
+  const formData = useFormik<DrawerFormEstablishmentProps>({
+    initialValues: initialEstablishmentValues(initialData),
+    validationSchema: formEstablishmentValidationSchema,
     enableReinitialize: true,
     validateOnMount: true,
     onSubmit: handlerOnSubmit,
@@ -101,7 +100,7 @@ export function EstablishmentDrawerContent({
   const multiStep = useMultiStepForm({
     totalSteps: stepsConfig.length,
     formData,
-    stepFields: stepBrandFields,
+    stepFields: stepEstablishmentFields,
     stepsConfig,
     activeStep,
     setActiveStep,

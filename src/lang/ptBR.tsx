@@ -90,6 +90,13 @@ export const ptBR = {
   "company.stateRegistration": "Inscrição estadual",
   "company.name": "Nome",
 
+  // Bandeira
+  "brand.code": "Código da bandeira",
+  "brand.details": "Dados da bandeira",
+  "brand.details.title": "Detalhes da bandeira",
+  "brand.clientPolicy": "Quem pode comprar?",
+  "brand.select": "Selecione a bandeira",
+
   segment: "Segmento",
   entity: "Organização",
 

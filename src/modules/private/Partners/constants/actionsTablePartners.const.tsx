@@ -44,7 +44,11 @@ export const PartnerActions = ({
 
   const handleNavigate = (module: any, params = {}) => {
     handleClose();
-    push(module, { partnerCode: partner.partnerCode, ...params });
+    push(
+      module,
+      { partnerCode: partner.partnerCode, ...params },
+      partner.company.fantasyName,
+    );
   };
 
   const menuItems = [

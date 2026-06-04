@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box } from "@mui/material";
 import { Show } from "@sr/common/components/Show";
@@ -6,22 +7,21 @@ import { useReactTableFilter } from "@sr/common/hooks";
 import { Select } from "@sr/common/iu/components/Select";
 import { ReactTableFilterConfig, ReactTableProps } from "@sr/common/types";
 import { useMemo } from "react";
-
-export type PartnerFilters = {
-  search?: string;
-};
+import { EstablishmentFilters } from "../../types";
 
 export function TableEstablishment<T, TQuery = any>({
   filters,
   onFilterChange,
+  currentFilters,
   ...props
 }: ReactTableProps<T, TQuery> & {
   filters?: ReactTableFilterConfig[];
-  onFilterChange?: (filters: PartnerFilters) => void;
+  onFilterChange?: (filters: EstablishmentFilters) => void;
+  currentFilters?: EstablishmentFilters;
 }) {
   const initialValues = useMemo(
     () => ({
-      search: "",
+      search: currentFilters?.search || "",
     }),
     [],
   );
@@ -38,12 +38,8 @@ export function TableEstablishment<T, TQuery = any>({
     { label: "Nome fantasia (Z a A)", value: "company_fantasyName:desc" },
     { label: "CNPJ (Menor para maior)", value: "company_code:asc" },
     { label: "CNPJ (Maior para menor)", value: "company_code:desc" },
-    { label: "Qtd. de Lojas (Crescente)", value: "storeCount:asc" },
-    { label: "Qtd. de Lojas (Decrescente)", value: "storeCount:desc" },
-    { label: "Segmento (A a Z)", value: "segment:asc" },
-    { label: "Segmento (Z a A)", value: "segment:desc" },
-    { label: "Organização (A a Z)", value: "entity:asc" },
-    { label: "Organização (Z a A)", value: "entity:desc" },
+    { label: "Bandeira (A a Z)", value: "brand:asc" },
+    { label: "Bandeira (Z a A)", value: "brand:desc" },
   ];
 
   return (
@@ -69,7 +65,7 @@ export function TableEstablishment<T, TQuery = any>({
         />
       </Box>
 
-      <ReactTable {...props} />
+      <ReactTable {...props} sortOptions={sortOptions} />
     </>
   );
 }

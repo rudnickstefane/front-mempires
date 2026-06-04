@@ -20,13 +20,17 @@ export const useUpsertEstablishment = () => {
       payload: any;
       signal?: AbortSignal;
     }) => {
-      return await request(Graphql.MutationUpsertBrand, payload, signal);
+      return await request(
+        Graphql.MutationUpsertEstablishment,
+        payload,
+        signal,
+      );
     },
     onSuccess: () => {
       setAttemptCount(0);
 
       queryClient.invalidateQueries({ queryKey: ["findBrands"] });
-      queryClient.invalidateQueries({ queryKey: ["findBrand"] });
+      queryClient.invalidateQueries({ queryKey: ["findEstablishments"] });
     },
     onError: (error: unknown) => {
       setAttemptCount((prev) => prev + 1);

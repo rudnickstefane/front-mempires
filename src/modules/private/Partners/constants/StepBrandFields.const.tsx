@@ -10,5 +10,6 @@ export const stepBrandFields: Record<number, string[]> = {
     "address.city",
     "address.state",
   ],
-  1: ["contacts"],
+  1: ["clients"],
+  2: ["contacts"],
 };

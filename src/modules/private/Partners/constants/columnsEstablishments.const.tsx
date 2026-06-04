@@ -16,7 +16,7 @@ export const columnsEstablishments = (
     name: string,
     isActive: boolean,
   ) => void,
-  openDrawer: (partner: any) => void,
+  openDrawer: (establisment: any) => void,
   onDelete: (code: string, name: string) => void,
 ) => [
   columnHelper.accessor("details.status", {
@@ -24,7 +24,7 @@ export const columnsEstablishments = (
     cell: (info) => {
       const status = info.getValue();
       const isActive = status === "ACTIVE";
-      const { brandCode, partnerCode, name, company } = info.row.original;
+      const { brandCode, partnerCode, company } = info.row.original;
 
       return (
         <Switch
@@ -34,7 +34,7 @@ export const columnsEstablishments = (
             onToggleStatus(
               brandCode || "",
               partnerCode || "",
-              name ? name : company.fantasyName,
+              company.fantasyName,
               isActive,
             );
           }}
@@ -58,29 +58,36 @@ export const columnsEstablishments = (
       </Typography>
     ),
   }),
-  columnHelper.accessor("company.code", {
+  columnHelper.accessor("brand", {
     header: () => (
       <Typography className="text-sm font-bold">Bandeira</Typography>
-    ),
-    cell: (info) => (
-      <Typography className="text-sm">
-        {info.getValue() ? FormatCode(info.getValue()) : "-"}
-      </Typography>
-    ),
-  }),
-  columnHelper.accessor("storeCount", {
-    header: () => (
-      <Typography className="text-sm font-bold">Endereço</Typography>
     ),
     cell: (info) => (
       <Typography className="text-sm">{info.getValue()}</Typography>
     ),
   }),
+  columnHelper.accessor("address", {
+    header: () => (
+      <Typography className="text-sm font-bold">Endereço</Typography>
+    ),
+    cell: (info) => {
+      const { address, number, district, city, state, zipCode, complement } =
+        info.row.original.address;
+
+      if (!address) return <Typography className="text-sm">-</Typography>;
+
+      const formattedAddress = `${formatText(address)}, nº ${number}${
+        complement ? ` - ${formatText(complement)}` : ""
+      } - ${formatText(district)}, ${formatText(city)} - ${state}, ${zipCode}`;
+
+      return <Typography className="text-sm">{formattedAddress}</Typography>;
+    },
+  }),
   columnHelper.display({
     id: "actions",
     cell: (info) => (
       <EstablishmentsActions
-        partner={info.row.original}
+        establishment={info.row.original}
         onEdit={() => openDrawer(info.row.original)}
         onDelete={() =>
           onDelete(

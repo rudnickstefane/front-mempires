@@ -3,6 +3,7 @@ import {
   BrandAndEstablishmentPage,
   PartnerDetailsPage,
 } from "../../Partners/pages";
+import { BrandDetailsPage } from "../../Partners/pages/BrandAndEstablishment/BrandDetails.page";
 import Profile from "../../Profile";
 import { SecurityPage } from "../../Profile/pages";
 import HomeGymManagement from "../pages/home/pages/Home/HomeGymManagement";
@@ -16,6 +17,7 @@ export const modulesRegistry: Partial<
       subtitle?: string;
       description?: string;
       component: React.ReactNode;
+      useLabelAsPath?: boolean;
     }
   >
 > = {
@@ -29,7 +31,7 @@ export const modulesRegistry: Partial<
     subtitle: "profile.subtitle",
     component: <Profile />,
   },
-  partners: {
+  Partners: {
     title: "partner.title",
     subtitle: "partner.subtitle",
     component: <Partners />,
@@ -42,10 +44,19 @@ export const modulesRegistry: Partial<
   PartnerDetails: {
     title: "partner.details.title",
     component: <PartnerDetailsPage />,
+    useLabelAsPath: true,
   },
   BrandAndEstablishment: {
     title: "brandAndEstablishment.title",
     description: "brandAndEstablishment.description",
     component: <BrandAndEstablishmentPage />,
+  },
+  BrandDetails: {
+    title: "brand.details.title",
+    component: <BrandDetailsPage />,
+  },
+  EstablishmentDetails: {
+    title: "partner.details.title",
+    component: <PartnerDetailsPage />,
   },
 };

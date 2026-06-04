@@ -1,5 +1,6 @@
 export { isAbortError } from "./AbortError.util";
 export { entityBadges } from "./EntityBadge.const";
+export { listClientPolicy } from "./ListClientPolicy.const";
 export { listContactType } from "./ListContactType.const";
 export { listEntity } from "./ListEntity.const";
 export { listGender } from "./ListGender.const";

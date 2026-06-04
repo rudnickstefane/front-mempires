@@ -21,6 +21,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { ArrowDown2, ArrowUp2 } from "iconsax-react";
+import { useMemo } from "react";
 
 export function ReactTable<T>({
   data,
@@ -31,7 +32,14 @@ export function ReactTable<T>({
   isLoading,
   sort,
   onSortChange,
+  sortOptions = [],
 }: ReactTableProps<T>) {
+  const sortableFields = useMemo(() => {
+    return Array.from(
+      new Set(sortOptions.map((opt) => opt.value.split(":")[0])),
+    );
+  }, [sortOptions]);
+
   const limitOptions = [
     { label: 5, value: 5 },
     { label: 10, value: 10 },
@@ -108,8 +116,7 @@ export function ReactTable<T>({
                 {headerGroup.headers.map((header, index) => {
                   const columnId = header.column.id;
 
-                  const isSortable =
-                    columnId !== "actions" && columnId !== "details_status";
+                  const isSortable = sortableFields.includes(columnId);
 
                   const isFirst = index === 0;
                   const isLast = index === headerGroup.headers.length - 1;
@@ -128,7 +135,6 @@ export function ReactTable<T>({
                         {isSortable && renderSortIcon(columnId)}
                       </Box>
 
-                      {/* 🔥 linha custom */}
                       {!isFirst && !isLast && (
                         <Box className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-px bg-gray-200" />
                       )}

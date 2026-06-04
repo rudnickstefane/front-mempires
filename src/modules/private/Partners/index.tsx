@@ -1,10 +1,59 @@
+import { Box } from "@mui/material";
+import { Card, StatCard } from "@sr/common/components/Card";
 import { ModuleHeader, ModuleViewport } from "@sr/common/components/Layout";
 import { Animated } from "@sr/common/ui/motion";
+import { Buildings, Buildings2, StatusUp } from "iconsax-react";
+import { TablePartner } from "./components/Table";
 import { usePartnerHook } from "./hooks";
-import { PartnersPage } from "./pages";
 
 export default function Partners() {
-  const { openDrawer, closeDrawer } = usePartnerHook();
+  const {
+    openDrawer,
+    closeDrawer,
+    isPending,
+    partnersQuery,
+    columns,
+    rows,
+    metrics,
+    pagination,
+    setPage,
+    setLimit,
+    handleFilterChange,
+    sort,
+    setSort,
+  } = usePartnerHook();
+
+  const isPositive = (metrics?.growthPercentage ?? 0) >= 0;
+
+  const statsConfig = [
+    {
+      title: "Total de parceiros",
+      value: metrics?.totalGeneral?.toLocaleString("pt-BR") || 0,
+      icon: <Buildings variant="Bulk" size={24} />,
+    },
+    {
+      title: "Novos parceiros",
+      value: metrics?.totalCurrentMonth?.toLocaleString("pt-BR") || 0,
+      icon: <Buildings2 variant="Bulk" size={24} />,
+      change: `${isPositive ? "+" : ""}${metrics?.growthPercentage}% vs. mês anterior`,
+      trend: isPositive ? ("up" as const) : ("down" as const),
+    },
+    {
+      title: "Ativos",
+      value: metrics?.totalActive || 0,
+      icon: <StatusUp variant="Bulk" size={24} />,
+      colorClass: "text-success",
+      bgClass: "bg-success/10",
+    },
+    {
+      title: "Inativos",
+      value: metrics?.totalInactive || 0,
+      icon: <StatusUp variant="Bulk" size={24} />,
+      colorClass: "text-slate-500",
+      bgClass: "bg-slate-100",
+      iconClass: "rotate-180 scale-x-[-1]",
+    },
+  ];
 
   return (
     <ModuleViewport
@@ -18,7 +67,35 @@ export default function Partners() {
       onCloseDrawer={closeDrawer}
     >
       <Animated variant="container" className="grid grid-cols-1 gap-5">
-        <PartnersPage />
+        <Box className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {statsConfig.map((stat, index) => (
+            <Card key={index} loading={isPending} skeletonCount={3}>
+              <StatCard {...stat} />
+            </Card>
+          ))}
+        </Box>
+
+        <TablePartner
+          queryResult={partnersQuery}
+          data={rows}
+          columns={columns}
+          setPage={setPage}
+          setLimitPagination={setLimit}
+          pagination={pagination}
+          sort={sort}
+          onSortChange={(s) => {
+            setSort(s);
+          }}
+          isDataWithEdges={true}
+          filters={[
+            {
+              type: "search",
+              name: "search",
+              placeholder: "Buscar por nome ou CNPJ",
+            },
+          ]}
+          onFilterChange={handleFilterChange}
+        />
       </Animated>
     </ModuleViewport>
   );

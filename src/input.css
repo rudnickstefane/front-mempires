@@ -17,6 +17,8 @@
   --font-secondary: "Open Sans", Arial, Helvetica, sans-serif;
   --font-nsr: "Noto Serif", Arial, Helvetica, sans-serif;
 
+  --font-posterama: "Posterama Semibold", Arial, Helvetica, sans-serif;
+
   --bg-theme: url("@sr/assets/images/bgHeader.png");
   --logo: url("@sr/modules/assets/images/logo.png");
   --min-logo: url("@sr/modules/assets/images/min-logo.png");
@@ -726,6 +728,13 @@ body {
   font-weight: 800;
   font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: "Posterama Semibold";
+  src: url("/src/assets/fonts/Posterama-Semibold.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @layer base {

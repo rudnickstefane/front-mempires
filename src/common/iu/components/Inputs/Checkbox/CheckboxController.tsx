@@ -9,6 +9,7 @@ export function CheckboxController({
   error,
   errorMessage,
   checked,
+  disabled,
   onValueChange,
   ...props
 }: CheckboxControllerProps) {
@@ -24,8 +25,10 @@ export function CheckboxController({
     return (
       <Box className="flex flex-col gap-1 w-full">
         <Box
-          onClick={() => onValueChange?.(!isChecked)}
-          className={`flex items-start gap-3 p-4 rounded-2xl border transition-all cursor-pointer ${
+          onClick={() => !disabled && onValueChange?.(!isChecked)}
+          className={`flex items-start gap-3 p-4 rounded-lg border transition-all ${
+            disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+          } ${
             isChecked
               ? "bg-primary/5 border-primary/20"
               : "bg-neutral-50 border-neutral-200"
@@ -34,7 +37,7 @@ export function CheckboxController({
           {CustomIcon}
           <Box className="flex-1">
             {typeof label === "string" ? (
-              <Typography className="!text-xs !text-neutral-600 !leading-relaxed !font-manrope">
+              <Typography className="text-xs text-neutral-600 leading-relaxed font-manrope">
                 {label}
               </Typography>
             ) : (
@@ -43,7 +46,7 @@ export function CheckboxController({
           </Box>
         </Box>
         {errorMessage && (
-          <FormHelperText error className="ml-2 !font-manrope">
+          <FormHelperText error className="ml-2 font-manrope">
             {errorMessage}
           </FormHelperText>
         )}
@@ -59,6 +62,7 @@ export function CheckboxController({
           <Checkbox
             {...props}
             checked={isChecked}
+            disabled={disabled}
             onChange={(e) => onValueChange?.(e.target.checked)}
             icon={
               <Box className="mx-0.5 w-5 h-5 rounded-md border-solid border bg-white border-neutral-300" />

@@ -1,26 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { dialogConfirmConfig } from "@sr/common/configs";
-import { isAbortError } from "@sr/common/constants";
-import {
-  useConfirmDialog,
-  useDrawerStore,
-  usePaginationHook,
-} from "@sr/common/hooks";
-import { notify } from "@sr/common/iu/components/notifications";
 import { GetErrorMessage } from "@sr/modules/common/utils";
+import { columnsClients } from "@sr/modules/private/Clients/constants";
+import { PartnerDrawerContent } from "@sr/modules/private/Partners/drawers";
+import {
+  useFindPartnerMetrics,
+  useUpsertPartner,
+} from "@sr/modules/private/Partners/hooks";
+import { DrawerFormPartnerProps } from "@sr/modules/private/Partners/types";
+import { useNavigationStore } from "@sr/store";
 import { useCallback, useMemo, useState } from "react";
 import * as Hook from ".";
-import { columnsPartners } from "../constants/columnsPartners.const";
-import { PartnerDrawerContent } from "../drawers";
-import { DrawerFormPartnerProps } from "../types";
+import { dialogConfirmConfig } from "../configs";
+import { isAbortError } from "../constants";
+import { notify } from "../iu/components/notifications";
+import { useConfirmDialog } from "./useConfirmDialog.hook";
+import { useDrawerStore } from "./useDrawerStore.hook";
+import { usePaginationHook } from "./usePagination.hook";
 
-export const usePartnerPageHook = () => {
+export const useClientHook = (manual = false) => {
+  const { params } = useNavigationStore();
   const confirm = useConfirmDialog();
 
-  const [filters, setFilters] = useState({
-    search: "",
-  });
-
+  const [filters, setFilters] = useState({ search: "" });
   const [sort, setSort] = useState<{
     field?: string;
     direction?: "asc" | "desc";
@@ -30,37 +31,41 @@ export const usePartnerPageHook = () => {
   const skip = (page - 1) * limit;
 
   const open = useDrawerStore((s) => s.openDrawer);
-  const { mutateAsync: upsertPartner } = Hook.useUpsertPartner();
+  const { mutateAsync: upsertPartner } = useUpsertPartner();
 
-  const metricsQuery = Hook.useFindPartnerMetrics();
-  const partnersQuery = Hook.useFindPartners({
-    take: limit,
-    skip: skip,
-    filter: {
-      search: filters.search || undefined,
+  const metricsQuery = useFindPartnerMetrics();
+  const clientsQuery = Hook.useFindClients(
+    {
+      partnerCode: params?.partnerCode,
+      take: limit,
+      skip: skip,
+      filter: {
+        search: filters.search || undefined,
+      },
+      orderBy: sort.field
+        ? {
+            field: sort.field,
+            direction: sort.direction,
+          }
+        : undefined,
     },
-    orderBy: sort.field
-      ? {
-          field: sort.field,
-          direction: sort.direction,
-        }
-      : undefined,
-  });
+    manual ? !!filters.search && filters.search.length > 0 : true,
+  );
 
-  const { data: partnersData, isPending } = partnersQuery;
+  const { data: clientsData, isPending } = clientsQuery;
 
   const rows = useMemo(() => {
     return (
-      partnersData?.edges?.map(({ node }) => ({
+      clientsData?.edges?.map(({ node }) => ({
         ...node,
         partnerCode: node.partnerCode,
         fantasyName: node.company?.fantasyName || "N/A",
-        cnpj: node.company?.code || "",
-        storesCount: node.storeCount || 0,
+        name: node.name || "N/A",
+        code: node.company?.code || "",
         isActive: node.details?.status === "ACTIVE",
       })) || []
     );
-  }, [partnersData]);
+  }, [clientsData]);
 
   const openDrawer = useCallback(
     (data?: DrawerFormPartnerProps) => {
@@ -148,13 +153,13 @@ export const usePartnerPageHook = () => {
               signal,
             });
 
-            notify.success("Parceiro excluído com sucesso.");
+            notify.success("Convênio excluído com sucesso.");
           } catch (error: any) {
             if (isAbortError(error)) return;
 
             const msg = GetErrorMessage(
               error,
-              "Algo deu errado ao excluir parceiro. Tente novamente!",
+              "Algo deu errado ao excluir convênio. Tente novamente!",
             );
 
             notify.error(msg);
@@ -166,37 +171,27 @@ export const usePartnerPageHook = () => {
   );
 
   const columns = useMemo(() => {
-    return columnsPartners(handleToggle, openDrawer, handleDelete);
+    return columnsClients(handleToggle, openDrawer, handleDelete);
   }, [handleToggle, openDrawer, handleDelete]);
 
   const handleFilterChange = useCallback(
-    (newFilters: { search?: string; isActive?: boolean }) => {
-      const nextFilters = {
-        search: newFilters.search ?? "",
-        isActive: newFilters.isActive ?? false,
-      };
-
-      setFilters((prev) => {
-        if (prev.search === nextFilters.search) {
-          return prev;
-        }
-        setPage(1);
-        return nextFilters;
-      });
+    (newFilters: any) => {
+      setFilters(newFilters);
+      setPage(1);
     },
     [setPage],
   );
 
   return {
     isPending,
-    partnersQuery,
+    clientsQuery,
     columns,
     rows,
     metrics: metricsQuery.data,
     pagination: {
       page,
       limit,
-      total: partnersData?.totalCount || 0,
+      total: clientsData?.totalCount || 0,
     },
     setPage,
     setLimit,

@@ -10,7 +10,7 @@ export function Show(props: ShowProps) {
     <Collapse in={!props.hidden} unmountOnExit timeout={300} className="w-full">
       <Fade in={!props.hidden} timeout={400}>
         <Box
-          className={`${props.variant === "effect" ? "" : "flex flex-col gap-6"}`}
+          className={`${props.variant === "effect" ? props.className : "flex flex-col gap-6"}`}
         >
           {props.children}
         </Box>

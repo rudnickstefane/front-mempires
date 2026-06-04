@@ -29,7 +29,7 @@ export const usePartnerDetailsPageHook = () => {
   const open = useDrawerStore((s) => s.openDrawer);
   const { params, push } = useNavigationStore();
 
-  const { handleToggle } = Hook.usePartnerPageHook();
+  const { handleToggle } = Hook.usePartnerHook();
   const { data: partnerData, isPending } = Hook.useFindPartner(
     params?.partnerCode,
   );
@@ -102,14 +102,14 @@ export const usePartnerDetailsPageHook = () => {
   const statsConfig = [
     {
       title: "Bandeiras",
-      value: 1,
+      value: partnerData?.brandsCount || 0,
       icon: Building,
       colorClass: "text-slate-500",
       bgClass: "bg-slate-100",
     },
     {
       title: "Lojas",
-      value: partnerData?.storeCount || 0,
+      value: partnerData?.establishmentsCount || 0,
       icon: Shop,
       colorClass: "text-slate-500",
       bgClass: "bg-slate-100",
@@ -196,8 +196,10 @@ export const usePartnerDetailsPageHook = () => {
     statsConfig,
     quickActions,
     navigateToModule: (mod: string) =>
-      push(mod as RendererModulesType, {
-        partnerCode: partnerData?.partnerCode,
-      }),
+      push(
+        mod as RendererModulesType,
+        { partnerCode: partnerData?.partnerCode },
+        partnerData?.company.fantasyName,
+      ),
   };
 };

@@ -207,6 +207,7 @@ export default {
         ubuntu: ["Ubuntu", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
         manrope: ["Manrope", "sans-serif"],
+        posterama: ["Posterama Semibold", "sans-serif"],
       },
       width: {
         ...width,

@@ -1,1 +1,1 @@
-export type BrandAndEstablishmentViewType = "BRANDS" | "STORES";
+export type BrandAndEstablishmentViewType = "BRANDS" | "ESTABLISHMENTS";

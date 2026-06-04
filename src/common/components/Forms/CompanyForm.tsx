@@ -9,7 +9,7 @@ import { formatText, formatZipCode } from "@sr/utils";
 import { Edit, Location } from "iconsax-react";
 import { ChangeEvent } from "react";
 import { Show } from "../Show";
-import { CompanySpecificFields } from "./CompanySpecificForm";
+import { CompanySpecificForm } from "./CompanySpecificForm";
 
 type CompanyFormType =
   | "partner"
@@ -99,7 +99,7 @@ export function CompanyForm({ type }: CompanyFormProps) {
           </Button>
         </Box>
 
-        <CompanySpecificFields type={type} setFieldValue={setFieldValue} />
+        <CompanySpecificForm type={type} setFieldValue={setFieldValue} />
       </Show>
     </Box>
   );

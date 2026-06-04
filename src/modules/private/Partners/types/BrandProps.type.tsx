@@ -11,7 +11,8 @@ export type BrandProps = {
   partnerCode?: string;
   name?: string;
   brandClientPolicy?: BrandClientPolicyEnum;
-  storeCount?: number;
+  establishmentsCount?: number;
+  clients?: [];
   company: CompanyProps;
   address: AddressProps;
   details: DetailsProps;

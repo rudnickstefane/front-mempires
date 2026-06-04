@@ -27,7 +27,7 @@ export const QueryFindBrands = gql`
           partnerCode
           name
           brandClientPolicy
-          storeCount
+          establishmentsCount
           # Dados da Empresa
           company {
             id

@@ -21,17 +21,18 @@ export function BrandAndEstablishmentPage() {
 
   const brand = useBrandTabHook({
     partnerCode: params.partnerCode,
-    ...pageBase,
+    isEnabled: pageBase.currentView === "BRANDS",
   });
 
   const establishment = useEstablishmentTabHook({
+    brandCode: params.brandCode,
     partnerCode: params.partnerCode,
-    ...pageBase,
+    isEnabled: pageBase.currentView === "ESTABLISHMENTS",
   });
 
   const tabOptions: TabOption<BrandAndEstablishmentViewType>[] = [
     { id: "BRANDS", label: "Bandeiras" },
-    { id: "STORES", label: "Lojas" },
+    { id: "ESTABLISHMENTS", label: "Lojas" },
   ];
 
   const headerConfig = {
@@ -39,7 +40,7 @@ export function BrandAndEstablishmentPage() {
       label: "Adicionar Bandeira",
       title: "brandAndEstablishment.title",
     },
-    STORES: {
+    ESTABLISHMENTS: {
       label: "Adicionar Loja",
       title: "brandAndEstablishment.title",
     },
@@ -75,15 +76,15 @@ export function BrandAndEstablishmentPage() {
               queryResult={brand.brandsQuery}
               data={brand.rows}
               columns={brand.columns}
-              setPage={pageBase.setPage}
-              setLimitPagination={pageBase.setLimit}
+              setPage={brand.setPage}
+              setLimitPagination={brand.setLimit}
               pagination={{
-                ...pageBase.pagination,
+                ...brand.pagination,
                 total: brand.brandsQuery.data?.totalCount || 0,
               }}
-              sort={pageBase.sort}
+              sort={brand.sort}
               onSortChange={(s) => {
-                pageBase.setSort(s);
+                brand.setSort(s);
               }}
               isDataWithEdges={true}
               filters={[
@@ -93,24 +94,28 @@ export function BrandAndEstablishmentPage() {
                   placeholder: "Buscar bandeira ou CNPJ",
                 },
               ]}
-              onFilterChange={pageBase.handleFilterChange}
+              onFilterChange={brand.handleFilterChange}
+              currentFilters={brand.filters}
             />
           </Show>
 
-          <Show hidden={pageBase.currentView !== "STORES"} variant="effect">
+          <Show
+            hidden={pageBase.currentView !== "ESTABLISHMENTS"}
+            variant="effect"
+          >
             <TableEstablishment
               queryResult={establishment.establishmentsQuery}
               data={establishment.rows}
               columns={establishment.columns}
-              setPage={pageBase.setPage}
-              setLimitPagination={pageBase.setLimit}
+              setPage={establishment.setPage}
+              setLimitPagination={establishment.setLimit}
               pagination={{
-                ...pageBase.pagination,
+                ...establishment.pagination,
                 total: establishment.establishmentsQuery.data?.totalCount || 0,
               }}
-              sort={pageBase.sort}
+              sort={establishment.sort}
               onSortChange={(s) => {
-                pageBase.setSort(s);
+                establishment.setSort(s);
               }}
               isDataWithEdges={true}
               filters={[
@@ -120,7 +125,8 @@ export function BrandAndEstablishmentPage() {
                   placeholder: "Buscar por nome ou CNPJ",
                 },
               ]}
-              onFilterChange={pageBase.handleFilterChange}
+              onFilterChange={establishment.handleFilterChange}
+              currentFilters={establishment.filters}
             />
           </Show>
         </Card>

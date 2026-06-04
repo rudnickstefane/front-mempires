@@ -1,6 +1,8 @@
 export type { AddressDataProps, AddressProps } from "./AddressProps.type";
 export type { AlertVariant } from "./AlertVariant.type.tsx";
 export type { CheckboxControllerProps } from "./CheckboxControllerProps.type";
+export type { ClientEdgeProps } from "./ClientEdgeProps.type.tsx";
+export type { ClientProps } from "./ClientProps.type.tsx";
 export type { CompanyProps } from "./CompanyProps.type";
 export type { ConfirmDialogProps } from "./ConfirmDialogProps.type.tsx";
 export type { ContactItemProps } from "./ContactItemProps.type.tsx";
@@ -20,6 +22,8 @@ export type {
 export type { DrawerContainerProps } from "./DrawerContainerProps.type";
 export type { DrawerHeaderProps } from "./DrawerHeaderProps.type";
 export type { DrawerStepsProps } from "./DrawerStepsProps.type";
+export type { FindClientsResponse } from "./FindClientsResponse.type.tsx";
+export type { FindBrandsVariables } from "./FindClientsVariables.type.tsx";
 export type { ModalHeaderProps } from "./ModalHeaderProps.type";
 export type { MultiStepFormProps } from "./MultiStepFormProps.type";
 export type { PageInfoProps } from "./PageInfoProps.type.tsx";

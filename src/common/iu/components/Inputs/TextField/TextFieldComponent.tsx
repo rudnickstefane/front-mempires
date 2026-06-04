@@ -173,7 +173,7 @@ export function TextFieldComponent({
                       e.stopPropagation();
                     }}
                     onClick={handleHookAction}
-                    className="!font-manrope !text-base !font-semibold !normal-case !text-primary !rounded-md"
+                    className="font-manrope !text-base font-semibold normal-case text-primary rounded-md"
                     sx={{
                       "&.Mui-disabled": {
                         backgroundColor: "transparent !important",

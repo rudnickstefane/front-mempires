@@ -9,14 +9,14 @@ import {
 import { useNavigationStore } from "@sr/store";
 import { DocumentText1, Edit, More, Trash } from "iconsax-react";
 import { useState } from "react";
-import { PartnerProps } from "../types";
+import { BrandProps } from "../types";
 
 export const BrandsActions = ({
-  partner,
+  brand,
   onEdit,
   onDelete,
 }: {
-  partner: PartnerProps;
+  brand: BrandProps;
   onEdit: () => void;
   onDelete: (code: string, name: string) => void;
 }) => {
@@ -34,14 +34,18 @@ export const BrandsActions = ({
 
   const handleNavigate = (module: any, params = {}) => {
     handleClose();
-    push(module, { partnerCode: partner.partnerCode, ...params });
+    push(module, {
+      brandCode: brand.brandCode,
+      partnerCode: brand.partnerCode,
+      ...params,
+    });
   };
 
   const menuItems = [
     {
       label: "Mais detalhes",
       icon: <DocumentText1 size={20} variant="Linear" />,
-      action: () => handleNavigate("PartnerDetails"),
+      action: () => handleNavigate("BrandDetails"),
     },
     {
       label: "Alterar",
@@ -57,7 +61,7 @@ export const BrandsActions = ({
       icon: <Trash size={20} variant="Linear" />,
       action: () => {
         handleClose();
-        onDelete(partner.partnerCode || "", partner.company.fantasyName);
+        onDelete(brand.brandCode || "", brand.company.fantasyName);
       },
       color: "text-red-600",
     },

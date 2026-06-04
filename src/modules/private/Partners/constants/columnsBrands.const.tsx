@@ -16,7 +16,7 @@ export const columnsBrands = (
     name: string,
     isActive: boolean,
   ) => void,
-  openDrawer: (partner: any) => void,
+  openDrawer: (brand: any) => void,
   onDelete: (code: string, name: string) => void,
 ) => [
   columnHelper.accessor("details.status", {
@@ -67,7 +67,7 @@ export const columnsBrands = (
       </Typography>
     ),
   }),
-  columnHelper.accessor("storeCount", {
+  columnHelper.accessor("establishmentsCount", {
     header: () => <Typography className="text-sm font-bold">Lojas</Typography>,
     cell: (info) => (
       <Typography className="text-sm">{info.getValue()}</Typography>
@@ -77,11 +77,11 @@ export const columnsBrands = (
     id: "actions",
     cell: (info) => (
       <BrandsActions
-        partner={info.row.original}
+        brand={info.row.original}
         onEdit={() => openDrawer(info.row.original)}
         onDelete={() =>
           onDelete(
-            info.row.original.partnerCode || "",
+            info.row.original.brandCode || "",
             info.row.original.company.fantasyName,
           )
         }

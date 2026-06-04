@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { listEntity, listSegment } from "@sr/common/constants";
+import {
+  listClientPolicy,
+  listEntity,
+  listSegment,
+} from "@sr/common/constants";
 import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
+import { useBrandTabHook } from "@sr/modules/private/Partners/hooks";
+import { useNavigationStore } from "@sr/store";
 import { formatText } from "@sr/utils";
 
 interface SpecificFieldsProps {
@@ -8,23 +14,54 @@ interface SpecificFieldsProps {
   setFieldValue: (field: string, value: any) => void;
 }
 
-export function CompanySpecificFields({
+export function CompanySpecificForm({
   type,
   setFieldValue,
 }: SpecificFieldsProps) {
+  const { params } = useNavigationStore();
+
   const isPartner = type === "partner";
-  const isBrand = type === "brand" || type === "establishment";
+  const isBrand = type === "brand";
+  const isEstablishment = type === "establishment";
   const isClientOrAffiliate = type === "client" || type === "affiliate";
+
+  const { brandOptions } = useBrandTabHook({
+    partnerCode: params.partnerCode,
+  });
 
   if (isBrand) {
     return (
-      <TextField
-        name="name"
-        label="company.name"
-        fullWidth
-        information="Personalize o nome da bandeira como desejar! Se não preencher, não se preocupe: utilizaremos o nome fantasia."
-        onChange={(e) => setFieldValue("name", formatText(e.target.value))}
-      />
+      <>
+        <TextField
+          name="name"
+          label="company.name"
+          fullWidth
+          information="Personalize o nome da bandeira como desejar! Se não preencher, não se preocupe: utilizaremos o nome fantasia."
+          onChange={(e) => setFieldValue("name", formatText(e.target.value))}
+        />
+
+        <TextField
+          required
+          name="brandClientPolicy"
+          label="brand.clientPolicy"
+          fullWidth
+          options={listClientPolicy.brand}
+        />
+      </>
+    );
+  }
+
+  if (isEstablishment) {
+    return (
+      <>
+        <TextField
+          required
+          name="brandCode"
+          label="brand.select"
+          fullWidth
+          options={brandOptions}
+        />
+      </>
     );
   }
 

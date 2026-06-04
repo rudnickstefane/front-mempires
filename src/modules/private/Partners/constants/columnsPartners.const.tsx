@@ -49,7 +49,7 @@ export const columnsPartners = (
       </Typography>
     ),
   }),
-  columnHelper.accessor("storeCount", {
+  columnHelper.accessor("establishmentsCount", {
     header: () => <Typography className="text-sm font-bold">Lojas</Typography>,
     cell: (info) => (
       <Typography className="text-sm">{info.getValue()}</Typography>

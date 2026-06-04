@@ -1,8 +1,6 @@
 import { Box, Link } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
-import { BookSaved, Health, Heart, Timer1 } from "iconsax-react"; // Importando ícones que remetem aos seus temas
 import * as motion from "motion/react-client";
-import { useEffect, useState } from "react";
 
 interface LogoProps {
   className?: string;
@@ -17,26 +15,6 @@ export function Logo({
   isCollapsed = false,
   animated = true,
 }: LogoProps) {
-  const [index, setIndex] = useState(0);
-
-  // Lista de itens que vão rotacionar dentro do quadrado
-  const items = [
-    { type: "text", content: "B" },
-    { type: "icon", content: <Heart variant="Bold" size={28} /> },
-    { type: "icon", content: <Health variant="Bold" size={28} /> },
-    { type: "icon", content: <BookSaved variant="Bold" size={28} /> },
-    { type: "icon", content: <Timer1 variant="Bold" size={28} /> },
-  ];
-
-  useEffect(() => {
-    if (animated) {
-      const timer = setInterval(() => {
-        setIndex((prev) => (prev + 1) % items.length);
-      }, 3000); // Troca a cada 3 segundos
-      return () => clearInterval(timer);
-    }
-  }, [animated, items.length]);
-
   const LogoContent = (
     <Link
       href={isApp ? "/portal" : "/"}
@@ -51,28 +29,25 @@ export function Logo({
           >
             <AnimatePresence mode="wait">
               <motion.div
-                key={index}
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -20, opacity: 0 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="flex items-center justify-center w-full h-full"
               >
-                {items[index].type === "text" ? (
-                  <span className="pt-2 text-3xl">{items[index].content}</span>
-                ) : (
-                  <Box className="flex items-center justify-center">
-                    {items[index].content}
-                  </Box>
-                )}
+                <span className="pt-2 text-3xl">B</span>
               </motion.div>
             </AnimatePresence>
           </Box>
         )}
 
         {!isCollapsed && (
-          <Box className={`font-galada mt-[0.4rem] ${className}`}>
-            BenefyCare
+          <Box className={`font-posterama !text-2xl mt-[0.4rem] ${className}`}>
+            Benefy
+            <Box className="relative inline-block">
+              Care
+              <Box className="absolute left-[26.2px] -translate-x-1/2 top-[22px] bg-primary w-[7px] h-[3px] rounded-xl rounded-b-md" />
+            </Box>
           </Box>
         )}
       </Box>

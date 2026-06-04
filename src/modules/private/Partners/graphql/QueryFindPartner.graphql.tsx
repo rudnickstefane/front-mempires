@@ -8,7 +8,8 @@ export const QueryFindPartner = gql`
       entity
       fee
       rewardsRate
-      storeCount
+      brandsCount
+      establishmentsCount
       # Dados da Empresa
       company {
         id

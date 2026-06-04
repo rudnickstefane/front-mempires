@@ -43,4 +43,6 @@ export type ReactTableProps<T, TQuery = any> = {
   // Ordenação da tabela
   sort?: SortState;
   onSortChange?: (sort: SortState) => void;
+
+  sortOptions?: { label: string | number; value: string }[];
 };

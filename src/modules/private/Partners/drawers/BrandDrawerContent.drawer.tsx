@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DrawerButtons } from "@sr/common/components/Drawer/DrawerButtons";
-import { CompanyForm, ContactsForm } from "@sr/common/components/Forms";
+import {
+  ClientsForm,
+  CompanyForm,
+  ContactsForm,
+} from "@sr/common/components/Forms";
 import { Show } from "@sr/common/components/Show";
 import { isAbortError } from "@sr/common/constants";
 import { BrandClientPolicyEnum } from "@sr/common/enums";
@@ -10,7 +14,7 @@ import { notify } from "@sr/common/iu/components/notifications";
 import { GetErrorMessage } from "@sr/modules/common/utils";
 import { useNavigationStore } from "@sr/store";
 import { useFormik } from "formik";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { initialBrandValues, stepBrandFields } from "../constants";
 import * as Hook from "../hooks";
 import { DrawerFormBrandProps } from "../types";
@@ -22,20 +26,8 @@ export function BrandDrawerContent({
   initialData?: DrawerFormBrandProps;
 }) {
   const { params } = useNavigationStore();
-  const { activeStep, setActiveStep, closeDrawer } = useDrawerStore();
+  const { activeStep, setActiveStep, closeDrawer, setSteps } = useDrawerStore();
   const { mutateAsync: upsertBrand } = Hook.useUpsertBrand();
-
-  const stepsConfig = useMemo(
-    () => [
-      {
-        key: "company",
-        title: "Dados da bandeira",
-        Component: () => <CompanyForm type="brand" />,
-      },
-      { key: "contacts", title: "Contato", Component: ContactsForm },
-    ],
-    [],
-  );
 
   const handlerOnSubmit = async (values: DrawerFormBrandProps) => {
     const isCreate = !values.brandCode;
@@ -47,9 +39,10 @@ export function BrandDrawerContent({
         brandCode: values.brandCode ?? "",
         partnerCode: params?.partnerCode ?? "",
         name: values.name,
-        brandClientPolicy: values?.brandClientPolicy
-          ? BrandClientPolicyEnum[values.brandClientPolicy]
-          : BrandClientPolicyEnum.ALL,
+        brandClientPolicy: values.brandClientPolicy,
+        clients: values.clients?.map((c: any) => ({
+          clientCode: c.clientCode,
+        })),
         company: { ...values.company },
         address: { ...values.address },
         details: {
@@ -89,6 +82,43 @@ export function BrandDrawerContent({
     onSubmit: handlerOnSubmit,
   });
 
+  const isExclusive =
+    formData.values.brandClientPolicy === BrandClientPolicyEnum.EXCLUSIVE;
+
+  useEffect(() => {
+    const names = isExclusive
+      ? ["Dados da bandeira", "Convênios", "Contato"]
+      : ["Dados da bandeira", "Contato"];
+
+    setSteps(names);
+  }, [isExclusive, setSteps]);
+
+  const stepsConfig = useMemo(() => {
+    const allSteps = [
+      {
+        key: "company",
+        title: "Dados da bandeira",
+        Component: () => <CompanyForm type="brand" />,
+      },
+      {
+        key: "clients",
+        title: "Convênios",
+        Component: ClientsForm,
+      },
+      {
+        key: "contacts",
+        title: "Contato",
+        Component: ContactsForm,
+      },
+    ];
+
+    if (!isExclusive) {
+      return allSteps.filter((step) => step.key !== "clients");
+    }
+
+    return allSteps;
+  }, [isExclusive]);
+
   const isEditingContactPending = useMemo(() => {
     return (
       activeStep === 1 &&
@@ -98,10 +128,20 @@ export function BrandDrawerContent({
     );
   }, [activeStep, formData.values]);
 
+  const stepFieldsDynamic = useMemo(() => {
+    const mapping: Record<number, string[]> = {};
+    stepsConfig.forEach((step, index) => {
+      if (step.key === "company") mapping[index] = stepBrandFields[0];
+      if (step.key === "clients") mapping[index] = ["clients"];
+      if (step.key === "contacts") mapping[index] = ["contacts"];
+    });
+    return mapping;
+  }, [stepsConfig]);
+
   const multiStep = useMultiStepForm({
     totalSteps: stepsConfig.length,
     formData,
-    stepFields: stepBrandFields,
+    stepFields: stepFieldsDynamic,
     stepsConfig,
     activeStep,
     setActiveStep,

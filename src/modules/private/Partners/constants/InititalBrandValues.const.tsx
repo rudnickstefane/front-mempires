@@ -8,9 +8,10 @@ export const initialBrandValues = (data?: BrandProps): DrawerFormBrandProps => {
     brandCode: data?.brandCode || "",
     partnerCode: data?.partnerCode || "",
     name: data?.name || "",
-    clientPolicy: data?.brandClientPolicy
+    brandClientPolicy: data?.brandClientPolicy
       ? BrandClientPolicyEnum[data.brandClientPolicy]
       : BrandClientPolicyEnum.ALL,
+    clients: data?.clients || [],
     company: {
       id: data?.company?.id ? Number(data.company.id) : -1,
       code: data?.company?.code || "",

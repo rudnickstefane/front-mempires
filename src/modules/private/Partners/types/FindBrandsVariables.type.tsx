@@ -1,4 +1,4 @@
-export type FindBrandsVariables = {
+export type FindClientsVariables = {
   partnerCode: string;
   take: number;
   skip: number;

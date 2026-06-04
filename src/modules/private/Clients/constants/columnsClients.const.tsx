@@ -1,22 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Switch } from "@sr/common/components/Switch";
+import { entityBadges, segmentBadges } from "@sr/common/constants";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { FormatCode } from "@sr/modules/common/utils/FormatCodeAndIdentity.util";
 import { formatText } from "@sr/utils";
 import { createColumnHelper } from "@tanstack/react-table";
-import { BrandProps } from "../types";
-import { BrandsActions } from "./actionsTableBrands.const";
+import { PartnerActions } from "../../Partners/constants/actionsTablePartners.const";
+import { PartnerProps } from "../../Partners/types";
 
-const columnHelper = createColumnHelper<BrandProps>();
+const columnHelper = createColumnHelper<PartnerProps>();
 
-export const columnsStores = (
-  onToggleStatus: (
-    brandCode: string,
-    partnerCode: string,
-    name: string,
-    isActive: boolean,
-  ) => void,
-  onEdit: (partner: any) => void,
+export const columnsClients = (
+  onToggleStatus: (code: string, name: string, isActive: boolean) => void,
+  openDrawer: (partner: any) => void,
   onDelete: (code: string, name: string) => void,
 ) => [
   columnHelper.accessor("details.status", {
@@ -24,25 +20,14 @@ export const columnsStores = (
     cell: (info) => {
       const status = info.getValue();
       const isActive = status === "ACTIVE";
-      const { brandCode, partnerCode, name, company } = info.row.original;
+      const { partnerCode, company } = info.row.original;
 
       return (
         <Switch
           isTable
           checked={isActive}
           onChange={() => {
-            onToggleStatus(
-              brandCode || "",
-              partnerCode || "",
-              name ? name : company.fantasyName,
-              isActive,
-            );
-            onToggleStatus(
-              brandCode || "",
-              partnerCode || "",
-              name ? name : company.fantasyName,
-              isActive,
-            );
+            onToggleStatus(partnerCode || "", company.fantasyName, isActive);
           }}
         />
       );
@@ -56,14 +41,6 @@ export const columnsStores = (
       <Typography className="text-sm">{formatText(info.getValue())}</Typography>
     ),
   }),
-  columnHelper.accessor("storeCount", {
-    header: () => (
-      <Typography className="text-sm font-bold">Bandeira</Typography>
-    ),
-    cell: (info) => (
-      <Typography className="text-sm">{info.getValue()}</Typography>
-    ),
-  }),
   columnHelper.accessor("company.code", {
     header: () => <Typography className="text-sm font-bold">CNPJ</Typography>,
     cell: (info) => (
@@ -72,20 +49,52 @@ export const columnsStores = (
       </Typography>
     ),
   }),
-  columnHelper.accessor("storeCount", {
-    header: () => (
-      <Typography className="text-sm font-bold">Endereço</Typography>
-    ),
+  columnHelper.accessor("establishmentsCount", {
+    header: () => <Typography className="text-sm font-bold">Lojas</Typography>,
     cell: (info) => (
       <Typography className="text-sm">{info.getValue()}</Typography>
     ),
   }),
+  columnHelper.accessor("segment", {
+    header: () => (
+      <Typography className="text-sm font-bold">Segmento</Typography>
+    ),
+    cell: (info) => {
+      const val = info.getValue() as string;
+      const config = segmentBadges[val] || { label: val };
+
+      return (
+        <Typography
+          className="px-3 py-1 rounded-full bg-gray-100 text-xs inline-block text-center"
+          translateId={config.label}
+        />
+      );
+    },
+  }),
+  columnHelper.accessor("entity", {
+    header: () => (
+      <Typography className="text-sm font-bold">Organização</Typography>
+    ),
+    cell: (info) => {
+      const val = info.getValue() as string;
+      const config = entityBadges[val] || {
+        label: val,
+      };
+
+      return (
+        <Typography
+          className="px-3 py-1 rounded-full bg-gray-100 text-xs inline-block text-center"
+          translateId={config.label}
+        />
+      );
+    },
+  }),
   columnHelper.display({
     id: "actions",
     cell: (info) => (
-      <BrandsActions
+      <PartnerActions
         partner={info.row.original}
-        onEdit={() => onEdit(info.row.original)}
+        onEdit={() => openDrawer(info.row.original)}
         onDelete={() =>
           onDelete(
             info.row.original.partnerCode || "",

@@ -1,4 +1,3 @@
-import { BrandClientPolicyEnum } from "@sr/common/enums";
 import {
   AddressProps,
   CompanyProps,
@@ -9,9 +8,9 @@ import {
 export type EstablishmentProps = {
   brandCode?: string;
   partnerCode?: string;
-  name?: string;
-  brandClientPolicy?: BrandClientPolicyEnum;
-  storeCount?: number;
+  establishmentCode?: string;
+  establishmentsCount?: string;
+  brand?: string;
   company: CompanyProps;
   address: AddressProps;
   details: DetailsProps;

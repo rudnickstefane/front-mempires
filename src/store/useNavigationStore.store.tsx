@@ -5,8 +5,9 @@ import { create } from "zustand";
 interface NavigationState {
   stack: GymManagementType[];
   params: any;
+  labels: Record<string, string>;
   // Ações
-  push: (module: GymManagementType, params?: any) => void;
+  push: (module: GymManagementType, params?: any, label?: string) => void;
   pop: () => void;
   reset: (module: GymManagementType) => void;
   // Getters
@@ -16,13 +17,15 @@ interface NavigationState {
 export const useNavigationStore = create<NavigationState>((set, get) => ({
   stack: ["Home"],
   params: {},
+  labels: {},
 
   getActiveModule: () => get().stack[get().stack.length - 1],
 
-  push: (module, params = {}) =>
+  push: (module, params = {}, label) =>
     set((state) => ({
       stack: [...state.stack, module],
       params: { ...state.params, ...params },
+      labels: label ? { ...state.labels, [module]: label } : state.labels,
     })),
 
   pop: () =>
@@ -34,5 +37,6 @@ export const useNavigationStore = create<NavigationState>((set, get) => ({
     set({
       stack: [module],
       params: {},
+      labels: {},
     }),
 }));

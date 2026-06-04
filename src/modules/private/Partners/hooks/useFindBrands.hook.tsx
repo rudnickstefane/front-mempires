@@ -3,7 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import * as Graphql from "../graphql";
 import { FindBrandsResponse, FindBrandsVariables } from "../types";
 
-export const useFindBrands = (variables: FindBrandsVariables) => {
+export const useFindBrands = (
+  variables: FindBrandsVariables,
+  enabled: boolean = true,
+) => {
   const { request } = useBackend();
 
   return useQuery({
@@ -15,6 +18,7 @@ export const useFindBrands = (variables: FindBrandsVariables) => {
 
       return response.findBrands;
     },
+    enabled,
     placeholderData: (previousData) => previousData,
   });
 };

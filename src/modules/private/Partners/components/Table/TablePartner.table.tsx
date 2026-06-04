@@ -7,10 +7,7 @@ import { useReactTableFilter } from "@sr/common/hooks";
 import { Select } from "@sr/common/iu/components/Select";
 import { ReactTableFilterConfig, ReactTableProps } from "@sr/common/types";
 import { useMemo } from "react";
-
-export type PartnerFilters = {
-  search?: string;
-};
+import { PartnerFilters } from "../../types";
 
 export function TablePartner<T, TQuery = any>({
   filters,
@@ -39,8 +36,8 @@ export function TablePartner<T, TQuery = any>({
     { label: "Nome fantasia (Z a A)", value: "company_fantasyName:desc" },
     { label: "CNPJ (Menor para maior)", value: "company_code:asc" },
     { label: "CNPJ (Maior para menor)", value: "company_code:desc" },
-    { label: "Qtd. de Lojas (Crescente)", value: "storeCount:asc" },
-    { label: "Qtd. de Lojas (Decrescente)", value: "storeCount:desc" },
+    { label: "Qtd. de Lojas (Crescente)", value: "establishmentsCount:asc" },
+    { label: "Qtd. de Lojas (Decrescente)", value: "establishmentsCount:desc" },
     { label: "Segmento (A a Z)", value: "segment:asc" },
     { label: "Segmento (Z a A)", value: "segment:desc" },
     { label: "Organização (A a Z)", value: "entity:asc" },
@@ -70,7 +67,7 @@ export function TablePartner<T, TQuery = any>({
         />
       </Box>
 
-      <ReactTable {...props} />
+      <ReactTable {...props} sortOptions={sortOptions} />
     </Card>
   );
 }

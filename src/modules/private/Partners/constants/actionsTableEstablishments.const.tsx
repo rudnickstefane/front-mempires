@@ -9,14 +9,14 @@ import {
 import { useNavigationStore } from "@sr/store";
 import { DocumentText1, Edit, More, Trash } from "iconsax-react";
 import { useState } from "react";
-import { PartnerProps } from "../types";
+import { EstablishmentProps } from "../types";
 
 export const EstablishmentsActions = ({
-  partner,
+  establishment,
   onEdit,
   onDelete,
 }: {
-  partner: PartnerProps;
+  establishment: EstablishmentProps;
   onEdit: () => void;
   onDelete: (code: string, name: string) => void;
 }) => {
@@ -34,14 +34,17 @@ export const EstablishmentsActions = ({
 
   const handleNavigate = (module: any, params = {}) => {
     handleClose();
-    push(module, { partnerCode: partner.partnerCode, ...params });
+    push(module, {
+      establishmentCode: establishment.establishmentCode,
+      ...params,
+    });
   };
 
   const menuItems = [
     {
       label: "Mais detalhes",
       icon: <DocumentText1 size={20} variant="Linear" />,
-      action: () => handleNavigate("PartnerDetails"),
+      action: () => handleNavigate("EstablishmentDetails"),
     },
     {
       label: "Alterar",
@@ -57,7 +60,10 @@ export const EstablishmentsActions = ({
       icon: <Trash size={20} variant="Linear" />,
       action: () => {
         handleClose();
-        onDelete(partner.partnerCode || "", partner.company.fantasyName);
+        onDelete(
+          establishment.establishmentCode || "",
+          establishment.company.fantasyName,
+        );
       },
       color: "text-red-600",
     },

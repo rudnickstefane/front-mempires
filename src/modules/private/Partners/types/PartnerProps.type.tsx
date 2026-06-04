@@ -12,7 +12,8 @@ export type PartnerProps = {
   entity?: EntityEnum;
   fee?: string | number;
   rewardsRate?: string | number;
-  storeCount?: number;
+  brandsCount?: number;
+  establishmentsCount?: number;
   company: CompanyProps;
   address: AddressProps;
   details: DetailsProps;

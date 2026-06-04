@@ -8,6 +8,7 @@ import {
 
 export const useFindEstablishments = (
   variables: FindEstablishmentsVariables,
+  enabled: boolean = true,
 ) => {
   const { request } = useBackend();
 
@@ -16,10 +17,11 @@ export const useFindEstablishments = (
     queryFn: async () => {
       const response = await request<{
         findEstablishments: FindEstablishmentsResponse;
-      }>(Graphql.QueryFindBrands, variables);
+      }>(Graphql.QueryFindEstablishments, variables);
 
       return response.findEstablishments;
     },
+    enabled,
     placeholderData: (previousData) => previousData,
   });
 };

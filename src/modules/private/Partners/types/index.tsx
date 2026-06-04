@@ -1,9 +1,12 @@
 export type { BrandAndEstablishmentViewType } from "./BrandAndEstablishmentView.type";
 export type { BrandEdgeProps } from "./BrandEdgeProps.type";
+export type { BrandFilters } from "./BrandFilters.type";
 export type { BrandProps } from "./BrandProps.type";
 export type { DrawerFormBrandProps } from "./DrawerFormBrandProps.type";
+export type { DrawerFormEstablishmentProps } from "./DrawerFormEstablishmentProps.type";
 export type { DrawerFormPartnerProps } from "./DrawerFormPartnerProps.type";
 export type { EstablishmentEdgeProps } from "./EstablishmentEdgeProps.type";
+export type { EstablishmentFilters } from "./EstablishmentFilters.type";
 export type { EstablishmentProps } from "./EstablishmentProps.type";
 export type { FindBrandsResponse } from "./FindBrandsResponse.type";
 export type { FindBrandsVariables } from "./FindBrandsVariables.type";
@@ -12,4 +15,5 @@ export type { FindEstablishmentsVariables } from "./FindEstablishmentsVariables.
 export type { FindPartnerResponse } from "./FindPartnerResponse.type";
 export type { FindPartnersResponse } from "./FindPartnersResponse.type";
 export type { PartnerEdgeProps } from "./PartnerEdgeProps.type";
+export type { PartnerFilters } from "./PartnerFilters.type";
 export type { PartnerProps } from "./PartnerProps.type";

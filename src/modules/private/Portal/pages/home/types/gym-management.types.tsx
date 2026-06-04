@@ -29,6 +29,9 @@ export type RendererModulesType =
   | "GroupAccess"
   | "Signature"
   | "PartnerDetails"
-  | "Invoices";
+  | "Invoices"
+  | "BrandAndEstablishment"
+  | "BrandDetails"
+  | "EstablishmentDetails";
 
 export type GymManagementType = RendererModulesType;

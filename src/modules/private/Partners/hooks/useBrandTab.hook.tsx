@@ -1,37 +1,60 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { dialogConfirmConfig } from "@sr/common/configs";
 import { isAbortError } from "@sr/common/constants";
-import { useConfirmDialog, useDrawerStore } from "@sr/common/hooks";
+import {
+  useConfirmDialog,
+  useDrawerStore,
+  usePaginationHook,
+} from "@sr/common/hooks";
 import { notify } from "@sr/common/iu/components/notifications";
 import { GetErrorMessage } from "@sr/modules/common/utils";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import * as Hook from ".";
 import { columnsBrands } from "../constants";
 import { BrandDrawerContent } from "../drawers";
 import { DrawerFormBrandProps } from "../types";
 
 export const useBrandTabHook = (params: any) => {
-  const { partnerCode, limit, page, filters, sort } = params;
+  const { partnerCode, isEnabled } = params;
+
+  const [filters, setFilters] = useState({ search: "" });
+  const [sort, setSort] = useState<{
+    field?: string;
+    direction?: "asc" | "desc";
+  }>({});
+
+  const { page, limit, setPage, setLimit } = usePaginationHook(10);
   const skip = (page - 1) * limit;
 
   const open = useDrawerStore((s) => s.openDrawer);
   const confirm = useConfirmDialog();
   const { mutateAsync: upsertBrand } = Hook.useUpsertBrand();
 
-  const brandsQuery = Hook.useFindBrands({
-    partnerCode,
-    take: limit,
-    skip: skip,
-    filter: {
-      search: filters.search || undefined,
+  const brandsQuery = Hook.useFindBrands(
+    {
+      partnerCode,
+      take: limit,
+      skip: skip,
+      filter: {
+        search: filters.search || undefined,
+      },
+      orderBy: sort.field
+        ? {
+            field: sort.field,
+            direction: sort.direction,
+          }
+        : undefined,
     },
-    orderBy: sort.field
-      ? {
-          field: sort.field,
-          direction: sort.direction,
-        }
-      : undefined,
-  });
+    isEnabled,
+  );
+
+  const handleFilterChange = useCallback(
+    (newFilters: any) => {
+      setFilters(newFilters);
+      setPage(1);
+    },
+    [setPage],
+  );
 
   const { data: brandsData } = brandsQuery;
 
@@ -44,7 +67,7 @@ export const useBrandTabHook = (params: any) => {
         fantasyName: node.company?.fantasyName || "N/A",
         name: node.name || "N/A",
         code: node.company?.code || "",
-        storesCount: node.storeCount || 0,
+        establishmentsCount: node.establishmentsCount || 0,
         isActive: node.details?.status === "ACTIVE",
       })) || []
     );
@@ -52,9 +75,14 @@ export const useBrandTabHook = (params: any) => {
 
   const openDrawer = useCallback(
     (data?: DrawerFormBrandProps) => {
+      const steps =
+        data?.brandClientPolicy === "EXCLUSIVE"
+          ? ["Dados da bandeira", "Convênios", "Contato"]
+          : ["Dados da bandeira", "Contato"];
+
       open({
         title: data ? "Alterar Bandeira" : "Adicionar Bandeira",
-        steps: ["Dados da bandeira", "Contato"],
+        steps,
         component: BrandDrawerContent,
         componentProps: { initialData: data },
       });
@@ -161,9 +189,17 @@ export const useBrandTabHook = (params: any) => {
     return columnsBrands(handleToggle, openDrawer, handleDelete);
   }, [handleToggle, openDrawer, handleDelete]);
 
+  const brandOptions = useMemo(() => {
+    return rows.map((brand) => ({
+      label: brand.fantasyName || brand.name,
+      value: brand.brandCode ?? "",
+    }));
+  }, [rows]);
+
   return {
     openDrawer,
     brandsQuery,
+    brandOptions,
     columns,
     rows,
     pagination: {
@@ -171,7 +207,12 @@ export const useBrandTabHook = (params: any) => {
       limit,
       total: brandsData?.totalCount || 0,
     },
+    setPage,
+    setLimit,
+    filters,
+    handleFilterChange,
     sort,
+    setSort,
     handleToggle,
   };
 };

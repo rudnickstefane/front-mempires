@@ -1,5 +1,4 @@
 export type FindEstablishmentsVariables = {
-  brandCode: string;
   partnerCode: string;
   take: number;
   skip: number;

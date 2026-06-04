@@ -1,11 +1,12 @@
 import { Box, IconButton, Skeleton } from "@mui/material";
+import { Breadcrumbs } from "@sr/common/iu/components/Breadcrumbs/Breadcrumbs";
 import { Button } from "@sr/common/iu/components/Button";
 import { notify } from "@sr/common/iu/components/notifications";
 import { Typography } from "@sr/common/iu/components/Typography";
 import { Animated } from "@sr/common/ui/motion/Animated";
 import { modulesRegistry } from "@sr/modules/private/Portal/config/navigation.const";
 import { useNavigationStore } from "@sr/store";
-import { Add, ArrowLeft, ArrowRight2, Copy, TickSquare } from "iconsax-react";
+import { Add, ArrowLeft, Copy, TickSquare } from "iconsax-react";
 import { useState } from "react";
 import { Switch } from "../Switch";
 
@@ -81,28 +82,11 @@ export function ModuleHeader({ ...props }: Readonly<ModuleHeaderProps>) {
           )}
           <Box className="flex flex-row items-center gap-1">
             {props.onBack && !config?.subtitle ? (
-              stack.map((moduleName, index) => {
-                const isLast = index === stack.length - 1;
-                const moduleConfig = modulesRegistry[moduleName];
-
-                return (
-                  <Box
-                    key={`${moduleName}-${index}`}
-                    className="flex flex-row items-center gap-2"
-                  >
-                    <Typography
-                      translateId={moduleConfig?.title}
-                      onClick={!isLast ? () => handleBackTo(index) : undefined}
-                      className={`text-sm ${
-                        !isLast
-                          ? "text-rhino-900 cursor-pointer"
-                          : "text-rhino-850"
-                      }`}
-                    />
-                    {!isLast && <ArrowRight2 size={14} variant="Linear" />}
-                  </Box>
-                );
-              })
+              <Breadcrumbs
+                stack={stack}
+                modulesRegistry={modulesRegistry}
+                handleBackTo={handleBackTo}
+              />
             ) : (
               <Typography
                 translateId={config?.subtitle || config?.description}

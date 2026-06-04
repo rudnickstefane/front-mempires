@@ -4,5 +4,6 @@ export type CheckboxControllerProps = {
   error?: boolean;
   errorMessage?: string;
   checked?: boolean;
+  disabled?: boolean;
   onValueChange?: (value: boolean) => void;
 };
