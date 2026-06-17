@@ -1,5 +1,6 @@
 import { useThemeDarkMode } from "@sr/modules/common/theme/ThemeContext";
 import { useEffect, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 import { Menu } from "../types";
 
 export const useMenuLogic = () => {
@@ -12,37 +13,223 @@ export const useMenuLogic = () => {
   const hoveringMenuRef = useRef(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const menuItemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const { formatMessage } = useIntl();
 
   const menus: Menu[] = [
     {
       key: "home",
-      label: "menu.home",
-      link: "#home",
+      label: formatMessage({ id: "menu.home" }),
+      link: "/",
     },
     {
-      key: "solutions",
-      label: "menu.solutions",
-      link: "#funcionalidades",
+      key: "explore",
+      label: formatMessage({ id: "menu.explore" }),
+      isMegaMenu: true,
+      sections: [
+        {
+          title: formatMessage({ id: "menu.explore.latest" }),
+          subtitle: formatMessage({ id: "menu.explore.latest.subtitle" }),
+          items: [
+            {
+              name: formatMessage({ id: "menu.explore.game_updates" }),
+              subItems: [
+                {
+                  name: formatMessage({ id: "menu.explore.patch_notes" }),
+                  link: "/news/updates/patch-notes",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.new_features" }),
+                  link: "/news/updates/new-features",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.balance_changes" }),
+                  link: "/news/updates/balance-changes",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.see_more_updates" }),
+                  link: "/news/updates",
+                },
+              ],
+            },
+            {
+              name: formatMessage({ id: "menu.explore.community_news" }),
+              subItems: [
+                {
+                  name: formatMessage({ id: "menu.explore.events" }),
+                  link: "/news/community/events",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.tournaments" }),
+                  link: "/news/community/tournaments",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.leaderboards" }),
+                  link: "/news/community/leaderboards",
+                },
+                {
+                  name: formatMessage({
+                    id: "menu.explore.see_more_community",
+                  }),
+                  link: "/news/community",
+                },
+              ],
+            },
+            {
+              name: formatMessage({ id: "menu.explore.development" }),
+              subItems: [
+                {
+                  name: formatMessage({ id: "menu.explore.devlog" }),
+                  link: "/news/development/devlog",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.sneak_peeks" }),
+                  link: "/news/development/sneak-peeks",
+                },
+                {
+                  name: formatMessage({
+                    id: "menu.explore.see_more_development",
+                  }),
+                  link: "/news/development",
+                },
+              ],
+            },
+            {
+              name: formatMessage({ id: "menu.explore.gameplay" }),
+              subItems: [
+                {
+                  name: formatMessage({ id: "menu.explore.game_modes" }),
+                  link: "/gameplay/game-modes",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.characters" }),
+                  link: "/gameplay/characters",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.maps" }),
+                  link: "/gameplay/maps",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.see_more_gameplay" }),
+                  link: "/gameplay",
+                },
+              ],
+            },
+            {
+              name: formatMessage({ id: "menu.explore.history" }),
+              subItems: [
+                {
+                  name: formatMessage({ id: "menu.explore.story_characters" }),
+                  link: "/history/characters",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.story_world" }),
+                  link: "/history/world",
+                },
+                {
+                  name: formatMessage({ id: "menu.explore.see_more_history" }),
+                  link: "/history",
+                },
+              ],
+            },
+            {
+              name: formatMessage({ id: "menu.explore.all_news" }),
+              subItems: [],
+              link: "/explore",
+            },
+          ],
+        },
+        {
+          title: formatMessage({ id: "menu.explore.quick_access" }),
+          items: [
+            {
+              name: formatMessage({ id: "menu.quick.download" }),
+              link: "/download",
+            },
+            { name: formatMessage({ id: "menu.quick.beta" }), link: "/beta" },
+            {
+              name: formatMessage({ id: "menu.quick.roadmap" }),
+              link: "/roadmap",
+            },
+          ],
+        },
+      ],
+      sponsor: {
+        content: formatMessage({ id: "sponsor.content" }),
+      },
     },
     {
-      key: "ecosystem",
-      label: "menu.ecosystem",
-      link: "#ecosystem",
-    },
-    {
-      key: "differentials",
-      label: "menu.differentials",
-      link: "#diferenciais",
+      key: "community",
+      label: formatMessage({ id: "menu.community" }),
+      title: formatMessage({ id: "menu.community.title" }),
+      subtitle: formatMessage({ id: "menu.community.subtitle" }),
+      items: [
+        {
+          name: formatMessage({ id: "menu.community.discord" }),
+          link: "https://discord.gg/TYz9EWXBw",
+          target: true,
+        },
+        {
+          name: formatMessage({ id: "menu.community.forum" }),
+          link: "/community/forum",
+        },
+        {
+          name: formatMessage({ id: "menu.community.reddit" }),
+          link: "https://www.reddit.com/r/mobileempires/",
+          target: true,
+        },
+        {
+          name: formatMessage({ id: "menu.community.youtube" }),
+          link: "https://www.youtube.com/@mobileempires",
+          target: true,
+        },
+      ],
     },
     {
       key: "faq",
-      label: "menu.faq",
-      link: "#faq",
+      label: formatMessage({ id: "menu.faq" }),
+      title: formatMessage({ id: "menu.faq.title" }),
+      subtitle: formatMessage({ id: "menu.faq.subtitle" }),
+      items: [
+        {
+          name: formatMessage({ id: "menu.faq.questions" }),
+          link: "/faq/questions",
+        },
+        {
+          name: formatMessage({ id: "menu.faq.beginner_guide" }),
+          link: "/faq/beginner-guide",
+        },
+        {
+          name: formatMessage({ id: "menu.faq.advanced_tips" }),
+          link: "/faq/advanced-tips",
+        },
+      ],
     },
     {
-      key: "contact",
-      label: "menu.contact",
-      link: "#contact",
+      key: "help",
+      label: formatMessage({ id: "menu.help" }),
+      title: formatMessage({ id: "menu.help.title" }),
+      items: [
+        {
+          name: formatMessage({ id: "menu.help.help_center" }),
+          link: "/help/help-center",
+        },
+        {
+          name: formatMessage({ id: "menu.help.contact_us" }),
+          link: "/help/contact-us",
+        },
+        {
+          name: formatMessage({ id: "menu.help.how_works" }),
+          link: "/help/how-works",
+        },
+        {
+          name: formatMessage({ id: "menu.help.terms" }),
+          link: "/help/terms-of-use",
+        },
+        {
+          name: formatMessage({ id: "menu.help.privacy" }),
+          link: "/help/privacy-policy",
+        },
+      ],
     },
   ];
 

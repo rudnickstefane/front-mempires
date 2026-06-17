@@ -4,13 +4,17 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  IconButton,
 } from "@mui/material";
 import bgFeatures from "@sr/assets/images/bgFeatures.png";
 import bgFeatures1 from "@sr/assets/images/bgFeatures1.png";
 import bgFeatures2 from "@sr/assets/images/bgFeatures2.png";
 import { DestaqueTitle } from "@sr/assets/styles/styles.d";
 import { Button } from "@sr/common/iu/components/Button";
+import { FormController } from "@sr/common/iu/components/Forms";
+import { TextField } from "@sr/common/iu/components/Inputs/TextField/TextField";
 import { Typography } from "@sr/common/iu/components/Typography";
+import { useSignInFormHook } from "@sr/modules/common/hooks";
 import {
   ArrowCircleRight2,
   ArrowDown2,
@@ -22,19 +26,23 @@ import {
   FingerScan,
   Key,
   Layer,
-  Messages1,
   MessageSquare,
   Mobile,
   MoneyRecive,
   NotificationBing,
+  PasswordCheck,
   Profile2User,
+  SecurityUser,
   Shield,
   ShieldSecurity,
   ShieldTick,
   Star,
   TickCircle,
   TrendUp,
+  VolumeUp,
 } from "iconsax-react";
+import { VolumeOff } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { BsApple, BsGooglePlay } from "react-icons/bs";
 import "../../../input.css";
 import Footer from "../../components/Footer";
@@ -205,68 +213,208 @@ export default function Home() {
     </Box>
   );
 
+  const [playing, setPlaying] = useState(false);
+  const [audioInitialized, setAudioInitialized] = useState(false);
+  const [wasPlayingBeforeHidden, setWasPlayingBeforeHidden] = useState(false);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Inicializa o áudio
+  useEffect(() => {
+    const audio = new Audio("/mempires.mp3");
+    audio.loop = true;
+    audioRef.current = audio;
+    return () => audio.pause();
+  }, []);
+
+  // Inicia o áudio (após interação do usuário)
+  const startAudio = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio || audioInitialized) return;
+
+    audio
+      .play()
+      .then(() => {
+        setAudioInitialized(true);
+        setPlaying(true);
+      })
+      .catch(() => {});
+  }, [audioInitialized]);
+
+  // Alterna entre play/pause
+  const togglePlay = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const toggle = playing
+      ? Promise.resolve(audio.pause())
+      : audio.play().then(() => setAudioInitialized(true));
+
+    toggle.then(() => setPlaying(!playing));
+  }, [playing]);
+
+  // Inicia áudio no primeiro clique
+  useEffect(() => {
+    const handleClick = () => startAudio();
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [startAudio]);
+
+  // Pausa quando sai da aba e retoma apenas se estava tocando antes
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const audio = audioRef.current;
+      if (!audio || !audioInitialized) return;
+
+      if (document.hidden) {
+        setWasPlayingBeforeHidden(playing);
+        playing && audio.pause();
+        setPlaying(false);
+        return;
+      }
+
+      if (wasPlayingBeforeHidden) {
+        audio
+          .play()
+          .then(() => setPlaying(true))
+          .catch(() => {});
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [audioInitialized, playing, wasPlayingBeforeHidden]);
+
+  const { formData, showPassword, handleClickShowPassword, isLoading } =
+    useSignInFormHook();
+
   return (
     <>
       <HomeHeader />
 
-      <Box
-        component="section"
-        className="w-full bg-gradient-to-t from-white from-50% to-primary-200/10 to-50%"
+      {/* Controle de áudio */}
+      <IconButton
+        onClick={togglePlay}
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          right: 16,
+          color: "white",
+          zIndex: 1000,
+          backgroundColor: "rgba(0,0,0,0.5)",
+          "&:hover": { backgroundColor: "rgba(0,0,0,0.7)" },
+        }}
       >
+        {playing ? <VolumeUp /> : <VolumeOff />}
+      </IconButton>
+
+      <Box component="section" className="sign-news-section w-full py-7">
         {/* Ajustado px-6 para px-4 no mobile e mantido px-6 no lg */}
-        <Box className="mx-auto max-w-screen-2xl px-4 lg:px-6">
+        <Box className="mx-auto max-w-screen-2xl">
           {/* Ajustado px-12 para px-6 no mobile e mantido px-12 no lg */}
-          <Box className="bg-primary-950 bgOverlay text-white rounded-3xl w-full px-6 lg:px-12 pb-12">
+          <Box className="text-white rounded-3xl w-full">
             {/* flex-col por padrão (mobile) e flex-row no lg (desktop) */}
             <Box className="flex flex-col lg:flex-row gap-5">
               {/* Bloco de texto: w-full no mobile e w-156 no lg */}
-              <Box className="flex flex-col gap-5 p-5 pt-12 lg:pt-20 w-full lg:w-156">
-                <Typography className="uppercase text-sm font-bold font-ubuntu">
-                  Por que nos escolher?
-                </Typography>
-                <Typography className="text-3xl lg:text-4xl font-ubuntu font-bold">
-                  Um ecossistema feito para conectar
-                </Typography>
-                <Button
-                  fullWidth
-                  translateId="Tenho interesse"
-                  to="#contact"
-                  className="py-3 px-4 text-base bg-primary text-white w-fit"
-                  startIcon={<ArrowCircleRight2 size={23} variant="Linear" />}
-                />
-              </Box>
-
-              {/* Card 1 */}
-              <Box className="p-5 flex items-center justify-center">
-                <Box className="flex flex-col gap-5 items-center justify-center text-center">
-                  <Box className="bg-white p-5 rounded-2xl w-fit">
-                    <Messages1 size={60} className="text-primary-900" />
-                  </Box>
-                  <Typography className="text-xl font-ubuntu font-bold">
-                    Conexão Direta
+              <Box className="sign-in-section flex flex-col p-24 items-center">
+                <Box className="flex flex-col items-center">
+                  <Typography
+                    className="
+                      uppercase 
+                      font-marcellus
+                      font-semibold
+                      text-2xl
+                      text-[#3a1f0c]
+                    "
+                  >
+                    Olá, Comandante
                   </Typography>
-                  <Typography className="text-base">
-                    Portal integrado para abertura de tickets e suporte entre
-                    RH, Beneficiário e Varejo.
+                  <Typography
+                    className="
+                    font-bonobo
+                    text-base
+                    text-[#3a1f0c]
+                  "
+                  >
+                    Seu império aguarda por você.
                   </Typography>
                 </Box>
-              </Box>
-
-              {/* Card 2: Cashback */}
-              {/* Mantido bg-primary e rounded, apenas ajustado para o fluxo vertical no mobile */}
-              <Box className="bg-primary rounded-2xl lg:rounded-none lg:rounded-b-2xl p-5 flex items-center justify-center">
-                <Box className="flex flex-col gap-5 items-center justify-center text-center">
-                  <Box className="bg-white p-5 rounded-2xl w-fit">
-                    <MoneyRecive size={60} className="text-primary-900" />
+                <FormController
+                  value={formData}
+                  className="flex flex-col gap-[0.92rem] mt-6"
+                >
+                  <Box className="flex flex-col gap-2">
+                    <Box className="input-sign flex flex-row items-center p-4">
+                      <SecurityUser
+                        variant="Linear"
+                        className="text-[#a3865a]"
+                      />
+                      <TextField
+                        required
+                        fullWidth
+                        name="login"
+                        label="E-mail ou usuário"
+                      />
+                    </Box>
+                    <Box className="input-sign flex flex-row items-center p-4">
+                      <PasswordCheck
+                        variant="Linear"
+                        className="text-[#a3865a]"
+                      />
+                      <TextField
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        showPasswordToggle
+                      />
+                    </Box>
+                    <Typography
+                      className="
+                        text-right
+                        font-bonobo
+                        text-sm
+                        text-[#3a1f0c]
+                        pt-1
+                      "
+                    >
+                      Esqueceu sua senha!
+                    </Typography>
                   </Box>
-                  <Typography className="text-xl font-ubuntu font-bold text-white">
-                    Cashback
+                  <Button className="btn-red-sign text-xl font-marcellus uppercase rounded-sm">
+                    <Box className="btn-red-text tracking-[0.05em] font-semibold mt-1">
+                      Entrar
+                    </Box>
+                  </Button>
+                  <Typography
+                    className="
+                    text-center
+                    font-bonobo
+                    text-base
+                    text-[#3a1f0c]
+                  "
+                  >
+                    OU
                   </Typography>
-                  <Typography className="text-base text-white">
-                    Pontos que viram desconto direto na fatura, criando um ciclo
-                    de fidelidade e retorno à sua rede.
-                  </Typography>
-                </Box>
+                  <Button className="btn-black text-xl font-marcellus uppercase rounded-sm">
+                    <Box className="btn-red-text tracking-[0.05em] font-semibold mt-1">
+                      Criar conta
+                    </Box>
+                  </Button>
+                </FormController>
+                <Typography
+                  className="
+                    text-center
+                    font-bonobo
+                    text-sm
+                    text-[#3a1f0c]
+                    mt-2
+                  "
+                >
+                  Ao cadastrar, você concorda com nossos Termos de Serviço e
+                  Política de Privacidade.
+                </Typography>
               </Box>
 
               {/* Card 3 */}

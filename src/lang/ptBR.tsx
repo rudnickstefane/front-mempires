@@ -1,11 +1,71 @@
 export const ptBR = {
   // Menu principal
   "menu.home": "Início",
-  "menu.solutions": "Funcionalidades",
-  "menu.ecosystem": "Ecossistema",
-  "menu.differentials": "Diferenciais",
-  "menu.faq": "FAQ",
-  "menu.contact": "Contato",
+  "menu.explore": "Recursos do Jogo",
+  "menu.community": "Events",
+  "menu.faq": "Eventos",
+  "menu.help": "COMMUNITY",
+
+  // Seções do menu Explorar
+  "menu.explore.latest": "Últimas",
+  "menu.explore.latest.subtitle": "notícias",
+  "menu.explore.quick_access": "Acesso rápido",
+
+  // Itens do menu Explorar
+  "menu.explore.game_updates": "Atualizações do jogo",
+  "menu.explore.community_news": "Comunidade",
+  "menu.explore.development": "Desenvolvimento",
+  "menu.explore.gameplay": "Gameplay",
+  "menu.explore.history": "História",
+  "menu.explore.all_news": "Todas as notícias",
+
+  // Subitens do menu Explorar
+  "menu.explore.patch_notes": "Notas de atualização",
+  "menu.explore.new_features": "Novos recursos",
+  "menu.explore.balance_changes": "Balanceamentos",
+  "menu.explore.see_more_updates": "Ver mais",
+  "menu.explore.events": "Eventos",
+  "menu.explore.tournaments": "Torneios",
+  "menu.explore.leaderboards": "Ranking",
+  "menu.explore.see_more_community": "Ver mais",
+  "menu.explore.devlog": "Devlog",
+  "menu.explore.sneak_peeks": "Sneak peeks",
+  "menu.explore.see_more_development": "Ver mais",
+  "menu.explore.game_modes": "Modos de jogo",
+  "menu.explore.characters": "Personagens",
+  "menu.explore.maps": "Mapas",
+  "menu.explore.see_more_gameplay": "Ver mais",
+  "menu.explore.story_characters": "Personagens",
+  "menu.explore.story_world": "Mundo",
+  "menu.explore.see_more_history": "Ver mais",
+
+  // Acesso rápido
+  "menu.quick.download": "Download",
+  "menu.quick.beta": "Registro beta",
+  "menu.quick.roadmap": "Roadmap",
+
+  // Menu Comunidade
+  "menu.community.title": "Nossos",
+  "menu.community.subtitle": "impérios",
+  "menu.community.discord": "Discord",
+  "menu.community.forum": "Fórum",
+  "menu.community.reddit": "Reddit",
+  "menu.community.youtube": "YouTube",
+
+  // Menu FAQ
+  "menu.faq.title": "Conheça",
+  "menu.faq.subtitle": "bem mais",
+  "menu.faq.questions": "Perguntas frequentes",
+  "menu.faq.beginner_guide": "Guia de iniciantes",
+  "menu.faq.advanced_tips": "Dicas avançadas",
+
+  // Menu Ajuda
+  "menu.help.title": "Tire suas dúvidas",
+  "menu.help.help_center": "Central de ajuda",
+  "menu.help.contact_us": "Fale conosco",
+  "menu.help.how_works": "Como funciona",
+  "menu.help.terms": "Termos de uso",
+  "menu.help.privacy": "Política de privacidade",
 
   "profile.code": "Código de perfil",
 
@@ -103,67 +163,6 @@ export const ptBR = {
   abbreviation: "Abreviação",
   effectiveStart: "Início da vigência",
   effectiveEnd: "Fim da vigência",
-
-  // Seções do menu Explorar
-  "menu.explore.latest": "Últimas",
-  "menu.explore.latest.subtitle": "notícias",
-  "menu.explore.quick_access": "Acesso rápido",
-
-  // Itens do menu Explorar
-  "menu.explore.game_updates": "Atualizações do jogo",
-  "menu.explore.community_news": "Comunidade",
-  "menu.explore.development": "Desenvolvimento",
-  "menu.explore.gameplay": "Gameplay",
-  "menu.explore.history": "História",
-  "menu.explore.all_news": "Todas as notícias",
-
-  // Subitens do menu Explorar
-  "menu.explore.patch_notes": "Notas de atualização",
-  "menu.explore.new_features": "Novos recursos",
-  "menu.explore.balance_changes": "Balanceamentos",
-  "menu.explore.see_more_updates": "Ver mais",
-  "menu.explore.events": "Eventos",
-  "menu.explore.tournaments": "Torneios",
-  "menu.explore.leaderboards": "Ranking",
-  "menu.explore.see_more_community": "Ver mais",
-  "menu.explore.devlog": "Devlog",
-  "menu.explore.sneak_peeks": "Sneak peeks",
-  "menu.explore.see_more_development": "Ver mais",
-  "menu.explore.game_modes": "Modos de jogo",
-  "menu.explore.characters": "Personagens",
-  "menu.explore.maps": "Mapas",
-  "menu.explore.see_more_gameplay": "Ver mais",
-  "menu.explore.story_characters": "Personagens",
-  "menu.explore.story_world": "Mundo",
-  "menu.explore.see_more_history": "Ver mais",
-
-  // Acesso rápido
-  "menu.quick.download": "Download",
-  "menu.quick.beta": "Registro beta",
-  "menu.quick.roadmap": "Roadmap",
-
-  // Menu Comunidade
-  "menu.community.title": "Nossos",
-  "menu.community.subtitle": "impérios",
-  "menu.community.discord": "Discord",
-  "menu.community.forum": "Fórum",
-  "menu.community.reddit": "Reddit",
-  "menu.community.youtube": "YouTube",
-
-  // Menu FAQ
-  "menu.faq.title": "Conheça",
-  "menu.faq.subtitle": "bem mais",
-  "menu.faq.questions": "Perguntas frequentes",
-  "menu.faq.beginner_guide": "Guia de iniciantes",
-  "menu.faq.advanced_tips": "Dicas avançadas",
-
-  // Menu Ajuda
-  "menu.help.title": "Tire suas dúvidas",
-  "menu.help.help_center": "Central de ajuda",
-  "menu.help.contact_us": "Fale conosco",
-  "menu.help.how_works": "Como funciona",
-  "menu.help.terms": "Termos de uso",
-  "menu.help.privacy": "Política de privacidade",
 
   // Idioma
   "language.choose": "Escolher um idioma",

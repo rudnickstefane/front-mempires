@@ -204,9 +204,11 @@ export default {
       fontFamily: {
         ...fontFamily,
         poppins: ["Poppins", "sans-serif"],
+        marcellus: ["Marcellus SC", "sans-serif"],
         ubuntu: ["Ubuntu", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
         manrope: ["Manrope", "sans-serif"],
+        bonobo: ["Bonobo Regular", "sans-serif"],
         posterama: ["Posterama Semibold", "sans-serif"],
       },
       width: {

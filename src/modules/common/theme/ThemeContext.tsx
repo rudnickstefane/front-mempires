@@ -20,7 +20,7 @@ export const useThemeDarkMode = () => {
             : ("afternoon" as EffectiveTheme),
       },
       { test: hour >= 15 && hour < 17, value: "sunset" as EffectiveTheme },
-      { test: hour >= 17 && hour < 19, value: "nightfall" as EffectiveTheme },
+      { test: hour >= 17 && hour < 18, value: "nightfall" as EffectiveTheme },
       { test: true, value: "dark" as EffectiveTheme },
     ];
 
@@ -46,7 +46,7 @@ export const useThemeDarkMode = () => {
         effectiveTheme = mode;
       }
 
-      effectiveTheme = "light";
+      // effectiveTheme = "light";
 
       // Remove temas antigos e adiciona o novo
       document.body.removeAttribute("data-theme");
